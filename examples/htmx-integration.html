@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>auy-ui + HTMX — Integração Completa</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2'><path d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/><polyline points='9 22 9 12 15 12 15 22'/></svg>">
+
+  <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfjkD3oYd1Mk7NBBk4" crossorigin="anonymous"></script>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "lit": "https://cdn.jsdelivr.net/npm/lit@3.2.1/+esm",
+      "lit/": "https://cdn.jsdelivr.net/npm/lit@3.2.1/",
+      "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm",
+      "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/",
+      "lit-html": "https://cdn.jsdelivr.net/npm/lit-html@3.2.1/+esm",
+      "lit-html/": "https://cdn.jsdelivr.net/npm/lit-html@3.2.1/",
+      "lit-element": "https://cdn.jsdelivr.net/npm/lit-element@4.1.1/+esm",
+      "lit-element/": "https://cdn.jsdelivr.net/npm/lit-element@4.1.1/",
+      "auy-ui": "https://cdn.jsdelivr.net/npm/auy-ui@0.1.0/dist/mod.js"
+    }
+  }
+  </script>
+
+  <style>
+    :root {
+      --auy-color-primary: oklch(50% 0.2 250);
+      --auy-color-primary-hover: oklch(45% 0.2 250);
+      --auy-color-surface: oklch(98% 0.005 260);
+      --auy-color-text: oklch(20% 0.03 260);
+      --auy-color-text-muted: oklch(45% 0.03 260);
+      --auy-color-border: oklch(0% 0 0 / 0.1);
+      --auy-color-success: oklch(55% 0.2 145);
+      --auy-color-error: oklch(55% 0.22 30);
+      --auy-color-warning: oklch(65% 0.2 85);
+      --auy-color-info: oklch(50% 0.2 250);
+      --auy-color-overlay: oklch(0% 0 0 / 0.4);
+      --auy-radius-sm: 4px;
+      --auy-radius-md: 8px;
+      --auy-radius-lg: 12px;
+      --auy-space-xs: 4px;
+      --auy-space-sm: 8px;
+      --auy-space-md: 16px;
+      --auy-space-lg: 24px;
+      --auy-shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.06);
+      --auy-shadow-md: 0 2px 8px oklch(0% 0 0 / 0.1);
+      --auy-shadow-lg: 0 4px 24px oklch(0% 0 0 / 0.12);
+      --auy-transition-fast: 150ms ease;
+      --auy-transition-base: 200ms ease;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --auy-color-surface: oklch(15% 0.02 260);
+        --auy-color-text: oklch(90% 0.01 260);
+        --auy-color-text-muted: oklch(60% 0.02 260);
+        --auy-color-border: oklch(100% 0 0 / 0.12);
+        --auy-color-primary: oklch(60% 0.2 250);
+        --auy-color-primary-hover: oklch(65% 0.2 250);
+        --auy-color-overlay: oklch(0% 0 0 / 0.6);
+      }
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      background: var(--auy-color-surface);
+      color: var(--auy-color-text);
+      line-height: 1.6;
+    }
+
+    .content-section {
+      padding: var(--auy-space-lg);
+    }
+
+    .content-section h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0 0 var(--auy-space-md);
+    }
+
+    .toolbar-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--auy-space-sm);
+      align-items: center;
+      margin-bottom: var(--auy-space-md);
+    }
+
+    .search-box {
+      display: flex;
+      gap: var(--auy-space-sm);
+      align-items: center;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .search-box input {
+      flex: 1;
+      padding: var(--auy-space-sm) var(--auy-space-md);
+      border: 1px solid var(--auy-color-border);
+      border-radius: var(--auy-radius-md);
+      background: var(--auy-color-surface);
+      color: var(--auy-color-text);
+      font-family: inherit;
+      font-size: 0.875rem;
+    }
+
+    .search-box input:focus {
+      outline: 2px solid var(--auy-color-primary);
+      outline-offset: -1px;
+      border-color: transparent;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--auy-color-border);
+      border-radius: var(--auy-radius-md);
+    }
+
+    .table-container table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .table-container th {
+      padding: var(--auy-space-sm) var(--auy-space-md);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--auy-color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-align: left;
+      background: var(--auy-color-surface);
+      border-bottom: 2px solid var(--auy-color-border);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .table-container th:hover {
+      color: var(--auy-color-primary);
+    }
+
+    .table-container td {
+      padding: var(--auy-space-sm) var(--auy-space-md);
+      font-size: 0.875rem;
+      border-bottom: 1px solid var(--auy-color-border);
+    }
+
+    .table-container tbody tr:hover {
+      background: color-mix(in srgb, var(--auy-color-primary) 5%, transparent);
+    }
+
+    .badge-cell {
+      display: flex;
+      align-items: center;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: var(--auy-space-xs);
+      align-items: center;
+    }
+
+    .pagination {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--auy-space-xs);
+      align-items: center;
+      justify-content: center;
+      padding: var(--auy-space-md) 0;
+    }
+
+    .pagination .page-info {
+      font-size: 0.875rem;
+      color: var(--auy-color-text-muted);
+      margin: 0 var(--auy-space-sm);
+    }
+
+    .form-layout {
+      display: grid;
+      gap: var(--auy-space-md);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--auy-space-md);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--auy-space-xs);
+    }
+
+    .form-group label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--auy-color-text);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: var(--auy-space-sm) var(--auy-space-md);
+      border: 1px solid var(--auy-color-border);
+      border-radius: var(--auy-radius-md);
+      background: var(--auy-color-surface);
+      color: var(--auy-color-text);
+      font-family: inherit;
+      font-size: 0.875rem;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: 2px solid var(--auy-color-primary);
+      outline-offset: -1px;
+      border-color: transparent;
+    }
+
+    .form-group .hint {
+      font-size: 0.8rem;
+      color: var(--auy-color-text-muted);
+    }
+
+    .form-actions {
+      display: flex;
+      gap: var(--auy-space-sm);
+      justify-content: flex-end;
+      padding-top: var(--auy-space-md);
+      border-top: 1px solid var(--auy-color-border);
+      margin-top: var(--auy-space-md);
+    }
+
+    .toast-container {
+      position: fixed;
+      top: var(--auy-space-md);
+      right: var(--auy-space-md);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: var(--auy-space-sm);
+      width: 360px;
+      max-width: calc(100vw - var(--auy-space-lg));
+    }
+
+    .htmx-indicator {
+      opacity: 0;
+      transition: opacity var(--auy-transition-fast);
+    }
+
+    .htmx-request .htmx-indicator {
+      opacity: 1;
+    }
+
+    .htmx-request.htmx-indicator {
+      opacity: 1;
+    }
+
+    tr.htmx-swapping {
+      opacity: 0;
+      transition: opacity var(--auy-transition-base);
+    }
+
+    .modal-form-body {
+      display: grid;
+      gap: var(--auy-space-md);
+      padding: var(--auy-space-md) 0;
+    }
+  </style>
+</head>
+<body hx-ext="response-targets">
+
+  <auy-app-layout theme="light" sidebar-width="280px" header-height="auto">
+
+    <auy-header slot="header" page-title="Pedidos — HTMX + auy-ui" sticky>
+      <span slot="logo">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+      </span>
+      <nav slot="nav" aria-label="Navegação principal">
+        <auy-internal-button variant="ghost" size="sm">Dashboard</auy-internal-button>
+        <auy-internal-button variant="primary" size="sm">Pedidos</auy-internal-button>
+        <auy-internal-button variant="ghost" size="sm">Clientes</auy-internal-button>
+        <auy-internal-button variant="ghost" size="sm">Produtos</auy-internal-button>
+      </nav>
+      <div slot="search">
+        <input type="search" placeholder="Pesquisar pedidos..." aria-label="Pesquisar pedidos" style="padding:6px 12px;border:1px solid var(--auy-color-border);border-radius:var(--auy-radius-md);background:var(--auy-color-surface);color:var(--auy-color-text);font-size:0.875rem;font-family:inherit;">
+      </div>
+      <div slot="actions">
+        <auy-internal-tooltip text="Notificações">
+          <auy-internal-button variant="ghost" size="sm" aria-label="Notificações">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          </auy-internal-button>
+        </auy-internal-tooltip>
+        <auy-internal-tooltip text="João Silva (Admin)">
+          <auy-internal-button variant="ghost" size="sm" aria-label="Perfil do usuário">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </auy-internal-button>
+        </auy-internal-tooltip>
+      </div>
+    </auy-header>
+
+    <auy-sidebar slot="sidebar" app-title="Auy Store" aria-label="Navegação lateral" items='[{"label":"Dashboard","href":"/dashboard","icon":"📊"},{"label":"Pedidos","href":"/orders","icon":"📋","active":true},{"label":"Clientes","href":"/customers","icon":"👥"},{"label":"Produtos","href":"/products","icon":"📦"},{"label":"Relatórios","href":"/reports","icon":"📈"}]'>
+    </auy-sidebar>
+
+    <auy-main-section slot="main" id="main-content" header="Gerenciamento de Pedidos" columns="single" role="main">
+
+      <div slot="header-actions">
+        <auy-internal-button variant="primary" size="sm" hx-get="/orders/new" hx-target="#modal-container" hx-trigger="click" hx-swap="innerHTML" _="on htmx:afterOnLoad wait 10ms then call #orderModal.open.setAttribute('open', '')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Novo Pedido
+        </auy-internal-button>
+      </div>
+
+      <div class="content-section">
+
+        <div class="toolbar-row">
+          <div class="search-box">
+            <input
+              type="search"
+              name="q"
+              placeholder="Buscar por cliente, pedido ou status..."
+              aria-label="Buscar pedidos"
+              hx-get="/orders/search"
+              hx-trigger="keyup changed delay:300ms, search"
+              hx-target="#orders-table-body"
+              hx-swap="innerHTML"
+              hx-indicator="#search-spinner"
+            >
+            <auy-internal-spinner id="search-spinner" size="20" class="htmx-indicator" role="status"></auy-internal-spinner>
+          </div>
+          <auy-internal-tooltip text="Recarregar lista">
+            <auy-internal-button
+              variant="ghost"
+              size="sm"
+              hx-get="/orders"
+              hx-target="#orders-table-container"
+              hx-swap="innerHTML"
+              hx-indicator="#table-indicator"
+              aria-label="Recarregar lista de pedidos"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            </auy-internal-button>
+          </auy-internal-tooltip>
+        </div>
+
+        <div id="orders-table-container" class="table-container">
+          <table aria-label="Lista de pedidos">
+            <thead>
+              <tr>
+                <th hx-get="/orders?sort=id" hx-target="#orders-table-body" hx-swap="innerHTML" hx-trigger="click" role="columnheader" aria-sort="ascending">
+                  Pedido <span aria-hidden="true">▲</span>
+                </th>
+                <th hx-get="/orders?sort=customer" hx-target="#orders-table-body" hx-swap="innerHTML" hx-trigger="click" role="columnheader">
+                  Cliente
+                </th>
+                <th hx-get="/orders?sort=date" hx-target="#orders-table-body" hx-swap="innerHTML" hx-trigger="click" role="columnheader">
+                  Data
+                </th>
+                <th hx-get="/orders?sort=total" hx-target="#orders-table-body" hx-swap="innerHTML" hx-trigger="click" role="columnheader">
+                  Total
+                </th>
+                <th hx-get="/orders?sort=status" hx-target="#orders-table-body" hx-swap="innerHTML" hx-trigger="click" role="columnheader">
+                  Status
+                </th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="orders-table-body" hx-indicator="#table-indicator">
+              <tr>
+                <td data-label="Pedido"><strong>#4521</strong></td>
+                <td data-label="Cliente">Maria Santos</td>
+                <td data-label="Data">18/07/2026</td>
+                <td data-label="Total">R$ 2.450,00</td>
+                <td data-label="Status">
+                  <span class="badge-cell">
+                    <auy-internal-badge variant="success">Entregue</auy-internal-badge>
+                  </span>
+                </td>
+                <td data-label="Ações">
+                  <div class="action-buttons">
+                    <auy-internal-tooltip text="Visualizar detalhes">
+                      <auy-internal-button
+                        variant="ghost" size="sm"
+                        hx-get="/orders/4521"
+                        hx-target="#modal-container"
+                        hx-swap="innerHTML"
+                        _="on click call #orderModal.open.setAttribute('open', '')"
+                        aria-label="Visualizar pedido 4521"
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      </auy-internal-button>
+                    </auy-internal-tooltip>
+                    <auy-internal-tooltip text="Excluir pedido">
+                      <auy-internal-button
+                        variant="ghost" size="sm"
+                        hx-delete="/orders/4521"
+                        hx-target="#orders-table-body"
+                        hx-swap="innerHTML"
+                        hx-confirm="Tem certeza que deseja excluir o pedido #4521?"
+                        hx-indicator="#table-indicator"
+                        class="htmx-indicator"
+                        aria-label="Excluir pedido 4521"
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                      </auy-internal-button>
+                    </auy-internal-tooltip>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td data-label="Pedido"><strong>#4520</strong></td>
+                <td data-label="Cliente">Carlos Almeida</td>
+                <td data-label="Data">17/07/2026</td>
+                <td data-label="Total">R$ 890,00</td>
+                <td data-label="Status">
+                  <span class="badge-cell">
+                    <auy-internal-badge variant="warning">Pendente</auy-internal-badge>
+                  </span>
+                </td>
+                <td data-label="Ações">
+                  <div class="action-buttons">
+                    <auy-internal-tooltip text="Visualizar detalhes">
+                      <auy-internal-button variant="ghost" size="sm" hx-get="/orders/4520" hx-target="#modal-container" hx-swap="innerHTML" _="on click call #orderModal.open.setAttribute('open', '')" aria-label="Visualizar pedido 4520">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      </auy-internal-button>
+                    </auy-internal-tooltip>
+                    <auy-internal-tooltip text="Excluir pedido">
+                      <auy-internal-button variant="ghost" size="sm" hx-delete="/orders/4520" hx-target="#orders-table-body" hx-swap="innerHTML" hx-confirm="Tem certeza que deseja excluir o pedido #4520?" hx-indicator="#table-indicator" class="htmx-indicator" aria-label="Excluir pedido 4520">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                      </auy-internal-button>
+                    </auy-internal-tooltip>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td data-label="Pedido"><strong>#4519</strong></td>
+                <td data-label="Cliente">Ana Beatriz</td>
+                <td data-label="Data">16/07/2026</td>
+                <td data-label="Total">R$ 5.320,00</td>
+                <td data-label="Status">
+                  <span class="badge-cell">
+                    <auy-internal-badge variant="info">Processando</auy-internal-badge>
+                  </span>
+                </td>
+                <td data-label="Ações">
+                  <div class="action-buttons">
+                    <auy-internal-tooltip text="Visualizar detalhes">
+                      <auy-internal-button variant="ghost" size="sm" hx-get="/orders/4519" hx-target="#modal-container" hx-swap="innerHTML" _="on click call #orderModal.open.setAttribute('open', '')" aria-label="Visualizar pedido 4519">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      </auy-internal-button>
+                    </auy-internal-tooltip>
+                    <auy-internal-tooltip text="Excluir pedido">
+                      <auy-internal-button variant="ghost" size="sm" hx-delete="/orders/4519" hx-target="#orders-table-body" hx-swap="innerHTML" hx-confirm="Tem certeza que deseja excluir o pedido #4519?" hx-indicator="#table-indicator" class="htmx-indicator" aria-label="Excluir pedido 4519">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                      </auy-internal-button>
+                    </auy-internal-tooltip>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div id="table-indicator" class="htmx-indicator" style="text-align:center;padding:var(--auy-space-md);">
+            <auy-internal-spinner size="28" role="status" aria-label="Carregando"></auy-internal-spinner>
+          </div>
+        </div>
+
+        <div class="pagination" hx-target="#orders-table-body" hx-swap="innerHTML" hx-indicator="#table-indicator">
+          <auy-internal-button variant="secondary" size="sm" hx-get="/orders?page=1" hx-trigger="click" aria-label="Primeira página">
+            &laquo; Primeira
+          </auy-internal-button>
+          <auy-internal-button variant="secondary" size="sm" hx-get="/orders?page=1" hx-trigger="click" aria-label="Página anterior">
+            &lsaquo; Anterior
+          </auy-internal-button>
+          <span class="page-info" aria-live="polite">Página 1 de 12</span>
+          <auy-internal-button variant="secondary" size="sm" hx-get="/orders?page=2" hx-trigger="click" aria-label="Próxima página">
+            Próxima &rsaquo;
+          </auy-internal-button>
+          <auy-internal-button variant="secondary" size="sm" hx-get="/orders?page=12" hx-trigger="click" aria-label="Última página">
+            Última &raquo;
+          </auy-internal-button>
+        </div>
+
+        <h2 style="margin-top:var(--auy-space-xl);">Novo Pedido</h2>
+        <form
+          hx-post="/orders"
+          hx-target="#orders-table-body"
+          hx-swap="beforeend"
+          hx-on::after-request="if(event.detail.successful) this.reset()"
+          hx-indicator="#form-indicator"
+          class="form-layout"
+          novalidate
+        >
+          <div class="form-row">
+            <div class="form-group">
+              <label for="customer">Nome do Cliente</label>
+              <input type="text" id="customer" name="customer" required aria-required="true" placeholder="Nome completo">
+              <span class="hint">Campo obrigatório</span>
+            </div>
+            <div class="form-group">
+              <label for="email">E-mail</label>
+              <input type="email" id="email" name="email" required aria-required="true" placeholder="cliente@exemplo.com">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="product">Produto</label>
+              <select id="product" name="product" required aria-required="true">
+                <option value="">Selecione um produto</option>
+                <option value="notebook">Notebook Pro</option>
+                <option value="monitor">Monitor 27"</option>
+                <option value="teclado">Teclado Mecânico</option>
+                <option value="mouse">Mouse Wireless</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="quantity">Quantidade</label>
+              <input type="number" id="quantity" name="quantity" min="1" value="1" required aria-required="true">
+            </div>
+            <div class="form-group">
+              <label for="total">Valor Unitário (R$)</label>
+              <input type="text" id="total" name="unit_price" placeholder="0,00" inputmode="decimal">
+            </div>
+          </div>
+          <div class="form-actions">
+            <span id="form-indicator" class="htmx-indicator">
+              <auy-internal-spinner size="18" role="status" aria-label="Enviando"></auy-internal-spinner>
+            </span>
+            <auy-internal-button variant="secondary" size="md" type="reset">Limpar</auy-internal-button>
+            <auy-internal-button variant="primary" size="md" type="submit">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Criar Pedido
+            </auy-internal-button>
+          </div>
+        </form>
+      </div>
+
+    </auy-main-section>
+
+    <auy-footer slot="footer" copyright="© 2026 Auy Store. Todos os direitos reservados." year="2026" columns="4">
+      <div slot="nav" style="font-size:0.875rem;">
+        <strong style="display:block;margin-bottom:0.5rem;">Links</strong>
+        <a href="#" style="display:block;color:var(--auy-color-text-muted);text-decoration:none;padding:2px 0;">Início</a>
+        <a href="#" style="display:block;color:var(--auy-color-text-muted);text-decoration:none;padding:2px 0;">Política de Privacidade</a>
+        <a href="#" style="display:block;color:var(--auy-color-text-muted);text-decoration:none;padding:2px 0;">Termos de Uso</a>
+      </div>
+      <div slot="contact" style="font-size:0.875rem;">
+        <strong style="display:block;margin-bottom:0.5rem;">Suporte</strong>
+        <a href="mailto:suporte@auystore.dev" style="display:block;color:var(--auy-color-text-muted);text-decoration:none;padding:2px 0;">suporte@auystore.dev</a>
+        <span style="display:block;color:var(--auy-color-text-muted);padding:2px 0;">(11) 99999-8888</span>
+      </div>
+      <div slot="services" style="font-size:0.875rem;">
+        <strong style="display:block;margin-bottom:0.5rem;">Serviços</strong>
+        <span style="display:block;color:var(--auy-color-text-muted);padding:2px 0;">Entrega Expressa</span>
+        <span style="display:block;color:var(--auy-color-text-muted);padding:2px 0;">Garantia Estendida</span>
+      </div>
+    </auy-footer>
+
+  </auy-app-layout>
+
+  <div id="modal-container" hidden aria-hidden="true"></div>
+
+  <auy-internal-modal id="orderModal" aria-labelledby="modal-title-slot">
+  </auy-internal-modal>
+
+  <div class="toast-container" aria-live="polite" aria-atomic="true" id="toast-container">
+    <auy-internal-toast id="successToast" variant="success" dismissible>
+      <span slot="icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+      </span>
+      Operação realizada com sucesso!
+    </auy-internal-toast>
+    <auy-internal-toast id="errorToast" variant="error" dismissible>
+      <span slot="icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg>
+      </span>
+      Erro ao processar a requisição.
+    </auy-internal-toast>
+    <auy-internal-toast id="infoToast" variant="info" dismissible>
+      <span slot="icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15v-2h2v2zm2-4h-2V7h2v6z"/></svg>
+      </span>
+    </auy-internal-toast>
+  </div>
+
+  <script type="module">
+    import 'auy-ui';
+  </script>
+
+  <script>
+    document.body.addEventListener('htmx:beforeSwap', function(evt) {
+      if (evt.detail.xhr.status >= 400) {
+        evt.detail.shouldSwap = true;
+        evt.detail.isError = true;
+      }
+    });
+
+    document.body.addEventListener('htmx:afterSwap', function(evt) {
+      if (evt.detail.target.id === 'orders-table-body') {
+        var modal = document.getElementById('orderModal');
+        modal.open = false;
+      }
+    });
+
+    document.body.addEventListener('htmx:responseError', function(evt) {
+      var toast = document.getElementById('errorToast');
+      if (toast) {
+        toast.open = true;
+        setTimeout(function() { toast.open = false; }, 5000);
+      }
+    });
+
+    document.body.addEventListener('htmx:afterRequest', function(evt) {
+      if (evt.detail.successful && evt.detail.requestConfig.verb === 'delete') {
+        var toast = document.getElementById('successToast');
+        if (toast) {
+          toast.open = true;
+          setTimeout(function() { toast.open = false; }, 4000);
+        }
+      }
+    });
+
+    document.body.addEventListener('htmx:afterOnLoad', function(evt) {
+      if (evt.detail.requestConfig.path.startsWith('/orders/new')) {
+        var modal = document.getElementById('orderModal');
+        modal.open = true;
+      }
+      if (evt.detail.requestConfig.path.match(/^\/orders\/\d+$/) && evt.detail.requestConfig.verb === 'get') {
+        var modal = document.getElementById('orderModal');
+        modal.open = true;
+      }
+    });
+
+    document.getElementById('orderModal').addEventListener('close', function() {
+      var container = document.getElementById('modal-container');
+      container.innerHTML = '';
+    });
+
+    document.body.addEventListener('htmx:afterRequest', function(evt) {
+      if (evt.detail.successful && evt.detail.requestConfig.verb === 'post') {
+        var toast = document.getElementById('successToast');
+        if (toast) {
+          toast.querySelector('.message').textContent = 'Pedido criado com sucesso!';
+          toast.open = true;
+          setTimeout(function() { toast.open = false; }, 4000);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

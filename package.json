@@ -1,0 +1,68 @@
+{
+  "name": "auy-ui",
+  "version": "0.1.0",
+  "description": "Design system acessível: CSS classless + Web Components (Lit)",
+  "type": "module",
+  "main": "./dist/mod.js",
+  "module": "./dist/mod.js",
+  "unpkg": "./dist/mod.min.js",
+  "jsdelivr": "./dist/mod.min.js",
+  "sideEffects": true,
+  "exports": {
+    ".": {
+      "import": "./dist/mod.js",
+      "style": "./dist/auy-ui.css"
+    },
+    "./dist/*": "./dist/*",
+    "./styles/*": "./src/styles/*",
+    "./mod.min": "./dist/mod.min.js",
+    "./css": "./dist/auy-ui.css"
+  },
+  "files": [
+    "dist",
+    "src/styles"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && node scripts/postbuild.mjs",
+    "build:css": "echo 'CSS is bundled via dist/auy-ui.css during npm run build'",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "lit": "^3.2.1",
+    "@lit-labs/ssr": "^3.3.0",
+    "@lit-labs/ssr-client": "^1.1.7"
+  },
+  "devDependencies": {
+    "@lit-labs/compiler": "^1.1.2",
+    "lightningcss": "^1.29.2",
+    "terser": "^5.49.0",
+    "typescript": "^5.7.3",
+    "vite": "^8.1.5"
+  },
+  "keywords": [
+    "web-components",
+    "lit",
+    "wcag",
+    "accessibility",
+    "a11y",
+    "design-system",
+    "css-subgrid",
+    "html5",
+    "custom-elements",
+    "framework-agnostic",
+    "backend-agnostic",
+    "ssr"
+  ],
+  "license": "MIT",
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

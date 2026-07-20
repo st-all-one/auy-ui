@@ -1,0 +1,44 @@
+@layer base {
+  :where(code, kbd, samp, pre) {
+    font-family: var(--auy-font-mono);
+    font-size: 0.9em;
+  }
+
+  :where(code, samp) {
+    padding: 0.125em 0.375em;
+    border-radius: var(--auy-radius-sm);
+    background: color-mix(in oklch, var(--auy-color-border) 40%, transparent);
+    color: var(--auy-color-text);
+    word-break: break-word;
+  }
+
+  :where(pre) {
+    overflow-x: auto;
+    padding: var(--auy-space-md);
+    border-radius: var(--auy-radius-md);
+    background: color-mix(in oklch, var(--auy-color-surface) 100%, transparent);
+    border: 1px solid var(--auy-color-border);
+    line-height: 1.5;
+    tab-size: 2;
+    -moz-tab-size: 2;
+  }
+
+  :where(pre) code {
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    font-size: inherit;
+    color: inherit;
+  }
+
+  :where(kbd) {
+    display: inline-block;
+    padding: 0.125em 0.375em;
+    border-radius: var(--auy-radius-sm);
+    background: var(--auy-color-text);
+    color: var(--auy-color-surface);
+    font-weight: 500;
+    box-shadow: 0 1px 0 color-mix(in oklch, var(--auy-color-text) 30%, transparent);
+    line-height: 1.4;
+  }
+}

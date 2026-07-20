@@ -1,0 +1,59 @@
+@layer base {
+  :where(table) {
+    inline-size: 100%;
+    border-collapse: collapse;
+    font-size: var(--auy-text-sm);
+    line-height: 1.5;
+  }
+
+  :where(caption) {
+    caption-side: bottom;
+    padding-block-start: 0.5em;
+    font-size: var(--auy-text-sm);
+    color: var(--auy-color-text-muted);
+    text-align: start;
+  }
+
+  :where(th, td) {
+    padding: 0.625rem 1rem;
+    text-align: start;
+    border-block-end: 1px solid var(--auy-color-border);
+  }
+
+  :where(th) {
+    font-weight: 600;
+    color: var(--auy-color-text-muted);
+    font-size: 0.85em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: color-mix(in oklch, var(--auy-color-border) 15%, transparent);
+  }
+
+  :where(tbody tr):hover {
+    background: color-mix(in oklch, var(--auy-color-border) 10%, transparent);
+  }
+
+  :where(tbody tr):nth-child(even) {
+    background: color-mix(in oklch, var(--auy-color-border) 5%, transparent);
+  }
+
+  :where(tbody tr):nth-child(even):hover {
+    background: color-mix(in oklch, var(--auy-color-border) 15%, transparent);
+  }
+
+  @media (forced-colors: active) {
+    :where(th, td) {
+      border-color: CanvasText;
+    }
+  }
+
+  @media print {
+    :where(th) {
+      background: none;
+      border-block-end: 2px solid #000;
+    }
+    :where(td) {
+      border-block-end: 1px solid #ccc;
+    }
+  }
+}

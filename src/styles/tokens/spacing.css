@@ -1,0 +1,12 @@
+@layer tokens {
+  :root {
+    --auy-space-2xs: clamp(1px, 0.15vw, 2px);
+    --auy-space-xs: clamp(2px, 0.3vw, 4px);
+    --auy-space-sm: clamp(4px, 0.5vw, 8px);
+    --auy-space-md: clamp(8px, 1vw, 16px);
+    --auy-space-lg: clamp(16px, 2vw, 24px);
+    --auy-space-xl: clamp(24px, 4vw, 40px);
+    --auy-space-2xl: clamp(40px, 6vw, 64px);
+    --auy-space-3xl: clamp(64px, 8vw, 96px);
+  }
+}

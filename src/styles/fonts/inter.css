@@ -1,0 +1,7 @@
+/* Optional: Load Inter font family (SIL OFL, https://rsms.me/inter)
+ * Include this file OR add the following <link> to your HTML:
+ *   <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/inter" />
+ * Or install the font package:
+ *   npm install @fontsource/inter
+ */
+@import url('https://fonts.cdnfonts.com/css/inter') layer(base);

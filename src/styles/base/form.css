@@ -1,0 +1,292 @@
+@layer base {
+  :where(form) {
+    display: grid;
+    gap: var(--auy-space-md);
+  }
+
+  :where(fieldset) {
+    border: 1px solid var(--auy-color-border);
+    border-radius: var(--auy-radius-md);
+    padding: var(--auy-space-md);
+    margin: 0;
+  }
+
+  :where(legend) {
+    font-weight: 600;
+    font-size: var(--auy-text-sm);
+    color: var(--auy-color-text);
+    padding-inline: 0.5em;
+  }
+
+  :where(label) {
+    display: block;
+    font-size: var(--auy-text-sm);
+    font-weight: 500;
+    color: var(--auy-color-text);
+    margin-block-end: 0.25em;
+  }
+
+  :where(input, select, textarea) {
+    box-sizing: border-box;
+    display: block;
+    inline-size: 100%;
+    padding: var(--auy-space-sm) var(--auy-space-md);
+    font-family: inherit;
+    font-size: var(--auy-text-sm);
+    line-height: 1.5;
+    color: var(--auy-color-text);
+    background: var(--auy-color-surface);
+    border: 1px solid var(--auy-color-border);
+    border-radius: var(--auy-radius-md);
+    transition: border-color var(--auy-transition), box-shadow var(--auy-transition);
+    outline: none;
+    touch-action: manipulation;
+    accent-color: var(--auy-color-primary);
+  }
+
+  :where(input)::placeholder,
+  :where(textarea)::placeholder {
+    color: var(--auy-color-text-muted);
+    opacity: 0.7;
+  }
+
+  :where(input, select, textarea):focus-visible {
+    outline: 0.125rem solid var(--auy-color-primary);
+    outline-offset: 0.125rem;
+  }
+
+  :where(input, select, textarea):user-valid {
+    border-color: var(--auy-color-success);
+  }
+
+  :where(input, select, textarea):user-invalid {
+    border-color: var(--auy-color-error);
+  }
+
+  :where(input[type="checkbox"], input[type="radio"]) {
+    inline-size: auto;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    accent-color: var(--auy-color-primary);
+  }
+
+  :where(input[type="checkbox"]):focus-visible,
+  :where(input[type="radio"]):focus-visible {
+    outline: 0.125rem solid var(--auy-color-primary);
+    outline-offset: 0.125rem;
+  }
+
+  :where(input[type="radio"]) {
+    border-radius: 50%;
+  }
+
+  :where(input[type="color"]) {
+    inline-size: 3rem;
+    block-size: 2.5rem;
+    padding: 2px;
+    border-radius: var(--auy-radius-md);
+    cursor: pointer;
+  }
+
+  :where(input[type="range"]) {
+    padding: 0;
+    border: none;
+    background: none;
+    accent-color: var(--auy-color-primary);
+  }
+
+  :where(input[type="range"]):focus-visible {
+    outline: 0.125rem solid var(--auy-color-primary);
+    outline-offset: 0.125rem;
+  }
+
+  :where(input[type="file"]) {
+    position: relative;
+    box-sizing: border-box;
+    inline-size: 100%;
+    padding: var(--auy-space-lg) var(--auy-space-md);
+    border: 1px solid var(--auy-color-border);
+    border-radius: var(--auy-radius-md);
+    background: color-mix(in oklch, var(--auy-color-border) 5%, transparent);
+    cursor: pointer;
+    font-size: var(--auy-text-sm);
+    color: var(--auy-color-text-muted);
+    transition: border-color var(--auy-transition), background var(--auy-transition);
+    text-align: center;
+  }
+
+  :where(input[type="file"]):hover {
+    border-color: var(--auy-color-primary);
+    background: color-mix(in oklch, var(--auy-color-primary) 5%, transparent);
+  }
+
+  :where(input[type="file"]):focus-visible {
+    outline: 0.125rem solid var(--auy-color-primary);
+    outline-offset: 0.125rem;
+  }
+
+  :where(input[type="file"])::file-selector-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.375rem 0.75rem;
+    margin-inline-end: var(--auy-space-sm);
+    font-family: inherit;
+    font-size: var(--auy-text-xs);
+    font-weight: 500;
+    border: none;
+    border-radius: var(--auy-radius-sm);
+    background: var(--auy-color-primary);
+    color: var(--auy-color-primary-inverse);
+    cursor: pointer;
+    transition: background var(--auy-transition);
+  }
+
+  :where(input[type="file"])::file-selector-button:hover {
+    background: var(--auy-color-primary-hover);
+  }
+
+  :where(select) {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-inline-end: var(--auy-space-xl);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%236b7280' d='M4.646 5.646a.5.5 0 0 1 .708 0L8 8.293l2.646-2.647a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--auy-space-sm) center;
+    background-size: 16px;
+    cursor: pointer;
+  }
+
+  :where(textarea) {
+    resize: vertical;
+    min-block-size: 5rem;
+  }
+
+  :where(button, [type="submit"], [type="reset"], [type="button"]) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--auy-space-xs);
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: var(--auy-text-sm);
+    font-weight: 500;
+    line-height: 1.5;
+    padding: 0.625rem 1rem;
+    border: 1px solid transparent;
+    border-radius: var(--auy-radius-md);
+    cursor: pointer;
+    user-select: none;
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    transition: background-color var(--auy-transition), border-color var(--auy-transition), color var(--auy-transition), box-shadow var(--auy-transition);
+    background-color: var(--auy-color-primary);
+    color: var(--auy-color-primary-inverse);
+    text-decoration: none;
+    text-align: center;
+  }
+
+  :where(button, [type="submit"], [type="reset"], [type="button"]):hover {
+    background-color: var(--auy-color-primary-hover);
+  }
+
+  :where(button, [type="submit"], [type="reset"], [type="button"]):active {
+    background-color: var(--auy-color-primary-active);
+  }
+
+  :where(button, [type="submit"], [type="reset"], [type="button"]):focus-visible {
+    outline: 0.125rem solid var(--auy-color-primary);
+    outline-offset: 0.125rem;
+  }
+
+  :where(button, [type="submit"], [type="reset"], [type="button"]):disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  :where(button[type="reset"]) {
+    background-color: transparent;
+    color: var(--auy-color-text);
+    border-color: var(--auy-color-border);
+  }
+
+  :where(button[type="reset"]):hover {
+    background-color: color-mix(in oklch, var(--auy-color-border) 15%, transparent);
+  }
+
+  :where(input[type="submit"], input[type="reset"], input[type="button"]) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: var(--auy-text-sm);
+    font-weight: 500;
+    line-height: 1.5;
+    padding: 0.625rem 1rem;
+    border: 1px solid transparent;
+    border-radius: var(--auy-radius-md);
+    cursor: pointer;
+    user-select: none;
+    touch-action: manipulation;
+    transition: background-color var(--auy-transition), border-color var(--auy-transition);
+    background-color: var(--auy-color-primary);
+    color: var(--auy-color-primary-inverse);
+    inline-size: auto;
+  }
+
+  :where(input[type="submit"]):hover,
+  :where(input[type="button"]):hover {
+    background-color: var(--auy-color-primary-hover);
+  }
+
+  :where(input[type="reset"]):hover {
+    background-color: color-mix(in oklch, var(--auy-color-border) 15%, transparent);
+  }
+
+  :where(input[type="reset"]) {
+    background-color: transparent;
+    color: var(--auy-color-text);
+    border-color: var(--auy-color-border);
+  }
+
+  :where(:disabled) {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  @media (forced-colors: active) {
+    :where(input, select, textarea) {
+      border: 1px solid ButtonText;
+    }
+    :where(input, select, textarea):focus-visible {
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
+    }
+    :where(input[type="file"]) {
+      border: 2px solid ButtonText;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where(input, select, textarea) {
+      transition: none;
+    }
+  }
+
+  @media print {
+    :where(input, select, textarea) {
+      border-color: #000;
+    }
+    :where(input[type="file"]) {
+      display: none;
+    }
+  }
+}

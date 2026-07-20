@@ -1,0 +1,60 @@
+@layer base {
+  :where(hr) {
+    border: none;
+    block-size: 1px;
+    background: var(--auy-color-border);
+    margin-block: 1em;
+  }
+
+  :where(mark) {
+    background: oklch(from var(--auy-color-warning) 80% 0.15 h);
+    color: oklch(10% 0.01 260);
+    padding: 0.125em 0.25em;
+    border-radius: var(--auy-radius-sm);
+  }
+
+  :where(small) {
+    font-size: 0.85em;
+  }
+
+  :where(sub, sup) {
+    font-size: 0.75em;
+    line-height: 0;
+  }
+
+  :where(abbr[title]) {
+    text-decoration: underline dotted;
+    cursor: help;
+  }
+
+  :where(del) {
+    color: var(--auy-color-error);
+    text-decoration: line-through;
+  }
+
+  :where(ins) {
+    color: var(--auy-color-success);
+    text-decoration: underline;
+  }
+
+  :where(address) {
+    font-style: normal;
+    color: var(--auy-color-text-muted);
+    margin-block: 0.75em;
+  }
+
+  :where(dialog) {
+    border: none;
+    border-radius: var(--auy-radius-lg);
+    background: var(--auy-color-surface);
+    color: var(--auy-color-text);
+    box-shadow: var(--auy-shadow-lg);
+    max-inline-size: 32rem;
+    inline-size: 100%;
+  }
+
+  :where(dialog::backdrop) {
+    background: var(--auy-color-overlay);
+    backdrop-filter: blur(4px);
+  }
+}

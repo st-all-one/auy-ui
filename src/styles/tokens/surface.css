@@ -1,0 +1,21 @@
+@layer tokens {
+  :root {
+    --auy-radius-sm: 4px;
+    --auy-radius-md: 8px;
+    --auy-radius-lg: 12px;
+    --auy-radius-full: 9999px;
+
+    --auy-shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.06);
+    --auy-shadow-md: 0 2px 8px oklch(0% 0 0 / 0.1), 0 2px 4px -1px oklch(0% 0 0 / 0.06);
+    --auy-shadow-lg: 0 4px 24px oklch(0% 0 0 / 0.12), 0 8px 16px -4px oklch(0% 0 0 / 0.08), 0 2px 4px -2px oklch(0% 0 0 / 0.04);
+
+    --auy-transition: 200ms ease;
+    --auy-transition-fast: 150ms ease;
+    --auy-transition-slow: 300ms ease;
+
+    --auy-safe-area-top: env(safe-area-inset-top, 0px);
+    --auy-safe-area-bottom: env(safe-area-inset-bottom, 0px);
+    --auy-safe-area-left: env(safe-area-inset-left, 0px);
+    --auy-safe-area-right: env(safe-area-inset-right, 0px);
+  }
+}

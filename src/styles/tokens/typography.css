@@ -1,0 +1,44 @@
+@layer tokens {
+  :root {
+    --auy-font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    --auy-font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Source Code Pro', Consolas, monospace;
+
+    --auy-text-xs: clamp(0.65rem, 0.6rem + 0.15vw, 0.75rem);
+    --auy-text-sm: clamp(0.75rem, 0.7rem + 0.15vw, 0.85rem);
+    --auy-text-base: clamp(0.875rem, 0.8rem + 0.25vw, 1rem);
+    --auy-text-lg: clamp(1rem, 0.9rem + 0.4vw, 1.2rem);
+    --auy-text-xl: clamp(1.2rem, 1rem + 0.8vw, 1.5rem);
+    --auy-text-2xl: clamp(1.5rem, 1.1rem + 1.5vw, 2rem);
+
+    --auy-font-weight-regular: 400;
+    --auy-font-weight-medium: 500;
+    --auy-font-weight-semibold: 600;
+    --auy-font-weight-bold: 700;
+
+    --auy-line-height: 1.6;
+    --auy-line-height-sm: 1.3;
+    --auy-line-height-lg: 1.8;
+
+    --auy-tracking-tight: -0.02em;
+    --auy-tracking-normal: 0;
+    --auy-tracking-wide: 0.03em;
+  }
+
+  body {
+    font-family: var(--auy-font-sans);
+    font-size: var(--auy-text-base);
+    line-height: var(--auy-line-height);
+    color: var(--auy-color-text);
+    background: var(--auy-color-surface);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  ::selection {
+    background: color-mix(in oklch, var(--auy-color-primary) 30%, transparent);
+    color: var(--auy-color-text);
+  }
+}

@@ -1,0 +1,20 @@
+@layer tokens {
+  [data-auy-theme="ruby"] {
+    --auy-color-primary: oklch(50% 0.22 20);
+    --auy-color-primary-hover: oklch(45% 0.22 20);
+    --auy-color-primary-active: oklch(42% 0.24 20);
+    --auy-color-primary-focus: oklch(55% 0.27 20 / 0.35);
+    --auy-color-primary-inverse: oklch(100% 0 0);
+    --auy-color-error: oklch(55% 0.22 30);
+    --auy-color-info: oklch(50% 0.2 250);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    [data-auy-theme="ruby"] {
+      --auy-color-primary: oklch(60% 0.22 20);
+      --auy-color-primary-hover: oklch(65% 0.22 20);
+      --auy-color-primary-active: oklch(60% 0.24 20);
+      --auy-color-primary-focus: oklch(65% 0.27 20 / 0.3);
+    }
+  }
+}

@@ -1,0 +1,198 @@
+import { LitElement, html, css, nothing } from 'lit'
+import { customElement, property, state } from 'lit/decorators.js'
+import { classMap } from 'lit/directives/class-map.js'
+
+/**
+ * @slot prev-icon - Icon for the previous page button
+ * @slot next-icon - Icon for the next page button
+ */
+@customElement('auy-internal-pagination')
+export class AuyInternalPagination extends LitElement {
+  static override styles = css`
+    @layer components {
+      :host {
+        display: block;
+        contain: layout style;
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+        gap: var(--auy-space-xs);
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      button {
+        all: unset;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-inline-size: 2.25rem;
+        block-size: 2.25rem;
+        border-radius: var(--auy-radius-md);
+        font-size: var(--auy-text-sm);
+        cursor: pointer;
+        color: var(--auy-color-text);
+        background: transparent;
+        transition: background var(--auy-transition, 200ms ease);
+        box-sizing: border-box;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+      }
+
+      button:hover:not(:disabled):not(.ellipsis) {
+        background: var(--auy-color-border);
+      }
+
+      button:focus-visible {
+        outline: 0.125rem solid var(--auy-color-primary);
+        outline-offset: 0.125rem;
+      }
+
+      button:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+
+      button.active {
+        background: var(--auy-color-primary);
+        color: oklch(100% 0 0);
+        font-weight: 600;
+      }
+
+      button.ellipsis {
+        letter-spacing: 2px;
+        cursor: default;
+      }
+
+      @media (forced-colors: active) {
+        button {
+          border: 1px solid ButtonText;
+        }
+      }
+
+      @media print {
+        nav {
+          display: none;
+        }
+      }
+    }
+  `
+
+  @property({ type: Number, reflect: true }) current: number = 1
+  @property({ type: Number }) total: number = 1
+  @property({ type: Number }) perPage: number = 10
+  @property({ type: Number }) maxVisible: number = 5
+  @property({ type: Boolean }) disabled: boolean = false
+
+  @state() private _totalPages = 1
+  @state() private _firstPage = true
+  @state() private _lastPage = true
+  @state() private _pages: (number | string)[] = []
+
+  override willUpdate(changed: Map<string, unknown>) {
+    if (changed.has('total') || changed.has('perPage') || changed.has('current') || changed.has('maxVisible') || changed.has('disabled')) {
+      this._totalPages = Math.ceil(this.total / this.perPage)
+      this._firstPage = this.current <= 1 || this.disabled
+      this._lastPage = this.current >= this._totalPages || this.disabled
+      this._pages = this._generatePages()
+    }
+  }
+
+  private _goTo(page: number): void {
+    if (this.disabled) return
+    if (page < 1 || page > this._totalPages) return
+    if (page === this.current) return
+    this.current = page
+    this.dispatchEvent(
+      new CustomEvent('page-change', {
+        detail: { page: this.current, perPage: this.perPage },
+        bubbles: true,
+        composed: true,
+      })
+    )
+  }
+
+  private readonly _handlePageClick = (e: Event) => {
+    const page = Number((e.currentTarget as HTMLElement).dataset.page);
+    this._goTo(page);
+  };
+
+  private _goPrev(): void {
+    if (this.current > 1) this._goTo(this.current - 1)
+  }
+
+  private _goNext(): void {
+    if (this.current < this._totalPages) this._goTo(this.current + 1)
+  }
+
+  private _generatePages(): (number | string)[] {
+    const total = this._totalPages
+    const current = this.current
+    const visible = this.maxVisible
+
+    if (total <= visible + 2) {
+      return Array.from({ length: total }, (_, i) => i + 1)
+    }
+
+    const pages: (number | string)[] = [1]
+
+    let start = Math.max(2, current - Math.floor(visible / 2))
+    let end = Math.min(total - 1, start + visible - 1)
+
+    if (end - start < visible - 1) {
+      start = Math.max(2, end - visible + 1)
+    }
+
+    if (start > 2) pages.push('...')
+    for (let i = start; i <= end; i++) pages.push(i)
+    if (end < total - 1) pages.push('...')
+
+    pages.push(total)
+    return pages
+  }
+
+  override render() {
+    const pages = this._pages
+
+    return html`
+      <nav part="nav" aria-label="Paginação">
+        <button
+          part="btn prev"
+          ?disabled=${this._firstPage}
+          @click=${this._goPrev}
+          aria-label="Página anterior"
+        >
+          <slot name="prev-icon">‹</slot>
+        </button>
+        ${pages.map(
+          (p) =>
+            typeof p === 'string'
+              ? html`<button part="btn ellipsis" class="ellipsis" disabled aria-hidden="true">${p}</button>`
+              : html`
+                  <button
+                    part="btn page"
+                    class=${classMap({ active: p === this.current })}
+                    ?disabled=${this.disabled}
+                    data-page="${p}"
+                    @click=${this._handlePageClick}
+                    aria-current=${p === this.current ? 'page' : nothing}
+                    aria-label="Ir para página ${p}"
+                  >
+                    ${p}
+                  </button>
+                `
+        )}
+        <button
+          part="btn next"
+          ?disabled=${this._lastPage}
+          @click=${this._goNext}
+          aria-label="Próxima página"
+        >
+          <slot name="next-icon">›</slot>
+        </button>
+      </nav>
+    `
+  }
+}

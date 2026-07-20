@@ -1,0 +1,31 @@
+@layer base {
+  :where(figure) {
+    margin: 0;
+    margin-block: 0.75em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+  }
+
+  :where(figcaption) {
+    font-size: var(--auy-text-sm);
+    color: var(--auy-color-text-muted);
+    text-align: center;
+    font-style: italic;
+  }
+
+  :where(img, video, canvas, svg) {
+    display: block;
+    max-inline-size: 100%;
+    block-size: auto;
+  }
+
+  :where(iframe, embed, object) {
+    max-inline-size: 100%;
+    border: none;
+  }
+
+  :where(video) {
+    inline-size: 100%;
+  }
+}

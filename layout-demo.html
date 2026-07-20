@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="pt-BR" data-auy-theme="azure">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <title>auy-ui — Layout Completo</title>
+  <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/inter" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" />
+  <link rel="stylesheet" href="/src/styles/layers.css" />
+  <link rel="stylesheet" href="/src/styles/reset.css" />
+  <link rel="stylesheet" href="/src/styles/tokens/colors.css" />
+  <link rel="stylesheet" href="/src/styles/tokens/spacing.css" />
+  <link rel="stylesheet" href="/src/styles/tokens/typography.css" />
+  <link rel="stylesheet" href="/src/styles/tokens/surface.css" />
+  <link rel="stylesheet" href="/src/styles/base/typography.css" />
+  <link rel="stylesheet" href="/src/styles/base/link.css" />
+  <link rel="stylesheet" href="/src/styles/base/embed.css" />
+  <link rel="stylesheet" href="/src/styles/base/code.css" />
+  <link rel="stylesheet" href="/src/styles/base/misc.css" />
+  <link rel="stylesheet" href="/src/styles/base/table.css" />
+  <link rel="stylesheet" href="/src/styles/base/form.css" />
+  <link rel="stylesheet" href="/src/styles/utilities/accessibility.css" />
+  <link rel="stylesheet" href="/src/styles/utilities/reduce-motion.css" />
+  <link rel="stylesheet" href="/src/styles/print.css" media="print" />
+  <style>
+    body { margin: 0; }
+    auy-app-layout { min-block-size: 100dvh; }
+
+    .stats-grid { display: flex; gap: var(--auy-space-md); margin-block-end: var(--auy-space-lg); flex-wrap: wrap; }
+    .stats-grid > auy-internal-card { flex: 1; min-inline-size: 200px; }
+    .stat-value { font-size: var(--auy-text-2xl); font-weight: 700; line-height: 1; }
+    .stat-label { font-size: var(--auy-text-sm); color: var(--auy-color-text-muted); }
+
+    [slot="copyright"] a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+    .actions-bar { display: flex; flex-wrap: wrap; gap: var(--auy-space-sm); align-items: center; }
+    .main-grid { display: grid; gap: var(--auy-space-lg); }
+    .checkbox-col { display: flex; flex-direction: column; gap: var(--auy-space-sm); }
+    .toast-stack { position: fixed; inset-block-start: 1rem; inset-inline-end: 1rem; z-index: 9999; display: flex; flex-direction: column; gap: 0.5rem; pointer-events: none; }
+    .toast-stack > * { pointer-events: auto; }
+    .inline-flex { display: inline-flex; gap: var(--auy-space-xs); align-items: center; }
+    .welcome-text { max-inline-size: 600px; }
+
+    .theme-bar { display: flex; align-items: center; gap: var(--auy-space-sm); flex-wrap: wrap; }
+    .theme-btn { all: unset; inline-size: 1.5rem; block-size: 1.5rem; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: border-color var(--auy-transition); }
+    .theme-btn:hover { border-color: var(--auy-color-text); }
+    .theme-btn.active { border-color: var(--auy-color-text); box-shadow: 0 0 0 2px var(--auy-color-surface); }
+  </style>
+</head>
+<body>
+  <auy-back-to-top></auy-back-to-top>
+
+  <auy-app-layout id="app-layout">
+    <header slot="header">
+      <auy-header page-title="Painel Administrativo" sticky>
+        <span slot="logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" focusable="false" aria-hidden="true">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </span>
+        <div slot="nav" class="inline-flex">
+          <auy-nav aria-label="Navegação principal">
+            <a href="#" aria-current="page">Dashboard</a>
+            <a href="#">Relatórios</a>
+            <a href="#">Configurações</a>
+          </auy-nav>
+        </div>
+        <div slot="actions" class="actions-bar">
+          <auy-internal-button variant="ghost" size="sm" aria-label="Notificações">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" focusable="false" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          </auy-internal-button>
+          <auy-dropdown label="Admin" align="end">
+            <a href="#">Perfil</a>
+            <a href="#">Configurações</a>
+            <a href="#">Sair</a>
+          </auy-dropdown>
+        </div>
+      </auy-header>
+    </header>
+
+    <aside slot="sidebar">
+      <auy-sidebar id="layout-sidebar" app-title="Admin" logo-contrast="">
+        <div slot="extension" style="padding:var(--auy-space-sm);font-size:var(--auy-text-xs);color:var(--auy-color-text-muted);text-align:center;">
+          v2.1.0 · <span id="sidebar-theme-label">azure</span>
+        </div>
+      </auy-sidebar>
+    </aside>
+
+    <main-section slot="main" columns="single" header="Dashboard">
+      <div slot="header-actions" class="actions-bar">
+        <div class="theme-bar">
+          <button class="theme-btn active" data-theme="azure" style="background:oklch(50% 0.2 250)" aria-label="Azure"></button>
+          <button class="theme-btn" data-theme="emerald" style="background:oklch(50% 0.2 160)" aria-label="Emerald"></button>
+          <button class="theme-btn" data-theme="ruby" style="background:oklch(50% 0.22 20)" aria-label="Ruby"></button>
+          <button class="theme-btn" data-theme="amber" style="background:oklch(55% 0.2 85)" aria-label="Amber"></button>
+          <button class="theme-btn" data-theme="violet" style="background:oklch(50% 0.22 290)" aria-label="Violet"></button>
+        </div>
+        <auy-button-group aria-label="Ações">
+          <auy-internal-button variant="primary" size="sm">+ Novo</auy-internal-button>
+          <auy-internal-button variant="secondary" size="sm">Exportar</auy-internal-button>
+        </auy-button-group>
+          <auy-dropdown label="Mais" align="end">
+            <button @click=${() => showLayoutToast('Importação iniciada', 'info')}>Importar CSV</button>
+            <button @click=${() => showLayoutToast('Relatório gerado', 'success')}>Gerar PDF</button>
+            <div role="separator"></div>
+            <button @click=${() => showLayoutToast('Cache limpo', 'warning')}>Limpar cache</button>
+          </auy-dropdown>
+      </div>
+
+      <div class="main-grid">
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+          <auy-internal-card variant="elevated">
+            <span slot="title">Usuários Ativos</span>
+            <span class="stat-value" slot="description">1.247</span>
+            <span class="stat-label" slot="footer">+12% este mês</span>
+          </auy-internal-card>
+          <auy-internal-card variant="elevated">
+            <span slot="title">Vendas Hoje</span>
+            <span class="stat-value" slot="description">R$ 12.580</span>
+            <span class="stat-label" slot="footer">Meta: R$ 15.000</span>
+          </auy-internal-card>
+          <auy-internal-card variant="elevated">
+            <span slot="title">Tickets Abertos</span>
+            <span class="stat-value" slot="description">23 <auy-internal-badge variant="warning">5 urgentes</auy-internal-badge></span>
+            <span class="stat-label" slot="footer">Tempo médio: 2.4h</span>
+          </auy-internal-card>
+        </div>
+
+        <!-- Welcome Alert -->
+        <auy-internal-alert variant="info" dismissible>
+          <span slot="title">Bem-vindo ao Painel!</span>
+          Utilize o menu lateral para navegar entre os módulos. Pressione <kbd>Ctrl+B</kbd> para recolher/expandir a sidebar.
+        </auy-internal-alert>
+
+        <!-- Progress -->
+        <div style="display:grid;gap:var(--auy-space-md);max-inline-size:500px">
+          <auy-progress value="78" max="100" label="Meta de vendas" variant="success" show-percent></auy-progress>
+          <auy-progress value="45" max="100" label="Processamento" variant="warning" show-percent></auy-progress>
+          <auy-progress indeterminate label="Sincronizando dados..."></auy-progress>
+        </div>
+
+        <!-- Tabs with Table -->
+        <auy-internal-tabs id="layout-tabs">
+          <span slot="tab1">
+            <auy-internal-table id="layout-table" selectable></auy-internal-table>
+          </span>
+          <span slot="tab2">
+            <div class="welcome-text">
+              <p>Configure as preferências do sistema:</p>
+              <div style="margin-block-start:var(--auy-space-md);" class="checkbox-col">
+                <auy-internal-checkbox type="switch" checked>Notificações por e-mail</auy-internal-checkbox>
+                <auy-internal-checkbox type="switch">Modo escuro automático</auy-internal-checkbox>
+                <auy-internal-checkbox type="checkbox">Relatórios semanais</auy-internal-checkbox>
+                <auy-internal-checkbox type="checkbox" checked>Backup automático</auy-internal-checkbox>
+              </div>
+              <hr />
+              <div style="max-inline-size:300px">
+                <auy-range-input label="Timeout (segundos)" value="30" min="5" max="120" step="5" show-min-max></auy-range-input>
+              </div>
+              <div style="margin-block-start:var(--auy-space-md);">
+                <auy-color-input label="Cor do tema" value="#3b82f6"></auy-color-input>
+              </div>
+            </div>
+          </span>
+          <span slot="tab3">
+            <auy-accordion heading="O que é auy-ui?">
+              Design system acessível com CSS classless + Web Components Lit.
+            </auy-accordion>
+            <auy-accordion heading="Atalhos do sistema">
+              <kbd>Ctrl+B</kbd> — Toggle sidebar · <kbd>Ctrl+K</kbd> — Busca · <kbd>Esc</kbd> — Fechar modal
+            </auy-accordion>
+          </span>
+        </auy-internal-tabs>
+
+        <!-- Pagination -->
+        <auy-internal-pagination id="layout-pagination" total="50" per-page="10" current="1"></auy-internal-pagination>
+      </div>
+    </main-section>
+
+    <footer slot="footer">
+      <auy-footer copyright="AUY Systems" columns="3">
+        <div slot="nav" style="display:flex;gap:var(--auy-space-sm);font-size:var(--auy-text-sm);">
+          <a href="#" style="color:inherit;">Privacidade</a>
+          <a href="#" style="color:inherit;">Termos</a>
+          <a href="#" style="color:inherit;">Suporte</a>
+        </div>
+        <div slot="social" style="display:flex;gap:var(--auy-space-sm);font-size:var(--auy-text-sm);">
+          <a href="#" style="color:inherit;">GitHub</a>
+          <a href="#" style="color:inherit;">Twitter</a>
+        </div>
+        <span slot="metadata" style="font-size:var(--auy-text-xs);font-family:var(--auy-font-mono);color:var(--auy-color-text-muted);">
+          Desenvolvido com auy-ui · v2.1.0
+        </span>
+        <span slot="copyright">© 2026 AUY Systems. Todos os direitos reservados.</span>
+      </auy-footer>
+    </footer>
+  </auy-app-layout>
+
+  <auy-accessibility-bar mode="compact"></auy-accessibility-bar>
+
+  <!-- Toast Container -->
+  <auy-toast-container id="layout-toast-container" position="top-right"></auy-toast-container>
+
+  <script type="module">
+    import './src/mod.ts';
+
+    // ── Theme switcher ──
+    const themeBtns = document.querySelectorAll('[data-theme]');
+    const sidebarThemeLabel = document.getElementById('sidebar-theme-label');
+    themeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const theme = btn.dataset.theme;
+        document.documentElement.setAttribute('data-auy-theme', theme);
+        themeBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        if (sidebarThemeLabel) sidebarThemeLabel.textContent = theme;
+      });
+    });
+
+    // ── Toast helper ──
+    function showLayoutToast(message, variant) {
+      const container = document.getElementById('layout-toast-container');
+      if (container) container.show(message, variant || 'info');
+    }
+
+    // ── Sidebar ──
+    const sidebar = document.getElementById('layout-sidebar');
+    if (sidebar) {
+      sidebar.items = [
+        { label: 'Dashboard', href: '#', current: true },
+        { label: 'Usuários', href: '#', children: [
+          { label: 'Listar', href: '#' },
+          { label: 'Criar', href: '#' },
+          { label: 'Permissões', href: '#' },
+        ]},
+        { label: 'Relatórios', href: '#', children: [
+          { label: 'Vendas', href: '#' },
+          { label: 'Acessos', href: '#' },
+        ]},
+        { label: 'Configurações', href: '#' },
+        { label: 'Auditoria', href: '#' },
+      ];
+    }
+
+    // ── Tabs ──
+    const tabs = document.getElementById('layout-tabs');
+    if (tabs) tabs.tabs = [
+      { id: 'tab1', label: 'Dados' },
+      { id: 'tab2', label: 'Configurações' },
+      { id: 'tab3', label: 'Ajuda' },
+    ];
+
+    // ── Table ──
+    const table = document.getElementById('layout-table');
+    if (table) {
+      table.columns = [
+        { key: 'nome', label: 'Nome' },
+        { key: 'email', label: 'E-mail' },
+        { key: 'cargo', label: 'Cargo' },
+        { key: 'status', label: 'Status' },
+      ];
+      table.rows = [
+        { nome: 'Maria Silva', email: 'maria@exemplo.com', cargo: 'Analista', status: 'Ativo' },
+        { nome: 'João Santos', email: 'joao@exemplo.com', cargo: 'Gerente', status: 'Ativo' },
+        { nome: 'Ana Costa', email: 'ana@exemplo.com', cargo: 'Designer', status: 'Férias' },
+        { nome: 'Pedro Oliveira', email: 'pedro@exemplo.com', cargo: 'Dev', status: 'Ativo' },
+        { nome: 'Carla Souza', email: 'carla@exemplo.com', cargo: 'Suporte', status: 'Inativo' },
+      ];
+    }
+
+    // ── Keyboard shortcut: Ctrl+B toggle sidebar ──
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
+        e.preventDefault();
+        if (sidebar) sidebar.collapsed = !sidebar.collapsed;
+      }
+    });
+  </script>
+</body>
+</html>
