@@ -620,15 +620,15 @@ var fiStyles = css`
     position: absolute;
     inset-block-start: 0.125rem;
     inset-inline-end: 0.125rem;
-    inline-size: 1.25rem;
-    block-size: 1.25rem;
+    inline-size: 2rem;
+    block-size: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: var(--auy-radius-full);
     background: color-mix(in oklch, var(--auy-color-border) 40%, transparent);
     cursor: pointer;
-    font-size: var(--auy-text-xs);
+    font-size: var(--auy-text-sm);
     line-height: 1;
     color: var(--auy-color-text-muted);
     opacity: 0;
@@ -1415,8 +1415,8 @@ var searchStyles = `
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    inline-size: 2rem;
-    block-size: 2rem;
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
     border-radius: var(--auy-radius-lg);
     cursor: pointer;
     font-size: var(--auy-text-xl);
@@ -1726,7 +1726,7 @@ var styles = css`
     touch-action: manipulation;
     text-align: start;
     gap: var(--auy-space-sm);
-    min-block-size: 2.5rem;
+    min-block-size: 2.75rem;
   }
 
   .trigger:hover {
@@ -1807,6 +1807,9 @@ var styles = css`
     font-size: var(--auy-text-sm);
     color: var(--auy-color-text);
     touch-action: manipulation;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .option:hover {
@@ -2418,8 +2421,8 @@ var AuyCompToast = class AuyCompToast extends LitElement {
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
-        inline-size: 1.5em;
-        block-size: 1.5em;
+        min-inline-size: 2.75rem;
+        min-block-size: 2.75rem;
         padding: 0;
         border: none;
         border-radius: var(--auy-radius-sm);
@@ -2738,8 +2741,8 @@ var AuyCompToastContainer = class AuyCompToastContainer extends LitElement {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        inline-size: 1.5em;
-        block-size: 1.5em;
+        min-inline-size: 2.75rem;
+        min-block-size: 2.75rem;
         flex-shrink: 0;
         border-radius: var(--auy-radius-sm);
         cursor: pointer;
@@ -2887,8 +2890,8 @@ var AuyCompPagination = class AuyCompPagination extends LitElement {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-inline-size: 2.25rem;
-        block-size: 2.25rem;
+        min-inline-size: 2.75rem;
+        block-size: 2.75rem;
         border-radius: var(--auy-radius-md);
         font-size: var(--auy-text-sm);
         cursor: pointer;
@@ -3056,7 +3059,7 @@ var AuyCompCodeEditor = class AuyCompCodeEditor extends LitElement {
 		this.readonly = false;
 		this.theme = "default";
 		this.lineNumbers = true;
-		this.height = "300px";
+		this.height = "clamp(200px, 40dvh, 600px)";
 		this.placeholder = "";
 		this.cmOptions = "";
 		this._lines = ["1"];
@@ -3382,8 +3385,8 @@ var AuyCompAudio = class AuyCompAudio extends LitElement {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      inline-size: 2.5rem;
-      block-size: 2.5rem;
+      inline-size: 2.75rem;
+      block-size: 2.75rem;
       border-radius: var(--auy-radius-full);
       cursor: pointer;
       touch-action: manipulation;
@@ -4242,7 +4245,7 @@ var AuyCompColorInput = class AuyCompColorInput extends LitElement {
 
       .eyedropper {
         display: inline-flex; align-items: center; justify-content: center;
-        inline-size: 2rem; block-size: 2rem;
+        min-inline-size: 2.75rem; min-block-size: 2.75rem;
         border: 1px solid var(--auy-color-border);
         border-radius: var(--auy-radius-sm);
         background: var(--auy-color-surface);
@@ -4264,7 +4267,7 @@ var AuyCompColorInput = class AuyCompColorInput extends LitElement {
       }
 
       .recent-swatch {
-        inline-size: 20px; block-size: 20px;
+        inline-size: 2.5rem; block-size: 2.5rem;
         border-radius: var(--auy-radius-sm);
         cursor: pointer;
         border: 1.5px solid transparent;
@@ -5061,8 +5064,8 @@ var AuyCompTable = class AuyCompTable extends LitElement {
       touch-action: manipulation;
       cursor: pointer;
       accent-color: var(--auy-color-primary);
-      block-size: 1rem;
-      inline-size: 1rem;
+      block-size: 1.25rem;
+      inline-size: 1.25rem;
     }
 
     [part~='th-checkbox'],
@@ -5629,8 +5632,8 @@ var AuyCompModal = class AuyCompModal extends LitElement {
 
       .close {
         flex-shrink: 0;
-        inline-size: 2rem;
-        block-size: 2rem;
+        min-inline-size: 2.75rem;
+        min-block-size: 2.75rem;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -5966,13 +5969,13 @@ var AuyCompButton = class AuyCompButton extends AuyShadowElement {
       }
 
       .btn--sm {
-        min-block-size: 2.25rem;
+        min-block-size: 2.5rem;
         padding: 0.375rem 0.75rem;
         font-size: var(--auy-text-sm);
       }
 
       .btn--md {
-        min-block-size: 2.5rem;
+        min-block-size: 2.75rem;
         padding: 0.5rem 1rem;
         font-size: var(--auy-text-sm);
       }
@@ -5984,8 +5987,8 @@ var AuyCompButton = class AuyCompButton extends AuyShadowElement {
       }
 
       .btn--icon {
-        min-block-size: 2.25rem;
-        min-inline-size: 2.25rem;
+        min-block-size: 2.75rem;
+        min-inline-size: 2.75rem;
         padding: 0.375rem;
         font-size: var(--auy-text-base);
       }
@@ -6390,15 +6393,15 @@ var AuyCompAlert = class AuyCompAlert extends LitElement {
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
-        inline-size: 1.5em;
-        block-size: 1.5em;
+        min-inline-size: 2.75rem;
+        min-block-size: 2.75rem;
         padding: 0;
         border: none;
         border-radius: var(--auy-radius-sm);
         background: transparent;
         color: inherit;
         cursor: pointer;
-        font-size: 1.2em;
+        font-size: var(--auy-text-lg);
         line-height: 1;
         opacity: 0.7;
         touch-action: manipulation;
@@ -6732,6 +6735,20 @@ var AuyCompTooltip = class AuyCompTooltip extends LitElement {
 		this._visible = false;
 		this._active = false;
 	}
+	_onToggle() {
+		if (this.disabled || !this.text) return;
+		this._clearTimer();
+		if (this._visible) this._onHide();
+		else {
+			this._show();
+			this.updateComplete.then(() => {
+				this._position();
+				requestAnimationFrame(() => {
+					this._active = true;
+				});
+			});
+		}
+	}
 	_clearTimer() {
 		if (this._timer !== null) {
 			clearTimeout(this._timer);
@@ -6756,6 +6773,8 @@ var AuyCompTooltip = class AuyCompTooltip extends LitElement {
         @mouseleave=${this._onHide}
         @focusin=${this._onShow}
         @focusout=${this._onHide}
+        @click=${this._onToggle}
+        @touchenter=${this._onShow}
       >
         <slot @slotchange=${this._updateTriggerAria}></slot>
       </span>
@@ -6806,6 +6825,7 @@ var AuyCompAccordion = class AuyCompAccordion extends LitElement {
       :host {
         display: block;
         contain: layout style;
+        container-type: inline-size;
       }
 
       .accordion-item {
@@ -6823,6 +6843,7 @@ var AuyCompAccordion = class AuyCompAccordion extends LitElement {
         align-items: center;
         gap: var(--auy-space-sm);
         padding: var(--auy-space-md);
+        min-block-size: 2.75rem;
         font-family: inherit;
         font-size: var(--auy-text-sm);
         font-weight: var(--auy-font-weight-medium);
@@ -6843,6 +6864,18 @@ var AuyCompAccordion = class AuyCompAccordion extends LitElement {
       summary:focus-visible {
         outline: 0.125rem solid var(--auy-color-primary);
         outline-offset: -0.125rem;
+      }
+
+      .title-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      @container (max-width: 300px) {
+        .title-text {
+          max-inline-size: 15ch;
+        }
       }
 
       .icon {
@@ -6978,7 +7011,7 @@ var AuyCompAccordion = class AuyCompAccordion extends LitElement {
             <span class="icon icon--${this.icon}" aria-hidden="true">
               ${this.icon === "chevron" ? unsafeHTML(ICONS.chevronDown) : unsafeHTML(ICONS.plus)}
             </span>
-            <span>${item.title}</span>
+            <span class="title-text">${item.title}</span>
           </summary>
           <div class="content" data-item="${item.id}">
             <div class="content-inner">
@@ -7030,6 +7063,9 @@ var AuyCompBadge = class AuyCompBadge extends LitElement {
         color: var(--auy-color-primary-inverse);
         background: var(--auy-color-primary);
         white-space: nowrap;
+        max-inline-size: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
         user-select: none;
         border: 1px solid transparent;
         vertical-align: middle;
@@ -7165,6 +7201,7 @@ var AuyCompBreadcrumbs = class AuyCompBreadcrumbs extends LitElement {
       align-items: center;
       gap: var(--auy-space-2xs);
       padding: var(--auy-space-2xs) var(--auy-space-xs);
+      min-block-size: 2.75rem;
       border-radius: var(--auy-radius-sm);
       white-space: nowrap;
       touch-action: manipulation;

@@ -98,15 +98,15 @@ export class AuyCompAlert extends LitElement {
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
-        inline-size: 1.5em;
-        block-size: 1.5em;
+        min-inline-size: 2.75rem;
+        min-block-size: 2.75rem;
         padding: 0;
         border: none;
         border-radius: var(--auy-radius-sm);
         background: transparent;
         color: inherit;
         cursor: pointer;
-        font-size: 1.2em;
+        font-size: var(--auy-text-lg);
         line-height: 1;
         opacity: 0.7;
         touch-action: manipulation;

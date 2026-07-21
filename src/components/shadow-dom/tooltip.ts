@@ -208,6 +208,22 @@ export class AuyCompTooltip extends LitElement {
     this._active = false;
   }
 
+  private _onToggle() {
+    if (this.disabled || !this.text) return;
+    this._clearTimer();
+    if (this._visible) {
+      this._onHide();
+    } else {
+      this._show();
+      this.updateComplete.then(() => {
+        this._position();
+        requestAnimationFrame(() => {
+          this._active = true;
+        });
+      });
+    }
+  }
+
   private _clearTimer() {
     if (this._timer !== null) {
       clearTimeout(this._timer);
@@ -240,6 +256,8 @@ export class AuyCompTooltip extends LitElement {
         @mouseleave=${this._onHide}
         @focusin=${this._onShow}
         @focusout=${this._onHide}
+        @click=${this._onToggle}
+        @touchenter=${this._onShow}
       >
         <slot @slotchange=${this._updateTriggerAria}></slot>
       </span>
@@ -256,3 +274,4 @@ export class AuyCompTooltip extends LitElement {
     `;
   }
 }
+

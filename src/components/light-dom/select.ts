@@ -29,7 +29,7 @@ const styles = css`
     touch-action: manipulation;
     text-align: start;
     gap: var(--auy-space-sm);
-    min-block-size: 2.5rem;
+    min-block-size: 2.75rem;
   }
 
   .trigger:hover {
@@ -110,6 +110,9 @@ const styles = css`
     font-size: var(--auy-text-sm);
     color: var(--auy-color-text);
     touch-action: manipulation;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .option:hover {

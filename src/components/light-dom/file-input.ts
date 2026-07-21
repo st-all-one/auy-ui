@@ -147,15 +147,15 @@ const fiStyles = css`
     position: absolute;
     inset-block-start: 0.125rem;
     inset-inline-end: 0.125rem;
-    inline-size: 1.25rem;
-    block-size: 1.25rem;
+    inline-size: 2rem;
+    block-size: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: var(--auy-radius-full);
     background: color-mix(in oklch, var(--auy-color-border) 40%, transparent);
     cursor: pointer;
-    font-size: var(--auy-text-xs);
+    font-size: var(--auy-text-sm);
     line-height: 1;
     color: var(--auy-color-text-muted);
     opacity: 0;

@@ -104,8 +104,8 @@ const searchStyles = `
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    inline-size: 2rem;
-    block-size: 2rem;
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
     border-radius: var(--auy-radius-lg);
     cursor: pointer;
     font-size: var(--auy-text-xl);

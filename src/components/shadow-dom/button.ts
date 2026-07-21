@@ -51,13 +51,13 @@ export class AuyCompButton extends AuyShadowElement {
       }
 
       .btn--sm {
-        min-block-size: 2.25rem;
+        min-block-size: 2.5rem;
         padding: 0.375rem 0.75rem;
         font-size: var(--auy-text-sm);
       }
 
       .btn--md {
-        min-block-size: 2.5rem;
+        min-block-size: 2.75rem;
         padding: 0.5rem 1rem;
         font-size: var(--auy-text-sm);
       }
@@ -69,8 +69,8 @@ export class AuyCompButton extends AuyShadowElement {
       }
 
       .btn--icon {
-        min-block-size: 2.25rem;
-        min-inline-size: 2.25rem;
+        min-block-size: 2.75rem;
+        min-inline-size: 2.75rem;
         padding: 0.375rem;
         font-size: var(--auy-text-base);
       }

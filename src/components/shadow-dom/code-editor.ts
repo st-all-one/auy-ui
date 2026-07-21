@@ -123,7 +123,7 @@ export class AuyCompCodeEditor extends LitElement {
   /** Whether to show line numbers. */
   @property({ type: Boolean }) lineNumbers = true;
   /** CSS height value for the editor. */
-  @property({ type: String }) height = '300px';
+  @property({ type: String }) height = 'clamp(200px, 40dvh, 600px)';
   /** Placeholder text when empty. */
   @property({ type: String }) placeholder = '';
   /** JSON string of CodeMirror 6 options. */

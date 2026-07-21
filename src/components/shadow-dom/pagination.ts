@@ -25,8 +25,8 @@ export class AuyCompPagination extends LitElement {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-inline-size: 2.25rem;
-        block-size: 2.25rem;
+        min-inline-size: 2.75rem;
+        block-size: 2.75rem;
         border-radius: var(--auy-radius-md);
         font-size: var(--auy-text-sm);
         cursor: pointer;

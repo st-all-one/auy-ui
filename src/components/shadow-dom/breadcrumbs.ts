@@ -75,6 +75,7 @@ export class AuyCompBreadcrumbs extends LitElement {
       align-items: center;
       gap: var(--auy-space-2xs);
       padding: var(--auy-space-2xs) var(--auy-space-xs);
+      min-block-size: 2.75rem;
       border-radius: var(--auy-radius-sm);
       white-space: nowrap;
       touch-action: manipulation;

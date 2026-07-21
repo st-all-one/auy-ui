@@ -281,8 +281,8 @@ export class AuyCompTable extends LitElement {
       touch-action: manipulation;
       cursor: pointer;
       accent-color: var(--auy-color-primary);
-      block-size: 1rem;
-      inline-size: 1rem;
+      block-size: 1.25rem;
+      inline-size: 1.25rem;
     }
 
     [part~='th-checkbox'],

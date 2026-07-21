@@ -145,8 +145,8 @@ export class AuyCompModal extends LitElement {
 
       .close {
         flex-shrink: 0;
-        inline-size: 2rem;
-        block-size: 2rem;
+        min-inline-size: 2.75rem;
+        min-block-size: 2.75rem;
         display: inline-flex;
         align-items: center;
         justify-content: center;

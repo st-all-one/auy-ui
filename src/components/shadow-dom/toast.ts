@@ -87,8 +87,8 @@ export class AuyCompToast extends LitElement {
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
-        inline-size: 1.5em;
-        block-size: 1.5em;
+        min-inline-size: 2.75rem;
+        min-block-size: 2.75rem;
         padding: 0;
         border: none;
         border-radius: var(--auy-radius-sm);

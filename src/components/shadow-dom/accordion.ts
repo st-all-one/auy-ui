@@ -32,6 +32,7 @@ export class AuyCompAccordion extends LitElement {
       :host {
         display: block;
         contain: layout style;
+        container-type: inline-size;
       }
 
       .accordion-item {
@@ -49,6 +50,7 @@ export class AuyCompAccordion extends LitElement {
         align-items: center;
         gap: var(--auy-space-sm);
         padding: var(--auy-space-md);
+        min-block-size: 2.75rem;
         font-family: inherit;
         font-size: var(--auy-text-sm);
         font-weight: var(--auy-font-weight-medium);
@@ -69,6 +71,18 @@ export class AuyCompAccordion extends LitElement {
       summary:focus-visible {
         outline: 0.125rem solid var(--auy-color-primary);
         outline-offset: -0.125rem;
+      }
+
+      .title-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      @container (max-width: 300px) {
+        .title-text {
+          max-inline-size: 15ch;
+        }
       }
 
       .icon {
@@ -215,7 +229,7 @@ export class AuyCompAccordion extends LitElement {
             <span class="icon icon--${this.icon}" aria-hidden="true">
               ${this.icon === 'chevron' ? unsafeHTML(ICONS.chevronDown) : unsafeHTML(ICONS.plus)}
             </span>
-            <span>${item.title}</span>
+            <span class="title-text">${item.title}</span>
           </summary>
           <div class="content" data-item="${item.id}">
             <div class="content-inner">

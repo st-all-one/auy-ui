@@ -23,6 +23,9 @@ export class AuyCompBadge extends LitElement {
         color: var(--auy-color-primary-inverse);
         background: var(--auy-color-primary);
         white-space: nowrap;
+        max-inline-size: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
         user-select: none;
         border: 1px solid transparent;
         vertical-align: middle;

@@ -109,8 +109,8 @@ export class AuyCompAudio extends LitElement {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      inline-size: 2.5rem;
-      block-size: 2.5rem;
+      inline-size: 2.75rem;
+      block-size: 2.75rem;
       border-radius: var(--auy-radius-full);
       cursor: pointer;
       touch-action: manipulation;

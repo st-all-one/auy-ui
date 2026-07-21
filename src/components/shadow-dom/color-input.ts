@@ -430,7 +430,7 @@ export class AuyCompColorInput extends LitElement {
 
       .eyedropper {
         display: inline-flex; align-items: center; justify-content: center;
-        inline-size: 2rem; block-size: 2rem;
+        min-inline-size: 2.75rem; min-block-size: 2.75rem;
         border: 1px solid var(--auy-color-border);
         border-radius: var(--auy-radius-sm);
         background: var(--auy-color-surface);
@@ -452,7 +452,7 @@ export class AuyCompColorInput extends LitElement {
       }
 
       .recent-swatch {
-        inline-size: 20px; block-size: 20px;
+        inline-size: 2.5rem; block-size: 2.5rem;
         border-radius: var(--auy-radius-sm);
         cursor: pointer;
         border: 1.5px solid transparent;
