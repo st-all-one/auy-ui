@@ -177,13 +177,13 @@ export class AuyCompColorInput extends LitElement {
         margin-inline: auto;
         cursor: crosshair;
         touch-action: none;
+        min-inline-size: 0;
       }
 
       .hsv-wrap canvas {
         display: block;
         inline-size: 100%;
         block-size: 100%;
-        border-radius: var(--auy-radius-md);
       }
 
       .ring-indicator {
@@ -227,6 +227,7 @@ export class AuyCompColorInput extends LitElement {
         display: flex;
         align-items: center;
         gap: var(--auy-space-sm);
+        min-inline-size: 0;
       }
 
       .preview-stack {
@@ -356,7 +357,7 @@ export class AuyCompColorInput extends LitElement {
         flex-shrink: 0;
       }
 
-      .formats { display: flex; flex-wrap: wrap; gap: var(--auy-space-2xs); }
+      .formats { display: flex; flex-wrap: wrap; gap: var(--auy-space-2xs); min-inline-size: 0; }
 
       .format-chip {
         display: inline-flex;
@@ -422,6 +423,7 @@ export class AuyCompColorInput extends LitElement {
         display: flex;
         gap: var(--auy-space-sm);
         align-items: center;
+        min-inline-size: 0;
       }
 
       .toolbar .formats { flex: 1; }
@@ -446,6 +448,7 @@ export class AuyCompColorInput extends LitElement {
         gap: var(--auy-space-2xs);
         padding-block-start: var(--auy-space-xs);
         border-block-start: 1px solid color-mix(in oklch, var(--auy-color-border) 50%, transparent);
+        min-inline-size: 0;
       }
 
       .recent-swatch {
@@ -601,8 +604,9 @@ export class AuyCompColorInput extends LitElement {
 
     const cx = w / 2, cy = h / 2;
     const half = Math.min(cx, cy);
-    const rOuter = half * 0.96;
-    const rInner = half * 0.70;
+    const rOuter = half * 0.88;
+
+    const rInner = half * 0.64;
     const ri = rInner - 2;
 
     ctx.imageSmoothingEnabled = true;
@@ -681,9 +685,6 @@ export class AuyCompColorInput extends LitElement {
     const offCtx = off.getContext('2d')!;
     offCtx.putImageData(img, 0, 0);
     ctx.drawImage(off, 0, 0);
-
-    cvs.style.inlineSize = `${rect.width}px`;
-    cvs.style.blockSize = `${rect.height}px`;
   }
 
   /* ── Drag handling ── */
