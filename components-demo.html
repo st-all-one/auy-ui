@@ -1,0 +1,915 @@
+<!doctype html>
+<html lang="pt-BR" data-auy-theme="azure">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <title>auy-ui — Componentes HTML + CSS Nativos</title>
+  <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/inter" crossorigin="anonymous" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/src/styling/auy-ui.css" />
+
+  <style>
+    body { padding: var(--auy-space-lg); max-inline-size: 75rem; margin: 0 auto; }
+    .demo-header { margin-block-end: var(--auy-space-xl); }
+    .demo-header h1 { margin-block-end: var(--auy-space-xs); }
+    .demo-header p { color: var(--auy-color-text-muted); font-size: var(--auy-text-sm); }
+    .demo-nav { position: sticky; inset-block-start: 0; z-index: 10; display: flex; flex-wrap: wrap; gap: var(--auy-space-xs); margin-block-end: var(--auy-space-lg); padding: var(--auy-space-sm); background: var(--auy-color-surface); border: 1px solid var(--auy-color-border); border-radius: var(--auy-radius-md); }
+    .demo-nav a { font-size: var(--auy-text-sm); }
+    .demo-section { background: var(--auy-color-surface); border: 1px solid var(--auy-color-border); border-radius: var(--auy-radius-md); padding: var(--auy-space-lg); margin-block-end: var(--auy-space-lg); }
+    .demo-section h2 { display: flex; align-items: center; gap: var(--auy-space-sm); margin: 0 0 var(--auy-space-md); font-size: var(--auy-text-lg); }
+    .demo-section h2 .tag { font-size: var(--auy-text-xs); color: var(--auy-color-text-muted); font-family: var(--auy-font-mono); background: color-mix(in oklch, var(--auy-color-border) 40%, transparent); border: 1px solid var(--auy-color-border); border-radius: var(--auy-radius-sm); padding: 2px 6px; font-weight: 400; }
+    .row { display: flex; flex-wrap: wrap; gap: var(--auy-space-md); align-items: center; }
+    .col { display: flex; flex-direction: column; gap: var(--auy-space-md); }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--auy-space-md); }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--auy-space-md); }
+    .note { font-size: var(--auy-text-sm); color: var(--auy-color-text-muted); font-style: italic; margin-block-start: var(--auy-space-sm); }
+    .badge-grid { display: flex; flex-wrap: wrap; gap: var(--auy-space-sm); align-items: center; }
+    .checkbox-col { display: flex; flex-direction: column; gap: var(--auy-space-sm); }
+    .form-demo { max-inline-size: 400px; }
+    .card-demo { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--auy-space-md); }
+    .theme-bar { display: flex; align-items: center; gap: var(--auy-space-sm); flex-wrap: wrap; padding: var(--auy-space-md); background: var(--auy-color-surface-alt); border-radius: var(--auy-radius-md); margin-block-end: var(--auy-space-lg); border: 1px solid var(--auy-color-border); }
+    .theme-bar label { font-weight: 600; font-size: var(--auy-text-sm); }
+    .theme-btn { all: unset; display: inline-flex; align-items: center; justify-content: center; inline-size: 2rem; block-size: 2rem; border-radius: var(--auy-radius-full); cursor: pointer; border: 2px solid transparent; transition: border-color var(--auy-transition), transform var(--auy-transition); }
+    .theme-btn:hover { transform: scale(1.15); }
+    .theme-btn.active { border-color: var(--auy-color-text); box-shadow: 0 0 0 2px var(--auy-color-surface); }
+    .toast-stack { position: fixed; inset-block-start: 1rem; inset-inline-end: 1rem; z-index: 9999; display: flex; flex-direction: column; gap: 0.5rem; pointer-events: none; }
+    .flex-1 { flex: 1; }
+    .mb-sm { margin-block-end: var(--auy-space-sm); }
+  </style>
+</head>
+<body>
+
+<a href="#components-main" class="skip-link">Pular para conteúdo principal</a>
+
+<div id="components-main">
+
+  <div class="demo-header">
+    <h1>auy-ui — Componentes HTML + CSS Nativos</h1>
+    <p>Demonstração completa com HTML nativo estilizado via CSS + componentes interativos.</p>
+  </div>
+
+  <div class="theme-bar">
+    <label>Tema:</label>
+    <button class="theme-btn active" data-theme="azure" style="background:oklch(50% 0.2 250)" title="Azure" aria-label="Tema azure"></button>
+    <button class="theme-btn" data-theme="emerald" style="background:oklch(50% 0.2 160)" title="Emerald" aria-label="Tema esmeralda"></button>
+    <button class="theme-btn" data-theme="ruby" style="background:oklch(50% 0.22 20)" title="Ruby" aria-label="Tema ruby"></button>
+    <button class="theme-btn" data-theme="amber" style="background:oklch(55% 0.2 85)" title="Amber" aria-label="Tema amber"></button>
+    <button class="theme-btn" data-theme="violet" style="background:oklch(50% 0.22 290)" title="Violet" aria-label="Tema violeta"></button>
+    <span style="margin-inline-start:auto;font-size:var(--auy-text-xs);color:var(--auy-color-text-muted)" id="theme-label">azure</span>
+  </div>
+
+  <nav class="demo-nav" aria-label="Navegação rápida">
+    <a href="#buttons">Buttons</a>
+    <a href="#button-group">Button Group</a>
+    <a href="#badges">Badges</a>
+    <a href="#spinner">Spinner</a>
+    <a href="#alert">Alert</a>
+    <a href="#card">Card</a>
+    <a href="#modal">Modal</a>
+    <a href="#tooltip">Tooltip</a>
+    <a href="#accordion">Accordion</a>
+    <a href="#tabs">Tabs</a>
+    <a href="#dropdown">Dropdown</a>
+    <a href="#nav">Nav</a>
+    <a href="#progress">Progress</a>
+    <a href="#pagination">Pagination</a>
+    <a href="#checkbox">Checkbox</a>
+    <a href="#form-group">Form Group</a>
+    <a href="#toast">Toast</a>
+    <a href="#file-input">File Input</a>
+    <a href="#audio">Audio</a>
+    <a href="#range-input">Range</a>
+    <a href="#color-input">Color</a>
+    <a href="#date-input">Date</a>
+    <a href="#breadcrumb">Breadcrumb</a>
+    <a href="#table">Table</a>
+    <a href="#search">Search</a>
+    <a href="#code-editor">Code Editor</a>
+    <a href="#container-section">Container/Section</a>
+    <a href="#metadata">Metadata</a>
+  </nav>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 1. BUTTONS                                                 -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="buttons">
+    <h2><span class="tag">button[variant]</span> 1. Buttons</h2>
+    <div class="col">
+      <div class="row">
+        <button variant="primary sm">Small</button>
+        <button variant="primary">Primary</button>
+        <button variant="primary lg">Large</button>
+      </div>
+      <div class="row">
+        <button variant="secondary">Secondary</button>
+        <button variant="ghost">Ghost</button>
+        <button variant="danger">Danger</button>
+        <button variant="contrast">Contrast</button>
+      </div>
+      <div class="row">
+        <button variant="primary" aria-busy="true">Loading</button>
+        <button variant="primary" disabled>Disabled</button>
+        <button variant="secondary" disabled>Disabled</button>
+      </div>
+      <div class="row">
+        <button variant="primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="inline-size:1em;block-size:1em;"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+          With Icon
+        </button>
+        <button variant="secondary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="inline-size:1em;block-size:1em;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Home
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 2. BUTTON GROUP                                            -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="button-group">
+    <h2><span class="tag">div[role=group]</span> 2. Button Group</h2>
+    <div class="col">
+      <div>
+        <p class="note">Grupo com secondary buttons</p>
+        <div role="group" aria-label="Ações de edição">
+          <button variant="secondary">Cortar</button>
+          <button variant="secondary">Copiar</button>
+          <button variant="secondary">Colar</button>
+        </div>
+      </div>
+      <div>
+        <p class="note">Grupo misto primary + secondary + sm</p>
+        <div role="group" aria-label="Ações primárias">
+          <button variant="primary sm">Salvar</button>
+          <button variant="secondary sm">Descartar</button>
+        </div>
+      </div>
+      <div>
+        <p class="note">Grupo com lg</p>
+        <div role="group" aria-label="Ações grandes">
+          <button variant="primary lg">Confirmar</button>
+          <button variant="secondary lg">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 2b. NATIVE BUTTON VARIANTS (via base/button.css)           -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="native-buttons">
+    <h2><span class="tag">button[variant]</span> 2b. Native Button Variants</h2>
+    <p class="note">Botões HTML nativos estilizados via <code>variant</code> attribute — sem Web Component, zero JS.</p>
+    <div class="row">
+      <button variant="primary">Primary</button>
+      <button variant="secondary">Secondary</button>
+      <button variant="ghost">Ghost</button>
+      <button variant="danger">Danger</button>
+      <button variant="outline">Outline</button>
+      <button variant="link">Link</button>
+    </div>
+    <div class="row" style="margin-block-start:var(--auy-space-md)">
+      <button variant="primary sm">Small</button>
+      <button variant="primary">Default</button>
+      <button variant="primary lg">Large</button>
+    </div>
+    <div class="row" style="margin-block-start:var(--auy-space-md)">
+      <button variant="primary" aria-busy="true">Loading</button>
+      <button variant="secondary" aria-busy="true">Loading</button>
+      <button variant="primary" disabled>Disabled</button>
+    </div>
+    <p class="note" style="margin-block-start:var(--auy-space-md)">Agrupamento com <code>[role="group"]</code>:</p>
+    <div role="group" aria-label="Native button group">
+      <button variant="primary">Salvar</button>
+      <button variant="secondary">Cancelar</button>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 3. BADGES                                                  -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="badges">
+    <h2><span class="tag">span[data-badge]</span> 3. Badges</h2>
+    <div class="col">
+      <div class="row">
+        <span data-badge>Default</span>
+        <span data-badge data-badge-variant="success">Success</span>
+        <span data-badge data-badge-variant="error">Error</span>
+        <span data-badge data-badge-variant="warning">Warning</span>
+        <span data-badge data-badge-variant="info">Info</span>
+        <span data-badge data-badge-variant="neutral">Neutral</span>
+      </div>
+      <div class="row">
+        <span data-badge data-badge-pill>Pill</span>
+        <span data-badge data-badge-variant="success" data-badge-pill>Publicado</span>
+        <span data-badge data-badge-variant="error" data-badge-pill>Bloqueado</span>
+        <span data-badge data-badge-variant="warning" data-badge-pill>Pendente</span>
+        <span data-badge data-badge-variant="info" data-badge-pill>Info</span>
+        <span data-badge data-badge-variant="neutral" data-badge-pill>Rascunho</span>
+      </div>
+      <div class="row">
+        <span data-badge data-badge-outline>Outline</span>
+        <span data-badge data-badge-variant="success" data-badge-outline>Sucesso</span>
+        <span data-badge data-badge-variant="error" data-badge-outline>Erro</span>
+        <span data-badge data-badge-variant="warning" data-badge-outline>Atenção</span>
+        <span data-badge data-badge-variant="info" data-badge-outline>Info</span>
+        <span data-badge data-badge-variant="neutral" data-badge-outline>Neutral</span>
+      </div>
+      <div class="row">
+        <span data-badge data-badge-count>3</span>
+        <span data-badge data-badge-count>42</span>
+        <span data-badge data-badge-count data-badge-max="99">150</span>
+        <span data-badge data-badge-count data-badge-max="99">999</span>
+      </div>
+      <div class="row">
+        <span data-badge data-badge-dot></span>
+        <span data-badge data-badge-variant="success" data-badge-dot></span>
+        <span data-badge data-badge-variant="error" data-badge-dot></span>
+        <span data-badge data-badge-variant="warning" data-badge-dot></span>
+        <span data-badge data-badge-variant="info" data-badge-dot></span>
+      </div>
+      <div class="row">
+        <span data-badge data-badge-variant="warning">★ Favorito</span>
+        <span data-badge data-badge-variant="success">✓ Concluído</span>
+        <span data-badge data-badge-variant="error">✕ Falhou</span>
+        <span data-badge data-badge-variant="info">● Online</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 4. SPINNER                                                 -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="spinner">
+    <h2><span class="tag">span.spinner</span> 4. Spinner</h2>
+    <div class="row">
+      <span class="spinner" style="--spinner-size: 16px" role="status" aria-label="Carregando"></span>
+      <span class="spinner" role="status" aria-label="Carregando"></span>
+      <span class="spinner" style="--spinner-size: 48px" role="status" aria-label="Carregando"></span>
+      <span class="spinner" style="--spinner-size: 16px; --spinner-color: oklch(55% 0.22 30)" role="status" aria-label="Carregando"></span>
+      <span class="spinner" style="--spinner-size: 16px; --spinner-color: oklch(55% 0.2 145)" role="status" aria-label="Carregando"></span>
+      <span class="spinner" style="--spinner-size: 32px; --spinner-color: oklch(65% 0.2 85)" role="status" aria-label="Carregando"></span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 5. ALERT                                                   -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="alert">
+    <h2><span class="tag">div.alert</span> 5. Alert</h2>
+    <div class="col">
+      <div class="alert alert--info" role="alert">Informação importante para o usuário.</div>
+      <div class="alert alert--success" role="alert">Operação concluída com sucesso!</div>
+      <div class="alert alert--warning" role="alert">Alerta com botão de fechar — clique no ×.<button class="alert__close" aria-label="Fechar">×</button></div>
+      <div class="alert alert--error" role="alert">Erro crítico no sistema. Contate o suporte.<button class="alert__close" aria-label="Fechar">×</button></div>
+      <div class="alert alert--info" role="alert">
+        <strong>Com título customizado</strong><br>
+        Mensagem com cabeçalho destacado.
+      </div>
+      <div class="alert alert--success" role="alert">
+        <strong>Parabéns!</strong><br>
+        Sua conta foi criada com sucesso.
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 6. CARD                                                    -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="card">
+    <h2><span class="tag">article.card</span> 6. Card</h2>
+    <div class="card-demo">
+      <article class="card card--default">
+        <h3 class="card__title">Default Card</h3>
+        <p class="card__description">Card sem sombra nem borda. Apenas o fundo da superfície.</p>
+      </article>
+      <article class="card card--elevated">
+        <h3 class="card__title">Elevated Card</h3>
+        <p class="card__description">Card com sombra para destaque. Ideal para conteúdo em destaque.</p>
+      </article>
+      <article class="card card--outlined">
+        <h3 class="card__title">Outlined Card</h3>
+        <p class="card__description">Card com borda. Ótimo para grids e listagens.</p>
+      </article>
+      <a href="#" class="card card--elevated">
+        <h3 class="card__title">Card como Link</h3>
+        <p class="card__description">Card clicável — use <code>href</code> para transformar em link. Efeito hover de escala.</p>
+      </a>
+      <article class="card card--elevated">
+        <div style="block-size:120px;background:linear-gradient(135deg, var(--auy-color-primary), var(--auy-color-info));display:flex;align-items:center;justify-content:center;color:#fff;font-size:2rem;">🎨</div>
+        <h3 class="card__title">Com Media</h3>
+        <p class="card__description">Card com slot "media" para imagem, banner ou ilustração.</p>
+        <div class="card__footer" style="display:flex;gap:var(--auy-space-sm);border-block-start:1px solid var(--auy-color-border);padding-block-start:var(--auy-space-md);">
+          <button variant="primary sm" style="flex:1;">Abrir</button>
+          <button variant="ghost sm" style="flex:1;">Detalhes</button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 7. MODAL                                                   -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="modal">
+    <h2><span class="tag">dialog</span> 7. Modal</h2>
+    <div class="row">
+      <button id="modal-trigger" variant="primary">Abrir Modal</button>
+      <button id="modal-lg-trigger" variant="secondary">Modal + Conteúdo</button>
+    </div>
+    <dialog id="demo-modal">
+      <h3>Confirmação</h3>
+      <p>Modal com gerenciamento de foco (Tab trap). Pressione <kbd>Esc</kbd> para fechar.</p>
+      <div>
+        <button variant="ghost" id="modal-cancel">Cancelar</button>
+        <button variant="primary" id="modal-confirm">Confirmar</button>
+      </div>
+    </dialog>
+    <dialog id="modal-lg">
+      <h3>Termos de Uso</h3>
+      <div style="max-block-size:40vh;overflow-y:auto">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </div>
+      <div>
+        <button variant="primary" id="modal-lg-accept">Aceitar</button>
+      </div>
+    </dialog>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 8. TOOLTIP                                                 -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="tooltip">
+    <h2><span class="tag">span[data-tooltip]</span> 8. Tooltip</h2>
+    <div class="row" style="padding: var(--auy-space-xl) 0;">
+      <span data-tooltip="Tooltip em cima" data-tooltip-position="top">
+        <button variant="secondary">Top</button>
+      </span>
+      <span data-tooltip="Tooltip embaixo" data-tooltip-position="bottom">
+        <button variant="secondary">Bottom</button>
+      </span>
+      <span data-tooltip="Tooltip à direita" data-tooltip-position="right">
+        <button variant="secondary">Right</button>
+      </span>
+      <span data-tooltip="Tooltip à esquerda" data-tooltip-position="left">
+        <button variant="secondary">Left</button>
+      </span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 9. ACCORDION                                               -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="accordion">
+    <h2><span class="tag">details/summary</span> 9. Accordion</h2>
+    <div style="max-inline-size:600px">
+      <details open>
+        <summary>O que é auy-ui?</summary>
+        <div class="content">Design system acessível com CSS classless (estiliza HTML nativo) + Web Components (Lit) para interatividade.</div>
+      </details>
+      <details>
+        <summary>Precisa de JavaScript?</summary>
+        <div class="content">Não para o básico! O CSS funciona standalone — os web components são upgrade progressivo.</div>
+      </details>
+      <details>
+        <summary>Quantos temas existem?</summary>
+        <div class="content">5 temas de cor (azure, emerald, ruby, amber, violet) com dark mode automático em cada um.</div>
+      </details>
+      <details>
+        <summary>Suporta SSR?</summary>
+        <div class="content">Sim! Todos os componentes funcionam com Server-Side Rendering. O HTML é renderizado no servidor e os Web Components são hidratados no cliente.</div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 10. TABS                                                   -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="tabs">
+    <h2><span class="tag">auy-comp-tabs</span> 10. Tabs</h2>
+    <auy-comp-tabs id="demo-tabs"></auy-comp-tabs>
+    <p class="note">Navegação por setas ← →. Sete a propriedade <code>tabs</code> via JS.</p>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 11. DROPDOWN                                               -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="dropdown">
+    <h2><span class="tag">details[data-dropdown]</span> 11. Dropdown</h2>
+    <div class="row">
+      <details data-dropdown>
+        <summary part="trigger">Ações</summary>
+        <button onclick="alert('Editar')">✏️ Editar</button>
+        <button onclick="alert('Duplicar')">📋 Duplicar</button>
+        <div role="separator"></div>
+        <button onclick="alert('Excluir')">🗑️ Excluir</button>
+      </details>
+      <details data-dropdown data-align="end">
+        <summary part="trigger">Links</summary>
+        <a href="#" aria-current="page">Perfil</a>
+        <a href="#">Configurações</a>
+        <div role="separator"></div>
+        <a href="#">Ajuda</a>
+        <a href="#">Sair</a>
+      </details>
+      <details data-dropdown>
+        <summary part="trigger">Visualização</summary>
+        <button onclick="alert('Grade')">📐 Grade</button>
+        <button onclick="alert('Lista')">📋 Lista</button>
+      </details>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 12. NAV                                                    -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="nav">
+    <h2><span class="tag">nav[data-variant]</span> 12. Nav</h2>
+    <div class="col">
+      <div>
+        <p class="note"><strong>default</strong> — horizontal</p>
+        <nav aria-label="Nav default">
+          <a href="#" aria-current="page">Dashboard</a>
+          <a href="#">Usuários</a>
+          <a href="#">Relatórios</a>
+          <button>Exportar</button>
+        </nav>
+      </div>
+      <div>
+        <p class="note"><strong>underline</strong> — indicador inferior</p>
+        <nav data-variant="underline" aria-label="Nav underline">
+          <a href="#" aria-current="page">Principal</a>
+          <a href="#">Detalhes</a>
+          <a href="#">Histórico</a>
+          <a href="#">Anexos</a>
+        </nav>
+      </div>
+      <div>
+        <p class="note"><strong>tray</strong> — bandeja arredondada</p>
+        <nav data-variant="tray" aria-label="Nav tray">
+          <a href="#" aria-current="page">Home</a>
+          <a href="#">Explorar</a>
+          <a href="#">Biblioteca</a>
+          <a href="#">Configurações</a>
+        </nav>
+      </div>
+      <div>
+        <p class="note"><strong>vertical + underline</strong></p>
+        <nav data-variant="underline" data-orientation="vertical" aria-label="Nav vertical" style="max-inline-size:200px">
+          <a href="#" aria-current="page">Dashboard</a>
+          <a href="#">Usuários</a>
+          <a href="#">Relatórios</a>
+          <a href="#">Sair</a>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 13. PROGRESS                                               -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="progress">
+    <h2><span class="tag">progress</span> 13. Progress</h2>
+    <div class="col" style="max-inline-size:500px">
+      <div class="form-group"><label>Download</label><progress value="45" max="100"></progress></div>
+      <div class="form-group"><label>Upload</label><progress value="80" max="100" data-variant="success"></progress></div>
+      <div class="form-group"><label>Sincronização</label><progress value="30" max="100" data-variant="warning"></progress></div>
+      <div class="form-group"><label>Completo</label><progress value="100" max="100" data-variant="success"></progress></div>
+      <div class="form-group"><label>Processando...</label><progress indeterminate></progress></div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 14. PAGINATION                                             -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="pagination">
+    <h2><span class="tag">auy-comp-pagination</span> 14. Pagination</h2>
+    <auy-comp-pagination id="demo-pagination" total="100" per-page="10" current="1"></auy-comp-pagination>
+    <p class="note" id="page-info">Página 1 de 10</p>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 15. CHECKBOX                                               -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="checkbox">
+    <h2><span class="tag">input[type=checkbox/radio/switch]</span> 15. Checkbox / Radio / Switch</h2>
+    <div class="row" style="align-items: start;">
+      <div class="checkbox-col">
+        <strong>Checkbox</strong>
+        <label class="form-group"><input type="checkbox"> Lembrar de mim</label>
+        <label class="form-group"><input type="checkbox" checked> Aceitar termos</label>
+        <label class="form-group"><input type="checkbox" disabled> Desabilitado</label>
+        <label class="form-group"><input type="checkbox" checked disabled> Checked + Disabled</label>
+      </div>
+      <div class="checkbox-col">
+        <strong>Radio</strong>
+        <label class="form-group"><input type="radio" name="rg1"> Opção A</label>
+        <label class="form-group"><input type="radio" name="rg1" checked> Opção B</label>
+        <label class="form-group"><input type="radio" name="rg1"> Opção C</label>
+        <label class="form-group"><input type="radio" name="rg1" disabled> Disabled</label>
+      </div>
+      <div class="checkbox-col">
+        <strong>Switch</strong>
+        <label class="form-group"><input type="checkbox" role="switch"> Notificações push</label>
+        <label class="form-group"><input type="checkbox" role="switch" checked> Modo escuro</label>
+        <label class="form-group"><input type="checkbox" role="switch" disabled> Wi-Fi</label>
+        <label class="form-group"><input type="checkbox" role="switch" checked disabled> Bluetooth</label>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 16. FORM GROUP                                             -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="form-group">
+    <h2><span class="tag">.form-group</span> 16. Form Group</h2>
+    <div class="form-demo col">
+      <div class="form-group"><label>Nome completo</label><input type="text" placeholder="Digite seu nome" required><span class="note">Nome completo sem abreviações</span></div>
+      <div class="form-group" id="demo-email"><label>E-mail</label><input type="email" placeholder="email@exemplo.com" required><span class="note">Usaremos apenas para login</span></div>
+      <div class="form-group"><label>Senha</label><input type="password" placeholder="Mínimo 8 caracteres" required><span class="note">Crie uma senha forte</span></div>
+      <div class="form-group"><label>Telefone</label><input type="tel" placeholder="(00) 00000-0000"><span class="note">Celular ou fixo com DDD</span></div>
+      <div class="form-group"><label>CPF</label><input type="text" placeholder="000.000.000-00" maxlength="14"><span class="note">Formatação automática</span></div>
+      <div class="form-group"><label>Senha com erro</label><input type="password" placeholder="********" required aria-invalid="true"><span class="error">Senha deve ter no mínimo 8 caracteres</span></div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 17. TOAST & TOAST CONTAINER                                -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="toast">
+    <h2><span class="tag">auy-comp-toast / auy-comp-toast-container</span> 17. Toast</h2>
+    <div class="col">
+      <div>
+        <p class="note"><strong>auy-comp-toast</strong> — toasts individuais</p>
+        <div class="row">
+          <button id="toast-info" variant="secondary">Info</button>
+          <button id="toast-success" variant="secondary" style="--auy-color-primary:oklch(55% 0.2 145)">Sucesso</button>
+          <button id="toast-warning" variant="secondary" style="--auy-color-primary:oklch(65% 0.2 85)">Aviso</button>
+          <button id="toast-error" variant="secondary" style="--auy-color-primary:oklch(55% 0.22 30)">Erro</button>
+        </div>
+      </div>
+      <div>
+        <p class="note"><strong>auy-comp-toast-container</strong> — container gerenciado via JS</p>
+        <div class="row">
+          <button id="tc-info" variant="secondary">Info</button>
+          <button id="tc-success" variant="secondary" style="--auy-color-primary:oklch(55% 0.2 145)">Sucesso</button>
+          <button id="tc-warning" variant="secondary" style="--auy-color-primary:oklch(65% 0.2 85)">Aviso</button>
+          <button id="tc-error" variant="secondary" style="--auy-color-primary:oklch(55% 0.22 30)">Erro</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 18. FILE INPUT                                             -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="file-input">
+    <h2><span class="tag">auy-comp-file-input</span> 18. File Input</h2>
+    <auy-comp-file-input label="Documentos anexos" accept=".pdf,.doc,.docx" max-size="5242880" multiple></auy-comp-file-input>
+    <p class="note">Arraste arquivos ou clique para selecionar. Aceita PDF, DOC, DOCX até 5MB.</p>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 19. AUDIO PLAYER                                           -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="audio">
+    <h2><span class="tag">auy-comp-audio</span> 19. Audio Player</h2>
+    <auy-comp-audio
+      src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA="
+      title="Narração do Conteúdo"
+      show-transcript
+    >
+      <span slot="transcript-text">Componente de áudio acessível com controles customizados. Suporta play/pause, skip ±10s, controle de volume, velocidade 0.5x–2x, animação de onda e download.</span>
+    </auy-comp-audio>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 20. RANGE INPUT                                            -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="range-input">
+    <h2><span class="tag">input[type=range]</span> 19. Range Input</h2>
+    <div class="col" style="max-inline-size:400px">
+      <div class="form-group"><label>Volume</label><input type="range" value="70"></div>
+      <div class="form-group"><label>Preço máximo</label><input type="range" value="50" min="0" max="200" step="5"></div>
+      <div class="form-group"><label>Temperatura</label><input type="range" value="22" min="-10" max="50"></div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 20. COLOR INPUT                                            -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="color-input">
+    <h2><span class="tag">auy-comp-color-input</span> 20. Color Input</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:var(--auy-space-lg);">
+      <auy-comp-color-input label="Cor primária" value="#3b82f6"></auy-comp-color-input>
+      <auy-comp-color-input label="Tom de pele" value="#e8b4a0"></auy-comp-color-input>
+      <auy-comp-color-input label="Verde floresta" value="#2d7d46"></auy-comp-color-input>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 21. DATE INPUT                                             -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="date-input">
+    <h2><span class="tag">input[type=date/time/month]</span> 21. Date Input</h2>
+    <div class="row">
+      <div class="form-group"><label>Data de nascimento</label><input type="date"></div>
+      <div class="form-group"><label>Hora do evento</label><input type="time" value="14:30"></div>
+      <div class="form-group"><label>Mês de referência</label><input type="month"></div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 22. BREADCRUMB                                             -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="breadcrumb">
+    <h2><span class="tag">nav[aria-label=Breadcrumb]</span> 22. Breadcrumb</h2>
+    <nav aria-label="Breadcrumb" id="demo-breadcrumb"><ol></ol></nav>
+    <p class="note">Breadcrumb estilizado via CSS com lista ordenada.</p>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 23. TABLE                                                  -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="table">
+    <h2><span class="tag">table</span> 23. Table</h2>
+    <table id="demo-table"></table>
+    <p class="note">Tabela HTML nativa populada via JS.</p>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 24. SEARCH                                                 -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="search">
+    <h2><span class="tag">auy-comp-search</span> 24. Search (Command Palette)</h2>
+    <p class="note">
+      <button id="search-trigger" variant="primary sm">Abrir Busca</button>
+      ou pressione <kbd>Ctrl+K</kbd>
+    </p>
+    <auy-comp-search id="demo-search" placeholder="Buscar no sistema..."></auy-comp-search>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 25. CODE EDITOR                                            -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="code-editor">
+    <h2><span class="tag">auy-comp-code-editor</span> 25. Code Editor</h2>
+    <auy-comp-code-editor id="demo-editor" value="// Digite seu código aqui&#10;function hello() {&#10;  console.log('auy-ui!');&#10;}" language="javascript"></auy-comp-code-editor>
+    <p class="note">
+      <button id="editor-get" variant="secondary sm">Obter valor</button>
+    </p>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 26. CONTAINER & SECTION                                    -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="container-section">
+    <h2><span class="tag">div[data-container] + section</span> 26. Container &amp; Section</h2>
+    <div data-container style="background:color-mix(in oklch, var(--auy-color-border) 8%, transparent);border-radius:var(--auy-radius-md);padding:var(--auy-space-md);">
+      <section>
+        <h2>Seção dentro de Container</h2>
+        <p>Container centraliza com max-width e Section adiciona padding vertical com heading e description.</p>
+        <p>Este conteúdo está dentro de <code>div[data-container]</code> (max-width centralizado) e <code>section</code> (padding + heading + description).</p>
+        <button variant="primary">Ação no container</button>
+      </section>
+    </div>
+    <p class="note">Use <code>data-container</code> para centralização com max-width.</p>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 28. METADATA                                               -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="metadata">
+    <h2><span class="tag">auy-comp-metadata</span> 27. Metadata</h2>
+    <auy-comp-metadata id="demo-metadata"></auy-comp-metadata>
+    <p class="note">Injeta meta tags SEO/OG/Twitter/JSON-LD no <code>&lt;head&gt;</code>. Configure via propriedades.</p>
+    <button id="meta-trigger" variant="primary sm">Injetar Meta Tags</button>
+    <button id="meta-clear" variant="secondary sm">Limpar</button>
+  </section>
+
+  <hr />
+  <p style="text-align:center;color:var(--auy-color-text-muted);font-size:var(--auy-text-sm);padding:var(--auy-space-lg) 0;">
+    auy-ui — <strong>Componentes HTML + CSS</strong> · Importado via <code>./src/mod.ts</code>
+  </p>
+
+  <!-- Toast stack for auy-comp-toast -->
+  <div class="toast-stack" id="toast-stack"></div>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- MODULE IMPORT + JS SETUP                                   -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <script type="module">
+    import './src/mod.ts';
+
+    // ── Theme switcher ──
+    const themeBtns = document.querySelectorAll('[data-theme]');
+    const themeLabel = document.getElementById('theme-label');
+    themeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const theme = btn.dataset.theme;
+        document.documentElement.setAttribute('data-auy-theme', theme);
+        themeBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        if (themeLabel) themeLabel.textContent = theme;
+      });
+    });
+
+    // ── Tabs ──
+    const tabs = document.getElementById('demo-tabs');
+    if (tabs) tabs.tabs = [
+      { id: 'tab1', label: 'Conteúdo' },
+      { id: 'tab2', label: 'Código' },
+      { id: 'tab3', label: 'Preview' },
+    ];
+    // Add panel content
+    const tabPanels = () => {
+      if (!tabs) return;
+      const p1 = document.createElement('div');
+      p1.slot = 'panel-tab1';
+      p1.textContent = 'Conteúdo da primeira aba. Navegue entre as abas usando as setas do teclado.';
+      tabs.appendChild(p1);
+      const p2 = document.createElement('div');
+      p2.slot = 'panel-tab2';
+      p2.innerHTML = '<pre><code>import { LitElement } from "lit";</code></pre>';
+      tabs.appendChild(p2);
+      const p3 = document.createElement('div');
+      p3.slot = 'panel-tab3';
+      p3.textContent = 'Preview da aba.';
+      tabs.appendChild(p3);
+    };
+    tabPanels();
+
+    // ── Breadcrumb ──
+    const bc = document.getElementById('demo-breadcrumb');
+    if (bc) {
+      const items = [
+        { label: 'Home', href: '/' },
+        { label: 'Componentes', href: '/components' },
+        { label: 'Navegação', href: '/components/nav' },
+        { label: 'Breadcrumb' },
+      ];
+      const ol = bc.querySelector('ol');
+      if (ol) {
+        items.forEach((item, i) => {
+          const li = document.createElement('li');
+          if (item.href) {
+            const a = document.createElement('a');
+            a.href = item.href;
+            a.textContent = item.label;
+            li.appendChild(a);
+          } else {
+            li.textContent = item.label;
+            li.setAttribute('aria-current', 'page');
+          }
+          ol.appendChild(li);
+        });
+      }
+    }
+
+    // ── Table ──
+    const table = document.getElementById('demo-table');
+    if (table) {
+      const columns = [
+        { key: 'nome', label: 'Nome' },
+        { key: 'email', label: 'E-mail' },
+        { key: 'cargo', label: 'Cargo' },
+        { key: 'status', label: 'Status' },
+      ];
+      const rows = [
+        { nome: 'Maria Silva', email: 'maria@exemplo.com', cargo: 'Analista', status: 'Ativo' },
+        { nome: 'João Santos', email: 'joao@exemplo.com', cargo: 'Gerente', status: 'Ativo' },
+        { nome: 'Ana Costa', email: 'ana@exemplo.com', cargo: 'Designer', status: 'Férias' },
+        { nome: 'Pedro Oliveira', email: 'pedro@exemplo.com', cargo: 'Dev', status: 'Ativo' },
+        { nome: 'Carla Souza', email: 'carla@exemplo.com', cargo: 'Suporte', status: 'Inativo' },
+      ];
+      const thead = document.createElement('thead');
+      const tr = document.createElement('tr');
+      columns.forEach(col => {
+        const th = document.createElement('th');
+        th.textContent = col.label;
+        tr.appendChild(th);
+      });
+      thead.appendChild(tr);
+      table.appendChild(thead);
+      const tbody = document.createElement('tbody');
+      rows.forEach(row => {
+        const tr2 = document.createElement('tr');
+        columns.forEach(col => {
+          const td = document.createElement('td');
+          td.textContent = row[col.key];
+          tr2.appendChild(td);
+        });
+        tbody.appendChild(tr2);
+      });
+      table.appendChild(tbody);
+    }
+
+    // ── Search ──
+    const search = document.getElementById('demo-search');
+    if (search) search.items = [
+      { label: 'Dashboard', description: 'Painel principal', category: 'Páginas' },
+      { label: 'Usuários', description: 'Gerenciamento de usuários', category: 'Páginas' },
+      { label: 'Relatórios', description: 'Relatórios e análises', category: 'Páginas' },
+      { label: 'Configurações', description: 'Configurações do sistema', category: 'Sistema' },
+      { label: 'Auditoria', description: 'Logs de auditoria', category: 'Sistema' },
+    ];
+    document.getElementById('search-trigger')?.addEventListener('click', () => {
+      const s = document.getElementById('demo-search');
+      if (s) s.open = true;
+    });
+
+    // ── Pagination ──
+    const pagination = document.getElementById('demo-pagination');
+    if (pagination) {
+      pagination.addEventListener('page-change', (e) => {
+        const info = document.getElementById('page-info');
+        if (info) info.textContent = `Página ${e.detail.page} de ${Math.ceil(100 / 10)}`;
+      });
+    }
+
+    // ── Modal ──
+    document.getElementById('modal-trigger')?.addEventListener('click', () => document.getElementById('demo-modal')?.showModal());
+    document.getElementById('modal-cancel')?.addEventListener('click', () => document.getElementById('demo-modal')?.close());
+    document.getElementById('modal-confirm')?.addEventListener('click', () => document.getElementById('demo-modal')?.close());
+    document.getElementById('modal-lg-trigger')?.addEventListener('click', () => document.getElementById('modal-lg')?.showModal());
+    document.getElementById('modal-lg-accept')?.addEventListener('click', () => document.getElementById('modal-lg')?.close());
+
+    // ── Legacy Toast (auy-comp-toast) ──
+    function showToast(msg, variant) {
+      const stack = document.getElementById('toast-stack');
+      if (!stack) return;
+      const t = document.createElement('auy-comp-toast');
+      t.variant = variant || 'success';
+      t.duration = 3000;
+      t.textContent = msg;
+      stack.appendChild(t);
+      t.open = true;
+      t.addEventListener('hide', () => t.remove());
+    }
+    document.getElementById('toast-info')?.addEventListener('click', () => showToast('Informação carregada.', 'info'));
+    document.getElementById('toast-success')?.addEventListener('click', () => showToast('Operação realizada com sucesso!', 'success'));
+    document.getElementById('toast-warning')?.addEventListener('click', () => showToast('Atenção: verifique os dados.', 'warning'));
+    document.getElementById('toast-error')?.addEventListener('click', () => showToast('Erro ao processar a requisição.', 'error'));
+
+    // ── Toast Container (auy-comp-toast-container) ──
+    const tContainer = document.getElementById('toast-container');
+    // Create toast container dynamically
+    if (!tContainer) {
+      const container = document.createElement('auy-comp-toast-container');
+      container.id = 'toast-container';
+      container.position = 'top-right';
+      document.body.appendChild(container);
+    }
+    const tc = document.getElementById('toast-container');
+    if (tc) {
+      document.getElementById('tc-info')?.addEventListener('click', () => tc.show('Informação carregada.', 'info'));
+      document.getElementById('tc-success')?.addEventListener('click', () => tc.show('Sucesso!', 'success'));
+      document.getElementById('tc-warning')?.addEventListener('click', () => tc.show('Atenção!', 'warning'));
+      document.getElementById('tc-error')?.addEventListener('click', () => tc.show('Erro crítico!', 'error'));
+    }
+
+
+    // ── Code editor ──
+    document.getElementById('editor-get')?.addEventListener('click', () => {
+      const editor = document.getElementById('demo-editor');
+      if (editor) alert(editor.value || '(vazio)');
+    });
+
+    // ── Metadata ──
+    document.getElementById('meta-trigger')?.addEventListener('click', () => {
+      const meta = document.getElementById('demo-metadata');
+      if (meta) {
+        meta.title = 'auy-ui — Demo de Componentes';
+        meta.description = 'Página demonstrando todos os componentes HTML + CSS do auy-ui.';
+        meta.ogTitle = 'auy-ui Design System';
+        meta.ogDescription = 'Catálogo completo de Web Components acessíveis.';
+        meta.ogUrl = window.location.href;
+        meta.ogImage = 'https://auy-ui.dev/og-image.png';
+        meta.robots = 'index, follow';
+        alert('Meta tags injetadas no <head>!');
+      }
+    });
+    document.getElementById('meta-clear')?.addEventListener('click', () => {
+      const meta = document.getElementById('demo-metadata');
+      if (meta) {
+        meta.title = document.title;
+        meta.description = '';
+        meta.ogTitle = '';
+        meta.ogDescription = '';
+        meta.ogUrl = '';
+        meta.ogImage = '';
+        meta.robots = '';
+        alert('Meta tags limpas!');
+      }
+    });
+  </script>
+
+</div>
+
+</body>
+</html>

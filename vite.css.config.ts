@@ -25,7 +25,7 @@ export default defineConfig({
     emptyOutDir: false,
     copyPublicDir: false,
     lib: {
-      entry: resolve(__dirname, 'src/styles/auy-ui.css'),
+      entry: resolve(__dirname, 'src/styling/auy-ui.css'),
       name: 'AuyUICSS',
       formats: ['es'],
       fileName: 'auy-ui',

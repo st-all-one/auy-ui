@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, copyFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { transform } from 'lightningcss';
 import { execSync } from 'child_process';
 
@@ -52,11 +52,4 @@ console.log(`Final ${MIN_OUT}: ${(minified.length / 1024).toFixed(1)} KB (saved 
 
 execSync(`rm ${MIN_RAW}`, { stdio: 'ignore' });
 
-// Copy CSS bundle for standalone CSS usage
-try {
-  copyFileSync('dist/mod.css', 'dist/auy-ui.css');
-  const cssSize = readFileSync('dist/auy-ui.css', 'utf8').length;
-  console.log(`CSS bundle: dist/auy-ui.css (${(cssSize / 1024).toFixed(1)} KB)`);
-} catch {
-  console.log('No CSS bundle found at dist/mod.css');
-}
+// CSS bundle is built by vite to dist/auy-ui.css directly

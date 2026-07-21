@@ -1,0 +1,65 @@
+@layer base {
+  :where(strong, b) {
+    font-weight: 600;
+  }
+
+  :where(em, i, cite, dfn, var) {
+    font-style: italic;
+  }
+
+  :where(u) {
+    text-decoration: underline;
+    text-underline-offset: 0.125em;
+  }
+
+  :where(s) {
+    text-decoration: line-through;
+    color: var(--auy-color-text-muted);
+  }
+
+  :where(q) {
+    font-style: italic;
+  }
+
+  :where(q)::before {
+    content: "\201C";
+  }
+
+  :where(q)::after {
+    content: "\201D";
+  }
+
+  :where(cite) {
+    color: var(--auy-color-text-muted);
+  }
+
+  :where(dfn) {
+    font-weight: 500;
+  }
+
+  :where(abbr) {
+    text-decoration: underline dotted;
+    text-underline-offset: 0.125em;
+    cursor: help;
+  }
+
+  :where(time) {
+    font-variant-numeric: tabular-nums;
+  }
+
+  :where(var) {
+    font-family: var(--auy-font-mono);
+  }
+
+  :where(bdi, bdo) {
+    unicode-bidi: isolate;
+  }
+
+  :where(ruby) {
+    ruby-align: center;
+  }
+
+  :where(rp) {
+    display: none;
+  }
+}

@@ -8,6 +8,7 @@ Uso de Vite, dados server-side e layout administrativo completo.
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="color-scheme" content="light dark">
+  <meta http-equiv="Accept-CH" content="Sec-CH-Prefers-Reduced-Motion, Sec-CH-Prefers-Color-Scheme, Save-Data">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>@yield('title', 'Painel Administrativo') — {{ config('app.name') }}</title>
 
@@ -187,9 +188,9 @@ Uso de Vite, dados server-side e layout administrativo completo.
 </head>
 <body>
 
-  <auy-app-layout theme="{{ $theme ?? 'light' }}" sidebar-width="280px" header-height="auto">
+  <auy-admin-layout theme="{{ $theme ?? 'light' }}" sidebar-width="280px" header-height="auto">
 
-    <auy-header slot="header" page-title="{{ $pageTitle ?? 'Dashboard' }}" sticky>
+    <auy-admin-header slot="header" page-title="{{ $pageTitle ?? 'Dashboard' }}" sticky>
       <span slot="logo">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -197,53 +198,53 @@ Uso de Vite, dados server-side e layout administrativo completo.
         </svg>
       </span>
       <nav slot="nav" aria-label="Navegação principal">
-        <auy-internal-button variant="ghost" size="sm">{{ __('Dashboard') }}</auy-internal-button>
-        <auy-internal-button variant="ghost" size="sm">{{ __('Pedidos') }}</auy-internal-button>
-        <auy-internal-button variant="ghost" size="sm">{{ __('Clientes') }}</auy-internal-button>
-        <auy-internal-button variant="ghost" size="sm">{{ __('Relatórios') }}</auy-internal-button>
+        <auy-comp-button variant="ghost" size="sm">{{ __('Dashboard') }}</auy-comp-button>
+        <auy-comp-button variant="ghost" size="sm">{{ __('Pedidos') }}</auy-comp-button>
+        <auy-comp-button variant="ghost" size="sm">{{ __('Clientes') }}</auy-comp-button>
+        <auy-comp-button variant="ghost" size="sm">{{ __('Relatórios') }}</auy-comp-button>
       </nav>
       <div slot="search">
         <input type="search" placeholder="{{ __('Pesquisar...') }}" aria-label="{{ __('Pesquisar no sistema') }}" style="padding:6px 12px;border:1px solid var(--auy-color-border);border-radius:var(--auy-radius-md);background:var(--auy-color-surface);color:var(--auy-color-text);font-size:0.875rem;font-family:inherit;">
       </div>
       <div slot="actions">
-        <auy-internal-tooltip text="{{ __('Notificações') }}">
-          <auy-internal-button variant="ghost" size="sm" aria-label="{{ __('Notificações') }}">
+        <auy-comp-tooltip text="{{ __('Notificações') }}">
+          <auy-comp-button variant="ghost" size="sm" aria-label="{{ __('Notificações') }}">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-          </auy-internal-button>
-        </auy-internal-tooltip>
-        <auy-internal-tooltip text="{{ auth()->user()->name ?? 'Usuário' }}">
-          <auy-internal-button variant="ghost" size="sm" aria-label="{{ __('Perfil') }}">
+          </auy-comp-button>
+        </auy-comp-tooltip>
+        <auy-comp-tooltip text="{{ auth()->user()->name ?? 'Usuário' }}">
+          <auy-comp-button variant="ghost" size="sm" aria-label="{{ __('Perfil') }}">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          </auy-internal-button>
-        </auy-internal-tooltip>
+          </auy-comp-button>
+        </auy-comp-tooltip>
       </div>
-    </auy-header>
+    </auy-admin-header>
 
-    <auy-sidebar slot="sidebar" app-title="{{ config('app.name') }}" aria-label="{{ __('Navegação lateral') }}" items='@json($sidebarItems ?? [])'>
-    </auy-sidebar>
+    <auy-admin-sidebar slot="sidebar" app-title="{{ config('app.name') }}" aria-label="{{ __('Navegação lateral') }}" items='@json($sidebarItems ?? [])'>
+    </auy-admin-sidebar>
 
-    <auy-main-section slot="main" id="main-content" header="@yield('title', 'Dashboard')" columns="@yield('columns', 'single')" role="main">
+    <auy-admin-main-section slot="main" id="main-content" header="@yield('title', 'Dashboard')" columns="@yield('columns', 'single')" role="main">
 
       <div slot="header-actions" class="page-header-actions">
         @hasSection('header-actions')
           @yield('header-actions')
         @else
-          <auy-internal-button variant="secondary" size="sm" id="btnRefresh">
+          <auy-comp-button variant="secondary" size="sm" id="btnRefresh">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
             {{ __('Atualizar') }}
-          </auy-internal-button>
-          <auy-internal-button variant="primary" size="sm" id="btnNew">
+          </auy-comp-button>
+          <auy-comp-button variant="primary" size="sm" id="btnNew">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             {{ __('Novo') }}
-          </auy-internal-button>
+          </auy-comp-button>
         @endif
       </div>
 
       @yield('content')
 
-    </auy-main-section>
+    </auy-admin-main-section>
 
-    <auy-footer slot="footer" copyright="© {{ date('Y') }} {{ config('app.name') }}. Todos os direitos reservados." :year="(int) date('Y')" columns="3">
+    <auy-admin-footer slot="footer" copyright="© {{ date('Y') }} {{ config('app.name') }}. Todos os direitos reservados." :year="(int) date('Y')" columns="3">
       <div slot="nav" style="font-size:0.875rem;">
         <strong style="display:block;margin-bottom:0.5rem;">{{ __('Links') }}</strong>
         <a href="{{ route('home') }}" style="display:block;color:var(--auy-color-text-muted);text-decoration:none;padding:2px 0;">{{ __('Início') }}</a>
@@ -260,26 +261,26 @@ Uso de Vite, dados server-side e layout administrativo completo.
         <span style="display:block;color:var(--auy-color-text-muted);padding:2px 0;">v{{ config('app.version', '1.0.0') }}</span>
         <span style="display:block;color:var(--auy-color-text-muted);padding:2px 0;">PHP {{ PHP_VERSION }}</span>
       </div>
-    </auy-footer>
+    </auy-admin-footer>
 
-  </auy-app-layout>
+  </auy-admin-layout>
 
   <div class="toast-container" aria-live="polite" aria-atomic="true">
     @if(session('success'))
-      <auy-internal-toast variant="success" open dismissible>
+      <auy-comp-toast variant="success" open dismissible>
         <span slot="icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
         </span>
         {{ session('success') }}
-      </auy-internal-toast>
+      </auy-comp-toast>
     @endif
     @if(session('error'))
-      <auy-internal-toast variant="error" open dismissible>
+      <auy-comp-toast variant="error" open dismissible>
         <span slot="icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg>
         </span>
         {{ session('error') }}
-      </auy-internal-toast>
+      </auy-comp-toast>
     @endif
   </div>
 

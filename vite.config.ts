@@ -38,10 +38,15 @@ export default defineConfig({
     chunkSizeWarningLimit: 300,
 
     lib: {
-      entry: resolve(__dirname, 'src/mod.ts'),
+      entry: {
+        'styling': resolve(__dirname, 'src/styling/mod.ts'),
+        'components': resolve(__dirname, 'src/components/mod.ts'),
+        'layouts': resolve(__dirname, 'src/layouts/mod.ts'),
+        'mod': resolve(__dirname, 'src/mod.ts'),
+      },
       name: 'AuyUI',
       formats: ['es'],
-      fileName: 'mod',
+      fileName: (format, entryName) => `${entryName}.js`,
     },
 
     rolldownOptions: {

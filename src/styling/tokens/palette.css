@@ -1,0 +1,63 @@
+@layer tokens {
+  :root {
+    --auy-primary-50:  color-mix(in oklch, var(--auy-color-primary) 10%, white);
+    --auy-primary-100: color-mix(in oklch, var(--auy-color-primary) 20%, white);
+    --auy-primary-200: color-mix(in oklch, var(--auy-color-primary) 35%, white);
+    --auy-primary-300: color-mix(in oklch, var(--auy-color-primary) 50%, white);
+    --auy-primary-400: color-mix(in oklch, var(--auy-color-primary) 70%, white);
+    --auy-primary-500: var(--auy-color-primary);
+    --auy-primary-600: color-mix(in oklch, var(--auy-color-primary) 85%, black);
+    --auy-primary-700: color-mix(in oklch, var(--auy-color-primary) 65%, black);
+    --auy-primary-800: color-mix(in oklch, var(--auy-color-primary) 45%, black);
+    --auy-primary-900: color-mix(in oklch, var(--auy-color-primary) 25%, black);
+    --auy-primary-950: color-mix(in oklch, var(--auy-color-primary) 10%, black);
+
+    --auy-neutral-50:  oklch(98% 0.005 260);
+    --auy-neutral-100: oklch(95% 0.008 260);
+    --auy-neutral-200: oklch(90% 0.01 260);
+    --auy-neutral-300: oklch(80% 0.015 260);
+    --auy-neutral-400: oklch(65% 0.02 260);
+    --auy-neutral-500: oklch(50% 0.02 260);
+    --auy-neutral-600: oklch(40% 0.02 260);
+    --auy-neutral-700: oklch(30% 0.025 260);
+    --auy-neutral-800: oklch(20% 0.03 260);
+    --auy-neutral-900: oklch(12% 0.03 260);
+    --auy-neutral-950: oklch(5% 0.02 260);
+
+    --auy-success-50:  color-mix(in oklch, var(--auy-color-success) 10%, white);
+    --auy-success-100: color-mix(in oklch, var(--auy-color-success) 20%, white);
+    --auy-success-200: color-mix(in oklch, var(--auy-color-success) 35%, white);
+    --auy-success-300: color-mix(in oklch, var(--auy-color-success) 50%, white);
+    --auy-success-400: color-mix(in oklch, var(--auy-color-success) 70%, white);
+    --auy-success-500: var(--auy-color-success);
+    --auy-success-600: color-mix(in oklch, var(--auy-color-success) 85%, black);
+    --auy-success-700: color-mix(in oklch, var(--auy-color-success) 65%, black);
+    --auy-success-800: color-mix(in oklch, var(--auy-color-success) 45%, black);
+    --auy-success-900: color-mix(in oklch, var(--auy-color-success) 25%, black);
+    --auy-success-950: color-mix(in oklch, var(--auy-color-success) 10%, black);
+
+    --auy-warning-50:  color-mix(in oklch, var(--auy-color-warning) 10%, white);
+    --auy-warning-100: color-mix(in oklch, var(--auy-color-warning) 20%, white);
+    --auy-warning-200: color-mix(in oklch, var(--auy-color-warning) 35%, white);
+    --auy-warning-300: color-mix(in oklch, var(--auy-color-warning) 50%, white);
+    --auy-warning-400: color-mix(in oklch, var(--auy-color-warning) 70%, white);
+    --auy-warning-500: var(--auy-color-warning);
+    --auy-warning-600: color-mix(in oklch, var(--auy-color-warning) 85%, black);
+    --auy-warning-700: color-mix(in oklch, var(--auy-color-warning) 65%, black);
+    --auy-warning-800: color-mix(in oklch, var(--auy-color-warning) 45%, black);
+    --auy-warning-900: color-mix(in oklch, var(--auy-color-warning) 25%, black);
+    --auy-warning-950: color-mix(in oklch, var(--auy-color-warning) 10%, black);
+
+    --auy-error-50:  color-mix(in oklch, var(--auy-color-error) 10%, white);
+    --auy-error-100: color-mix(in oklch, var(--auy-color-error) 20%, white);
+    --auy-error-200: color-mix(in oklch, var(--auy-color-error) 35%, white);
+    --auy-error-300: color-mix(in oklch, var(--auy-color-error) 50%, white);
+    --auy-error-400: color-mix(in oklch, var(--auy-color-error) 70%, white);
+    --auy-error-500: var(--auy-color-error);
+    --auy-error-600: color-mix(in oklch, var(--auy-color-error) 85%, black);
+    --auy-error-700: color-mix(in oklch, var(--auy-color-error) 65%, black);
+    --auy-error-800: color-mix(in oklch, var(--auy-color-error) 45%, black);
+    --auy-error-900: color-mix(in oklch, var(--auy-color-error) 25%, black);
+    --auy-error-950: color-mix(in oklch, var(--auy-color-error) 10%, black);
+  }
+}

@@ -1,0 +1,19 @@
+@layer tokens {
+  [data-auy-theme="indigo"] {
+    --auy-color-primary: oklch(40% 0.22 270);
+    --auy-color-primary-hover: oklch(35% 0.22 270);
+    --auy-color-primary-active: oklch(32% 0.24 270);
+    --auy-color-primary-focus: oklch(45% 0.27 270 / 0.35);
+    --auy-color-primary-inverse: oklch(100% 0 0);
+    --auy-color-info: oklch(50% 0.2 250);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    [data-auy-theme="indigo"] {
+      --auy-color-primary: oklch(55% 0.22 270);
+      --auy-color-primary-hover: oklch(60% 0.22 270);
+      --auy-color-primary-active: oklch(55% 0.24 270);
+      --auy-color-primary-focus: oklch(60% 0.27 270 / 0.3);
+    }
+  }
+}

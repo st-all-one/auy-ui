@@ -1,0 +1,65 @@
+@layer tokens {
+  :root {
+    --auy-color-primary: oklch(50% 0.2 250);
+    --auy-color-primary-hover: oklch(45% 0.2 250);
+    --auy-color-primary-active: oklch(42% 0.22 250);
+    --auy-color-primary-focus: oklch(55% 0.25 250 / 0.35);
+    --auy-color-primary-inverse: oklch(100% 0 0);
+
+    --auy-color-secondary: oklch(45% 0.03 260);
+    --auy-color-secondary-hover: oklch(40% 0.03 260);
+    --auy-color-secondary-active: oklch(37% 0.03 260);
+    --auy-color-secondary-focus: oklch(45% 0.03 260 / 0.35);
+    --auy-color-secondary-inverse: oklch(100% 0 0);
+
+    --auy-color-surface: oklch(98% 0.005 260);
+    --auy-color-surface-alt: oklch(96% 0.005 260);
+    --auy-color-text: oklch(20% 0.03 260);
+    --auy-color-text-muted: oklch(45% 0.03 260);
+    --auy-color-border: oklch(0% 0 0 / 0.1);
+    --auy-color-overlay: oklch(0% 0 0 / 0.4);
+
+    --auy-color-error: oklch(55% 0.22 30);
+    --auy-color-success: oklch(55% 0.2 145);
+    --auy-color-warning: oklch(65% 0.2 85);
+    --auy-color-info: oklch(50% 0.2 250);
+    --auy-color-del: var(--auy-color-error);
+    --auy-color-ins: var(--auy-color-success);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --auy-color-surface: oklch(15% 0.02 260);
+      --auy-color-surface-alt: oklch(18% 0.02 260);
+      --auy-color-text: oklch(90% 0.01 260);
+      --auy-color-text-muted: oklch(60% 0.02 260);
+      --auy-color-border: oklch(100% 0 0 / 0.12);
+      --auy-color-primary: oklch(60% 0.2 250);
+      --auy-color-primary-hover: oklch(65% 0.2 250);
+      --auy-color-primary-active: oklch(60% 0.22 250);
+      --auy-color-primary-focus: oklch(65% 0.25 250 / 0.3);
+      --auy-color-overlay: oklch(0% 0 0 / 0.6);
+    }
+  }
+
+  @media (prefers-contrast: more) {
+    :root {
+      --auy-color-text: oklch(10% 0.05 260);
+      --auy-color-border: oklch(0% 0 0 / 0.5);
+      --auy-color-text-muted: oklch(35% 0.05 260);
+      --auy-color-surface: oklch(100% 0 0);
+      --auy-color-primary: oklch(40% 0.25 250);
+      --auy-color-primary-hover: oklch(35% 0.25 250);
+    }
+  }
+
+  @media (prefers-contrast: more) and (prefers-color-scheme: dark) {
+    :root {
+      --auy-color-text: oklch(95% 0 0);
+      --auy-color-border: oklch(100% 0 0 / 0.4);
+      --auy-color-text-muted: oklch(75% 0 0);
+      --auy-color-surface: oklch(0% 0 0);
+      --auy-color-primary: oklch(70% 0.25 250);
+    }
+  }
+}

@@ -1,8 +1,8 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
-@customElement('auy-file-input')
-export class AuyFileInput extends LitElement {
+@customElement('auy-comp-file-input')
+export class AuyCompFileInput extends LitElement {
   static override styles = css`
     @layer components {
       :host {
@@ -46,7 +46,7 @@ export class AuyFileInput extends LitElement {
       }
 
       .icon {
-        font-size: 2rem;
+        font-size: var(--auy-text-4xl);
         line-height: 1;
         opacity: 0.4;
       }
@@ -86,6 +86,11 @@ export class AuyFileInput extends LitElement {
         font-size: var(--auy-text-sm);
       }
 
+      .file-preview {
+        inline-size: 2rem; block-size: 2rem; border-radius: var(--auy-radius-sm);
+        object-fit: cover; flex-shrink: 0;
+      }
+
       .file-name {
         flex: 1;
         overflow: hidden;
@@ -108,7 +113,7 @@ export class AuyFileInput extends LitElement {
         block-size: 1.25rem;
         border-radius: var(--auy-radius-sm);
         cursor: pointer;
-        font-size: 1rem;
+        font-size: var(--auy-text-base);
         line-height: 1;
         opacity: 0.5;
         transition: opacity var(--auy-transition-fast);
@@ -147,12 +152,18 @@ export class AuyFileInput extends LitElement {
     }
   `;
 
+  static override shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+
   @property({ type: String }) label = '';
   @property({ type: Boolean }) multiple = false;
   @property({ type: String }) accept = '';
   @property({ type: Number }) maxSize = 5 * 1024 * 1024;
+  @property({ type: String }) action = '';
+  @property({ type: String }) headers = '';
+  @property({ type: Number }) chunkSize = 0;
 
   @state() private _files: File[] = [];
+  private _previewUrls: string[] = [];
   @state() private _dragover = false;
 
   private _handleChange(e: Event) {
@@ -173,15 +184,28 @@ export class AuyFileInput extends LitElement {
 
   private _addFiles(newFiles: File[]) {
     const filtered = newFiles.filter(f => f.size <= this.maxSize);
+    this._previewUrls.forEach(u => this._revokeUrl(u));
+    this._previewUrls = [];
+
     if (this.multiple) {
       this._files = [...this._files, ...filtered];
     } else {
       this._files = filtered.slice(0, 1);
     }
+
+    this._previewUrls = this._files.map(f => {
+      if (f.type.startsWith('image/')) {
+        return this._getFileUrl(f);
+      }
+      return '';
+    });
+
     this._dispatchChange();
   }
 
   private _removeFile(index: number) {
+    if (this._previewUrls[index]) this._revokeUrl(this._previewUrls[index]);
+    this._previewUrls = this._previewUrls.filter((_, i) => i !== index);
     this._files = this._files.filter((_, i) => i !== index);
     this._dispatchChange();
   }
@@ -200,11 +224,56 @@ export class AuyFileInput extends LitElement {
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   }
 
+  private _getFileUrl(file: File): string {
+    return URL.createObjectURL(file);
+  }
+
+  private _revokeUrl(url: string) {
+    URL.revokeObjectURL(url);
+  }
+
+  async upload(): Promise<Response | null> {
+    if (this._files.length === 0 || !this.action) return null;
+
+    const formData = new FormData();
+    for (const file of this._files) {
+      formData.append('files', file);
+    }
+
+    const headersObj: Record<string, string> = {};
+    if (this.headers) {
+      try { Object.assign(headersObj, JSON.parse(this.headers)); } catch { /* ignore */ }
+    }
+
+    try {
+      const res = await fetch(this.action, {
+        method: 'POST',
+        headers: headersObj,
+        body: formData,
+      });
+
+      this.dispatchEvent(new CustomEvent('upload-complete', {
+        detail: { response: res, ok: res.ok },
+        bubbles: true, composed: true,
+      }));
+
+      return res;
+    } catch (err) {
+      this.dispatchEvent(new CustomEvent('upload-error', {
+        detail: { error: err },
+        bubbles: true, composed: true,
+      }));
+      return null;
+    }
+  }
+
   get files(): File[] {
     return this._files;
   }
 
   clear() {
+    this._previewUrls.forEach(u => this._revokeUrl(u));
+    this._previewUrls = [];
     this._files = [];
     this._dispatchChange();
   }
@@ -234,6 +303,7 @@ export class AuyFileInput extends LitElement {
         <div part="files" class="files">
           ${this._files.map((f, i) => html`
             <div part="file-item" class="file-item">
+              ${this._previewUrls[i] ? html`<img part="file-preview" class="file-preview" src=${this._previewUrls[i]} alt="">` : nothing}
               <span part="file-name" class="file-name">${f.name}</span>
               <span part="file-size" class="file-size">${this._formatSize(f.size)}</span>
               <button part="remove" class="remove" @click=${() => this._removeFile(i)} aria-label="Remover ${f.name}">&times;</button>

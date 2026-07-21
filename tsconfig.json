@@ -15,7 +15,7 @@
     "forceConsistentCasingInFileNames": true,
     "verbatimModuleSyntax": true,
     "experimentalDecorators": true,
-    "types": ["vite/client"],
+    "types": ["vite/client", "mocha"],
     "paths": {
       "@/*": ["./src/*"]
     },

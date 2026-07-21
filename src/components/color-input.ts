@@ -95,8 +95,8 @@ type Format = 'hex' | 'rgb' | 'hsl' | 'oklch';
 
 /* ── Component ── */
 
-@customElement('auy-color-input')
-export class AuyColorInput extends LitElement {
+@customElement('auy-comp-color-input')
+export class AuyCompColorInput extends LitElement {
   static override styles = css`
     @layer components {
       :host { display: block; contain: layout style; }
@@ -200,7 +200,7 @@ export class AuyColorInput extends LitElement {
         border-radius: var(--auy-radius-sm);
         background: var(--auy-color-surface);
         cursor: pointer; touch-action: manipulation;
-        font-size: 1rem; line-height: 1;
+        font-size: var(--auy-text-base); line-height: 1;
         transition: background var(--auy-transition-fast);
         flex-shrink: 0;
       }
@@ -215,6 +215,8 @@ export class AuyColorInput extends LitElement {
       @media (prefers-reduced-motion: reduce) { .hsv-ring-indicator, .hsv-tri-crosshair { transition: none; } }
     }
   `;
+
+  static override shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   @property({ type: String }) value = '#3b82f6';
   @property({ type: String }) label = '';

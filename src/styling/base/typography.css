@@ -1,0 +1,194 @@
+@layer base {
+  :where(h1, h2, h3, h4, h5, h6) {
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--auy-color-text);
+    margin-block: 0.75em 0.25em;
+    text-wrap: balance;
+  }
+
+  :where(h1) {
+    font-size: clamp(var(--auy-text-3xl), calc(var(--auy-font-size-multiplier) * 1.5rem + 1.5vw), var(--auy-text-4xl));
+  }
+
+  :where(h2) {
+    font-size: clamp(var(--auy-text-2xl), calc(var(--auy-font-size-multiplier) * 1.25rem + 1.25vw), var(--auy-text-3xl));
+  }
+
+  :where(h3) {
+    font-size: clamp(var(--auy-text-xl), calc(var(--auy-font-size-multiplier) * 1rem + 1vw), var(--auy-text-2xl));
+  }
+
+  :where(h4) {
+    font-size: clamp(var(--auy-text-lg), calc(var(--auy-font-size-multiplier) * 0.875rem + 0.75vw), var(--auy-text-xl));
+  }
+
+  :where(h5) {
+    font-size: var(--auy-text-base);
+  }
+
+  :where(h6) {
+    font-size: var(--auy-text-sm);
+  }
+
+  :where(p) {
+    margin-block: 0 0.75em;
+    text-wrap: pretty;
+    overflow-wrap: break-word;
+  }
+
+  /* ── Lists ── */
+  :where(ul, ol) {
+    padding-inline-start: 1.5em;
+    margin-block: 0 0.75em;
+  }
+
+  :where(ul) {
+    list-style-type: var(--auy-list-marker, disc);
+  }
+
+  :where(ol) {
+    list-style-type: var(--auy-list-counter, decimal);
+  }
+
+  :where(li) {
+    margin-block: 0.25em;
+    padding-inline-start: 0.25em;
+  }
+
+  :where(li)::marker {
+    color: var(--auy-color-primary);
+    font-weight: 600;
+  }
+
+  :where(ol) ::marker {
+    color: var(--auy-color-text-muted);
+  }
+
+  :where(ul ul, ol ul) {
+    list-style-type: var(--auy-list-marker-nested, circle);
+  }
+
+  :where(ul ul ul, ol ul ul) {
+    list-style-type: var(--auy-list-marker-deep, square);
+  }
+
+  :where(ol ol, ul ol) {
+    list-style-type: var(--auy-list-counter-nested, lower-alpha);
+  }
+
+  :where(ol ol ol, ul ol ol) {
+    list-style-type: var(--auy-list-counter-deep, lower-roman);
+  }
+
+  :where(ul, ol) :where(ul, ol) {
+    margin-block: 0.25em;
+  }
+
+  /* ── Data-attribute marker presets ── */
+  [data-list-style="check"] { --auy-list-marker: '✓ '; }
+  [data-list-style="check"] ul,
+  [data-list-style="check"] ol ul { --auy-list-marker-nested: '✓ '; }
+  [data-list-style="check"] ul ul,
+  [data-list-style="check"] ol ul ul { --auy-list-marker-deep: '✓ '; }
+
+  [data-list-style="arrow"] { --auy-list-marker: '▸ '; }
+  [data-list-style="arrow"] ul,
+  [data-list-style="arrow"] ol ul { --auy-list-marker-nested: '▹ '; }
+  [data-list-style="arrow"] ul ul,
+  [data-list-style="arrow"] ol ul ul { --auy-list-marker-deep: '▪ '; }
+
+  [data-list-style="dash"] { --auy-list-marker: '— '; }
+  [data-list-style="dash"] ul,
+  [data-list-style="dash"] ol ul { --auy-list-marker-nested: '— '; }
+  [data-list-style="dash"] ul ul,
+  [data-list-style="dash"] ol ul ul { --auy-list-marker-deep: '— '; }
+
+  [data-list-style="star"] { --auy-list-marker: '★ '; }
+  [data-list-style="star"] ul,
+  [data-list-style="star"] ol ul { --auy-list-marker-nested: '☆ '; }
+  [data-list-style="star"] ul ul,
+  [data-list-style="star"] ol ul ul { --auy-list-marker-deep: '✦ '; }
+
+  /* ── Blockquote ── */
+  :where(blockquote) {
+    position: relative;
+    margin-block: 1.25em;
+    margin-inline: 0;
+    padding-block: 0.5em;
+    padding-inline: 1.25em 1em;
+    border-inline-start: 3px solid var(--auy-color-primary);
+    background: color-mix(in oklch, var(--auy-color-primary) 4%, transparent);
+    border-radius: 0 var(--auy-radius-sm) var(--auy-radius-sm) 0;
+    color: var(--auy-color-text);
+    font-style: italic;
+    line-height: 1.7;
+  }
+
+  :where(blockquote)::before {
+    content: '\201C';
+    position: absolute;
+    inset-block-start: 0.1em;
+    inset-inline-start: 0.35em;
+    font-size: 2.5em;
+    line-height: 1;
+    color: var(--auy-color-primary);
+    opacity: 0.2;
+    font-style: normal;
+    pointer-events: none;
+  }
+
+  :where(blockquote) p:last-of-type {
+    margin-block-end: 0;
+  }
+
+  :where(blockquote) footer {
+    display: block;
+    margin-block-start: 0.5em;
+    font-size: var(--auy-text-sm);
+    font-style: normal;
+    color: var(--auy-color-text-muted);
+  }
+
+  :where(blockquote) cite {
+    font-style: normal;
+  }
+
+  :where(blockquote) footer::before {
+    content: '\2014\00A0';
+  }
+
+  @media (forced-colors: active) {
+    :where(blockquote) {
+      border-inline-start: 3px solid CanvasText;
+    }
+  }
+
+  /* ── Small ── */
+  :where(small) {
+    font-size: 0.8em;
+    color: var(--auy-color-text-muted);
+    line-height: 1.5;
+  }
+
+  :where(p) small {
+    display: inline;
+  }
+
+  /* ── Definition lists ── */
+  :where(dl) {
+    margin-block: 0.75em;
+  }
+
+  :where(dt) {
+    font-weight: 600;
+    margin-block-start: 0.5em;
+    color: var(--auy-color-text);
+  }
+
+  :where(dd) {
+    margin-inline-start: 1.5em;
+    color: var(--auy-color-text-muted);
+    line-height: 1.6;
+  }
+}

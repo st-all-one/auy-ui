@@ -1,0 +1,18 @@
+@layer tokens {
+  [data-auy-theme="grey"] {
+    --auy-color-primary: oklch(45% 0.02 260);
+    --auy-color-primary-hover: oklch(40% 0.02 260);
+    --auy-color-primary-active: oklch(37% 0.04 260);
+    --auy-color-primary-focus: oklch(50% 0.07 260 / 0.35);
+    --auy-color-primary-inverse: oklch(100% 0 0);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    [data-auy-theme="grey"] {
+      --auy-color-primary: oklch(55% 0.02 260);
+      --auy-color-primary-hover: oklch(60% 0.02 260);
+      --auy-color-primary-active: oklch(55% 0.04 260);
+      --auy-color-primary-focus: oklch(60% 0.07 260 / 0.3);
+    }
+  }
+}

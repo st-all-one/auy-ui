@@ -1,0 +1,22 @@
+@layer utilities {
+  .content-visibility-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 200px;
+  }
+
+  .contain-layout-style {
+    contain: layout style;
+  }
+
+  .contain-strict {
+    contain: strict;
+  }
+
+  .contain-content {
+    contain: content;
+  }
+
+  .content-visibility-hidden {
+    content-visibility: hidden;
+  }
+}

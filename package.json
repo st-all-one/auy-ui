@@ -9,14 +9,13 @@
   "jsdelivr": "./dist/mod.min.js",
   "sideEffects": true,
   "exports": {
-    ".": {
-      "import": "./dist/mod.js",
-      "style": "./dist/auy-ui.css"
-    },
-    "./dist/*": "./dist/*",
-    "./styles/*": "./src/styles/*",
+    ".": "./dist/mod.js",
+    "./styling": "./dist/styling.js",
+    "./components": "./dist/components.js",
+    "./layouts": "./dist/layouts.js",
+    "./css": "./dist/auy-ui.css",
     "./mod.min": "./dist/mod.min.js",
-    "./css": "./dist/auy-ui.css"
+    "./dist/*": "./dist/*"
   },
   "files": [
     "dist",
@@ -28,15 +27,22 @@
     "build:css": "echo 'CSS is bundled via dist/auy-ui.css during npm run build'",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "test": "web-test-runner"
   },
   "dependencies": {
-    "lit": "^3.2.1",
     "@lit-labs/ssr": "^3.3.0",
-    "@lit-labs/ssr-client": "^1.1.7"
+    "@lit-labs/ssr-client": "^1.1.7",
+    "lit": "^3.2.1"
   },
   "devDependencies": {
     "@lit-labs/compiler": "^1.1.2",
+    "@open-wc/testing": "^5.0.0",
+    "@types/mocha": "^10.0.10",
+    "@web/dev-server-esbuild": "^2.0.0",
+    "@web/test-runner": "^1.0.0",
+    "@web/test-runner-playwright": "^1.0.0",
+    "axe-core": "^4.12.1",
     "lightningcss": "^1.29.2",
     "terser": "^5.49.0",
     "typescript": "^5.7.3",
@@ -64,5 +70,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true
   }
 }

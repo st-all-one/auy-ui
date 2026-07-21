@@ -7,6 +7,8 @@
   <title>auy-ui + HTMX — Integração Completa</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2'><path d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/><polyline points='9 22 9 12 15 12 15 22'/></svg>">
 
+  <meta http-equiv="Accept-CH" content="Sec-CH-Prefers-Reduced-Motion, Sec-CH-Prefers-Color-Scheme, Save-Data">
+
   <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfjkD3oYd1Mk7NBBk4" crossorigin="anonymous"></script>
 
   <script type="importmap">
@@ -276,9 +278,9 @@
 </head>
 <body hx-ext="response-targets">
 
-  <auy-app-layout theme="light" sidebar-width="280px" header-height="auto">
+  <auy-admin-layout theme="light" sidebar-width="280px" header-height="auto">
 
-    <auy-header slot="header" page-title="Pedidos — HTMX + auy-ui" sticky>
+    <auy-admin-header slot="header" page-title="Pedidos — HTMX + auy-ui" sticky>
       <span slot="logo">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -286,38 +288,34 @@
         </svg>
       </span>
       <nav slot="nav" aria-label="Navegação principal">
-        <auy-internal-button variant="ghost" size="sm">Dashboard</auy-internal-button>
-        <auy-internal-button variant="primary" size="sm">Pedidos</auy-internal-button>
-        <auy-internal-button variant="ghost" size="sm">Clientes</auy-internal-button>
-        <auy-internal-button variant="ghost" size="sm">Produtos</auy-internal-button>
+        <button variant="ghost sm">Dashboard</button>
+        <button variant="primary sm">Pedidos</button>
+        <button variant="ghost sm">Clientes</button>
+        <button variant="ghost sm">Produtos</button>
       </nav>
       <div slot="search">
         <input type="search" placeholder="Pesquisar pedidos..." aria-label="Pesquisar pedidos" style="padding:6px 12px;border:1px solid var(--auy-color-border);border-radius:var(--auy-radius-md);background:var(--auy-color-surface);color:var(--auy-color-text);font-size:0.875rem;font-family:inherit;">
       </div>
       <div slot="actions">
-        <auy-internal-tooltip text="Notificações">
-          <auy-internal-button variant="ghost" size="sm" aria-label="Notificações">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-          </auy-internal-button>
-        </auy-internal-tooltip>
-        <auy-internal-tooltip text="João Silva (Admin)">
-          <auy-internal-button variant="ghost" size="sm" aria-label="Perfil do usuário">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          </auy-internal-button>
-        </auy-internal-tooltip>
+        <button variant="ghost sm" aria-label="Notificações" data-tooltip="Notificações">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </button>
+        <button variant="ghost sm" aria-label="Perfil do usuário" data-tooltip="João Silva (Admin)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
       </div>
-    </auy-header>
+    </auy-admin-header>
 
-    <auy-sidebar slot="sidebar" app-title="Auy Store" aria-label="Navegação lateral" items='[{"label":"Dashboard","href":"/dashboard","icon":"📊"},{"label":"Pedidos","href":"/orders","icon":"📋","active":true},{"label":"Clientes","href":"/customers","icon":"👥"},{"label":"Produtos","href":"/products","icon":"📦"},{"label":"Relatórios","href":"/reports","icon":"📈"}]'>
-    </auy-sidebar>
+    <auy-admin-sidebar slot="sidebar" app-title="Auy Store" aria-label="Navegação lateral" items='[{"label":"Dashboard","href":"/dashboard","icon":"📊"},{"label":"Pedidos","href":"/orders","icon":"📋","active":true},{"label":"Clientes","href":"/customers","icon":"👥"},{"label":"Produtos","href":"/products","icon":"📦"},{"label":"Relatórios","href":"/reports","icon":"📈"}]'>
+    </auy-admin-sidebar>
 
-    <auy-main-section slot="main" id="main-content" header="Gerenciamento de Pedidos" columns="single" role="main">
+    <auy-admin-main-section slot="main" id="main-content" header="Gerenciamento de Pedidos" columns="single" role="main">
 
       <div slot="header-actions">
-        <auy-internal-button variant="primary" size="sm" hx-get="/orders/new" hx-target="#modal-container" hx-trigger="click" hx-swap="innerHTML" _="on htmx:afterOnLoad wait 10ms then call #orderModal.open.setAttribute('open', '')">
+        <button variant="primary sm" hx-get="/orders/new" hx-target="#modal-container" hx-trigger="click" hx-swap="innerHTML" _="on htmx:afterOnLoad wait 10ms then call #orderModal.showModal()">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           Novo Pedido
-        </auy-internal-button>
+        </button>
       </div>
 
       <div class="content-section">
@@ -335,21 +333,19 @@
               hx-swap="innerHTML"
               hx-indicator="#search-spinner"
             >
-            <auy-internal-spinner id="search-spinner" size="20" class="htmx-indicator" role="status"></auy-internal-spinner>
+            <span class="spinner htmx-indicator" style="--spinner-size: 20px" role="status" aria-label="Carregando"></span>
           </div>
-          <auy-internal-tooltip text="Recarregar lista">
-            <auy-internal-button
-              variant="ghost"
-              size="sm"
-              hx-get="/orders"
-              hx-target="#orders-table-container"
-              hx-swap="innerHTML"
-              hx-indicator="#table-indicator"
-              aria-label="Recarregar lista de pedidos"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-            </auy-internal-button>
-          </auy-internal-tooltip>
+          <button
+            variant="ghost sm"
+            hx-get="/orders"
+            hx-target="#orders-table-container"
+            hx-swap="innerHTML"
+            hx-indicator="#table-indicator"
+            aria-label="Recarregar lista de pedidos"
+            data-tooltip="Recarregar lista"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          </button>
         </div>
 
         <div id="orders-table-container" class="table-container">
@@ -382,37 +378,35 @@
                 <td data-label="Total">R$ 2.450,00</td>
                 <td data-label="Status">
                   <span class="badge-cell">
-                    <auy-internal-badge variant="success">Entregue</auy-internal-badge>
+                    <span data-badge data-badge-variant="success">Entregue</span>
                   </span>
                 </td>
                 <td data-label="Ações">
                   <div class="action-buttons">
-                    <auy-internal-tooltip text="Visualizar detalhes">
-                      <auy-internal-button
-                        variant="ghost" size="sm"
-                        hx-get="/orders/4521"
-                        hx-target="#modal-container"
-                        hx-swap="innerHTML"
-                        _="on click call #orderModal.open.setAttribute('open', '')"
-                        aria-label="Visualizar pedido 4521"
-                      >
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                      </auy-internal-button>
-                    </auy-internal-tooltip>
-                    <auy-internal-tooltip text="Excluir pedido">
-                      <auy-internal-button
-                        variant="ghost" size="sm"
-                        hx-delete="/orders/4521"
-                        hx-target="#orders-table-body"
-                        hx-swap="innerHTML"
-                        hx-confirm="Tem certeza que deseja excluir o pedido #4521?"
-                        hx-indicator="#table-indicator"
-                        class="htmx-indicator"
-                        aria-label="Excluir pedido 4521"
-                      >
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                      </auy-internal-button>
-                    </auy-internal-tooltip>
+                    <button
+                      variant="ghost sm"
+                      hx-get="/orders/4521"
+                      hx-target="#modal-container"
+                      hx-swap="innerHTML"
+                      _="on click call #orderModal.showModal()"
+                      aria-label="Visualizar pedido 4521"
+                      data-tooltip="Visualizar detalhes"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                    <button
+                      variant="ghost sm"
+                      hx-delete="/orders/4521"
+                      hx-target="#orders-table-body"
+                      hx-swap="innerHTML"
+                      hx-confirm="Tem certeza que deseja excluir o pedido #4521?"
+                      hx-indicator="#table-indicator"
+                      class="htmx-indicator"
+                      aria-label="Excluir pedido 4521"
+                      data-tooltip="Excluir pedido"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -423,21 +417,17 @@
                 <td data-label="Total">R$ 890,00</td>
                 <td data-label="Status">
                   <span class="badge-cell">
-                    <auy-internal-badge variant="warning">Pendente</auy-internal-badge>
+                    <span data-badge data-badge-variant="warning">Pendente</span>
                   </span>
                 </td>
                 <td data-label="Ações">
                   <div class="action-buttons">
-                    <auy-internal-tooltip text="Visualizar detalhes">
-                      <auy-internal-button variant="ghost" size="sm" hx-get="/orders/4520" hx-target="#modal-container" hx-swap="innerHTML" _="on click call #orderModal.open.setAttribute('open', '')" aria-label="Visualizar pedido 4520">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                      </auy-internal-button>
-                    </auy-internal-tooltip>
-                    <auy-internal-tooltip text="Excluir pedido">
-                      <auy-internal-button variant="ghost" size="sm" hx-delete="/orders/4520" hx-target="#orders-table-body" hx-swap="innerHTML" hx-confirm="Tem certeza que deseja excluir o pedido #4520?" hx-indicator="#table-indicator" class="htmx-indicator" aria-label="Excluir pedido 4520">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                      </auy-internal-button>
-                    </auy-internal-tooltip>
+                    <button variant="ghost sm" hx-get="/orders/4520" hx-target="#modal-container" hx-swap="innerHTML" _="on click call #orderModal.showModal()" aria-label="Visualizar pedido 4520" data-tooltip="Visualizar detalhes">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                    <button variant="ghost sm" hx-delete="/orders/4520" hx-target="#orders-table-body" hx-swap="innerHTML" hx-confirm="Tem certeza que deseja excluir o pedido #4520?" hx-indicator="#table-indicator" class="htmx-indicator" aria-label="Excluir pedido 4520" data-tooltip="Excluir pedido">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -448,45 +438,41 @@
                 <td data-label="Total">R$ 5.320,00</td>
                 <td data-label="Status">
                   <span class="badge-cell">
-                    <auy-internal-badge variant="info">Processando</auy-internal-badge>
+                    <span data-badge data-badge-variant="info">Processando</span>
                   </span>
                 </td>
                 <td data-label="Ações">
                   <div class="action-buttons">
-                    <auy-internal-tooltip text="Visualizar detalhes">
-                      <auy-internal-button variant="ghost" size="sm" hx-get="/orders/4519" hx-target="#modal-container" hx-swap="innerHTML" _="on click call #orderModal.open.setAttribute('open', '')" aria-label="Visualizar pedido 4519">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                      </auy-internal-button>
-                    </auy-internal-tooltip>
-                    <auy-internal-tooltip text="Excluir pedido">
-                      <auy-internal-button variant="ghost" size="sm" hx-delete="/orders/4519" hx-target="#orders-table-body" hx-swap="innerHTML" hx-confirm="Tem certeza que deseja excluir o pedido #4519?" hx-indicator="#table-indicator" class="htmx-indicator" aria-label="Excluir pedido 4519">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                      </auy-internal-button>
-                    </auy-internal-tooltip>
+                    <button variant="ghost sm" hx-get="/orders/4519" hx-target="#modal-container" hx-swap="innerHTML" _="on click call #orderModal.showModal()" aria-label="Visualizar pedido 4519" data-tooltip="Visualizar detalhes">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                    <button variant="ghost sm" hx-delete="/orders/4519" hx-target="#orders-table-body" hx-swap="innerHTML" hx-confirm="Tem certeza que deseja excluir o pedido #4519?" hx-indicator="#table-indicator" class="htmx-indicator" aria-label="Excluir pedido 4519" data-tooltip="Excluir pedido">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                    </button>
                   </div>
                 </td>
               </tr>
             </tbody>
           </table>
           <div id="table-indicator" class="htmx-indicator" style="text-align:center;padding:var(--auy-space-md);">
-            <auy-internal-spinner size="28" role="status" aria-label="Carregando"></auy-internal-spinner>
+            <span class="spinner" style="--spinner-size: 28px" role="status" aria-label="Carregando"></span>
           </div>
         </div>
 
         <div class="pagination" hx-target="#orders-table-body" hx-swap="innerHTML" hx-indicator="#table-indicator">
-          <auy-internal-button variant="secondary" size="sm" hx-get="/orders?page=1" hx-trigger="click" aria-label="Primeira página">
+          <button variant="secondary sm" hx-get="/orders?page=1" hx-trigger="click" aria-label="Primeira página">
             &laquo; Primeira
-          </auy-internal-button>
-          <auy-internal-button variant="secondary" size="sm" hx-get="/orders?page=1" hx-trigger="click" aria-label="Página anterior">
+          </button>
+          <button variant="secondary sm" hx-get="/orders?page=1" hx-trigger="click" aria-label="Página anterior">
             &lsaquo; Anterior
-          </auy-internal-button>
+          </button>
           <span class="page-info" aria-live="polite">Página 1 de 12</span>
-          <auy-internal-button variant="secondary" size="sm" hx-get="/orders?page=2" hx-trigger="click" aria-label="Próxima página">
+          <button variant="secondary sm" hx-get="/orders?page=2" hx-trigger="click" aria-label="Próxima página">
             Próxima &rsaquo;
-          </auy-internal-button>
-          <auy-internal-button variant="secondary" size="sm" hx-get="/orders?page=12" hx-trigger="click" aria-label="Última página">
+          </button>
+          <button variant="secondary sm" hx-get="/orders?page=12" hx-trigger="click" aria-label="Última página">
             Última &raquo;
-          </auy-internal-button>
+          </button>
         </div>
 
         <h2 style="margin-top:var(--auy-space-xl);">Novo Pedido</h2>
@@ -532,20 +518,20 @@
           </div>
           <div class="form-actions">
             <span id="form-indicator" class="htmx-indicator">
-              <auy-internal-spinner size="18" role="status" aria-label="Enviando"></auy-internal-spinner>
+              <span class="spinner" style="--spinner-size: 18px" role="status" aria-label="Enviando"></span>
             </span>
-            <auy-internal-button variant="secondary" size="md" type="reset">Limpar</auy-internal-button>
-            <auy-internal-button variant="primary" size="md" type="submit">
+            <button variant="secondary md" type="reset">Limpar</button>
+            <button variant="primary md" type="submit">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:4px"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
               Criar Pedido
-            </auy-internal-button>
+            </button>
           </div>
         </form>
       </div>
 
-    </auy-main-section>
+    </auy-admin-main-section>
 
-    <auy-footer slot="footer" copyright="© 2026 Auy Store. Todos os direitos reservados." year="2026" columns="4">
+    <auy-admin-footer slot="footer" copyright="© 2026 Auy Store. Todos os direitos reservados." year="2026" columns="4">
       <div slot="nav" style="font-size:0.875rem;">
         <strong style="display:block;margin-bottom:0.5rem;">Links</strong>
         <a href="#" style="display:block;color:var(--auy-color-text-muted);text-decoration:none;padding:2px 0;">Início</a>
@@ -562,33 +548,32 @@
         <span style="display:block;color:var(--auy-color-text-muted);padding:2px 0;">Entrega Expressa</span>
         <span style="display:block;color:var(--auy-color-text-muted);padding:2px 0;">Garantia Estendida</span>
       </div>
-    </auy-footer>
+    </auy-admin-footer>
 
-  </auy-app-layout>
+  </auy-admin-layout>
 
   <div id="modal-container" hidden aria-hidden="true"></div>
 
-  <auy-internal-modal id="orderModal" aria-labelledby="modal-title-slot">
-  </auy-internal-modal>
+  <dialog id="orderModal"></dialog>
 
   <div class="toast-container" aria-live="polite" aria-atomic="true" id="toast-container">
-    <auy-internal-toast id="successToast" variant="success" dismissible>
+    <auy-comp-toast id="successToast" variant="success" dismissible>
       <span slot="icon">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
       </span>
       Operação realizada com sucesso!
-    </auy-internal-toast>
-    <auy-internal-toast id="errorToast" variant="error" dismissible>
+    </auy-comp-toast>
+    <auy-comp-toast id="errorToast" variant="error" dismissible>
       <span slot="icon">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg>
       </span>
       Erro ao processar a requisição.
-    </auy-internal-toast>
-    <auy-internal-toast id="infoToast" variant="info" dismissible>
+    </auy-comp-toast>
+    <auy-comp-toast id="infoToast" variant="info" dismissible>
       <span slot="icon">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15v-2h2v2zm2-4h-2V7h2v6z"/></svg>
       </span>
-    </auy-internal-toast>
+    </auy-comp-toast>
   </div>
 
   <script type="module">
@@ -606,7 +591,7 @@
     document.body.addEventListener('htmx:afterSwap', function(evt) {
       if (evt.detail.target.id === 'orders-table-body') {
         var modal = document.getElementById('orderModal');
-        modal.open = false;
+        modal.close();
       }
     });
 
@@ -631,11 +616,11 @@
     document.body.addEventListener('htmx:afterOnLoad', function(evt) {
       if (evt.detail.requestConfig.path.startsWith('/orders/new')) {
         var modal = document.getElementById('orderModal');
-        modal.open = true;
+        modal.showModal();
       }
       if (evt.detail.requestConfig.path.match(/^\/orders\/\d+$/) && evt.detail.requestConfig.verb === 'get') {
         var modal = document.getElementById('orderModal');
-        modal.open = true;
+        modal.showModal();
       }
     });
 

@@ -1,0 +1,50 @@
+@layer base {
+  :where(.card) {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    border-radius: var(--auy-radius-md);
+    background: var(--auy-color-surface);
+    color: var(--auy-color-text);
+    overflow: hidden;
+    contain: layout style;
+  }
+
+  :where(.card--elevated) { box-shadow: var(--auy-shadow-sm); }
+  :where(.card--outlined) { border: 1px solid var(--auy-color-border); }
+
+  :where(.card > img, .card > picture) {
+    display: block;
+    inline-size: 100%;
+    grid-row: 1;
+  }
+
+  :where(.card__body) {
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    gap: var(--auy-space-md);
+    padding: var(--auy-space-md);
+  }
+
+  :where(.card__title) { font-size: var(--auy-text-lg); font-weight: 600; margin: 0; }
+  :where(.card__description) { font-size: var(--auy-text-sm); color: var(--auy-color-text-muted); margin: 0; }
+  :where(.card__footer) { display: flex; gap: var(--auy-space-sm); margin-block-start: auto; }
+
+  :where(a.card) {
+    text-decoration: none; color: inherit; cursor: pointer; touch-action: manipulation;
+  }
+  :where(a.card:hover) { scale: 1.02; transform-origin: center center; }
+  :where(a.card:focus-visible) { outline: 0.125rem solid var(--auy-color-primary); outline-offset: 0.125rem; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :where(a.card) { transition: scale var(--auy-transition, 200ms ease); }
+  }
+
+  @media (forced-colors: active) {
+    :where(a.card) { border: 1px solid ButtonText; }
+  }
+
+  @media print {
+    :where(.card) { break-inside: avoid; }
+  }
+}

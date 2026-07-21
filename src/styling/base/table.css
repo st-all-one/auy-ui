@@ -1,0 +1,121 @@
+@layer base {
+  :where(table) {
+    inline-size: 100%;
+    border-collapse: collapse;
+    font-size: var(--auy-text-sm);
+    line-height: 1.5;
+    container-type: inline-size;
+  }
+
+  :where(caption) {
+    caption-side: bottom;
+    padding-block-start: 0.5em;
+    font-size: var(--auy-text-sm);
+    color: var(--auy-color-text-muted);
+    text-align: start;
+  }
+
+  :where(th, td) {
+    padding: 0.625rem 1rem;
+    text-align: start;
+    border-block-end: 1px solid var(--auy-color-border);
+  }
+
+  :where(th) {
+    font-weight: 600;
+    color: var(--auy-color-text-muted);
+    font-size: 0.85em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: color-mix(in oklch, var(--auy-color-border) 15%, transparent);
+  }
+
+  :where(tbody tr):hover {
+    background: color-mix(in oklch, var(--auy-color-border) 10%, transparent);
+  }
+
+  :where(tbody tr):nth-child(even) {
+    background: color-mix(in oklch, var(--auy-color-border) 5%, transparent);
+  }
+
+  :where(tbody tr):nth-child(even):hover {
+    background: color-mix(in oklch, var(--auy-color-border) 15%, transparent);
+  }
+
+  :where(tfoot) :where(th, td) {
+    background: color-mix(in oklch, var(--auy-color-border) 18%, transparent);
+    font-weight: 600;
+    border-block-end: none;
+    border-block-start: 1px solid var(--auy-color-border);
+  }
+
+  :where(thead) { position: sticky; inset-block-start: 0; z-index: 1; }
+
+  /* ── Responsive: card layout on small containers ── */
+  @container (max-width: 600px) {
+    :where(thead) { display: none; }
+    :where(tbody tr) { display: flex; flex-direction: column; padding: 0.5rem 0; border-block-end: 1px solid var(--auy-color-border); }
+    :where(td) { display: flex; padding: 0.25rem 1rem; border-block-end: none; }
+    :where(td)::before { content: attr(data-label); font-weight: 600; color: var(--auy-color-text-muted); font-size: var(--auy-text-xs); min-inline-size: 7.5rem; flex-shrink: 0; }
+  }
+
+  /* ── Empty state ── */
+  :where(.table-empty) {
+    text-align: center;
+    padding: var(--auy-space-xl) var(--auy-space-md);
+    color: var(--auy-color-text-muted);
+    font-size: var(--auy-text-sm);
+  }
+  :where(.table-empty__icon) {
+    font-size: var(--auy-text-3xl);
+    display: block;
+    margin-block-end: var(--auy-space-sm);
+    opacity: 0.4;
+    line-height: 1;
+  }
+
+  :where(th[aria-sort]) {
+    cursor: pointer;
+    user-select: none;
+    padding-inline-end: 1.5em;
+    position: relative;
+  }
+  :where(th[aria-sort]:hover) {
+    color: var(--auy-color-primary);
+  }
+  :where(th[aria-sort])::after {
+    position: absolute;
+    inset-inline-end: 0.5em;
+    font-size: 0.7em;
+    line-height: 1;
+    color: var(--auy-color-text-muted);
+  }
+  :where(th[aria-sort="ascending"])::after {
+    content: "▲";
+    color: var(--auy-color-primary);
+  }
+  :where(th[aria-sort="descending"])::after {
+    content: "▼";
+    color: var(--auy-color-primary);
+  }
+  :where(th[aria-sort="none"])::after {
+    content: "⇅";
+    opacity: 0.4;
+  }
+
+  @media (forced-colors: active) {
+    :where(th, td) {
+      border-color: CanvasText;
+    }
+  }
+
+  @media print {
+    :where(th) {
+      background: none;
+      border-block-end: 2px solid #000;
+    }
+    :where(td) {
+      border-block-end: 1px solid #ccc;
+    }
+  }
+}

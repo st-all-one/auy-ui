@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en" class="auy-demo-page">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="robots" content="index, follow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" content="#4f6ef7">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' ws://localhost:*">
+  <link rel="canonical" href="/elements-demo.html">
+  <title>auy-ui — Elements Demo</title>
+  <link rel="stylesheet" href="/src/styling/auy-ui.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="modulepreload" href="/src/styling/auy-ui.css" as="style">
+  <link rel="prefetch" href="/components-demo.html" as="document">
+  <!-- Script loading strategies:
+     <script defer src="/analytics.js"></script>
+     <script async src="/widget.js"></script>
+     <link rel="modulepreload" href="/src/module.js">
+-->
+  <style>
+    .auy-demo-page {
+      --demo-max-width: clamp(40rem, 80vw, 75rem);
+    }
+    .demo-wrapper {
+      max-inline-size: var(--demo-max-width);
+      margin-inline: auto;
+      padding-block: var(--auy-space-2xl);
+      padding-inline: var(--auy-space-lg);
+    }
+    .demo-page-title {
+      font-size: var(--auy-text-3xl);
+      font-weight: var(--auy-font-weight-bold);
+      margin-block: 0 var(--auy-space-xs);
+    }
+    .demo-page-subtitle {
+      color: var(--auy-color-text-muted);
+      font-size: var(--auy-text-lg);
+      margin-block: 0 var(--auy-space-2xl);
+    }
+    .demo-section {
+      margin-block: var(--auy-space-2xl);
+    }
+    .demo-section-title {
+      font-size: var(--auy-text-xl);
+      font-weight: var(--auy-font-weight-semibold);
+      border-block-end: 1px solid var(--auy-color-border);
+      padding-block-end: var(--auy-space-xs);
+      margin-block: 0 var(--auy-space-lg);
+      color: var(--auy-color-primary);
+    }
+    .demo-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(clamp(14rem, 30vw, 22rem), 1fr));
+      gap: var(--auy-space-lg);
+    }
+    .demo-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(clamp(10rem, 20vw, 16rem), 1fr));
+      gap: var(--auy-space-md);
+    }
+    .demo-flex {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--auy-space-md);
+      align-items: center;
+    }
+    .demo-flex-col {
+      display: flex;
+      flex-direction: column;
+      gap: var(--auy-space-sm);
+    }
+    .demo-card {
+      border: 1px solid var(--auy-color-border);
+      border-radius: var(--auy-radius-md);
+      padding: var(--auy-space-md);
+      background: var(--auy-color-surface);
+    }
+    .demo-label {
+      font-size: var(--auy-text-xs);
+      font-weight: var(--auy-font-weight-semibold);
+      color: var(--auy-color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: block;
+      margin-block-end: var(--auy-space-2xs);
+    }
+    .demo-inline-label {
+      font-size: var(--auy-text-xs);
+      font-weight: var(--auy-font-weight-semibold);
+      color: var(--auy-color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .demo-visual {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      inline-size: 2rem;
+      block-size: 2rem;
+      border-radius: var(--auy-radius-sm);
+      background: color-mix(in oklch, var(--auy-color-primary) 10%, transparent);
+      font-size: var(--auy-text-xs);
+      font-weight: var(--auy-font-weight-bold);
+      color: var(--auy-color-primary);
+    }
+    .demo-tag {
+      display: inline-block;
+      font-size: var(--auy-text-xs);
+      font-family: var(--auy-font-mono);
+      padding: 0.125em 0.375em;
+      border-radius: var(--auy-radius-sm);
+      background: color-mix(in oklch, var(--auy-color-border) 30%, transparent);
+      color: var(--auy-color-text-muted);
+    }
+    .demo-bg-alt {
+      background: var(--auy-color-surface-alt);
+      border-radius: var(--auy-radius-md);
+      padding: var(--auy-space-md);
+    }
+    .demo-nav-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--auy-space-sm);
+    }
+    nav.demo-nav-list {
+      padding: var(--auy-space-sm) var(--auy-space-md);
+      background: color-mix(in oklch, var(--auy-color-border) 8%, transparent);
+      border-radius: var(--auy-radius-md);
+    }
+    .demo-ruby {
+      font-size: 1.25em;
+    }
+    .demo-phrase span {
+      margin-inline-end: 0.25em;
+    }
+    .demo-table-wrap {
+      overflow-x: auto;
+    }
+    .demo-form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--auy-space-md);
+      align-items: end;
+    }
+    .demo-form-row > * {
+      flex: 1 1 clamp(10rem, 20vw, 16rem);
+    }
+    .demo-meter-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--auy-space-sm);
+    }
+    .demo-details-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--auy-space-xs);
+    }
+    .demo-edits del,
+    .demo-edits ins {
+      margin-inline: 0.125em;
+    }
+  </style>
+</head>
+<body>
+
+<a href="#demo-main" class="skip-link">Pular para conteúdo principal</a>
+<noscript>
+  <div style="background:var(--auy-color-error);color:var(--auy-color-primary-inverse);padding:var(--auy-space-sm) var(--auy-space-md);text-align:center;font-size:var(--auy-text-sm)">
+    Esta página requer JavaScript para funcionalidades interativas.
+  </div>
+</noscript>
+
+<div class="demo-wrapper" id="demo-main" itemscope itemtype="https://schema.org/WebPage">
+
+  <header>
+    <h1 class="demo-page-title">auy-ui Elements Demo</h1>
+    <p class="demo-page-subtitle">Every standard HTML element styled with <code>auy-ui.css</code></p>
+  </header>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       2. Sectioning Elements
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="demo-section" aria-labelledby="sec-sectioning">
+    <h2 class="demo-section-title" id="sec-sectioning">Sectioning Elements</h2>
+
+    <div class="demo-grid-2">
+      <div class="demo-card">
+        <span class="demo-label">&lt;header&gt;</span>
+        <header style="padding:var(--auy-space-sm);background:color-mix(in oklch,var(--auy-color-primary) 6%,transparent);border-radius:var(--auy-radius-sm)">
+          <p style="margin:0"><strong>Site Header</strong> — logo, tagline</p>
+        </header>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;footer&gt;</span>
+        <footer style="padding:var(--auy-space-sm);background:color-mix(in oklch,var(--auy-color-border) 10%,transparent);border-radius:var(--auy-radius-sm)">
+          <p style="margin:0;color:var(--auy-color-text-muted)">&copy; 2026 auy-ui</p>
+        </footer>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;main&gt;</span>
+        <main style="padding:var(--auy-space-sm);border:1px dashed var(--auy-color-border);border-radius:var(--auy-radius-sm)">
+          <p style="margin:0">Primary page content lives here.</p>
+        </main>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;nav&gt;</span>
+        <nav class="demo-nav-list" aria-label="Demo navigation">
+          <a href="#">Home</a>
+          <a href="#">About</a>
+          <a href="#">Contact</a>
+        </nav>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;article&gt;</span>
+        <article style="padding:var(--auy-space-sm);border:1px solid var(--auy-color-border);border-radius:var(--auy-radius-sm)">
+          <h3 style="margin-block:0 0.25em">Article Title</h3>
+          <p style="margin:0">Self-contained composition.</p>
+        </article>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;section&gt;</span>
+        <section style="padding:var(--auy-space-sm);border:1px solid var(--auy-color-border);border-radius:var(--auy-radius-sm)">
+          <h3 style="margin-block:0 0.25em">Section Heading</h3>
+          <p style="margin:0">Thematic grouping of content.</p>
+        </section>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;aside&gt;</span>
+        <aside style="padding:var(--auy-space-sm);background:color-mix(in oklch,var(--auy-color-border) 8%,transparent);border-radius:var(--auy-radius-sm)">
+          <p style="margin:0;font-size:var(--auy-text-sm)">Sidebar / tangential content.</p>
+        </aside>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;hgroup&gt;</span>
+        <hgroup>
+          <h3 style="margin:0">Chapter Title</h3>
+          <p style="margin:0">Subtitle for the chapter</p>
+        </hgroup>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;address&gt;</span>
+        <address>
+          123 Demo Street<br>
+          San Francisco, CA
+        </address>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       3. Heading Elements
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="demo-section" aria-labelledby="sec-headings" itemscope itemtype="https://schema.org/Article">
+    <h2 class="demo-section-title" id="sec-headings" itemprop="name">Heading Elements</h2>
+
+    <div itemprop="description" class="demo-bg-alt" style="display:flex;flex-direction:column;gap:0">
+      <h1>&lt;h1&gt; — Level 1 heading</h1>
+      <h2>&lt;h2&gt; — Level 2 heading</h2>
+      <h3>&lt;h3&gt; — Level 3 heading</h3>
+      <h4>&lt;h4&gt; — Level 4 heading</h4>
+      <h5>&lt;h5&gt; — Level 5 heading</h5>
+      <h6>&lt;h6&gt; — Level 6 heading</h6>
+    </div>
+
+    <div class="demo-card" style="margin-block-start:var(--auy-space-md)">
+      <span class="demo-label">&lt;hgroup&gt; with h1 + p subtitle</span>
+      <hgroup>
+        <h1 style="margin:0">The Great Adventure</h1>
+        <p>A novel in three parts</p>
+      </hgroup>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       4. Text-level Semantics – Basic
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="demo-section" aria-labelledby="sec-text-basic">
+    <h2 class="demo-section-title" id="sec-text-basic">Text-level Semantics — Basic</h2>
+
+    <div class="demo-grid-3">
+      <div class="demo-card"><span class="demo-label">&lt;p&gt;</span><p style="margin:0">Paragraph of text with a sentence that wraps nicely.</p></div>
+      <div class="demo-card"><span class="demo-label">&lt;span&gt;</span><p style="margin:0">Inline <span style="color:var(--auy-color-primary)">span element</span> inside a paragraph.</p></div>
+      <div class="demo-card"><span class="demo-label">&lt;br&gt;</span><p style="margin:0">Line one<br>Line two</p></div>
+      <div class="demo-card"><span class="demo-label">&lt;wbr&gt;</span><p style="margin:0">super<wbr>long<wbr>word<wbr>example</p></div>
+      <div class="demo-card"><span class="demo-label">&lt;strong&gt;</span><p style="margin:0"><strong>Strong importance</strong></p></div>
+      <div class="demo-card"><span class="demo-label">&lt;em&gt;</span><p style="margin:0"><em>Emphasized text</em></p></div>
+      <div class="demo-card"><span class="demo-label">&lt;b&gt;</span><p style="margin:0"><b>Bold</b> (stylistic offset)</p></div>
+      <div class="demo-card"><span class="demo-label">&lt;i&gt;</span><p style="margin:0"><i>Italic</i> (alternate voice)</p></div>
+      <div class="demo-card"><span class="demo-label">&lt;u&gt;</span><p style="margin:0"><u>Underlined</u> text</p></div>
+      <div class="demo-card"><span class="demo-label">&lt;s&gt;</span><p style="margin:0"><s>Strikethrough</s> text</p></div>
+      <div class="demo-card"><span class="demo-label">&lt;mark&gt;</span><p style="margin:0"><mark>Highlighted</mark> text</p></div>
+      <div class="demo-card"><span class="demo-label">&lt;small&gt;</span><p style="margin:0"><small>Small / side-comment</small></p></div>
+      <div class="demo-card"><span class="demo-label">&lt;sub&gt; / &lt;sup&gt;</span><p style="margin:0">H<sub>2</sub>O &amp; E=mc<sup>2</sup></p></div>
+      <div class="demo-card"><span class="demo-label">&lt;abbr&gt;</span><p style="margin:0"><abbr title="Cascading Style Sheets">CSS</abbr></p></div>
+      <div class="demo-card"><span class="demo-label">&lt;dfn&gt;</span><p style="margin:0"><dfn>HTML</dfn> is the standard markup language.</p></div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       5. Text-level Semantics – Code & Technical
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="demo-section" aria-labelledby="sec-text-code">
+    <h2 class="demo-section-title" id="sec-text-code">Text-level Semantics — Code &amp; Technical</h2>
+
+    <div class="demo-grid-3">
+      <div class="demo-card">
+        <span class="demo-label">&lt;code&gt;</span>
+        <p style="margin:0">Use <code>const x = 42;</code> inline.</p>
+      </div>
+      <div class="demo-card">
+        <span class="demo-label">&lt;kbd&gt;</span>
+        <p style="margin:0">Press <kbd>Ctrl</kbd> + <kbd>C</kbd> to copy.</p>
+      </div>
+      <div class="demo-card">
+        <span class="demo-label">&lt;samp&gt;</span>
+        <p style="margin:0">Output: <samp>Hello, world!</samp></p>
+      </div>
+      <div class="demo-card">
+        <span class="demo-label">&lt;var&gt;</span>
+        <p style="margin:0"><var>responseTime</var> = 42ms</p>
+      </div>
+      <div class="demo-card" style="grid-column:1/-1">
+        <span class="demo-label">&lt;pre&gt; with &lt;code&gt;</span>
+<pre><code>function greet(name) {
+  return `Hello, ${name}!`;
+}
+
+console.log(greet('World'));</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       6. Text-level Semantics – Time & Data
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="demo-section" aria-labelledby="sec-text-time">
+    <h2 class="demo-section-title" id="sec-text-time">Text-level Semantics — Time &amp; Data</h2>
+
+    <div class="demo-grid-3">
+      <div class="demo-card">
+        <span class="demo-label">&lt;time&gt;</span>
+        <p style="margin:0">Published <time datetime="2026-07-21">July 21, 2026</time></p>
+      </div>
+      <div class="demo-card">
+        <span class="demo-label">&lt;data&gt;</span>
+        <p style="margin:0">Product <data value="P2847">Widget Pro</data></p>
+      </div>
+      <div class="demo-card">
+        <span class="demo-label">&lt;del&gt; / &lt;ins&gt;</span>
+        <p style="margin:0"><del>Old price</del> <ins>New price</ins></p>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       7. Grouping Content
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="demo-section" aria-labelledby="sec-grouping">
+    <h2 class="demo-section-title" id="sec-grouping">Grouping Content</h2>
+
+    <div class="demo-grid-2">
+      <div class="demo-card">
+        <span class="demo-label">&lt;div&gt;</span>
+        <div style="padding:var(--auy-space-sm);background:color-mix(in oklch,var(--auy-color-primary) 6%,transparent);border-radius:var(--auy-radius-sm)">
+          Generic container
+        </div>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;hr&gt;</span>
+        <p style="margin:0">Above the rule</p>
+        <hr>
+        <p style="margin:0">Below the rule</p>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;pre&gt;</span>
+<pre>line 1: status = OK
+line 2: count = 42</pre>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;blockquote&gt;</span>
+          <blockquote>
+            <p>The only way to do great work is to love what you do.</p>
+            <footer>Steve <cite>Jobs</cite></footer>
+          </blockquote>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;figure&gt; + &lt;figcaption&gt;</span>
+        <figure style="margin:0">
+          <div style="inline-size:100%;block-size:6rem;background:linear-gradient(135deg,var(--auy-color-primary),var(--auy-color-info));border-radius:var(--auy-radius-sm);display:flex;align-items:center;justify-content:center;color:var(--auy-color-primary-inverse);font-weight:var(--auy-font-weight-bold)">
+            Sample Graphic
+          </div>
+          <figcaption>A caption describing the figure</figcaption>
+        </figure>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;ul&gt; / &lt;ol&gt; / &lt;li&gt;</span>
+        <p style="font-size:var(--auy-text-sm);font-weight:var(--auy-font-weight-semibold);margin:0 0 var(--auy-space-xs)">Unordered</p>
+        <ul style="margin:0">
+          <li>Item alpha</li>
+          <li>Item beta</li>
+          <li>Item gamma</li>
+        </ul>
+        <p style="font-size:var(--auy-text-sm);font-weight:var(--auy-font-weight-semibold);margin:var(--auy-space-sm) 0 var(--auy-space-xs)">Ordered</p>
+        <ol style="margin:0">
+          <li>First step</li>
+          <li>Second step</li>
+          <li>Third step</li>
+        </ol>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label"><code>data-list-style</code> presets</span>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--auy-space-sm)">
+          <div>
+            <p style="font-size:var(--auy-text-xs);color:var(--auy-color-text-muted);margin:0 0 var(--auy-space-2xs)">check</p>
+            <ul data-list-style="check" style="margin:0">
+              <li>Verified</li>
+              <li>Approved</li>
+              <li>Completed</li>
+            </ul>
+          </div>
+          <div>
+            <p style="font-size:var(--auy-text-xs);color:var(--auy-color-text-muted);margin:0 0 var(--auy-space-2xs)">arrow</p>
+            <ul data-list-style="arrow" style="margin:0">
+              <li>Next step</li>
+              <li>Forward</li>
+              <li>Navigate</li>
+            </ul>
+          </div>
+          <div>
+            <p style="font-size:var(--auy-text-xs);color:var(--auy-color-text-muted);margin:0 0 var(--auy-space-2xs)">dash</p>
+            <ul data-list-style="dash" style="margin:0">
+              <li>Meta item</li>
+              <li>Note item</li>
+              <li>Reference</li>
+            </ul>
+          </div>
+          <div>
+            <p style="font-size:var(--auy-text-xs);color:var(--auy-color-text-muted);margin:0 0 var(--auy-space-2xs)">star</p>
+            <ul data-list-style="star" style="margin:0">
+              <li>Featured</li>
+              <li>Highlight</li>
+              <li>Priority</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;dl&gt; / &lt;dt&gt; / &lt;dd&gt;</span>
+        <dl style="margin:0">
+          <dt>HTML</dt>
+          <dd>HyperText Markup Language</dd>
+          <dt>CSS</dt>
+          <dd>Cascading Style Sheets</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       8. Links and Navigation
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="demo-section" aria-labelledby="sec-links">
+    <h2 class="demo-section-title" id="sec-links">Links and Navigation</h2>
+
+    <div class="demo-grid-2">
+      <div class="demo-card">
+        <span class="demo-label">&lt;a&gt; — default state</span>
+        <p style="margin:0"><a href="#">This is a link (default)</a></p>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;a&gt; — visited state</span>
+        <p style="margin:0"><a href="https://example.com/visited-demo">Visited link</a></p>
+      </div>
+
+      <div class="demo-card" style="grid-column:1/-1">
+        <span class="demo-label">&lt;search&gt; + &lt;nav&gt;</span>
+        <search aria-label="Buscar">
+          <input type="search" placeholder="Pesquisar…" aria-label="Termo de busca">
+          <button type="button">Buscar</button>
+          <div aria-live="polite" aria-atomic="true" style="font-size:var(--auy-text-xs);color:var(--auy-color-text-muted);inline-size:100%"></div>
+        </search>
+        <nav aria-label="Demo site nav" style="margin-block-start:var(--auy-space-sm)">
+          <ul class="demo-nav-list">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Help</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       9. Embedded Content
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="demo-section" aria-labelledby="sec-embedded" itemscope itemtype="https://schema.org/ImageGallery">
+    <h2 class="demo-section-title" id="sec-embedded" itemprop="name">Embedded Content</h2>
+
+    <div class="demo-grid-2">
+      <div class="demo-card">
+        <span class="demo-label">&lt;img&gt; with <code>srcset</code> + <code>sizes</code></span>
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200' viewBox='0 0 400 200'%3E%3Crect width='400' height='200' fill='%23e2e8f0'/%3E%3Ctext x='200' y='105' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif' font-size='14'%3E400w (fallback)%3C/text%3E%3C/svg%3E"
+             srcset="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200' viewBox='0 0 400 200'%3E%3Crect width='400' height='200' fill='%23e2e8f0'/%3E%3Ctext x='200' y='105' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif' font-size='14'%3E400w%3C/text%3E%3C/svg%3E 400w,
+               data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23e2e8f0'/%3E%3Ctext x='400' y='205' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif' font-size='16'%3E800w%3C/text%3E%3C/svg%3E 800w,
+               data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='600' viewBox='0 0 1200 600'%3E%3Crect width='1200' height='600' fill='%23e2e8f0'/%3E%3Ctext x='600' y='305' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif' font-size='20'%3E1200w%3C/text%3E%3C/svg%3E 1200w"
+             sizes="(max-width: 40rem) 100vw, 50vw"
+             alt="Exemplo de resolução com srcset e sizes"
+             loading="lazy"
+             decoding="async"
+             style="border-radius:var(--auy-radius-md);inline-size:100%">
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;figure&gt; + &lt;figcaption&gt; with image</span>
+        <figure style="margin:0">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='180' viewBox='0 0 400 180'%3E%3Crect width='400' height='180' fill='%23e2e8f0'/%3E%3Ctext x='200' y='95' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif' font-size='14'%3EFigure Image%3C/text%3E%3C/svg%3E"
+               alt="Figure sample"
+               loading="lazy"
+               decoding="async">
+          <figcaption>An image inside a figure with descriptive caption.</figcaption>
+        </figure>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;picture&gt; with &lt;source&gt; (art direction)</span>
+        <picture>
+          <source media="(min-width: 50rem)" srcset="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='200' viewBox='0 0 800 200'%3E%3Crect width='800' height='200' fill='%23e2e8f0'/%3E%3Ctext x='400' y='105' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif' font-size='16'%3ELarge: 800×200%3C/text%3E%3C/svg%3E">
+          <source media="(min-width: 30rem)" srcset="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='250' viewBox='0 0 600 250'%3E%3Crect width='600' height='250' fill='%23e2e8f0'/%3E%3Ctext x='300' y='130' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif' font-size='14'%3EMedium: 600×250%3C/text%3E%3C/svg%3E">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%23e2e8f0'/%3E%3Ctext x='200' y='155' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif' font-size='14'%3ESmall: 400×300%3C/text%3E%3C/svg%3E"
+               alt="Exemplo de art direction com picture element"
+               loading="lazy"
+               decoding="async"
+               style="border-radius:var(--auy-radius-sm);inline-size:100%">
+        </picture>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;audio&gt; + &lt;track&gt; (captions)</span>
+        <audio controls src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=">
+          <track kind="captions" src="data:text/vtt,WEBVTT%0A%0A00%3A00%3A00.000%20--%3E%2000%3A00%3A05.000%0A%5BIntrodução%5D" srclang="pt" label="Português" default>
+          Seu navegador não suporta áudio.
+        </audio>
+        <span class="demo-tag" style="margin-block-start:var(--auy-space-xs)">Silent placeholder with captions track</span>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;video&gt; placeholder</span>
+        <video controls style="background:oklch(0% 0 0 / 0.05);border-radius:var(--auy-radius-md);min-block-size:8rem;display:flex;align-items:center;justify-content:center">
+          <div style="padding:var(--auy-space-lg);text-align:center;color:var(--auy-color-text-muted)">Video placeholder</div>
+        </video>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;object&gt; + &lt;embed&gt; (fallback)</span>
+        <object data="data:application/pdf,fallback" type="application/pdf" style="inline-size:100%;min-block-size:4rem;border:1px dashed var(--auy-color-border);border-radius:var(--auy-radius-sm);display:flex;align-items:center;justify-content:center">
+          <embed src="data:application/pdf,fallback" type="application/pdf" style="display:none">
+          <p style="margin:0;font-size:var(--auy-text-sm);color:var(--auy-color-text-muted)">Visualizador de PDF não disponível.</p>
+        </object>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;canvas&gt; with fallback</span>
+        <canvas width="300" height="100" aria-label="Gráfico de exemplo" style="border:1px solid var(--auy-color-border);border-radius:var(--auy-radius-sm);inline-size:100%;block-size:auto">
+          <p style="margin:0;font-size:var(--auy-text-sm);color:var(--auy-color-text-muted)">Gráfico de barras mostrando crescimento trimestral. Seu navegador não suporta canvas.</p>
+        </canvas>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       10. Tabular Data
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="demo-section" aria-labelledby="sec-table">
+    <h2 class="demo-section-title" id="sec-table">Tabular Data</h2>
+
+    <div class="demo-table-wrap">
+      <table>
+        <caption>Q3 2026 Sales Summary</caption>
+        <colgroup>
+          <col>
+          <col>
+          <col>
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Units</th>
+            <th>Revenue</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Widget Pro</td>
+            <td>342</td>
+            <td>$17,100</td>
+          </tr>
+          <tr>
+            <td>Gadget X</td>
+            <td>189</td>
+            <td>$9,450</td>
+          </tr>
+          <tr>
+            <td>Accessory Kit</td>
+            <td>521</td>
+            <td>$10,420</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>Total</th>
+            <td>1,052</td>
+            <td>$36,970</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       11. Forms
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="demo-section" aria-labelledby="sec-forms" itemscope itemtype="https://schema.org/WebPageElement">
+    <h2 class="demo-section-title" id="sec-forms" itemprop="name">Forms</h2>
+
+    <form onsubmit="event.preventDefault()" style="container-type:initial">
+
+      <fieldset>
+        <legend>Text Inputs</legend>
+        <div class="demo-form-row">
+          <div>
+            <label for="demo-text">Text</label>
+            <input type="text" id="demo-text" placeholder="Enter text" value="Sample text">
+          </div>
+          <div>
+            <label for="demo-email">Email</label>
+            <input type="email" id="demo-email" placeholder="user@example.com" inputmode="email" autocomplete="email">
+          </div>
+          <div>
+            <label for="demo-password">Password</label>
+            <input type="password" id="demo-password" placeholder="••••••••" minlength="8" autocomplete="current-password">
+          </div>
+          <div>
+            <label for="demo-number">Number</label>
+            <input type="number" id="demo-number" placeholder="42.00" min="0" max="100" step="0.01" inputmode="decimal">
+          </div>
+          <div>
+            <label for="demo-tel">Telefone</label>
+            <input type="tel" id="demo-tel" placeholder="(11) 99999-0000" pattern="\(?\d{2}\)?\s?\d{4,5}-?\d{4}" inputmode="tel" autocomplete="tel">
+          </div>
+          <div>
+            <label for="demo-url">URL</label>
+            <input type="url" id="demo-url" placeholder="https://example.com" inputmode="url">
+          </div>
+          <div>
+            <label for="demo-search">Search</label>
+            <input type="search" id="demo-search" placeholder="Search…" inputmode="search">
+          </div>
+            <div class="form-group">
+            <label for="demo-cpf">CPF <span class="required-indicator">*</span></label>
+            <input type="text" id="demo-cpf" placeholder="000.000.000-00" pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}" inputmode="numeric" maxlength="14" required
+                   aria-describedby="cpf-help" aria-errormessage="cpf-error">
+            <span id="cpf-help" class="form-help">Apenas números, formato 000.000.000-00</span>
+            <span id="cpf-error" class="form-error" role="alert"><span class="form-error-icon">✕</span> CPF inválido — use 11 dígitos</span>
+          </div>
+            <div class="form-group">
+            <label for="demo-cep">CEP</label>
+            <input type="text" id="demo-cep" placeholder="00000-000" pattern="\d{5}-?\d{3}" inputmode="numeric" maxlength="9"
+                   aria-describedby="cep-help" aria-errormessage="cep-error">
+            <span id="cep-help" class="form-help">Formato 00000-000</span>
+            <span id="cep-error" class="form-error" role="alert"><span class="form-error-icon">✕</span> CEP inválido</span>
+          </div>
+          <div>
+            <label for="demo-disabled">Desabilitado (sem teclado virtual)</label>
+            <input type="text" id="demo-disabled" placeholder="Apenas leitura" value="Campo desabilitado" disabled inputmode="none">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Choice Inputs — Native (<code>accent-color</code>)</legend>
+        <div class="demo-flex">
+          <label><input type="checkbox" checked> Checked</label>
+          <label><input type="checkbox"> Unchecked</label>
+          <label><input type="checkbox" disabled> Disabled</label>
+          <label><input type="radio" name="demo-radio" checked> Radio A</label>
+          <label><input type="radio" name="demo-radio"> Radio B</label>
+          <label><input type="radio" name="demo-radio" disabled> Disabled</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Choice Inputs — Custom (<code>[data-custom]</code> + <code>.control</code>)</legend>
+        <div class="demo-flex">
+          <label><input type="checkbox" data-custom checked><span class="control"></span> Checked</label>
+          <label><input type="checkbox" data-custom><span class="control"></span> Unchecked</label>
+          <label><input type="checkbox" data-custom disabled><span class="control"></span> Disabled</label>
+          <label><input type="radio" name="demo-radio-custom" data-custom checked><span class="control"></span> Opção A</label>
+          <label><input type="radio" name="demo-radio-custom" data-custom><span class="control"></span> Opção B</label>
+          <label><input type="radio" name="demo-radio-custom" data-custom disabled><span class="control"></span> Disabled</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Switch (<code>role="switch"</code>)</legend>
+        <div class="demo-flex">
+          <label><input type="checkbox" role="switch" checked> Notificações</label>
+          <label><input type="checkbox" role="switch"> Modo escuro</label>
+          <label><input type="checkbox" role="switch" disabled checked> Wi-Fi</label>
+          <label><input type="checkbox" role="switch" disabled> Bluetooth</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Specialized Inputs</legend>
+        <div class="demo-form-row">
+          <div>
+            <label for="demo-color">Color</label>
+            <div style="display:flex;align-items:center;gap:var(--auy-space-sm)">
+              <input type="color" id="demo-color" value="#4f6ef7">
+              <code class="demo-tag">#4f6ef7</code>
+            </div>
+          </div>
+          <div>
+            <label for="demo-range">Range (accent-color, fill automático)</label>
+            <input type="range" id="demo-range" min="0" max="100" value="65">
+          </div>
+          <div>
+            <label for="demo-range-disabled">Range (disabled)</label>
+            <input type="range" id="demo-range-disabled" min="0" max="100" value="30" disabled>
+          </div>
+          <div>
+            <label for="demo-date">Date</label>
+            <input type="date" id="demo-date" value="2026-07-21">
+          </div>
+          <div>
+            <label for="demo-datetime-local">Datetime-local</label>
+            <input type="datetime-local" id="demo-datetime-local" value="2026-07-21T12:00">
+          </div>
+          <div>
+            <label for="demo-month">Month</label>
+            <input type="month" id="demo-month" value="2026-07">
+          </div>
+          <div>
+            <label for="demo-week">Week</label>
+            <input type="week" id="demo-week" value="2026-W30">
+          </div>
+          <div>
+            <label for="demo-time">Time</label>
+            <input type="time" id="demo-time" value="14:30">
+          </div>
+          <div>
+            <label style="font-weight:500;margin-block-end:0.25rem">File (dropzone)</label>
+            <label class="file-dropzone">
+              <input type="file">
+              <span class="file-dropzone__icon">
+                <svg viewBox="0 0 24 24"><path d="M12 16V4M8 8l4-4 4 4"/><path d="M20 16v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2"/></svg>
+              </span>
+              <span class="file-dropzone__text">Arraste arquivos aqui</span>
+              <span class="file-dropzone__hint">ou clique para selecionar</span>
+              <span class="file-dropzone__action">Escolher arquivo</span>
+            </label>
+          </div>
+          <div>
+            <label style="font-weight:500;margin-block-end:0.25rem">File (inline)</label>
+            <label class="file-dropzone" data-file-style="inline">
+              <input type="file">
+              <span class="file-dropzone__icon">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+              </span>
+              <span class="file-dropzone__text">Anexar documento</span>
+              <span class="file-dropzone__action">Selecionar</span>
+            </label>
+          </div>
+        </div>
+
+      <fieldset>
+        <legend>Buttons</legend>
+        <div class="demo-flex">
+          <input type="submit" value="Submit">
+          <input type="reset" value="Reset">
+          <input type="button" value="Button">
+          <button type="button">&lt;button&gt; element</button>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>&lt;datalist&gt; with search</legend>
+        <div>
+          <label for="demo-browser">Choose a browser</label>
+          <input type="search" id="demo-browser" list="browsers" placeholder="Type to filter…">
+          <datalist id="browsers">
+            <option value="Chrome">
+            <option value="Firefox">
+            <option value="Safari">
+            <option value="Edge">
+            <option value="Opera">
+            <option value="Brave">
+          </datalist>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>&lt;select&gt; with &lt;optgroup&gt;</legend>
+        <div class="demo-grid-2">
+          <div>
+            <label for="demo-select">Single</label>
+            <select id="demo-select">
+              <optgroup label="Fruits">
+                <option>Apple</option>
+                <option>Banana</option>
+                <option>Cherry</option>
+              </optgroup>
+              <optgroup label="Vegetables">
+                <option>Carrot</option>
+                <option>Broccoli</option>
+                <option>Spinach</option>
+              </optgroup>
+            </select>
+          </div>
+          <div>
+            <label for="demo-select-multi">Multiple (Ctrl+click)</label>
+            <select id="demo-select-multi" multiple>
+              <optgroup label="Frontend">
+                <option>HTML</option>
+                <option>CSS</option>
+                <option>JavaScript</option>
+              </optgroup>
+              <optgroup label="Backend">
+                <option>Python</option>
+                <option>Rust</option>
+                <option>Go</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>&lt;textarea&gt;</legend>
+        <div>
+          <label for="demo-textarea">Message</label>
+          <textarea id="demo-textarea" placeholder="Write your message…" rows="4"></textarea>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>&lt;output&gt;</legend>
+        <div class="demo-flex">
+          <output name="demo-output" style="padding:var(--auy-space-sm) var(--auy-space-md);border:1px solid var(--auy-color-border);border-radius:var(--auy-radius-md)">42</output>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>&lt;progress&gt;</legend>
+        <div class="demo-flex-col">
+          <div>
+            <span class="demo-inline-label">Determinate</span>
+            <progress value="0.65" max="1">65%</progress>
+          </div>
+          <div>
+            <span class="demo-inline-label">Indeterminate</span>
+            <progress>Loading…</progress>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>&lt;meter&gt;</legend>
+        <div class="demo-meter-group">
+          <div>
+            <span class="demo-inline-label">Optimum</span>
+            <meter value="0.8" min="0" max="1" low="0.3" high="0.7" optimum="0.9">80%</meter>
+          </div>
+          <div>
+            <span class="demo-inline-label">Suboptimum</span>
+            <meter value="0.5" min="0" max="1" low="0.3" high="0.7" optimum="0.9">50%</meter>
+          </div>
+          <div>
+            <span class="demo-inline-label">Low</span>
+            <meter value="0.15" min="0" max="1" low="0.3" high="0.7" optimum="0.9">15%</meter>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>&lt;fieldset&gt; with &lt;legend&gt;</legend>
+        <p style="margin:0">This entire form uses <code>fieldset</code> and <code>legend</code> wrappers.</p>
+      </fieldset>
+
+    </form>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       12. Interactive Elements
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="demo-section" aria-labelledby="sec-interactive">
+    <h2 class="demo-section-title" id="sec-interactive">Interactive Elements</h2>
+
+    <div class="demo-grid-2">
+      <div class="demo-card">
+        <span class="demo-label">&lt;details&gt; with &lt;summary&gt;</span>
+        <details ontoggle="this.setAttribute('aria-expanded', this.open)" aria-expanded="false">
+          <summary>Click to expand</summary>
+          <p style="margin:0">Hidden content revealed by the user.</p>
+        </details>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;details&gt; named group (accordion)</span>
+        <div class="demo-details-group">
+          <details name="demo-accordion" ontoggle="this.setAttribute('aria-expanded', this.open)" aria-expanded="false">
+            <summary>Section A</summary>
+            <p style="margin:0">Content for A.</p>
+          </details>
+          <details name="demo-accordion" ontoggle="this.setAttribute('aria-expanded', this.open)" aria-expanded="false">
+            <summary>Section B</summary>
+            <p style="margin:0">Content for B.</p>
+          </details>
+          <details name="demo-accordion" ontoggle="this.setAttribute('aria-expanded', this.open)" aria-expanded="false">
+            <summary>Section C</summary>
+            <p style="margin:0">Content for C.</p>
+          </details>
+        </div>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;dialog&gt; (ver demo completa no fim da página)</span>
+        <p style="margin:0;font-size:var(--auy-text-sm);color:var(--auy-color-text-muted)">A seção "Dialog com Header/Body/Footer + Tamanhos" ao final da página demonstra <code>showModal()</code>, <code>data-size</code> e <code>role="alertdialog"</code>.</p>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;menu&gt; (toolbar)</span>
+        <menu>
+          <li><button type="button" variant="ghost">✂️ Copiar</button></li>
+          <li><button type="button" variant="ghost">📋 Colar</button></li>
+          <li><button type="button" variant="ghost">🗑️ Remover</button></li>
+        </menu>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">Popover API (<code>popover</code>) + <code>data-position</code></span>
+        <div style="display:flex;flex-wrap:wrap;gap:var(--auy-space-sm);align-items:center">
+          <button type="button" popovertarget="info-popover" popovertargetaction="toggle">Topo (padrão)</button>
+          <button type="button" popovertarget="bottom-popover" popovertargetaction="toggle" variant="secondary">Base</button>
+        </div>
+        <p style="margin:var(--auy-space-sm) 0 0;font-size:var(--auy-text-xs);color:var(--auy-color-text-muted)">
+          Popover aparece em posições previsíveis da viewport. Para ancorar ao gatilho, use <code>anchor-name</code>/<code>position-anchor</code> (CSS Anchor Positioning) ou JS.
+        </p>
+        <div id="info-popover" popover="auto">
+          <h4 style="margin:0 0 var(--auy-space-xs);font-size:var(--auy-text-sm)">Topo</h4>
+          <p style="margin:0;font-size:var(--auy-text-sm)">Posição padrão: topo-centro. Use <code>data-position="bottom"</code> para base, <code>"start"</code>/<code>"end"</code> para laterais.</p>
+        </div>
+        <div id="bottom-popover" popover="auto" data-position="bottom">
+          <h4 style="margin:0 0 var(--auy-space-xs);font-size:var(--auy-text-sm)">Base</h4>
+          <p style="margin:0;font-size:var(--auy-text-sm)">Popover ancorado na base da viewport via <code>data-position="bottom"</code>. Auto-dismiss ao clicar fora.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       13. Text-level Semantics – Misc
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="demo-section" aria-labelledby="sec-text-misc">
+    <h2 class="demo-section-title" id="sec-text-misc">Text-level Semantics — Misc</h2>
+
+    <div class="demo-grid-3">
+      <div class="demo-card">
+        <span class="demo-label">&lt;ruby&gt; &lt;rt&gt; &lt;rp&gt;</span>
+        <p style="margin:0">
+          <ruby class="demo-ruby">
+            漢<rp>(</rp><rt>kan</rt><rp>)</rp>
+            字<rp>(</rp><rt>ji</rt><rp>)</rp>
+          </ruby>
+        </p>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;bdi&gt;</span>
+        <p style="margin:0">User <bdi>الرحمن</bdi> logged in.</p>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;bdo&gt;</span>
+        <p style="margin:0"><bdo dir="rtl">This text is reversed.</bdo></p>
+      </div>
+
+      <div class="demo-card" style="grid-column:1/-1">
+        <span class="demo-label">&lt;slot&gt;</span>
+        <p style="margin:0;color:var(--auy-color-text-muted)">
+          <code>&lt;slot&gt;</code> is used inside Web Components as a placeholder.
+          It is not rendered in static HTML without a shadow DOM.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       14. Inline Quotes & Citations
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="demo-section" aria-labelledby="sec-quotes">
+    <h2 class="demo-section-title" id="sec-quotes">Inline Quotes &amp; Citations</h2>
+
+    <div class="demo-grid-2">
+      <div class="demo-card">
+        <span class="demo-label">&lt;q&gt;</span>
+        <p style="margin:0">The philosopher said <q cite="https://example.com">I think, therefore I am</q>.</p>
+      </div>
+
+      <div class="demo-card">
+        <span class="demo-label">&lt;cite&gt;</span>
+        <p style="margin:0">Read more in <cite>The Art of War</cite> by Sun Tzu.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       15. Edits
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="demo-section" aria-labelledby="sec-edits">
+    <h2 class="demo-section-title" id="sec-edits">Edits</h2>
+
+    <div class="demo-card demo-edits">
+      <span class="demo-label">&lt;ins&gt; and &lt;del&gt;</span>
+      <p style="margin:0">
+        The price is <del datetime="2026-07-20" cite="#price-update">$19.99</del>
+        <ins datetime="2026-07-21" cite="#price-update">$24.99</ins>.
+      </p>
+      <p style="margin:var(--auy-space-sm) 0 0;font-size:var(--auy-text-sm);color:var(--auy-color-text-muted)">
+        The <del>struck text</del> indicates removal; <ins>underlined text</ins> indicates insertion.
+        Both accept <code>datetime</code> and <code>cite</code> attributes.
+      </p>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       16. Utilities: Grid & Container
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="demo-section" aria-labelledby="sec-utils">
+    <h2 class="demo-section-title" id="sec-utils">Utilities: Grid &amp; Container</h2>
+
+    <div class="demo-card">
+      <span class="demo-label"><code>[data-container]</code></span>
+      <p>Wrap content in a centered max-width box:</p>
+      <div data-container="sm" style="border:1px dashed var(--auy-color-border);padding:var(--auy-space-md);text-align:center;border-radius:var(--auy-radius-md)">
+        <code>data-container="sm"</code> — max-width 640px
+      </div>
+      <div data-container="md" style="border:1px dashed var(--auy-color-border);padding:var(--auy-space-md);margin-block-start:var(--auy-space-sm);text-align:center;border-radius:var(--auy-radius-md)">
+        <code>data-container="md"</code> — max-width 768px
+      </div>
+    </div>
+
+    <div class="demo-card" style="margin-block-start:var(--auy-space-lg)">
+      <span class="demo-label"><code>[data-grid]</code></span>
+      <p>Attribute-based responsive grid. Use <code>data-grid="auto"</code> for auto-fit or fixed numbers:</p>
+
+      <div data-grid="3" style="margin-block:var(--auy-space-md)">
+        <div style="border:1px solid var(--auy-color-border);padding:var(--auy-space-md);border-radius:var(--auy-radius-md);text-align:center;background:color-mix(in oklch, var(--auy-color-primary) 6%, transparent)">Item 1</div>
+        <div style="border:1px solid var(--auy-color-border);padding:var(--auy-space-md);border-radius:var(--auy-radius-md);text-align:center;background:color-mix(in oklch, var(--auy-color-primary) 6%, transparent)">Item 2</div>
+        <div style="border:1px solid var(--auy-color-border);padding:var(--auy-space-md);border-radius:var(--auy-radius-md);text-align:center;background:color-mix(in oklch, var(--auy-color-primary) 6%, transparent)">Item 3</div>
+      </div>
+
+      <p style="font-size:var(--auy-text-sm);color:var(--auy-color-text-muted)"><code>data-grid="3"</code> with <code>data-col="span-2"</code>:</p>
+      <div data-grid="3">
+        <div data-col="full" style="border:1px solid var(--auy-color-border);padding:var(--auy-space-md);border-radius:var(--auy-radius-md);text-align:center;background:color-mix(in oklch, var(--auy-color-primary) 6%, transparent)">Full width</div>
+        <div style="border:1px solid var(--auy-color-border);padding:var(--auy-space-md);border-radius:var(--auy-radius-md);text-align:center;background:color-mix(in oklch, var(--auy-color-primary) 6%, transparent)">Item</div>
+        <div style="border:1px solid var(--auy-color-border);padding:var(--auy-space-md);border-radius:var(--auy-radius-md);text-align:center;background:color-mix(in oklch, var(--auy-color-primary) 6%, transparent)">Item</div>
+        <div style="border:1px solid var(--auy-color-border);padding:var(--auy-space-md);border-radius:var(--auy-radius-md);text-align:center;background:color-mix(in oklch, var(--auy-color-primary) 6%, transparent)">Item</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- SESSION: NOVOS PADRÕES ENRIQUECIDOS (REF/ + REF_SERVICES/) -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section">
+    <h3 class="demo-section-title">Media Player (<code>.media-player</code> + <code>&lt;audio&gt;</code> nativo)</h3>
+    <div class="media-player">
+      <div class="media-player__header">
+        <span class="media-player__title">Narração do Conteúdo</span>
+        <div class="media-player__wave" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+      <audio controls src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA="
+             accent-color="var(--auy-color-primary)"></audio>
+      <details class="media-player__transcript">
+        <summary>Exibir texto da narração</summary>
+        <p style="font-size:var(--auy-text-sm);color:var(--auy-color-text-muted);margin:var(--auy-space-sm) 0 0">
+          Transcrição completa do áudio para acessibilidade WCAG AAA.
+        </p>
+      </details>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <h3 class="demo-section-title">Figure com <code>data-type</code> + <code>.hover-zoom</code> + <code>.figure-actions</code></h3>
+    <div class="demo-grid-2">
+      <figure data-type="image" class="hover-zoom">
+        <div style="block-size:120px;background:linear-gradient(135deg,var(--auy-color-primary),var(--auy-color-info));border-radius:var(--auy-radius-md);display:flex;align-items:center;justify-content:center;color:#fff;font-size:2rem">🖼</div>
+        <figcaption>
+          <span>Imagem com <code>hover-zoom</code> e actions</span>
+          <div class="figure-actions">
+            <a href="#" onclick="event.preventDefault()">Download</a>
+            <a href="#" onclick="event.preventDefault()">Abrir</a>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure data-type="pdf">
+        <div style="block-size:120px;background:linear-gradient(135deg,#fdf2e9,#fadbd8);border-radius:var(--auy-radius-md);display:flex;align-items:center;justify-content:center;color:#c0392b;font-size:2rem">📄</div>
+        <figcaption>
+          <span>Documento PDF — fallback visual</span>
+          <div class="figure-actions">
+            <a href="#" onclick="event.preventDefault()">Visualizar</a>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure data-type="spreadsheet">
+        <div style="block-size:120px;background:linear-gradient(135deg,#e8f8f5,#d1f2eb);border-radius:var(--auy-radius-md);display:flex;align-items:center;justify-content:center;color:#28b463;font-size:2rem">📊</div>
+        <figcaption>
+          <span>Planilha de dados</span>
+          <div class="figure-actions">
+            <a href="#" onclick="event.preventDefault()">Download</a>
+          </div>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <h3 class="demo-section-title">Transparency Badge (<code>.transparency-badge</code>)</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:var(--auy-space-md)">
+      <div class="transparency-badge">
+        <span class="fa-spin-hover">🔄</span>
+        <span>Atualizado em: <time datetime="2026-07-21T14:30:00">21/07/2026 14:30</time></span>
+      </div>
+      <div class="transparency-badge">
+        <span class="fa-spin-hover">👤</span>
+        <span>Última edição por: Maria Silva</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <h3 class="demo-section-title">Snippet Preview — SEO (<code>.snippet-preview</code>)</h3>
+    <div class="snippet-preview">
+      <div class="snippet-preview__url">https://www.exemplo.gov.br/pagina-exemplo</div>
+      <div class="snippet-preview__title">Título da Página — Exemplo Governamental</div>
+      <div class="snippet-preview__desc">Descrição da página que aparece nos resultados de busca. Recomenda-se entre 120 e 160 caracteres para uma boa exibição nos mecanismos de busca.</div>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <h3 class="demo-section-title">Character Counter + Progress Bar (<code>.char-counter</code> + <code>.char-progress</code>)</h3>
+    <div style="max-inline-size:400px">
+      <label style="font-size:var(--auy-text-sm);font-weight:500;color:var(--auy-color-text);display:block;margin-block-end:0.25rem">Meta Title</label>
+      <input type="text" class="form-control" id="demo-seo-title" placeholder="Título para resultados de busca" maxlength="70" style="margin-block-end:0.25rem">
+      <div class="char-counter">
+        <span>Recomendado: até <strong>60</strong> caracteres</span>
+        <span><span id="demo-title-count">0</span>/70</span>
+      </div>
+      <div class="char-progress">
+        <div class="char-progress__bar" id="demo-title-bar" style="inline-size:0%"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <h3 class="demo-section-title">Input Group (<code>.input-group</code> + ícone)</h3>
+    <div style="max-inline-size:400px">
+      <div class="input-group">
+        <span class="input-group__icon">🔍</span>
+        <input type="search" placeholder="Buscar no sistema..." aria-label="Buscar">
+      </div>
+    </div>
+    <div style="max-inline-size:400px;margin-block-start:var(--auy-space-md)">
+      <div class="input-group">
+        <input type="url" placeholder="https://" aria-label="URL do site">
+        <span class="input-group__icon">🌐</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <h3 class="demo-section-title">Timeline de Auditoria (<code>.timeline</code>)</h3>
+    <div class="timeline" style="max-block-size:20rem">
+      <div class="timeline__item">
+        <div class="timeline__dot timeline__dot--created">+</div>
+        <div class="timeline__card">
+          <div class="timeline__header">
+            <span class="timeline__author">Maria Silva</span>
+            <span class="timeline__time">há 2 horas</span>
+          </div>
+          <span class="timeline__action">Criado</span>
+        </div>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__dot timeline__dot--updated">✎</div>
+        <div class="timeline__card">
+          <div class="timeline__header">
+            <span class="timeline__author">João Santos</span>
+            <span class="timeline__time">há 1 dia</span>
+          </div>
+          <span class="timeline__action">Editado</span>
+          <div class="timeline__diff">
+            <div class="timeline__diff-row">
+              <span class="timeline__diff-key">Status</span>
+              <span class="timeline__diff-old">rascunho</span>
+              <span class="timeline__diff-arrow">→</span>
+              <span class="timeline__diff-new">publicado</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__dot timeline__dot--deleted">✕</div>
+        <div class="timeline__card">
+          <div class="timeline__header">
+            <span class="timeline__author">Sistema</span>
+            <span class="timeline__time">há 3 dias</span>
+          </div>
+          <span class="timeline__action">Removido</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <h3 class="demo-section-title">Dialog com Header/Body/Footer + Tamanhos</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:var(--auy-space-sm)">
+      <button onclick="document.getElementById('demo-dialog').showModal()" variant="primary">Abrir Dialog</button>
+      <button onclick="document.getElementById('demo-dialog-lg').showModal()" variant="secondary">Dialog LG</button>
+      <button onclick="document.getElementById('demo-confirm').showModal()" variant="secondary">Confirmar</button>
+    </div>
+    <dialog id="demo-dialog" data-size="sm">
+      <form method="dialog">
+        <div class="dialog-header">
+          <h3 style="margin:0;font-size:var(--auy-text-lg)">Confirmação</h3>
+          <button type="submit" value="close" aria-label="Close" style="all:unset;cursor:pointer;font-size:var(--auy-text-xl);line-height:1;min-inline-size:2.75rem;min-block-size:2.75rem;display:inline-flex;align-items:center;justify-content:center">&times;</button>
+        </div>
+        <div class="dialog-body">
+          <p style="margin:0">Deseja realmente excluir este registro? Esta ação não pode ser desfeita.</p>
+        </div>
+        <div class="dialog-footer">
+          <button type="submit" value="cancel" variant="ghost">Cancelar</button>
+          <button type="submit" value="confirm" variant="primary">Confirmar</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="demo-dialog-lg" data-size="lg">
+      <form method="dialog">
+        <div class="dialog-header">
+          <h3 style="margin:0;font-size:var(--auy-text-lg)">Termos de Uso</h3>
+          <button type="submit" value="close" aria-label="Close" style="all:unset;cursor:pointer;font-size:var(--auy-text-xl);line-height:1;min-inline-size:2.75rem;min-block-size:2.75rem;display:inline-flex;align-items:center;justify-content:center">&times;</button>
+        </div>
+        <div class="dialog-body">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div class="dialog-footer">
+          <button type="submit" value="accept" variant="primary">Aceitar</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="demo-confirm" role="alertdialog">
+      <form method="dialog">
+        <div class="dialog-header">
+          <h3 style="margin:0;font-size:var(--auy-text-lg)">⚠️ Atenção</h3>
+          <button type="submit" value="close" aria-label="Close" style="all:unset;cursor:pointer;font-size:var(--auy-text-xl);line-height:1;min-inline-size:2.75rem;min-block-size:2.75rem;display:inline-flex;align-items:center;justify-content:center">&times;</button>
+        </div>
+        <div class="dialog-body">
+          <p style="margin:0;font-size:var(--auy-text-sm)">Tem certeza que deseja prosseguir com esta ação?</p>
+        </div>
+        <div class="dialog-footer">
+          <button type="submit" value="cancel" variant="ghost">Cancelar</button>
+          <button type="submit" value="confirm" variant="primary">Confirmar</button>
+        </div>
+      </form>
+    </dialog>
+  </section>
+
+  <section class="demo-section">
+    <h3 class="demo-section-title">Code Editor — Dark Theme (<code>textarea.code-editor</code>)</h3>
+    <div style="max-inline-size:600px">
+      <textarea class="code-editor" rows="4" placeholder='{ "@context": "https://schema.org", "@type": "WebPage", ... }' style="inline-size:100%">{&quot;key&quot;: &quot;value&quot;}</textarea>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <h3 class="demo-section-title">Tabela com Sort + Empty State</h3>
+    <div style="overflow-x:auto">
+      <table aria-label="Exemplo de tabela ordenável">
+        <thead>
+          <tr>
+            <th aria-sort="ascending">Nome</th>
+            <th aria-sort="none">Cargo</th>
+            <th aria-sort="none">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Maria Silva</td>
+            <td>Analista</td>
+            <td>Ativo</td>
+          </tr>
+          <tr>
+            <td>João Santos</td>
+            <td>Gerente</td>
+            <td>Ativo</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:var(--auy-text-sm);color:var(--auy-color-text-muted);margin-block-start:var(--auy-space-md)">Empty state:</p>
+    <div style="overflow-x:auto">
+      <table aria-label="Tabela vazia">
+        <thead>
+          <tr><th>Nenhum dado</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="1">
+              <div class="table-empty">
+                <span class="table-empty__icon">📭</span>
+                Nenhum registro encontrado.
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <hr>
+
+  <footer style="text-align:center;padding-block:var(--auy-space-xl);color:var(--auy-color-text-muted);font-size:var(--auy-text-sm)">
+    <p style="margin:0">auy-ui Elements Demo · Built with semantic HTML</p>
+  </footer>
+
+</div>
+
+<script type="module">
+  import './src/mod.ts';
+
+  // ── Character counter demo ──
+  const titleInput = document.getElementById('demo-seo-title');
+  if (titleInput) {
+    titleInput.addEventListener('input', () => {
+      const len = titleInput.value.length;
+      const count = document.getElementById('demo-title-count');
+      const bar = document.getElementById('demo-title-bar');
+      if (count) count.textContent = String(len);
+      if (bar) {
+        const pct = Math.min((len / 70) * 100, 100);
+        bar.style.inlineSize = pct + '%';
+        bar.className = 'char-progress__bar';
+        if (len <= 60) bar.classList.add('char-progress__bar');
+        else if (len <= 65) bar.classList.add('char-progress__bar--warn');
+        else bar.classList.add('char-progress__bar--danger');
+      }
+    });
+  }
+</script>
+
+<script>
+  (function() {
+    'use strict';
+    // Dialog focus management + inert
+    var main = document.getElementById('demo-main');
+    if (!main) return;
+
+    function onDialogOpen() { if (main) main.inert = true; }
+    function onDialogClose() { if (main) main.inert = false; }
+
+    document.querySelectorAll('dialog').forEach(function(d) {
+      d.addEventListener('close', onDialogClose);
+      d.addEventListener('cancel', onDialogClose);
+    });
+
+    document.addEventListener('click', function(e) {
+      var btn = e.target.closest('[onclick*="showModal"]');
+      if (btn) onDialogOpen();
+    });
+  })();
+</script>
+<script>
+  document.querySelectorAll('dialog').forEach(function(d) {
+    d.addEventListener('close', function() {
+      var msg = document.getElementById('dialog-result');
+      if (msg) msg.textContent = 'Dialog fechado: ' + (d.returnValue || 'fechado');
+    });
+  });
+</script>
+<div id="dialog-result" aria-live="polite" aria-atomic="true" style="position:absolute;inline-size:1px;block-size:1px;overflow:hidden;clip:rect(0,0,0,0)"></div>
+</body>
+</html>

@@ -1,0 +1,287 @@
+@layer base {
+  :where(details) {
+    display: block;
+    margin-block: 0.5em;
+    border: 1px solid var(--auy-color-border);
+    border-radius: var(--auy-radius-md);
+    overflow: hidden;
+    background: var(--auy-color-surface);
+  }
+
+  :where(summary) {
+    display: flex;
+    align-items: center;
+    gap: var(--auy-space-sm);
+    padding: var(--auy-space-sm) var(--auy-space-md);
+    min-block-size: 2.75rem;
+    cursor: pointer;
+    font-weight: 500;
+    user-select: none;
+    background: color-mix(in oklch, var(--auy-color-border) 8%, transparent);
+    transition: background var(--auy-transition-fast);
+  }
+
+  :where(summary):hover {
+    background: color-mix(in oklch, var(--auy-color-border) 15%, transparent);
+  }
+
+  :where(summary)::-webkit-details-marker {
+    display: none;
+  }
+
+  :where(summary)::marker {
+    display: none;
+    content: '';
+  }
+
+  :where(summary)::after {
+    content: '▾';
+    margin-inline-start: auto;
+    transition: transform var(--auy-transition);
+    font-size: var(--auy-text-xs);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  :where(details[open] summary)::after { transform: rotate(180deg); }
+
+  :where(details[open]) summary {
+    border-block-end: 1px solid var(--auy-color-border);
+  }
+
+  :where(details + details) { margin-block-start: -1px; border-radius: 0; }
+  :where(details:first-of-type) { border-start-end-radius: var(--auy-radius-md); border-start-start-radius: var(--auy-radius-md); }
+  :where(details:last-of-type) { border-end-end-radius: var(--auy-radius-md); border-end-start-radius: var(--auy-radius-md); }
+  :where(details[open]) { border-color: var(--auy-color-primary); }
+
+  :where(details) > :where(:not(summary)) {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    transition: grid-template-rows var(--auy-transition), padding-block var(--auy-transition);
+    padding-inline: var(--auy-space-md);
+    padding-block: 0;
+  }
+  :where(details[open]) > :where(:not(summary)) {
+    grid-template-rows: 1fr;
+    padding-block: var(--auy-space-md);
+  }
+
+  :where(dialog) {
+    border: none;
+    border-radius: var(--auy-radius-lg);
+    background: var(--auy-color-surface);
+    color: var(--auy-color-text);
+    box-shadow: var(--auy-shadow-lg);
+    inline-size: min(calc(100% - 2rem), 32rem);
+    margin: auto;
+    padding: 0;
+    max-block-size: 85dvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity var(--auy-transition, 200ms ease), transform var(--auy-transition, 200ms ease), overlay var(--auy-transition, 200ms ease) allow-discrete, display var(--auy-transition, 200ms ease) allow-discrete;
+  }
+  :where(dialog[open]) { opacity: 1; transform: scale(1); }
+  @starting-style {
+    :where(dialog[open]) { opacity: 0; transform: scale(0.95); }
+  }
+
+  :where(dialog::backdrop) {
+    background: var(--auy-color-overlay);
+    backdrop-filter: blur(4px);
+  }
+
+  :where(.dialog-header) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--auy-space-md);
+    padding: var(--auy-space-md);
+    padding-block-end: 0;
+  }
+
+  :where(.dialog-body) {
+    padding: var(--auy-space-md);
+  }
+
+  :where(.dialog-footer) {
+    padding: var(--auy-space-md);
+    padding-block-start: 0;
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--auy-space-md);
+  }
+
+  :where(.dialog-header button[aria-label="Close"]) {
+    min-inline-size: 2.75rem;
+    min-block-size: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  :where(dialog[data-size="sm"]) { inline-size: min(calc(100% - 2rem), 24rem); }
+  :where(dialog[data-size="lg"]) { inline-size: min(calc(100% - 2rem), 48rem); }
+  :where(dialog[data-size="xl"]) { inline-size: min(calc(100% - 2rem), 64rem); }
+
+  :where(dialog[role="alertdialog"]) {
+    max-inline-size: 28rem;
+  }
+  :where(dialog[role="alertdialog"] .dialog-body) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--auy-space-sm);
+    padding-block: var(--auy-space-lg);
+  }
+  :where(dialog[role="alertdialog"] .dialog-footer) {
+    padding-block-start: 0;
+  }
+
+  :where([data-tooltip]) {
+    position: relative;
+  }
+
+  :where([data-tooltip])::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    inset-block-end: calc(100% + 0.375rem);
+    inset-inline-start: 50%;
+    translate: -50% 0;
+    padding: 0.25em 0.5em;
+    font-size: var(--auy-text-xs);
+    font-weight: 400;
+    line-height: 1.4;
+    color: oklch(100% 0 0);
+    background: oklch(20% 0.03 260);
+    border-radius: var(--auy-radius-sm);
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--auy-transition-fast);
+    z-index: 1000;
+  }
+
+  :where([data-tooltip]):hover::after,
+  :where([data-tooltip]):focus-visible::after {
+    opacity: 1;
+  }
+
+  :where([data-tooltip][data-tooltip-position="bottom"])::after {
+    inset-block-end: auto; inset-block-start: calc(100% + 0.375rem);
+  }
+  :where([data-tooltip][data-tooltip-position="left"])::after {
+    inset-block-end: auto; inset-block-start: 50%;
+    inset-inline-end: calc(100% + 0.375rem); inset-inline-start: auto;
+    translate: 0 -50%;
+  }
+  :where([data-tooltip][data-tooltip-position="right"])::after {
+    inset-block-end: auto; inset-block-start: 50%;
+    inset-inline-start: calc(100% + 0.375rem);
+    translate: 0 -50%;
+  }
+
+  :where([role="group"]) {
+    display: inline-flex;
+    align-items: stretch;
+  }
+
+  :where([role="group"]) > :where(button, [role="button"], a, input, select, textarea) {
+    border-radius: 0;
+    margin-inline: 0;
+  }
+
+  :where([role="group"]) > :where(button, [role="button"], a, input, select, textarea):first-child {
+    border-start-start-radius: var(--auy-radius-md);
+    border-end-start-radius: var(--auy-radius-md);
+  }
+
+  :where([role="group"]) > :where(button, [role="button"], a, input, select, textarea):last-child {
+    border-start-end-radius: var(--auy-radius-md);
+    border-end-end-radius: var(--auy-radius-md);
+  }
+
+  :where([role="group"]) > :where(:not(:first-child)) {
+    border-inline-start: none;
+  }
+
+  :where([aria-busy="true"]) {
+    position: relative;
+    pointer-events: none;
+  }
+
+  :where(body[aria-busy="true"]) {
+    pointer-events: none;
+  }
+
+  :where(body[aria-busy="true"])::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: var(--auy-color-overlay);
+    z-index: 9999;
+  }
+
+  :where(body[aria-busy="true"])::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    inline-size: 2rem;
+    block-size: 2rem;
+    border: 3px solid var(--auy-color-surface);
+    border-block-start-color: var(--auy-color-primary);
+    border-radius: 50%;
+    animation: auy-spin 0.6s linear infinite;
+    z-index: 10000;
+  }
+
+  :where(menu) {
+    display: flex;
+    gap: var(--auy-space-sm);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    flex-wrap: wrap;
+  }
+
+  :where(details[data-dropdown]) { position: relative; border: none; background: none; }
+  :where(details[data-dropdown] > summary) {
+    display: inline-flex; align-items: center; gap: var(--auy-space-xs);
+    padding: 0.5rem 0.75rem; font-family: inherit; font-size: var(--auy-text-sm);
+    font-weight: 500; line-height: 1.5; color: var(--auy-color-text);
+    background: var(--auy-color-surface); border: 1px solid var(--auy-color-border);
+    border-radius: var(--auy-radius-md); cursor: pointer; user-select: none;
+    touch-action: manipulation;
+    transition: border-color var(--auy-transition-fast), box-shadow var(--auy-transition-fast);
+  }
+  :where(details[data-dropdown] > summary):hover { border-color: var(--auy-color-text-muted); }
+  :where(details[data-dropdown] > summary):focus-visible { outline: 0.125rem solid var(--auy-color-primary); outline-offset: 0.0625rem; }
+  :where(details[data-dropdown][open] > summary) { border-color: var(--auy-color-primary); border-end-end-radius: 0; border-end-start-radius: 0; }
+  :where(details[data-dropdown] > :not(summary)) {
+    position: absolute; inset-block-start: 100%; inset-inline-start: 0;
+    min-inline-size: max(100%, 10rem); background: var(--auy-color-surface);
+    border: 1px solid var(--auy-color-primary); border-block-start: none;
+    border-radius: 0 0 var(--auy-radius-md) var(--auy-radius-md);
+    box-shadow: var(--auy-shadow-lg); padding: var(--auy-space-2xs);
+    list-style: none; margin: 0;
+    display: none; opacity: 0; transform: translateY(-0.25rem);
+    transition: display var(--auy-transition, 200ms) allow-discrete, opacity var(--auy-transition, 200ms), transform var(--auy-transition, 200ms);
+  }
+  :where(details[data-dropdown][open] > :not(summary)) { display: block; opacity: 1; transform: translateY(0); }
+  @starting-style {
+    :where(details[data-dropdown][open] > :not(summary)) { opacity: 0; transform: translateY(-0.25rem); }
+  }
+  :where(details[data-dropdown][data-align="end"] > :not(summary)) { inset-inline-start: auto; inset-inline-end: 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where(summary)::after { transition: none; }
+    :where(dialog) { transition: none; }
+    :where(dialog::backdrop) { transition: none; }
+    :where(details[data-dropdown] > :not(summary)) { transition: none; }
+    :where(details) > :where(:not(summary)) { transition: none; }
+  }
+}

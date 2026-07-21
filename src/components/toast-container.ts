@@ -8,8 +8,8 @@ interface ToastItem {
   duration: number;
 }
 
-@customElement('auy-toast-container')
-export class AuyToastContainer extends LitElement {
+@customElement('auy-comp-toast-container')
+export class AuyCompToastContainer extends LitElement {
   static override styles = css`
     @layer components {
       :host {
@@ -179,6 +179,8 @@ export class AuyToastContainer extends LitElement {
       }
     }
   `;
+
+  static override shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
   @property({ type: String, reflect: true }) position: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'top-center' = 'top-right';
   @property({ type: Number }) defaultDuration = 4000;

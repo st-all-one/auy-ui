@@ -1,0 +1,197 @@
+@layer base {
+  :where(button, [role="button"], [type="submit"], [type="reset"], [type="button"]) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--auy-space-xs);
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: var(--auy-text-sm);
+    font-weight: 500;
+    line-height: 1.5;
+    min-block-size: 2.75rem;
+    padding: 0.625rem 1rem;
+    border: 1px solid transparent;
+    border-radius: var(--auy-radius-md);
+    cursor: pointer;
+    user-select: none;
+    touch-action: manipulation;
+    transition: background-color var(--auy-transition), border-color var(--auy-transition), color var(--auy-transition), box-shadow var(--auy-transition);
+    background-color: var(--auy-color-primary);
+    color: var(--auy-color-primary-inverse);
+    text-decoration: none;
+    text-align: center;
+  }
+
+  :where(button, [role="button"], [type="submit"], [type="button"]):hover {
+    background-color: var(--auy-color-primary-hover);
+    color: var(--auy-color-primary-inverse);
+  }
+
+  :where(button, [role="button"], [type="submit"], [type="button"]):active {
+    background-color: var(--auy-color-primary-active);
+    color: var(--auy-color-primary-inverse);
+  }
+
+  :where(button, [role="button"], [type="submit"], [type="reset"], [type="button"]):focus-visible {
+    outline: 0.125rem solid var(--auy-color-primary);
+    outline-offset: 0.125rem;
+  }
+
+  :where(button, [role="button"], [type="submit"], [type="reset"], [type="button"]):disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  :where(input[type="submit"], input[type="reset"], input[type="button"]) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: var(--auy-text-sm);
+    font-weight: 500;
+    line-height: 1.5;
+    min-block-size: 2.75rem;
+    padding: 0.625rem 1rem;
+    border: 1px solid transparent;
+    border-radius: var(--auy-radius-md);
+    cursor: pointer;
+    user-select: none;
+    touch-action: manipulation;
+    transition: background-color var(--auy-transition), border-color var(--auy-transition);
+    background-color: var(--auy-color-primary);
+    color: var(--auy-color-primary-inverse);
+    inline-size: auto;
+  }
+
+  :where(input[type="submit"]):hover,
+  :where(input[type="button"]):hover {
+    background-color: var(--auy-color-primary-hover);
+    color: var(--auy-color-primary-inverse);
+  }
+
+  :where(button[variant~="secondary"], [role="button"][variant~="secondary"]) {
+    background-color: var(--auy-color-secondary);
+    color: var(--auy-color-secondary-inverse);
+  }
+
+  :where(button[variant~="secondary"]):hover,
+  :where([role="button"][variant~="secondary"]):hover {
+    background-color: var(--auy-color-secondary-hover);
+  }
+
+  :where(button[variant~="ghost"], [role="button"][variant~="ghost"]) {
+    background-color: transparent;
+    color: var(--auy-color-text);
+  }
+
+  :where(button[variant~="ghost"]):hover,
+  :where([role="button"][variant~="ghost"]):hover {
+    background-color: color-mix(in oklch, var(--auy-color-border) 15%, transparent);
+  }
+
+  :where(button[variant~="danger"], [role="button"][variant~="danger"]) {
+    background-color: var(--auy-color-error);
+    color: oklch(100% 0 0);
+  }
+
+  :where(button[variant~="danger"]):hover,
+  :where([role="button"][variant~="danger"]):hover {
+    background-color: color-mix(in oklch, var(--auy-color-error) 85%, black);
+  }
+
+  :where(button[variant~="outline"], [role="button"][variant~="outline"]) {
+    background-color: transparent;
+    color: var(--auy-color-primary);
+    border-color: var(--auy-color-primary);
+  }
+
+  :where(button[variant~="outline"]):hover,
+  :where([role="button"][variant~="outline"]):hover {
+    background-color: color-mix(in oklch, var(--auy-color-primary) 8%, transparent);
+  }
+
+  :where(button[variant~="link"], [role="button"][variant~="link"]) {
+    background-color: transparent;
+    color: var(--auy-color-primary);
+    padding: 0;
+    border: none;
+    text-decoration: underline;
+    text-underline-offset: 0.125em;
+  }
+
+  :where(button[variant~="link"]):hover,
+  :where([role="button"][variant~="link"]):hover {
+    color: var(--auy-color-primary-hover);
+  }
+
+  :where(button[variant~="contrast"], [role="button"][variant~="contrast"]) {
+    background-color: oklch(20% 0.03 260);
+    color: oklch(100% 0 0);
+  }
+  :where(button[variant~="contrast"]):hover,
+  :where([role="button"][variant~="contrast"]):hover {
+    background-color: oklch(0% 0 0);
+  }
+  :where(button[variant~="contrast"]):active,
+  :where([role="button"][variant~="contrast"]):active {
+    background-color: oklch(15% 0.03 260);
+  }
+
+  :where(button[variant~="sm"], [role="button"][variant~="sm"]) {
+    padding: 0.375rem 0.75rem;
+    font-size: var(--auy-text-xs);
+    min-block-size: 2.25rem;
+  }
+
+  :where(button[variant~="lg"], [role="button"][variant~="lg"]) {
+    padding: 0.75rem 1.5rem;
+    font-size: var(--auy-text-base);
+  }
+
+  :where(button[type="reset"]) {
+    background-color: transparent;
+    color: var(--auy-color-text);
+    border-color: var(--auy-color-border);
+  }
+
+  :where(button[type="reset"]):hover {
+    background-color: color-mix(in oklch, var(--auy-color-border) 15%, transparent);
+  }
+
+  :where(input[type="reset"]) {
+    background-color: transparent;
+    color: var(--auy-color-text);
+    border-color: var(--auy-color-border);
+  }
+
+  :where(input[type="reset"]):hover {
+    background-color: color-mix(in oklch, var(--auy-color-border) 15%, transparent);
+  }
+
+  :where(button[aria-busy="true"], [role="button"][aria-busy="true"]) {
+    position: relative;
+    pointer-events: none;
+    color: transparent;
+  }
+
+  :where(button[aria-busy="true"])::after,
+  :where([role="button"][aria-busy="true"])::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    inline-size: 1em;
+    block-size: 1em;
+    border: 2px solid var(--auy-color-primary-inverse);
+    border-block-start-color: transparent;
+    border-radius: 50%;
+    animation: auy-spin 0.6s linear infinite;
+  }
+}
+
+@keyframes auy-spin {
+  to { transform: rotate(360deg); }
+}

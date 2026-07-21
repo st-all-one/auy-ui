@@ -1,0 +1,60 @@
+@layer base {
+  :where(nav[aria-label="Breadcrumb"]) {
+    display: flex; flex-wrap: wrap; align-items: center;
+    font-size: var(--auy-text-xs); color: var(--auy-color-text-muted);
+    container-type: inline-size; padding-block: var(--auy-space-2xs);
+  }
+
+  :where(nav[aria-label="Breadcrumb"] ol) {
+    display: flex; flex-wrap: wrap; align-items: center;
+    list-style: none; padding: 0; margin: 0; gap: 0;
+  }
+
+  :where(nav[aria-label="Breadcrumb"] li) { display: flex; align-items: center; }
+
+  :where(nav[aria-label="Breadcrumb"] li + li)::before {
+    content: "›";
+    display: flex; align-items: center; justify-content: center;
+    margin-inline: var(--auy-space-2xs); color: var(--auy-color-border);
+    flex-shrink: 0; line-height: 0; font-size: 1.2em;
+  }
+
+  :where(nav[aria-label="Breadcrumb"] a) {
+    display: inline-flex; align-items: center; gap: var(--auy-space-2xs);
+    color: var(--auy-color-text-muted); text-decoration: none;
+    padding: var(--auy-space-2xs) var(--auy-space-xs);
+    border-radius: var(--auy-radius-sm);
+    transition: background var(--auy-transition-fast), color var(--auy-transition-fast);
+    white-space: nowrap; touch-action: manipulation; font-weight: 450;
+  }
+
+  :where(nav[aria-label="Breadcrumb"] a:hover) {
+    background: color-mix(in oklch, var(--auy-color-border) 20%, transparent);
+    color: var(--auy-color-text); text-decoration: none;
+  }
+
+  :where(nav[aria-label="Breadcrumb"] a:focus-visible) {
+    outline: 0.125rem solid var(--auy-color-primary); outline-offset: 0.0625rem;
+  }
+
+  :where(nav[aria-label="Breadcrumb"] [aria-current="page"]) {
+    display: inline-flex; align-items: center; gap: var(--auy-space-2xs);
+    padding: var(--auy-space-2xs) var(--auy-space-xs);
+    color: var(--auy-color-text); font-weight: 600;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-inline-size: 20ch;
+  }
+
+  @container (max-width: 400px) {
+    :where(nav[aria-label="Breadcrumb"] li:not(:last-of-type) .label) {
+      max-inline-size: 10ch; overflow: hidden; text-overflow: ellipsis;
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(nav[aria-label="Breadcrumb"] a) { border: 1px solid transparent; }
+    :where(nav[aria-label="Breadcrumb"] a:hover) { border-color: ButtonText; }
+    :where(nav[aria-label="Breadcrumb"] a:focus-visible) { outline: 2px solid Highlight; outline-offset: 2px; }
+  }
+
+  @media print { :where(nav[aria-label="Breadcrumb"]) { display: flex; } }
+}
