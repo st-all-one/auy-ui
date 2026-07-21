@@ -17,5 +17,11 @@
     --auy-safe-area-bottom: env(safe-area-inset-bottom, 0px);
     --auy-safe-area-left: env(safe-area-inset-left, 0px);
     --auy-safe-area-right: env(safe-area-inset-right, 0px);
+
+    --auy-z-sticky: 1;
+    --auy-z-overlay: 2;
+    --auy-z-modal: 3;
+    --auy-z-toast: 4;
+    --auy-z-tooltip: 5;
   }
 }

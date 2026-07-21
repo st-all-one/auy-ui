@@ -148,18 +148,6 @@ src/styling/
     └── inter.css         ← Import opcional de fontes
 ```
 
-## SCSS (para power users)
-
-Opcionalmente, compile com SCSS para customização avançada:
-
-```scss
-@use 'auy-ui/scss' with (
-  $auy-primary-h: 320,
-  $auy-primary-s: 25%,
-  $auy-primary-l: 50%,
-);
-```
-
 ## Acessibilidade
 
 - `:focus-visible` em todos os interativos

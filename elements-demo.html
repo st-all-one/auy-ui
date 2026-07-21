@@ -1414,6 +1414,94 @@ line 2: count = 42</pre>
     </div>
   </section>
 
+  <section class="demo-section">
+    <h3 class="demo-section-title">Dropdown (<code>&lt;details data-dropdown&gt;</code>)</h3>
+    <div class="demo-flex">
+      <details data-dropdown>
+        <summary>Ações</summary>
+        <ul>
+          <li><a href="#">Editar</a></li>
+          <li><a href="#">Duplicar</a></li>
+          <li><hr></li>
+          <li><a href="#" aria-current="page">Atual</a></li>
+          <li><button>Remover</button></li>
+        </ul>
+      </details>
+      <details data-dropdown data-align="end">
+        <summary>Alinhado à direita</summary>
+        <ul>
+          <li><a href="#">Opção 1</a></li>
+          <li><a href="#">Opção 2</a></li>
+        </ul>
+      </details>
+      <details data-dropdown data-direction="up">
+        <summary>Para cima</summary>
+        <ul>
+          <li><a href="#">Opção A</a></li>
+          <li><a href="#">Opção B</a></li>
+        </ul>
+      </details>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <h3 class="demo-section-title">Skeleton Loading (<code>[aria-busy="true"]</code>)</h3>
+    <div class="demo-grid-2">
+      <article aria-busy="true">
+        <h3>Título do Card</h3>
+        <p>Este conteúdo será substituído por placeholders skeleton. O texto fica invisível e blocos com shimmer aparecem no lugar.</p>
+        <p>Mais uma linha de descrição para preencher espaço e demonstrar o efeito visual do skeleton loading.</p>
+      </article>
+      <article>
+        <h3>Card Normal (sem skeleton)</h3>
+        <p>Este card não tem <code>aria-busy</code>, então o conteúdo aparece normalmente. Compare com o card ao lado para ver a diferença.</p>
+        <p>O efeito skeleton é ativado apenas com o atributo <code>aria-busy="true"</code>.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <h3 class="demo-section-title">Aspect Ratio (<code>[data-ratio]</code>)</h3>
+    <div class="demo-grid-3">
+      <div>
+        <span class="demo-label">16:9</span>
+        <div data-ratio="16/9" style="background:color-mix(in oklch, var(--auy-color-border) 30%, transparent)">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:var(--auy-text-sm);color:var(--auy-color-text-muted)">16:9</div>
+        </div>
+      </div>
+      <div>
+        <span class="demo-label">4:3</span>
+        <div data-ratio="4/3" style="background:color-mix(in oklch, var(--auy-color-border) 30%, transparent)">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:var(--auy-text-sm);color:var(--auy-color-text-muted)">4:3</div>
+        </div>
+      </div>
+      <div>
+        <span class="demo-label">1:1 (square)</span>
+        <div data-ratio="1/1" style="background:color-mix(in oklch, var(--auy-color-border) 30%, transparent)">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:var(--auy-text-sm);color:var(--auy-color-text-muted)">1:1</div>
+        </div>
+      </div>
+      <div>
+        <span class="demo-label">21:9</span>
+        <div data-ratio="21/9" style="background:color-mix(in oklch, var(--auy-color-border) 30%, transparent)">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:var(--auy-text-sm);color:var(--auy-color-text-muted)">21:9</div>
+        </div>
+      </div>
+      <div>
+        <span class="demo-label">3:2</span>
+        <div data-ratio="3/2" style="background:color-mix(in oklch, var(--auy-color-border) 30%, transparent)">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:var(--auy-text-sm);color:var(--auy-color-text-muted)">3:2</div>
+        </div>
+      </div>
+      <div>
+        <span class="demo-label">9:16 (vertical)</span>
+        <div data-ratio="9/16" style="background:color-mix(in oklch, var(--auy-color-border) 30%, transparent)">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:var(--auy-text-sm);color:var(--auy-color-text-muted)">9:16</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <hr>
 
   <footer style="text-align:center;padding-block:var(--auy-space-xl);color:var(--auy-color-text-muted);font-size:var(--auy-text-sm)">

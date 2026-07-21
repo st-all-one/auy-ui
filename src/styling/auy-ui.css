@@ -36,6 +36,8 @@
 @import './base/popover.css';
 @import './base/spinner.css';
 @import './base/timeline.css';
+@import './base/skeleton.css';
+@import './base/ratio.css';
 
 @import './tokens/palette.css';
 

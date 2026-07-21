@@ -4,42 +4,229 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="color-scheme" content="light dark" />
-  <title>auy-ui — Componentes HTML + CSS Nativos</title>
+  <title>auy-ui — Catálogo de Componentes</title>
   <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/inter" crossorigin="anonymous" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" crossorigin="anonymous" />
   <link rel="stylesheet" href="/src/styling/auy-ui.css" />
-
   <style>
-    body { padding: var(--auy-space-lg); max-inline-size: 75rem; margin: 0 auto; }
-    .demo-header { margin-block-end: var(--auy-space-xl); }
-    #theme-select { inline-size:auto; min-block-size:auto; padding:0.35rem 1.5rem 0.35rem 0.5rem; font-size:var(--auy-text-sm); }
-    .demo-header h1 { margin-block-end: var(--auy-space-xs); }
-    .demo-header p { color: var(--auy-color-text-muted); font-size: var(--auy-text-sm); }
-    .demo-nav { position: sticky; inset-block-start: 0; z-index: 10; display: flex; flex-wrap: wrap; gap: var(--auy-space-xs); margin-block-end: var(--auy-space-lg); padding: var(--auy-space-sm); background: var(--auy-color-surface); border: 1px solid var(--auy-color-border); border-radius: var(--auy-radius-md); }
-    .demo-nav a { font-size: var(--auy-text-sm); }
-    .demo-section { background: var(--auy-color-surface); border: 1px solid var(--auy-color-border); border-radius: var(--auy-radius-md); padding: var(--auy-space-lg); margin-block-end: var(--auy-space-lg); }
-    .demo-section h2 { display: flex; align-items: center; gap: var(--auy-space-sm); margin: 0 0 var(--auy-space-md); font-size: var(--auy-text-lg); }
-    .demo-section h2 .tag { font-size: var(--auy-text-xs); color: var(--auy-color-text-muted); font-family: var(--auy-font-mono); background: color-mix(in oklch, var(--auy-color-border) 40%, transparent); border: 1px solid var(--auy-color-border); border-radius: var(--auy-radius-sm); padding: 2px 6px; font-weight: 400; }
-    .row { display: flex; flex-wrap: wrap; gap: var(--auy-space-md); align-items: center; }
-    .col { display: flex; flex-direction: column; gap: var(--auy-space-md); }
-    .grid-2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--auy-space-md); }
-    .grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--auy-space-md); }
-    .note { font-size: var(--auy-text-sm); color: var(--auy-color-text-muted); font-style: italic; margin-block-start: var(--auy-space-sm); }
-    .badge-grid { display: flex; flex-wrap: wrap; gap: var(--auy-space-sm); align-items: center; }
-    .checkbox-col { display: flex; flex-direction: column; gap: var(--auy-space-sm); }
-    .form-demo { max-inline-size: 400px; }
-    .card-demo { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--auy-space-md); }
-    .theme-bar { display: flex; align-items: center; gap: var(--auy-space-sm); flex-wrap: wrap; padding: var(--auy-space-md); background: var(--auy-color-surface-alt); border-radius: var(--auy-radius-md); margin-block-end: var(--auy-space-lg); border: 1px solid var(--auy-color-border); }
-    .theme-bar label { font-weight: 600; font-size: var(--auy-text-sm); }
-    .theme-btn { all: unset; display: inline-flex; align-items: center; justify-content: center; inline-size: 2rem; block-size: 2rem; border-radius: var(--auy-radius-full); cursor: pointer; border: 2px solid transparent; transition: border-color var(--auy-transition), transform var(--auy-transition); }
-    .theme-btn:hover { transform: scale(1.15); }
-    .theme-btn.active { border-color: var(--auy-color-text); box-shadow: 0 0 0 2px var(--auy-color-surface); }
-    .toast-stack { position: fixed; inset-block-start: 1rem; inset-inline-end: 1rem; z-index: 9999; display: flex; flex-direction: column; gap: 0.5rem; pointer-events: none; }
-    .flex-1 { flex: 1; }
-    .mb-sm { margin-block-end: var(--auy-space-sm); }
+    body {
+      padding: var(--auy-space-lg);
+      max-inline-size: 75rem;
+      margin: 0 auto;
+    }
+
+    .demo-header {
+      margin-block-end: var(--auy-space-xl);
+    }
+    .demo-header h1 {
+      margin-block-end: var(--auy-space-xs);
+    }
+    .demo-header p {
+      color: var(--auy-color-text-muted);
+      font-size: var(--auy-text-sm);
+    }
+
+    .demo-nav {
+      position: sticky;
+      inset-block-start: 0;
+      z-index: var(--auy-z-sticky);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--auy-space-xs);
+      margin-block-end: var(--auy-space-lg);
+      padding: var(--auy-space-sm);
+      background: var(--auy-color-surface);
+      border: 1px solid var(--auy-color-border);
+      border-radius: var(--auy-radius-md);
+    }
+    .demo-nav a {
+      font-size: var(--auy-text-sm);
+    }
+
+    .demo-section {
+      background: var(--auy-color-surface);
+      border: 1px solid var(--auy-color-border);
+      border-radius: var(--auy-radius-md);
+      padding: var(--auy-space-xl) var(--auy-space-lg);
+      margin-block-end: var(--auy-space-lg);
+    }
+    .demo-section h2 {
+      display: flex;
+      align-items: center;
+      gap: var(--auy-space-sm);
+      margin: 0 0 var(--auy-space-lg);
+      font-size: var(--auy-text-lg);
+      padding-block-end: var(--auy-space-md);
+      border-block-end: 1px solid var(--auy-color-border);
+    }
+    .demo-section h2 .tag {
+      font-size: var(--auy-text-xs);
+      color: var(--auy-color-text-muted);
+      font-family: var(--auy-font-mono);
+      background: color-mix(in oklch, var(--auy-color-border) 40%, transparent);
+      border: 1px solid var(--auy-color-border);
+      border-radius: var(--auy-radius-sm);
+      padding: 3px 8px;
+      font-weight: 400;
+    }
+    .demo-section h2 .wc-tag {
+      font-size: var(--auy-text-xs);
+      color: var(--auy-color-primary);
+      font-family: var(--auy-font-mono);
+      background: color-mix(in oklch, var(--auy-color-primary) 10%, transparent);
+      border: 1px solid color-mix(in oklch, var(--auy-color-primary) 30%, transparent);
+      border-radius: var(--auy-radius-sm);
+      padding: 3px 8px;
+      font-weight: 500;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--auy-space-md);
+      align-items: center;
+    }
+    .row + .row {
+      margin-block-start: var(--auy-space-md);
+    }
+
+    .col {
+      display: flex;
+      flex-direction: column;
+      gap: var(--auy-space-md);
+    }
+
+    .cols-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--auy-space-lg);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: var(--auy-space-lg);
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: var(--auy-space-lg);
+    }
+
+    .note {
+      font-size: var(--auy-text-sm);
+      color: var(--auy-color-text-muted);
+      margin-block-end: var(--auy-space-md);
+    }
+    .note:last-child {
+      margin-block-end: 0;
+    }
+
+    .checkbox-col {
+      display: flex;
+      flex-direction: column;
+      gap: var(--auy-space-sm);
+    }
+    .form-demo {
+      max-inline-size: 400px;
+    }
+    .card-demo {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--auy-space-lg);
+    }
+
+    .theme-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--auy-space-sm);
+      flex-wrap: wrap;
+      padding: var(--auy-space-md);
+      background: var(--auy-color-surface-alt);
+      border-radius: var(--auy-radius-md);
+      margin-block-end: var(--auy-space-lg);
+      border: 1px solid var(--auy-color-border);
+    }
+    .theme-bar label {
+      font-weight: 600;
+      font-size: var(--auy-text-sm);
+    }
+    .theme-btn {
+      all: unset;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      inline-size: 2rem;
+      block-size: 2rem;
+      border-radius: var(--auy-radius-full);
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color var(--auy-transition), transform var(--auy-transition);
+    }
+    .theme-btn:hover {
+      transform: scale(1.15);
+    }
+    .theme-btn.active {
+      border-color: var(--auy-color-text);
+      box-shadow: 0 0 0 2px var(--auy-color-surface);
+    }
+
+    .demo-subsection {
+      margin-block-start: var(--auy-space-lg);
+      padding: var(--auy-space-md);
+      background: color-mix(in oklch, var(--auy-color-border) 4%, transparent);
+      border-radius: var(--auy-radius-md);
+    }
+    .demo-subsection h3 {
+      font-size: var(--auy-text-base);
+      font-weight: 600;
+      margin: 0 0 var(--auy-space-md);
+      color: var(--auy-color-text);
+    }
+
+    .demo-variant-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--auy-space-md);
+      align-items: center;
+    }
+    .demo-variant-row + .demo-variant-row {
+      margin-block-start: var(--auy-space-md);
+      padding-block-start: var(--auy-space-md);
+      border-block-start: 1px solid var(--auy-color-border);
+    }
+
+    .badge-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--auy-space-sm);
+      align-items: center;
+    }
+    .flex-1 {
+      flex: 1;
+    }
+
+    hr {
+      border: none;
+      border-block-start: 1px solid var(--auy-color-border);
+      margin: var(--auy-space-xl) 0;
+    }
+
+    .demo-footer {
+      text-align: center;
+      color: var(--auy-color-text-muted);
+      font-size: var(--auy-text-sm);
+      padding: var(--auy-space-xl) 0;
+    }
+
+    @media (max-width: 640px) {
+      body { padding: var(--auy-space-md); }
+      .demo-section { padding: var(--auy-space-md); }
+      .cols-2 { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -49,8 +236,8 @@
 <div id="components-main">
 
   <div class="demo-header">
-    <h1>auy-ui — Componentes HTML + CSS Nativos</h1>
-    <p>Demonstração completa com HTML nativo estilizado via CSS + componentes interativos.</p>
+    <h1>auy-ui — Catálogo de Componentes</h1>
+    <p>Demonstração de todos os componentes: CSS nativos + Web Components (Lit). Framework-agnóstico, acessível, pt-BR.</p>
   </div>
 
   <div class="theme-bar">
@@ -64,314 +251,591 @@
   </div>
 
   <nav class="demo-nav" aria-label="Navegação rápida">
-    <a href="#buttons">Buttons</a>
-    <a href="#button-group">Button Group</a>
+    <a href="#buttons-css">Botões CSS</a>
+    <a href="#button-wc">Botão WC</a>
     <a href="#badges">Badges</a>
     <a href="#spinner">Spinner</a>
-    <a href="#alert">Alert</a>
+    <a href="#alert-css">Alert CSS</a>
+    <a href="#alert-wc">Alert WC</a>
     <a href="#card">Card</a>
-    <a href="#modal">Modal</a>
-    <a href="#tooltip">Tooltip</a>
-    <a href="#accordion">Accordion</a>
+    <a href="#modal-wc">Modal</a>
+    <a href="#tooltip-css">Tooltip CSS</a>
+    <a href="#tooltip-wc">Tooltip WC</a>
+    <a href="#accordion-css">Accordion CSS</a>
+    <a href="#accordion-wc">Accordion WC</a>
     <a href="#tabs">Tabs</a>
     <a href="#dropdown">Dropdown</a>
     <a href="#nav">Nav</a>
     <a href="#progress">Progress</a>
     <a href="#pagination">Pagination</a>
     <a href="#checkbox">Checkbox</a>
-    <a href="#form-group">Form Group</a>
+    <a href="#form-group-css">Form CSS</a>
+    <a href="#form-group-wc">Form WC</a>
+    <a href="#select">Select WC</a>
+    <a href="#date-input">Date WC</a>
     <a href="#toast">Toast</a>
-    <a href="#file-input">File Input</a>
+    <a href="#file-input">File</a>
     <a href="#audio">Audio</a>
     <a href="#range-input">Range</a>
     <a href="#color-input">Color</a>
-    <a href="#date-input">Date</a>
     <a href="#breadcrumb">Breadcrumb</a>
-    <a href="#table">Table</a>
+    <a href="#table-css">Table CSS</a>
+    <a href="#table-wc">Table WC</a>
     <a href="#search">Search</a>
-    <a href="#code-editor">Code Editor</a>
-    <a href="#container-section">Container/Section</a>
+    <a href="#code-editor">Editor</a>
     <a href="#metadata">Metadata</a>
+    <a href="#badge-wc">Badge WC</a>
   </nav>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 1. BUTTONS                                                 -->
+  <!-- 1. BOTÕES — CSS NATIVO                                     -->
   <!-- ════════════════════════════════════════════════════════════ -->
-  <section class="demo-section" id="buttons">
-    <h2><span class="tag">button[variant]</span> 1. Buttons</h2>
-    <div class="col">
-      <div class="row">
-        <button variant="primary sm">Small</button>
+  <section class="demo-section" id="buttons-css">
+    <h2><span class="tag">button[variant]</span> 1. Botões CSS Nativos</h2>
+    <p class="note">Botões HTML nativos estilizados via <code>variant</code>, <code>size</code>, <code>aria-busy</code> — zero JS.</p>
+
+    <div class="demo-subsection">
+      <h3>Variantes</h3>
+      <div class="demo-variant-row">
         <button variant="primary">Primary</button>
-        <button variant="primary lg">Large</button>
-      </div>
-      <div class="row">
         <button variant="secondary">Secondary</button>
         <button variant="ghost">Ghost</button>
         <button variant="danger">Danger</button>
-        <button variant="contrast">Contrast</button>
+        <button variant="outline">Outline</button>
+        <button variant="link">Link</button>
       </div>
-      <div class="row">
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Tamanhos</h3>
+      <div class="demo-variant-row">
+        <button variant="primary sm">Small</button>
+        <button variant="primary">Default</button>
+        <button variant="primary lg">Large</button>
+      </div>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Estados</h3>
+      <div class="demo-variant-row">
         <button variant="primary" aria-busy="true">Loading</button>
+        <button variant="secondary" aria-busy="true">Loading</button>
         <button variant="primary" disabled>Disabled</button>
-        <button variant="secondary" disabled>Disabled</button>
-      </div>
-      <div class="row">
-        <button variant="primary">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="inline-size:1em;block-size:1em;"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
-          With Icon
-        </button>
-        <button variant="secondary">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="inline-size:1em;block-size:1em;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          Home
-        </button>
+        <button variant="outline" disabled>Disabled</button>
       </div>
     </div>
-  </section>
 
-  <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 2. BUTTON GROUP                                            -->
-  <!-- ════════════════════════════════════════════════════════════ -->
-  <section class="demo-section" id="button-group">
-    <h2><span class="tag">div[role=group]</span> 2. Button Group</h2>
-    <div class="col">
-      <div>
-        <p class="note">Grupo com secondary buttons</p>
-        <div role="group" aria-label="Ações de edição">
-          <button variant="secondary">Cortar</button>
-          <button variant="secondary">Copiar</button>
-          <button variant="secondary">Colar</button>
-        </div>
-      </div>
-      <div>
-        <p class="note">Grupo misto primary + secondary + sm</p>
-        <div role="group" aria-label="Ações primárias">
-          <button variant="primary sm">Salvar</button>
-          <button variant="secondary sm">Descartar</button>
-        </div>
-      </div>
-      <div>
-        <p class="note">Grupo com lg</p>
-        <div role="group" aria-label="Ações grandes">
-          <button variant="primary lg">Confirmar</button>
-          <button variant="secondary lg">Cancelar</button>
+    <div class="demo-subsection">
+      <h3>Grupo</h3>
+      <div class="demo-variant-row">
+        <div role="group" aria-label="Ações">
+          <button variant="primary">Salvar</button>
+          <button variant="secondary">Cancelar</button>
+          <button variant="ghost">Descartar</button>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 2b. NATIVE BUTTON VARIANTS (via base/button.css)           -->
+  <!-- 2. BOTÃO — WEB COMPONENT                                   -->
   <!-- ════════════════════════════════════════════════════════════ -->
-  <section class="demo-section" id="native-buttons">
-    <h2><span class="tag">button[variant]</span> 2b. Native Button Variants</h2>
-    <p class="note">Botões HTML nativos estilizados via <code>variant</code> attribute — sem Web Component, zero JS.</p>
-    <div class="row">
-      <button variant="primary">Primary</button>
-      <button variant="secondary">Secondary</button>
-      <button variant="ghost">Ghost</button>
-      <button variant="danger">Danger</button>
-      <button variant="outline">Outline</button>
-      <button variant="link">Link</button>
+  <section class="demo-section" id="button-wc">
+    <h2><span class="wc-tag">auy-comp-button</span> 2. Button Web Component</h2>
+    <p class="note">8 variantes, loading state, <code>fullWidth</code>, modo <code>href</code>.</p>
+
+    <div class="demo-subsection">
+      <h3>Variantes</h3>
+      <div class="demo-variant-row">
+        <auy-comp-button variant="primary">Primary</auy-comp-button>
+        <auy-comp-button variant="secondary">Secondary</auy-comp-button>
+        <auy-comp-button variant="success">Success</auy-comp-button>
+        <auy-comp-button variant="error">Error</auy-comp-button>
+        <auy-comp-button variant="warning">Warning</auy-comp-button>
+        <auy-comp-button variant="info">Info</auy-comp-button>
+        <auy-comp-button variant="ghost">Ghost</auy-comp-button>
+        <auy-comp-button variant="link">Link</auy-comp-button>
+      </div>
     </div>
-    <div class="row" style="margin-block-start:var(--auy-space-md)">
-      <button variant="primary sm">Small</button>
-      <button variant="primary">Default</button>
-      <button variant="primary lg">Large</button>
+
+    <div class="demo-subsection">
+      <h3>Tamanhos</h3>
+      <div class="demo-variant-row">
+        <auy-comp-button variant="primary" size="sm">Small</auy-comp-button>
+        <auy-comp-button variant="primary" size="md">Medium</auy-comp-button>
+        <auy-comp-button variant="primary" size="lg">Large</auy-comp-button>
+      </div>
     </div>
-    <div class="row" style="margin-block-start:var(--auy-space-md)">
-      <button variant="primary" aria-busy="true">Loading</button>
-      <button variant="secondary" aria-busy="true">Loading</button>
-      <button variant="primary" disabled>Disabled</button>
+
+    <div class="demo-subsection">
+      <h3>Estados</h3>
+      <div class="demo-variant-row">
+        <auy-comp-button id="btn-loading-demo" variant="primary">Clique p/ Loading</auy-comp-button>
+        <auy-comp-button variant="success" disabled>Desabilitado</auy-comp-button>
+        <auy-comp-button variant="error" loading>Carregando...</auy-comp-button>
+        <auy-comp-button variant="primary" fullWidth style="max-inline-size:20rem;">Largura Total</auy-comp-button>
+      </div>
     </div>
-    <p class="note" style="margin-block-start:var(--auy-space-md)">Agrupamento com <code>[role="group"]</code>:</p>
-    <div role="group" aria-label="Native button group">
-      <button variant="primary">Salvar</button>
-      <button variant="secondary">Cancelar</button>
+
+    <div class="demo-subsection">
+      <h3>Modo Link</h3>
+      <div class="demo-variant-row">
+        <auy-comp-button href="/">Home</auy-comp-button>
+        <auy-comp-button href="/usuarios" variant="secondary">Ver Usuários</auy-comp-button>
+        <auy-comp-button href="https://exemplo.com" target="_blank" variant="ghost">Externo ↗</auy-comp-button>
+      </div>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Exemplos para backend</h3>
+      <div class="demo-variant-row">
+        <auy-comp-button variant="primary">Adicionar</auy-comp-button>
+        <auy-comp-button variant="success">Salvar</auy-comp-button>
+        <auy-comp-button variant="error">Excluir</auy-comp-button>
+        <auy-comp-button variant="warning">Suspender</auy-comp-button>
+        <auy-comp-button variant="ghost">Cancelar</auy-comp-button>
+        <auy-comp-button href="/relatorios" variant="info">Relatórios</auy-comp-button>
+      </div>
+      <div class="demo-variant-row">
+        <auy-comp-button variant="primary" size="icon" icon="plus" aria-label="Adicionar" title="Adicionar"></auy-comp-button>
+        <auy-comp-button variant="success" size="icon" icon="save" aria-label="Salvar" title="Salvar"></auy-comp-button>
+        <auy-comp-button variant="error" size="icon" icon="trash" aria-label="Excluir" title="Excluir"></auy-comp-button>
+        <auy-comp-button variant="warning" size="icon" icon="alert" aria-label="Suspender" title="Suspender"></auy-comp-button>
+        <auy-comp-button variant="ghost" size="icon" icon="close" aria-label="Cancelar" title="Cancelar"></auy-comp-button>
+        <auy-comp-button variant="info" size="icon" icon="externalLink" href="/relatorios" aria-label="Relatórios" title="Relatórios"></auy-comp-button>
+      </div>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 3. BADGES                                                  -->
+  <!-- 3. BADGES — CSS NATIVO                                     -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <section class="demo-section" id="badges">
-    <h2><span class="tag">span[data-badge]</span> 3. Badges</h2>
-    <div class="col">
-      <div class="row">
+    <h2><span class="tag">span[data-badge]</span> 3. Badges CSS Nativos</h2>
+    <p class="note">Variantes visual, pill, outline, contador e dot — tudo via atributos HTML.</p>
+
+    <div class="demo-subsection">
+      <h3>Variantes</h3>
+      <div class="demo-variant-row">
         <span data-badge>Default</span>
         <span data-badge data-badge-variant="success">Success</span>
         <span data-badge data-badge-variant="error">Error</span>
         <span data-badge data-badge-variant="warning">Warning</span>
         <span data-badge data-badge-variant="info">Info</span>
-        <span data-badge data-badge-variant="neutral">Neutral</span>
       </div>
-      <div class="row">
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Pill</h3>
+      <div class="demo-variant-row">
         <span data-badge data-badge-pill>Pill</span>
         <span data-badge data-badge-variant="success" data-badge-pill>Publicado</span>
         <span data-badge data-badge-variant="error" data-badge-pill>Bloqueado</span>
         <span data-badge data-badge-variant="warning" data-badge-pill>Pendente</span>
-        <span data-badge data-badge-variant="info" data-badge-pill>Info</span>
-        <span data-badge data-badge-variant="neutral" data-badge-pill>Rascunho</span>
       </div>
-      <div class="row">
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Outline</h3>
+      <div class="demo-variant-row">
         <span data-badge data-badge-outline>Outline</span>
         <span data-badge data-badge-variant="success" data-badge-outline>Sucesso</span>
         <span data-badge data-badge-variant="error" data-badge-outline>Erro</span>
-        <span data-badge data-badge-variant="warning" data-badge-outline>Atenção</span>
-        <span data-badge data-badge-variant="info" data-badge-outline>Info</span>
-        <span data-badge data-badge-variant="neutral" data-badge-outline>Neutral</span>
       </div>
-      <div class="row">
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Contador e Dot</h3>
+      <div class="demo-variant-row">
         <span data-badge data-badge-count>3</span>
         <span data-badge data-badge-count>42</span>
         <span data-badge data-badge-count data-badge-max="99">150</span>
-        <span data-badge data-badge-count data-badge-max="99">999</span>
-      </div>
-      <div class="row">
         <span data-badge data-badge-dot></span>
         <span data-badge data-badge-variant="success" data-badge-dot></span>
         <span data-badge data-badge-variant="error" data-badge-dot></span>
-        <span data-badge data-badge-variant="warning" data-badge-dot></span>
-        <span data-badge data-badge-variant="info" data-badge-dot></span>
-      </div>
-      <div class="row">
-        <span data-badge data-badge-variant="warning">★ Favorito</span>
-        <span data-badge data-badge-variant="success">✓ Concluído</span>
-        <span data-badge data-badge-variant="error">✕ Falhou</span>
-        <span data-badge data-badge-variant="info">● Online</span>
       </div>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 4. SPINNER                                                 -->
+  <!-- 4. SPINNER                                                  -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <section class="demo-section" id="spinner">
     <h2><span class="tag">span.spinner</span> 4. Spinner</h2>
-    <div class="row">
-      <span class="spinner" style="--spinner-size: 16px" role="status" aria-label="Carregando"></span>
-      <span class="spinner" role="status" aria-label="Carregando"></span>
-      <span class="spinner" style="--spinner-size: 48px" role="status" aria-label="Carregando"></span>
-      <span class="spinner" style="--spinner-size: 16px; --spinner-color: oklch(55% 0.22 30)" role="status" aria-label="Carregando"></span>
-      <span class="spinner" style="--spinner-size: 16px; --spinner-color: oklch(55% 0.2 145)" role="status" aria-label="Carregando"></span>
-      <span class="spinner" style="--spinner-size: 32px; --spinner-color: oklch(65% 0.2 85)" role="status" aria-label="Carregando"></span>
-    </div>
-  </section>
+    <p class="note">Spinner CSS puro. Tamanho e cor via <code>--spinner-size</code> e <code>--spinner-color</code>.</p>
 
-  <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 5. ALERT                                                   -->
-  <!-- ════════════════════════════════════════════════════════════ -->
-  <section class="demo-section" id="alert">
-    <h2><span class="tag">div.alert</span> 5. Alert</h2>
-    <div class="col">
-      <div class="alert alert--info" role="alert">Informação importante para o usuário.</div>
-      <div class="alert alert--success" role="alert">Operação concluída com sucesso!</div>
-      <div class="alert alert--warning" role="alert">Alerta com botão de fechar — clique no ×.<button class="alert__close" aria-label="Fechar">×</button></div>
-      <div class="alert alert--error" role="alert">Erro crítico no sistema. Contate o suporte.<button class="alert__close" aria-label="Fechar">×</button></div>
-      <div class="alert alert--info" role="alert">
-        <strong>Com título customizado</strong><br>
-        Mensagem com cabeçalho destacado.
+    <div class="demo-subsection">
+      <h3>Tamanhos</h3>
+      <div class="demo-variant-row">
+        <span class="spinner" style="--spinner-size: 16px" role="status" aria-label="Carregando"></span>
+        <span class="spinner" style="--spinner-size: 24px" role="status" aria-label="Carregando"></span>
+        <span class="spinner" style="--spinner-size: 48px" role="status" aria-label="Carregando"></span>
       </div>
-      <div class="alert alert--success" role="alert">
-        <strong>Parabéns!</strong><br>
-        Sua conta foi criada com sucesso.
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Cores personalizadas</h3>
+      <div class="demo-variant-row">
+        <span class="spinner" style="--spinner-size: 24px; --spinner-color: var(--auy-color-primary)" role="status" aria-label="Carregando"></span>
+        <span class="spinner" style="--spinner-size: 24px; --spinner-color: var(--auy-color-success)" role="status" aria-label="Carregando"></span>
+        <span class="spinner" style="--spinner-size: 24px; --spinner-color: var(--auy-color-error)" role="status" aria-label="Carregando"></span>
+        <span class="spinner" style="--spinner-size: 24px; --spinner-color: var(--auy-color-warning)" role="status" aria-label="Carregando"></span>
       </div>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 6. CARD                                                    -->
+  <!-- 5. ALERT — CSS NATIVO                                      -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="alert-css">
+    <h2><span class="tag">.alert</span> 5. Alert CSS Nativo</h2>
+    <p class="note">Alerta inline com 4 variantes, botão de fechar e suporte a título.</p>
+
+    <div class="demo-subsection">
+      <h3>Variantes</h3>
+      <div class="demo-variant-row" style="flex-direction:column;align-items:stretch;">
+        <div class="alert alert--info" role="alert">Informação importante para o usuário.</div>
+        <div class="alert alert--success" role="alert">Operação concluída com sucesso!</div>
+        <div class="alert alert--warning" role="alert">Atenção: verifique os dados.<button class="alert__dismiss" aria-label="Fechar">&times;</button></div>
+        <div class="alert alert--error" role="alert">Erro crítico no sistema.<button class="alert__dismiss" aria-label="Fechar">&times;</button></div>
+      </div>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Com título</h3>
+      <div class="demo-variant-row" style="flex-direction:column;align-items:stretch;">
+        <div class="alert alert--info" role="alert"><strong class="alert__title">Informação</strong> Mensagem com cabeçalho destacado.</div>
+        <div class="alert alert--success" role="alert"><strong class="alert__title">Parabéns!</strong> Sua conta foi criada com sucesso.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 6. ALERT — WEB COMPONENT                                   -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="alert-wc">
+    <h2><span class="wc-tag">auy-comp-alert</span> 6. Alert Web Component</h2>
+    <p class="note">Dismissível, auto-timeout via <code>timeout</code>, <code>aria-live</code> assertivo para erro/warning.</p>
+
+    <div class="demo-subsection">
+      <h3>Variantes</h3>
+      <div class="demo-variant-row" style="flex-direction:column;align-items:stretch;">
+        <auy-comp-alert variant="info" title="Informação" open>Este é um alerta informativo.</auy-comp-alert>
+        <auy-comp-alert variant="success" title="Sucesso" open>Operação concluída.</auy-comp-alert>
+        <auy-comp-alert variant="warning" title="Atenção" open>Verifique os dados antes de prosseguir.</auy-comp-alert>
+        <auy-comp-alert variant="error" title="Erro" open>Falha ao processar requisição.</auy-comp-alert>
+      </div>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Comportamentos</h3>
+      <div class="demo-variant-row" style="flex-direction:column;align-items:stretch;">
+        <auy-comp-alert variant="warning" open dismissible>Alerta com botão de fechar</auy-comp-alert>
+        <auy-comp-alert variant="info" open :dismissible="false">Alerta sem botão fechar</auy-comp-alert>
+        <div class="demo-variant-row">
+          <button id="alert-trigger" variant="primary sm">Mostrar Alerta Dinâmico</button>
+          <div id="alert-mount-point"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 7. CARD                                                     -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <section class="demo-section" id="card">
-    <h2><span class="tag">article.card</span> 6. Card</h2>
-    <div class="card-demo">
-      <article class="card card--default">
-        <h3 class="card__title">Default Card</h3>
-        <p class="card__description">Card sem sombra nem borda. Apenas o fundo da superfície.</p>
-      </article>
-      <article class="card card--elevated">
-        <h3 class="card__title">Elevated Card</h3>
-        <p class="card__description">Card com sombra para destaque. Ideal para conteúdo em destaque.</p>
-      </article>
-      <article class="card card--outlined">
-        <h3 class="card__title">Outlined Card</h3>
-        <p class="card__description">Card com borda. Ótimo para grids e listagens.</p>
-      </article>
-      <a href="#" class="card card--elevated">
-        <h3 class="card__title">Card como Link</h3>
-        <p class="card__description">Card clicável — use <code>href</code> para transformar em link. Efeito hover de escala.</p>
-      </a>
-      <article class="card card--elevated">
-        <div style="block-size:120px;background:linear-gradient(135deg, var(--auy-color-primary), var(--auy-color-info));display:flex;align-items:center;justify-content:center;color:#fff;font-size:2rem;">🎨</div>
-        <h3 class="card__title">Com Media</h3>
-        <p class="card__description">Card com slot "media" para imagem, banner ou ilustração.</p>
-        <div class="card__footer" style="display:flex;gap:var(--auy-space-sm);border-block-start:1px solid var(--auy-color-border);padding-block-start:var(--auy-space-md);">
-          <button variant="primary sm" style="flex:1;">Abrir</button>
-          <button variant="ghost sm" style="flex:1;">Detalhes</button>
-        </div>
-      </article>
+    <h2><span class="tag">.card</span> 7. Card</h2>
+    <p class="note">Variantes default, elevated, outlined. Seções header, body, footer. Media flush. Aceita link.</p>
+
+    <div class="demo-subsection">
+      <h3>Variantes</h3>
+      <div class="card-demo">
+        <article class="card card--default">
+          <div class="card__body">
+            <h3 class="card__title">Default</h3>
+            <p class="card__description">Superfície limpa sem borda nem sombra. Ideal para grids densos.</p>
+          </div>
+          <div class="card__footer">
+            <button variant="ghost sm">Ação</button>
+          </div>
+        </article>
+        <article class="card card--elevated">
+          <div class="card__body">
+            <h3 class="card__title">Elevated</h3>
+            <p class="card__description">Sombra suave para destacar conteúdo em evidência na página.</p>
+          </div>
+          <div class="card__footer">
+            <button variant="primary sm">Saiba mais</button>
+          </div>
+        </article>
+        <article class="card card--outlined">
+          <div class="card__body">
+            <h3 class="card__title">Outlined</h3>
+            <p class="card__description">Borda sutil. Ótimo para seções editáveis ou selecionáveis.</p>
+          </div>
+          <div class="card__footer">
+            <button variant="ghost sm">Editar</button>
+          </div>
+        </article>
+        <a href="#" class="card card--elevated">
+          <div class="card__body">
+            <h3 class="card__title">Card como Link</h3>
+            <p class="card__description">Card clicável — levita ao passar o mouse.</p>
+          </div>
+          <div class="card__footer">
+            <span style="font-size:var(--auy-text-sm);color:var(--auy-color-primary)">Acessar &rarr;</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Com header, body e footer</h3>
+      <div class="card-demo">
+        <article class="card card--outlined">
+          <div class="card__header">
+            <span class="card__subtitle">Categoria: Design</span>
+            <h3 class="card__title">Princípios de Interface</h3>
+          </div>
+          <div class="card__body">
+            <p class="card__description">Exploramos os fundamentos de design de interfaces — hierarquia visual, contraste, alinhamento e consistência — aplicados a componentes modernos.</p>
+          </div>
+          <div class="card__footer">
+            <button variant="primary sm">Ler artigo</button>
+            <button variant="ghost sm">Compartilhar</button>
+          </div>
+        </article>
+        <article class="card card--elevated">
+          <div class="card__header">
+            <span class="card__subtitle">Release v2.0</span>
+            <h3 class="card__title">auy-ui Design System</h3>
+          </div>
+          <div class="card__body">
+            <p class="card__description">Novos componentes: tabela sortável, modal com dialog nativo, alertas com timeout, tooltips em 4 posições e mais.</p>
+          </div>
+          <div class="card__footer">
+            <button variant="primary sm">Documentação</button>
+            <button variant="ghost sm">Changelog</button>
+          </div>
+        </article>
+      </div>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 7. MODAL                                                   -->
+  <!-- 8. MODAL — WEB COMPONENT                                   -->
   <!-- ════════════════════════════════════════════════════════════ -->
-  <section class="demo-section" id="modal">
-    <h2><span class="tag">dialog</span> 7. Modal</h2>
-    <div class="row">
-      <button id="modal-trigger" variant="primary">Abrir Modal</button>
-      <button id="modal-lg-trigger" variant="secondary">Modal + Conteúdo</button>
+  <section class="demo-section" id="modal-wc">
+    <h2><span class="wc-tag">auy-comp-modal</span> 8. Modal Web Component</h2>
+    <p class="note"><code>&lt;dialog&gt;</code> nativo com 5 variantes (<code>default</code>, <code>info</code>, <code>success</code>, <code>warning</code>, <code>error</code>), <code>description</code>, animação slide-up, 5 tamanhos.</p>
+
+    <div class="demo-subsection">
+      <h3>Variantes</h3>
+      <div class="demo-variant-row">
+        <button id="modal-open-default" variant="primary sm">Default</button>
+        <button id="modal-open-info" variant="info sm">Info</button>
+        <button id="modal-open-success" variant="success sm">Success</button>
+        <button id="modal-open-warning" variant="warning sm">Warning</button>
+        <button id="modal-open-error" variant="error sm">Error</button>
+      </div>
     </div>
-    <dialog id="demo-modal">
-      <h3>Confirmação</h3>
-      <p>Modal com gerenciamento de foco (Tab trap). Pressione <kbd>Esc</kbd> para fechar.</p>
-      <div>
-        <button variant="ghost" id="modal-cancel">Cancelar</button>
-        <button variant="primary" id="modal-confirm">Confirmar</button>
+
+    <div class="demo-subsection">
+      <h3>Tamanhos</h3>
+      <div class="demo-variant-row">
+        <button id="modal-open-sm" variant="secondary sm">sm</button>
+        <button id="modal-open-md" variant="secondary sm">md</button>
+        <button id="modal-open-lg" variant="secondary sm">lg</button>
+        <button id="modal-open-xl" variant="secondary sm">xl</button>
+        <button id="modal-open-full" variant="secondary sm">full</button>
       </div>
-    </dialog>
-    <dialog id="modal-lg">
-      <h3>Termos de Uso</h3>
-      <div style="max-block-size:40vh;overflow-y:auto">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+
+    <!-- Modal instances -->
+    <auy-comp-modal id="modal-default" title="Confirmação" description="Tem certeza que deseja excluir este registro? Esta ação não pode ser desfeita.">
+      <p style="margin:0;font-size:var(--auy-text-sm);color:var(--auy-color-text-muted);">Esta ação removerá permanentemente o item selecionado.</p>
+      <div slot="footer">
+        <auy-comp-button variant="ghost" id="modal-default-cancel">Cancelar</auy-comp-button>
+        <auy-comp-button variant="error">Excluir</auy-comp-button>
       </div>
-      <div>
-        <button variant="primary" id="modal-lg-accept">Aceitar</button>
+    </auy-comp-modal>
+
+    <auy-comp-modal id="modal-info" variant="info" title="Atualização disponível" description="Uma nova versão do sistema está disponível para instalação.">
+      <p style="margin:0;font-size:var(--auy-text-sm);color:var(--auy-color-text-muted);">v2.5.0 — Corrige bugs de segurança e adiciona novos componentes.</p>
+      <div slot="footer">
+        <auy-comp-button variant="ghost">Agora não</auy-comp-button>
+        <auy-comp-button variant="primary">Atualizar</auy-comp-button>
       </div>
-    </dialog>
+    </auy-comp-modal>
+
+    <auy-comp-modal id="modal-success" variant="success" title="Conta criada" description="Sua conta foi criada com sucesso! Bem-vindo ao auy-ui.">
+      <p style="margin:0;font-size:var(--auy-text-sm);color:var(--auy-color-text-muted);">Enviamos um e-mail de confirmação para o endereço cadastrado.</p>
+      <div slot="footer">
+        <auy-comp-button variant="primary">Ir para o painel</auy-comp-button>
+      </div>
+    </auy-comp-modal>
+
+    <auy-comp-modal id="modal-warning" variant="warning" title="Limite de armazenamento" description="Seu espaço de armazenamento está quase cheio.">
+      <p style="margin:0;font-size:var(--auy-text-sm);color:var(--auy-color-text-muted);">Você usou 85% do seu plano atual. Considere liberar espaço ou fazer upgrade.</p>
+      <div slot="footer">
+        <auy-comp-button variant="ghost">Ignorar</auy-comp-button>
+        <auy-comp-button variant="primary">Gerenciar</auy-comp-button>
+      </div>
+    </auy-comp-modal>
+
+    <auy-comp-modal id="modal-error" variant="error" title="Erro de conexão" description="Não foi possível conectar ao servidor. Verifique sua rede.">
+      <p style="margin:0;font-size:var(--auy-text-sm);color:var(--auy-color-text-muted);">Código: ERR_NETWORK_TIMEOUT · Tente novamente em alguns instantes.</p>
+      <div slot="footer">
+        <auy-comp-button variant="ghost">Cancelar</auy-comp-button>
+        <auy-comp-button variant="primary">Tentar novamente</auy-comp-button>
+      </div>
+    </auy-comp-modal>
+
+    <auy-comp-modal id="modal-sm" size="sm" title="Modal pequeno" description="Para ações rápidas e confirmacões simples.">
+      <p style="margin:0;font-size:var(--auy-text-sm);color:var(--auy-color-text-muted);">Ideal para diálogos de confirmação compactos.</p>
+      <div slot="footer">
+        <auy-comp-button variant="ghost">Fechar</auy-comp-button>
+      </div>
+    </auy-comp-modal>
+
+    <auy-comp-modal id="modal-md" size="md" title="Modal médio" description="Tamanho padrão para a maioria dos diálogos.">
+      <p style="margin:0;font-size:var(--auy-text-sm);color:var(--auy-color-text-muted);">Conteúdo com espaço confortável para leitura.</p>
+      <div slot="footer">
+        <auy-comp-button variant="ghost">Fechar</auy-comp-button>
+      </div>
+    </auy-comp-modal>
+
+    <auy-comp-modal id="modal-lg" size="lg" title="Modal grande" description="Para conteúdo mais extenso, como formulários ou relatórios." closeOnOverlay>
+      <div style="display:grid;gap:var(--auy-space-md);">
+        <p style="margin:0;font-size:var(--auy-text-sm);color:var(--auy-color-text-muted);">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        <p style="margin:0;font-size:var(--auy-text-sm);color:var(--auy-color-text-muted);">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </div>
+      <div slot="footer">
+        <auy-comp-button variant="primary">Entendi</auy-comp-button>
+      </div>
+    </auy-comp-modal>
+
+    <auy-comp-modal id="modal-xl" size="xl" title="Modal extra grande" description="Espaço generoso para dashboards, tabelas ou mídia.">
+      <p style="margin:0;font-size:var(--auy-text-sm);color:var(--auy-color-text-muted);">Indicado para exibir tabelas extensas, preview de documentos ou formulários complexos.</p>
+      <div slot="footer">
+        <auy-comp-button variant="ghost">Fechar</auy-comp-button>
+      </div>
+    </auy-comp-modal>
+
+    <auy-comp-modal id="modal-full" size="full" title="Modal tela cheia" description="Ocupa quase toda a janela, ideal para editores ou visualizadores.">
+      <p style="margin:0;font-size:var(--auy-text-sm);color:var(--auy-color-text-muted);">Útil para editores de código, preview de documentos rich-text, ou qualquer conteúdo que precise de máximo espaço.</p>
+      <div slot="footer">
+        <auy-comp-button variant="ghost">Cancelar</auy-comp-button>
+        <auy-comp-button variant="primary">Salvar</auy-comp-button>
+      </div>
+    </auy-comp-modal>
+
+    <div class="demo-subsection">
+      <h3>Modal aninhado (nested)</h3>
+      <div class="demo-variant-row">
+        <button id="modal-open-nested" variant="primary sm">Abrir cadeia</button>
+      </div>
+      <p class="note">Cada <code>&lt;dialog&gt;</code> nativo vive no <em>top-layer</em> do navegador. Ao abrir um modal dentro de outro, o navegador empilha os backdrops, prende o foco no topo e restaura o foco anterior ao fechar — sem conflito.</p>
+    </div>
+
+    <auy-comp-modal id="modal-nested-1" variant="info" title="Modal pai" description="Este é o primeiro modal da cadeia.">
+      <p style="margin:0;font-size:var(--auy-text-sm);color:var(--auy-color-text-muted);">Clique abaixo para abrir um segundo modal dentro deste.</p>
+      <div slot="footer" style="display:flex;gap:var(--auy-space-sm);justify-content:flex-end;">
+        <auy-comp-button variant="ghost" id="modal-nested-1-cancel">Fechar</auy-comp-button>
+        <auy-comp-button variant="primary" id="modal-nested-1-next">Abrir filho</auy-comp-button>
+      </div>
+    </auy-comp-modal>
+
+    <auy-comp-modal id="modal-nested-2" variant="warning" title="Modal filho" description="Segundo nível da cadeia. O foco está aqui agora.">
+      <p style="margin:0;font-size:var(--auy-text-sm);color:var(--auy-color-text-muted);">Ao fechar este modal, o foco retorna automaticamente ao modal pai (nativo do <code>showModal()</code>).</p>
+      <div slot="footer" style="display:flex;gap:var(--auy-space-sm);justify-content:flex-end;">
+        <auy-comp-button variant="ghost" id="modal-nested-2-cancel">Voltar</auy-comp-button>
+        <auy-comp-button variant="primary" id="modal-nested-2-next">Abrir neto</auy-comp-button>
+      </div>
+    </auy-comp-modal>
+
+    <auy-comp-modal id="modal-nested-3" variant="error" title="Modal neto" description="Terceiro nível — demonstra empilhamento de backdrops.">
+      <p style="margin:0;font-size:var(--auy-text-sm);color:var(--auy-color-text-muted);">Três modais abertos simultaneamente. Cada backdrop a 50% de opacidade empilha suavemente sem escurecer demais.</p>
+      <div slot="footer" style="display:flex;gap:var(--auy-space-sm);justify-content:flex-end;">
+        <auy-comp-button variant="ghost" id="modal-nested-3-cancel">Fechar tudo</auy-comp-button>
+      </div>
+    </auy-comp-modal>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 8. TOOLTIP                                                 -->
+  <!-- 9. TOOLTIP — CSS NATIVO                                    -->
   <!-- ════════════════════════════════════════════════════════════ -->
-  <section class="demo-section" id="tooltip">
-    <h2><span class="tag">span[data-tooltip]</span> 8. Tooltip</h2>
-    <div class="row" style="padding: var(--auy-space-xl) 0;">
-      <span data-tooltip="Tooltip em cima" data-tooltip-position="top">
-        <button variant="secondary">Top</button>
-      </span>
-      <span data-tooltip="Tooltip embaixo" data-tooltip-position="bottom">
-        <button variant="secondary">Bottom</button>
-      </span>
-      <span data-tooltip="Tooltip à direita" data-tooltip-position="right">
-        <button variant="secondary">Right</button>
-      </span>
-      <span data-tooltip="Tooltip à esquerda" data-tooltip-position="left">
-        <button variant="secondary">Left</button>
-      </span>
+  <section class="demo-section" id="tooltip-css">
+    <h2><span class="tag">span[data-tooltip]</span> 9. Tooltip CSS Nativo</h2>
+    <p class="note">Tooltip via atributo <code>data-tooltip</code> com 4 posições: top, bottom, left, right.</p>
+
+    <div class="demo-subsection">
+      <div class="demo-variant-row" style="padding: var(--auy-space-xl) 0; gap: var(--auy-space-lg);">
+        <span data-tooltip="Tooltip em cima" data-tooltip-position="top">
+          <button variant="secondary">Top</button>
+        </span>
+        <span data-tooltip="Tooltip embaixo" data-tooltip-position="bottom">
+          <button variant="secondary">Bottom</button>
+        </span>
+        <span data-tooltip="Tooltip à direita" data-tooltip-position="right">
+          <button variant="secondary">Right</button>
+        </span>
+        <span data-tooltip="Tooltip à esquerda" data-tooltip-position="left">
+          <button variant="secondary">Left</button>
+        </span>
+      </div>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 9. ACCORDION                                               -->
+  <!-- 10. TOOLTIP — WEB COMPONENT                                -->
   <!-- ════════════════════════════════════════════════════════════ -->
-  <section class="demo-section" id="accordion">
-    <h2><span class="tag">details/summary</span> 9. Accordion</h2>
-    <div style="max-inline-size:600px">
+  <section class="demo-section" id="tooltip-wc">
+    <h2><span class="wc-tag">auy-comp-tooltip</span> 10. Tooltip Web Component</h2>
+    <p class="note"><code>role="tooltip"</code>, <code>aria-describedby</code>, delay configurável, 4 posições.</p>
+
+    <div class="demo-subsection">
+      <h3>Posições</h3>
+      <div class="demo-variant-row" style="padding: var(--auy-space-xl) 0; gap: var(--auy-space-lg);">
+        <auy-comp-tooltip text="Tooltip em cima" position="top" delay="0">
+          <button variant="secondary">Top</button>
+        </auy-comp-tooltip>
+        <auy-comp-tooltip text="Tooltip embaixo" position="bottom" delay="0">
+          <button variant="secondary">Bottom</button>
+        </auy-comp-tooltip>
+        <auy-comp-tooltip text="Tooltip à direita" position="right" delay="0">
+          <button variant="secondary">Right</button>
+        </auy-comp-tooltip>
+        <auy-comp-tooltip text="Tooltip à esquerda" position="left" delay="0">
+          <button variant="secondary">Left</button>
+        </auy-comp-tooltip>
+      </div>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Delay e Disabled</h3>
+      <div class="demo-variant-row" style="padding: var(--auy-space-xl) 0;">
+        <auy-comp-tooltip text="Delay de 1 segundo" delay="1000">
+          <button variant="ghost">Delay 1s</button>
+        </auy-comp-tooltip>
+        <auy-comp-tooltip text="Tooltip desabilitado" disabled>
+          <button variant="ghost">Disabled</button>
+        </auy-comp-tooltip>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 11. ACCORDION — CSS NATIVO                                 -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="accordion-css">
+    <h2><span class="tag">details/summary</span> 11. Accordion CSS Nativo</h2>
+    <p class="note">Accordion usando elementos HTML nativos <code>&lt;details&gt;</code> e <code>&lt;summary&gt;</code>.</p>
+
+    <div class="demo-subsection" style="max-inline-size:600px">
       <details open>
         <summary>O que é auy-ui?</summary>
-        <div class="content">Design system acessível com CSS classless (estiliza HTML nativo) + Web Components (Lit) para interatividade.</div>
+        <div class="content">Design system acessível com CSS classless + Web Components (Lit) para interatividade.</div>
       </details>
       <details>
         <summary>Precisa de JavaScript?</summary>
@@ -379,327 +843,604 @@
       </details>
       <details>
         <summary>Quantos temas existem?</summary>
-        <div class="content">5 temas de cor (azure, emerald, ruby, amber, violet) com dark mode automático em cada um.</div>
-      </details>
-      <details>
-        <summary>Suporta SSR?</summary>
-        <div class="content">Sim! Todos os componentes funcionam com Server-Side Rendering. O HTML é renderizado no servidor e os Web Components são hidratados no cliente.</div>
+        <div class="content">22 temas de cor com dark mode automático em cada um.</div>
       </details>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 10. TABS                                                   -->
+  <!-- 12. ACCORDION — WEB COMPONENT                              -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="accordion-wc">
+    <h2><span class="wc-tag">auy-comp-accordion</span> 12. Accordion Web Component</h2>
+    <p class="note"><code>multiple</code> permite vários abertos simultaneamente. <code>icon</code> alterna chevron/plus.</p>
+
+    <div class="grid-2">
+      <div class="demo-subsection">
+        <h3>Single (padrão)</h3>
+        <auy-comp-accordion id="accordion-single" style="max-inline-size:600px"></auy-comp-accordion>
+      </div>
+      <div class="demo-subsection">
+        <h3>Multiple + icon plus</h3>
+        <auy-comp-accordion id="accordion-multiple" multiple icon="plus" style="max-inline-size:600px"></auy-comp-accordion>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 13. TABS                                                   -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <section class="demo-section" id="tabs">
-    <h2><span class="tag">auy-comp-tabs</span> 10. Tabs</h2>
+    <h2><span class="wc-tag">auy-comp-tabs</span> 13. Tabs</h2>
+    <p class="note">Navegação por setas ← →, <code>orientation</code> horizontal/vertical. Conteúdo via slots <code>panel-{id}</code>.</p>
     <auy-comp-tabs id="demo-tabs"></auy-comp-tabs>
-    <p class="note">Navegação por setas ← →. Sete a propriedade <code>tabs</code> via JS.</p>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 11. DROPDOWN                                               -->
+  <!-- 14. DROPDOWN                                               -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <section class="demo-section" id="dropdown">
-    <h2><span class="tag">details[data-dropdown]</span> 11. Dropdown</h2>
-    <div class="row">
-      <details data-dropdown>
-        <summary part="trigger">Ações</summary>
-        <button onclick="alert('Editar')">✏️ Editar</button>
-        <button onclick="alert('Duplicar')">📋 Duplicar</button>
-        <div role="separator"></div>
-        <button onclick="alert('Excluir')">🗑️ Excluir</button>
-      </details>
-      <details data-dropdown data-align="end">
-        <summary part="trigger">Links</summary>
-        <a href="#" aria-current="page">Perfil</a>
-        <a href="#">Configurações</a>
-        <div role="separator"></div>
-        <a href="#">Ajuda</a>
-        <a href="#">Sair</a>
-      </details>
-      <details data-dropdown>
-        <summary part="trigger">Visualização</summary>
-        <button onclick="alert('Grade')">📐 Grade</button>
-        <button onclick="alert('Lista')">📋 Lista</button>
-      </details>
+    <h2><span class="tag">details[data-dropdown]</span> 14. Dropdown</h2>
+    <p class="note">Dropdown via <code>&lt;details data-dropdown&gt;</code>. Alinhamento padrão e <code>end</code>.</p>
+
+    <div class="demo-subsection">
+      <div class="demo-variant-row">
+        <details data-dropdown>
+          <summary>Ações</summary>
+          <button>✏️ Editar</button>
+          <button>📋 Duplicar</button>
+          <div role="separator"></div>
+          <button>🗑️ Excluir</button>
+        </details>
+        <details data-dropdown data-align="end">
+          <summary>Links</summary>
+          <a href="#">Perfil</a>
+          <a href="#">Configurações</a>
+          <div role="separator"></div>
+          <a href="#">Ajuda</a>
+        </details>
+      </div>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 12. NAV                                                    -->
+  <!-- 15. NAV                                                    -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <section class="demo-section" id="nav">
-    <h2><span class="tag">nav[data-variant]</span> 12. Nav</h2>
-    <div class="col">
-      <div>
-        <p class="note"><strong>default</strong> — horizontal</p>
-        <nav aria-label="Nav default">
-          <a href="#" aria-current="page">Dashboard</a>
-          <a href="#">Usuários</a>
-          <a href="#">Relatórios</a>
-          <button>Exportar</button>
-        </nav>
-      </div>
-      <div>
-        <p class="note"><strong>underline</strong> — indicador inferior</p>
-        <nav data-variant="underline" aria-label="Nav underline">
-          <a href="#" aria-current="page">Principal</a>
-          <a href="#">Detalhes</a>
-          <a href="#">Histórico</a>
-          <a href="#">Anexos</a>
-        </nav>
-      </div>
-      <div>
-        <p class="note"><strong>tray</strong> — bandeja arredondada</p>
-        <nav data-variant="tray" aria-label="Nav tray">
-          <a href="#" aria-current="page">Home</a>
-          <a href="#">Explorar</a>
-          <a href="#">Biblioteca</a>
-          <a href="#">Configurações</a>
-        </nav>
-      </div>
-      <div>
-        <p class="note"><strong>vertical + underline</strong></p>
-        <nav data-variant="underline" data-orientation="vertical" aria-label="Nav vertical" style="max-inline-size:200px">
-          <a href="#" aria-current="page">Dashboard</a>
-          <a href="#">Usuários</a>
-          <a href="#">Relatórios</a>
-          <a href="#">Sair</a>
-        </nav>
-      </div>
+    <h2><span class="tag">nav[data-variant]</span> 15. Nav</h2>
+    <p class="note">3 variantes: <code>default</code>, <code>underline</code>, <code>tray</code>. Orientação horizontal ou vertical.</p>
+
+    <div class="demo-subsection">
+      <h3>Default — horizontal</h3>
+      <nav aria-label="Nav default">
+        <a href="#" aria-current="page">Dashboard</a>
+        <a href="#">Usuários</a>
+        <a href="#">Relatórios</a>
+        <button>Exportar</button>
+      </nav>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Underline</h3>
+      <nav data-variant="underline" aria-label="Nav underline">
+        <a href="#" aria-current="page">Principal</a>
+        <a href="#">Detalhes</a>
+        <a href="#">Histórico</a>
+      </nav>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Tray</h3>
+      <nav data-variant="tray" aria-label="Nav tray">
+        <a href="#" aria-current="page">Home</a>
+        <a href="#">Explorar</a>
+        <a href="#">Biblioteca</a>
+      </nav>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Vertical + underline</h3>
+      <nav data-variant="underline" data-orientation="vertical" aria-label="Nav vertical" style="max-inline-size:200px">
+        <a href="#" aria-current="page">Dashboard</a>
+        <a href="#">Usuários</a>
+        <a href="#">Sair</a>
+      </nav>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 13. PROGRESS                                               -->
+  <!-- 16. PROGRESS                                               -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <section class="demo-section" id="progress">
-    <h2><span class="tag">progress</span> 13. Progress</h2>
-    <div class="col" style="max-inline-size:500px">
-      <div class="form-group"><label>Download</label><progress value="45" max="100"></progress></div>
-      <div class="form-group"><label>Upload</label><progress value="80" max="100" data-variant="success"></progress></div>
-      <div class="form-group"><label>Sincronização</label><progress value="30" max="100" data-variant="warning"></progress></div>
-      <div class="form-group"><label>Completo</label><progress value="100" max="100" data-variant="success"></progress></div>
-      <div class="form-group"><label>Processando...</label><progress indeterminate></progress></div>
+    <h2><span class="tag">progress</span> 16. Progress</h2>
+    <p class="note"><code>&lt;progress&gt;</code> nativo com variantes via <code>data-variant</code>.</p>
+
+    <div class="demo-subsection" style="max-inline-size:500px">
+      <div class="col">
+        <div class="form-group"><label>Download</label><progress value="45" max="100"></progress></div>
+        <div class="form-group"><label>Upload</label><progress value="80" max="100" data-variant="success"></progress></div>
+        <div class="form-group"><label>Atenção</label><progress value="30" max="100" data-variant="warning"></progress></div>
+        <div class="form-group"><label>Completo</label><progress value="100" max="100" data-variant="success"></progress></div>
+        <div class="form-group"><label>Indeterminado</label><progress indeterminate></progress></div>
+      </div>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 14. PAGINATION                                             -->
+  <!-- 17. PAGINATION                                             -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <section class="demo-section" id="pagination">
-    <h2><span class="tag">auy-comp-pagination</span> 14. Pagination</h2>
+    <h2><span class="wc-tag">auy-comp-pagination</span> 17. Pagination</h2>
+    <p class="note">Evento <code>page-change</code> com <code>page</code> e <code>perPage</code>. Props: <code>total</code>, <code>perPage</code>, <code>maxVisible</code>.</p>
     <auy-comp-pagination id="demo-pagination" total="100" per-page="10" current="1"></auy-comp-pagination>
-    <p class="note" id="page-info">Página 1 de 10</p>
+    <p id="page-info" class="note">Página 1 de 10</p>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 15. CHECKBOX                                               -->
+  <!-- 18. CHECKBOX / RADIO / SWITCH                              -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <section class="demo-section" id="checkbox">
-    <h2><span class="tag">input[type=checkbox/radio/switch]</span> 15. Checkbox / Radio / Switch</h2>
-    <div class="row" style="align-items: start;">
-      <div class="checkbox-col">
-        <strong>Checkbox</strong>
-        <label class="form-group"><input type="checkbox"> Lembrar de mim</label>
-        <label class="form-group"><input type="checkbox" checked> Aceitar termos</label>
-        <label class="form-group"><input type="checkbox" disabled> Desabilitado</label>
-        <label class="form-group"><input type="checkbox" checked disabled> Checked + Disabled</label>
-      </div>
-      <div class="checkbox-col">
-        <strong>Radio</strong>
-        <label class="form-group"><input type="radio" name="rg1"> Opção A</label>
-        <label class="form-group"><input type="radio" name="rg1" checked> Opção B</label>
-        <label class="form-group"><input type="radio" name="rg1"> Opção C</label>
-        <label class="form-group"><input type="radio" name="rg1" disabled> Disabled</label>
-      </div>
-      <div class="checkbox-col">
-        <strong>Switch</strong>
-        <label class="form-group"><input type="checkbox" role="switch"> Notificações push</label>
-        <label class="form-group"><input type="checkbox" role="switch" checked> Modo escuro</label>
-        <label class="form-group"><input type="checkbox" role="switch" disabled> Wi-Fi</label>
-        <label class="form-group"><input type="checkbox" role="switch" checked disabled> Bluetooth</label>
+    <h2><span class="tag">input[type=checkbox/radio/switch]</span> 18. Checkbox / Radio / Switch</h2>
+    <p class="note">Inputs nativos estilizados via CSS. Switch com <code>role="switch"</code>.</p>
+
+    <div class="demo-subsection">
+      <div class="demo-variant-row" style="align-items: start;">
+        <div class="checkbox-col">
+          <strong>Checkbox</strong>
+          <label class="form-group"><input type="checkbox"> Lembrar de mim</label>
+          <label class="form-group"><input type="checkbox" checked> Aceitar termos</label>
+          <label class="form-group"><input type="checkbox" disabled> Desabilitado</label>
+        </div>
+        <div class="checkbox-col">
+          <strong>Radio</strong>
+          <label class="form-group"><input type="radio" name="rg1"> Opção A</label>
+          <label class="form-group"><input type="radio" name="rg1" checked> Opção B</label>
+          <label class="form-group"><input type="radio" name="rg1" disabled> Disabled</label>
+        </div>
+        <div class="checkbox-col">
+          <strong>Switch</strong>
+          <label class="form-group"><input type="checkbox" role="switch"> Notificações</label>
+          <label class="form-group"><input type="checkbox" role="switch" checked> Modo escuro</label>
+          <label class="form-group"><input type="checkbox" role="switch" disabled> Wi-Fi</label>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 16. FORM GROUP                                             -->
+  <!-- 19. FORM GROUP — CSS NATIVO                                -->
   <!-- ════════════════════════════════════════════════════════════ -->
-  <section class="demo-section" id="form-group">
-    <h2><span class="tag">.form-group</span> 16. Form Group</h2>
-    <div class="form-demo col">
-      <div class="form-group"><label>Nome completo</label><input type="text" placeholder="Digite seu nome" required><span class="note">Nome completo sem abreviações</span></div>
-      <div class="form-group" id="demo-email"><label>E-mail</label><input type="email" placeholder="email@exemplo.com" required><span class="note">Usaremos apenas para login</span></div>
-      <div class="form-group"><label>Senha</label><input type="password" placeholder="Mínimo 8 caracteres" required><span class="note">Crie uma senha forte</span></div>
-      <div class="form-group"><label>Telefone</label><input type="tel" placeholder="(00) 00000-0000"><span class="note">Celular ou fixo com DDD</span></div>
-      <div class="form-group"><label>CPF</label><input type="text" placeholder="000.000.000-00" maxlength="14"><span class="note">Formatação automática</span></div>
-      <div class="form-group"><label>Senha com erro</label><input type="password" placeholder="********" required aria-invalid="true"><span class="error">Senha deve ter no mínimo 8 caracteres</span></div>
+  <section class="demo-section" id="form-group-css">
+    <h2><span class="tag">.form-group</span> 19. Form Group CSS Nativo</h2>
+    <p class="note">Grupo label + input. Validação sem JS via <code>:user-invalid</code> e <code>:has()</code>. Ícones de sucesso/erro automáticos.</p>
+
+    <div class="demo-subsection form-demo">
+      <div class="col">
+        <div class="form-group">
+          <label for="fg-nome">Nome completo <span class="required-indicator" aria-hidden="true">*</span></label>
+          <input id="fg-nome" type="text" placeholder="Digite seu nome" required />
+          <small class="form-help">Sem abreviações</small>
+          <span class="form-error" role="alert">Campo obrigatório</span>
+          <span class="form-success-icon" aria-hidden="true">&#10003;</span>
+          <span class="form-error-icon" aria-hidden="true">&#9888;</span>
+        </div>
+        <div class="form-group">
+          <label for="fg-email">E-mail <span class="required-indicator" aria-hidden="true">*</span></label>
+          <input id="fg-email" type="email" placeholder="email@exemplo.com" required />
+          <small class="form-help">Usaremos apenas para login</small>
+          <span class="form-error" role="alert">E-mail inválido</span>
+          <span class="form-success-icon" aria-hidden="true">&#10003;</span>
+          <span class="form-error-icon" aria-hidden="true">&#9888;</span>
+        </div>
+        <div class="form-group">
+          <label for="fg-senha">Senha <span class="required-indicator" aria-hidden="true">*</span></label>
+          <input id="fg-senha" type="password" placeholder="Mínimo 8 caracteres" minlength="8" required />
+          <small class="form-help">Mínimo 8 caracteres</small>
+          <span class="form-error" role="alert">Mínimo 8 caracteres</span>
+          <span class="form-success-icon" aria-hidden="true">&#10003;</span>
+          <span class="form-error-icon" aria-hidden="true">&#9888;</span>
+        </div>
+        <div class="form-group">
+          <label for="fg-tel">Telefone</label>
+          <input id="fg-tel" type="tel" placeholder="(00) 00000-0000" pattern="^\(\d{2}\)\s\d{4,5}-\d{4}$" />
+          <small class="form-help">Com DDD, formato (00) 00000-0000</small>
+          <span class="form-error" role="alert">Formato inválido</span>
+          <span class="form-success-icon" aria-hidden="true">&#10003;</span>
+          <span class="form-error-icon" aria-hidden="true">&#9888;</span>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 17. TOAST & TOAST CONTAINER                                -->
+  <!-- 20. FORM GROUP — WEB COMPONENT                             -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="form-group-wc">
+    <h2><span class="wc-tag">auy-comp-form-group</span> 20. Form Group Web Component</h2>
+    <p class="note">Light DOM, máscara (<code>mask="cpf"</code>) e validação (<code>validate="required,cpf"</code>) automáticas no input.</p>
+
+    <div class="grid-2">
+      <div class="demo-subsection">
+        <h3>Vertical</h3>
+        <div class="col">
+          <auy-comp-form-group label="Nome completo" hint="Sem abreviações" required>
+            <input type="text" placeholder="Digite seu nome" />
+          </auy-comp-form-group>
+          <auy-comp-form-group label="E-mail" validate="required,email" hint="Usaremos apenas para login">
+            <input type="email" placeholder="email@exemplo.com" />
+          </auy-comp-form-group>
+          <auy-comp-form-group label="CPF" mask="cpf" validate="required,cpf" hint="Digite apenas números">
+            <input type="text" placeholder="000.000.000-00" />
+          </auy-comp-form-group>
+          <auy-comp-form-group label="Telefone" mask="phone" hint="Com DDD">
+            <input type="tel" placeholder="(00) 00000-0000" />
+          </auy-comp-form-group>
+          <auy-comp-form-group label="Senha" validate="required,minLength:8,strongPassword" hint="Mín. 8 caracteres, maiúscula, número, especial">
+            <input type="password" placeholder="••••••••" />
+          </auy-comp-form-group>
+          <auy-comp-form-group label="Com erro" error="Campo obrigatório">
+            <input type="text" aria-invalid="true" />
+          </auy-comp-form-group>
+        </div>
+      </div>
+      <div class="demo-subsection">
+        <h3>Inline</h3>
+        <div class="col">
+          <auy-comp-form-group label="Telefone" hint="Com DDD" inline>
+            <input type="tel" placeholder="(00) 00000-0000" />
+          </auy-comp-form-group>
+          <auy-comp-form-group label="CPF" hint="Apenas números" inline>
+            <input type="text" placeholder="000.000.000-00" />
+          </auy-comp-form-group>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 21. SELECT — WEB COMPONENT                                 -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="select">
+    <h2><span class="wc-tag">auy-comp-select</span> 21. Select Web Component</h2>
+    <p class="note">Combobox com busca, <code>role="combobox"</code>, <code>aria-expanded</code>, <code>&lt;input type="hidden"&gt;</code> para <code>&lt;form&gt;</code>.</p>
+
+    <div class="grid-2">
+      <div class="demo-subsection">
+        <h3>Com busca (padrão)</h3>
+        <auy-comp-select id="select-demo" label="País" placeholder="Selecione um país"></auy-comp-select>
+        <p id="select-value" class="note" style="margin-block-start: var(--auy-space-sm);">Selecionado: —</p>
+      </div>
+      <div class="demo-subsection">
+        <h3>Sem busca + formulário</h3>
+        <auy-comp-select id="select-demo-2" label="Cargo" name="cargo" :searchable="false" placeholder="Escolha..."></auy-comp-select>
+      </div>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Integração com formulário</h3>
+      <form id="select-form" onsubmit="event.preventDefault();alert('Dados: ' + new FormData(this).get('departamento'))" style="display:block;">
+        <auy-comp-select label="Departamento" name="departamento" placeholder="Selecione..." style="display:block;"></auy-comp-select>
+        <auy-comp-button type="submit" variant="primary" style="margin-block-start:var(--auy-space-sm);inline-size:auto;">Enviar</auy-comp-button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 22. DATE INPUT — WEB COMPONENT                             -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="date-input">
+    <h2><span class="wc-tag">auy-comp-date-input</span> 22. Date Input Web Component</h2>
+    <p class="note">Light DOM, usa <code>&lt;input type="date"&gt;</code> nativo para compatibilidade total com <code>&lt;form&gt;</code>.</p>
+
+    <div class="demo-subsection">
+      <div class="grid-2">
+        <auy-comp-date-input label="Data de nascimento" name="nascimento" required></auy-comp-date-input>
+        <auy-comp-date-input label="Com valor inicial" value="2025-12-25"></auy-comp-date-input>
+        <auy-comp-date-input label="Com min/max" min="2025-01-01" max="2025-12-31"></auy-comp-date-input>
+        <auy-comp-date-input label="Desabilitado" disabled></auy-comp-date-input>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 23. TOAST                                                  -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <section class="demo-section" id="toast">
-    <h2><span class="tag">auy-comp-toast / auy-comp-toast-container</span> 17. Toast</h2>
-    <div class="col">
-      <div>
-        <p class="note"><strong>auy-comp-toast</strong> — toasts individuais</p>
-        <div class="row">
-          <button id="toast-info" variant="secondary">Info</button>
-          <button id="toast-success" variant="secondary" style="--auy-color-primary:oklch(55% 0.2 145)">Sucesso</button>
-          <button id="toast-warning" variant="secondary" style="--auy-color-primary:oklch(65% 0.2 85)">Aviso</button>
-          <button id="toast-error" variant="secondary" style="--auy-color-primary:oklch(55% 0.22 30)">Erro</button>
-        </div>
+    <h2><span class="wc-tag">auy-comp-toast / auy-comp-toast-container</span> 23. Toast</h2>
+    <p class="note">Toast individual (criação via JS) e Toast Container (gerenciamento programático).</p>
+
+    <div class="demo-subsection">
+      <h3>Toast individual</h3>
+      <div class="demo-variant-row">
+        <button id="toast-info" variant="secondary">Info</button>
+        <button id="toast-success" variant="secondary">Sucesso</button>
+        <button id="toast-warning" variant="secondary">Aviso</button>
+        <button id="toast-error" variant="secondary">Erro</button>
       </div>
-      <div>
-        <p class="note"><strong>auy-comp-toast-container</strong> — container gerenciado via JS</p>
-        <div class="row">
-          <button id="tc-info" variant="secondary">Info</button>
-          <button id="tc-success" variant="secondary" style="--auy-color-primary:oklch(55% 0.2 145)">Sucesso</button>
-          <button id="tc-warning" variant="secondary" style="--auy-color-primary:oklch(65% 0.2 85)">Aviso</button>
-          <button id="tc-error" variant="secondary" style="--auy-color-primary:oklch(55% 0.22 30)">Erro</button>
-        </div>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Toast Container</h3>
+      <div class="demo-variant-row">
+        <button id="tc-info" variant="secondary">Info</button>
+        <button id="tc-success" variant="secondary">Sucesso</button>
+        <button id="tc-warning" variant="secondary">Aviso</button>
+        <button id="tc-error" variant="secondary">Erro</button>
       </div>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 18. FILE INPUT                                             -->
+  <!-- 24. FILE INPUT                                             -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <section class="demo-section" id="file-input">
-    <h2><span class="tag">auy-comp-file-input</span> 18. File Input</h2>
-    <auy-comp-file-input label="Documentos anexos" accept=".pdf,.doc,.docx" max-size="5242880" multiple></auy-comp-file-input>
-    <p class="note">Arraste arquivos ou clique para selecionar. Aceita PDF, DOC, DOCX até 5MB.</p>
+    <h2><span class="wc-tag">auy-comp-file-input</span> 24. File Input</h2>
+    <p class="note">Light DOM, drag & drop, preview de imagens, upload via <code>upload()</code>. Compatível com <code>&lt;form&gt;</code>.</p>
+
+    <div class="demo-subsection">
+      <h3>Múltiplos arquivos</h3>
+      <auy-comp-file-input label="Documentos anexos" accept=".pdf,.doc,.docx,.png,.jpg" max-size="5242880" multiple></auy-comp-file-input>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Integração com formulário</h3>
+      <form id="file-form">
+        <auy-comp-file-input label="Upload via formulário" name="anexo"></auy-comp-file-input>
+        <auy-comp-button type="submit" variant="primary" style="margin-block-start:var(--auy-space-sm)">Simular Envio</auy-comp-button>
+      </form>
+    </div>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 19. AUDIO PLAYER                                           -->
+  <!-- 25. AUDIO PLAYER                                           -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <section class="demo-section" id="audio">
-    <h2><span class="tag">auy-comp-audio</span> 19. Audio Player</h2>
+    <h2><span class="wc-tag">auy-comp-audio</span> 25. Audio Player</h2>
+    <p class="note">Play/pause, skip ±10s, volume, velocidade 0.5x–2x, animação de onda, download e transcrição.</p>
+
     <auy-comp-audio
+      id="demo-audio"
       src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA="
       title="Narração do Conteúdo"
       show-transcript
     >
-      <span slot="transcript-text">Componente de áudio acessível com controles customizados. Suporta play/pause, skip ±10s, controle de volume, velocidade 0.5x–2x, animação de onda e download.</span>
+      <span slot="transcript-text">Player de áudio acessível com controles customizados. Suporta play/pause, skip, volume, velocidade.</span>
     </auy-comp-audio>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 20. RANGE INPUT                                            -->
+  <!-- 26. RANGE INPUT                                            -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <section class="demo-section" id="range-input">
-    <h2><span class="tag">input[type=range]</span> 19. Range Input</h2>
-    <div class="col" style="max-inline-size:400px">
-      <div class="form-group"><label>Volume</label><input type="range" value="70"></div>
-      <div class="form-group"><label>Preço máximo</label><input type="range" value="50" min="0" max="200" step="5"></div>
-      <div class="form-group"><label>Temperatura</label><input type="range" value="22" min="-10" max="50"></div>
+    <h2><span class="tag">input[type=range]</span> 26. Range Input</h2>
+    <p class="note"><code>&lt;input type="range"&gt;</code> nativo estilizado via CSS.</p>
+
+    <div class="demo-subsection" style="max-inline-size:400px">
+      <div class="col">
+        <div class="form-group"><label>Volume</label><input type="range" value="70"></div>
+        <div class="form-group"><label>Preço máximo</label><input type="range" value="50" min="0" max="200" step="5"></div>
+        <div class="form-group"><label>Temperatura</label><input type="range" value="22" min="-10" max="50"></div>
+      </div>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 20. COLOR INPUT                                            -->
+  <!-- 27. COLOR INPUT                                            -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <section class="demo-section" id="color-input">
-    <h2><span class="tag">auy-comp-color-input</span> 20. Color Input</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:var(--auy-space-lg);">
-      <auy-comp-color-input label="Cor primária" value="#3b82f6"></auy-comp-color-input>
-      <auy-comp-color-input label="Tom de pele" value="#e8b4a0"></auy-comp-color-input>
-      <auy-comp-color-input label="Verde floresta" value="#2d7d46"></auy-comp-color-input>
+    <h2><span class="wc-tag">auy-comp-color-input</span> 27. Color Input</h2>
+    <p class="note">Seletor HSV com anel cromático suavizado (<code>ConicGradient</code>) + triângulo SV com feather anti-aliasing. Preview duplo, hex editável, alpha slider, formatos com swatch (OKLCH em destaque), cores recentes, pipeta SVG.</p>
+
+    <div class="demo-subsection">
+      <h3>Variantes</h3>
+      <div class="grid-3">
+        <auy-comp-color-input label="Cor primária" value="#3B82F6"></auy-comp-color-input>
+        <auy-comp-color-input label="Tom de pele" value="#E8B4A0"></auy-comp-color-input>
+        <auy-comp-color-input label="Verde floresta" value="#2D7D46"></auy-comp-color-input>
+      </div>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Sem alpha / sem recentes</h3>
+      <div class="grid-3">
+        <auy-comp-color-input id="color-no-alpha" label="Sem alpha" value="#8B5CF6"></auy-comp-color-input>
+        <auy-comp-color-input id="color-no-recent" label="Sem recentes" value="#F59E0B"></auy-comp-color-input>
+        <auy-comp-color-input id="color-minimal" label="Mínimo" value="#EF4444"></auy-comp-color-input>
+      </div>
     </div>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 21. DATE INPUT                                             -->
-  <!-- ════════════════════════════════════════════════════════════ -->
-  <section class="demo-section" id="date-input">
-    <h2><span class="tag">input[type=date/time/month]</span> 21. Date Input</h2>
-    <div class="row">
-      <div class="form-group"><label>Data de nascimento</label><input type="date"></div>
-      <div class="form-group"><label>Hora do evento</label><input type="time" value="14:30"></div>
-      <div class="form-group"><label>Mês de referência</label><input type="month"></div>
-    </div>
-  </section>
-
-  <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 22. BREADCRUMB                                             -->
+  <!-- 28. BREADCRUMB                                             -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <section class="demo-section" id="breadcrumb">
-    <h2><span class="tag">nav[aria-label=Breadcrumb]</span> 22. Breadcrumb</h2>
-    <nav aria-label="Breadcrumb" id="demo-breadcrumb"><ol></ol></nav>
-    <p class="note">Breadcrumb estilizado via CSS com lista ordenada.</p>
+    <h2><span class="tag">nav[aria-label=Breadcrumb]</span> <span class="wc-tag">auy-comp-breadcrumbs</span> 28. Breadcrumb</h2>
+
+    <div class="demo-subsection">
+      <h3>CSS Nativo</h3>
+      <p class="note">Estilizado via CSS com <code>aria-label="Breadcrumb"</code> — zero JS.</p>
+      <nav aria-label="Breadcrumb" id="demo-breadcrumb"><ol></ol></nav>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>WC — Variantes</h3>
+      <div class="col">
+        <auy-comp-breadcrumbs id="demo-bc-default" variant="default"></auy-comp-breadcrumbs>
+        <auy-comp-breadcrumbs id="demo-bc-arrow" variant="arrow"></auy-comp-breadcrumbs>
+        <auy-comp-breadcrumbs id="demo-bc-depth" variant="depth"></auy-comp-breadcrumbs>
+        <auy-comp-breadcrumbs id="demo-bc-solid" variant="solid"></auy-comp-breadcrumbs>
+      </div>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>WC — Com ícones</h3>
+      <div class="col">
+        <auy-comp-breadcrumbs id="demo-bc-icons" variant="default" icons></auy-comp-breadcrumbs>
+        <auy-comp-breadcrumbs id="demo-bc-icons-depth" variant="depth" icons></auy-comp-breadcrumbs>
+        <auy-comp-breadcrumbs id="demo-bc-icons-solid" variant="solid" icons></auy-comp-breadcrumbs>
+      </div>
+    </div>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 23. TABLE                                                  -->
+  <!-- 29. TABLE — CSS NATIVO                                     -->
   <!-- ════════════════════════════════════════════════════════════ -->
-  <section class="demo-section" id="table">
-    <h2><span class="tag">table</span> 23. Table</h2>
-    <table id="demo-table"></table>
-    <p class="note">Tabela HTML nativa populada via JS.</p>
+  <section class="demo-section" id="table-css">
+    <h2><span class="tag">table</span> 29. Table CSS Nativa</h2>
+    <p class="note">Tabela HTML nativa estilizada via CSS. Responsiva — em telas pequenas vira card layout.</p>
+
+    <div style="overflow-x:auto">
+      <table id="demo-table-css"></table>
+    </div>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 24. SEARCH                                                 -->
+  <!-- 30. TABLE — WEB COMPONENT                                  -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="table-wc">
+    <h2><span class="wc-tag">auy-comp-table</span> 30. Table Web Component</h2>
+    <p class="note">Sort, filter textual, row select, paginação, total row, título, descrição, cabeçalho opcional.</p>
+
+    <div class="demo-subsection">
+      <h3>Completa (sort, filtro, seleção, paginação, total, título, descrição)</h3>
+      <auy-comp-table id="demo-table-wc-full"></auy-comp-table>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Sem cabeçalho + sem filtro</h3>
+      <auy-comp-table id="demo-table-wc-no-header" showHeader="false" style="display:block;margin-block-end:1rem;"></auy-comp-table>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Com filtro + descrição semântica</h3>
+      <auy-comp-table id="demo-table-wc-filter" filterable description="Tabela de funcionários ativos — dados atualizados mensalmente."></auy-comp-table>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Título interativo com filtro + total</h3>
+      <auy-comp-table id="demo-table-wc-filter-total" filterable showTotalRow title="Folha de Pagamento"></auy-comp-table>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Compacta (sem paginação, sem cabeçalho, sem filtro — visualização rápida)</h3>
+      <auy-comp-table id="demo-table-wc-compact" showHeader="false" style="display:block;margin-block-end:1rem;"></auy-comp-table>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 31. BADGE — WEB COMPONENT                                  -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <section class="demo-section" id="badge-wc">
+    <h2><span class="wc-tag">auy-comp-badge</span> 31. Badge Web Component</h2>
+    <p class="note">Wrapper do CSS <code>data-badge</code>. Props: <code>text</code>, <code>variant</code>, <code>outline</code>, <code>pill</code>, <code>size</code>.</p>
+
+    <div class="demo-subsection">
+      <h3>Variantes</h3>
+      <div class="demo-variant-row">
+        <auy-comp-badge text="Default"></auy-comp-badge>
+        <auy-comp-badge text="Success" variant="success"></auy-comp-badge>
+        <auy-comp-badge text="Error" variant="error"></auy-comp-badge>
+        <auy-comp-badge text="Warning" variant="warning"></auy-comp-badge>
+        <auy-comp-badge text="Info" variant="info"></auy-comp-badge>
+      </div>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Pill</h3>
+      <div class="demo-variant-row">
+        <auy-comp-badge text="Pill" pill></auy-comp-badge>
+        <auy-comp-badge text="Publicado" variant="success" pill></auy-comp-badge>
+        <auy-comp-badge text="Bloqueado" variant="error" pill></auy-comp-badge>
+      </div>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Outline</h3>
+      <div class="demo-variant-row">
+        <auy-comp-badge text="Outline" outline></auy-comp-badge>
+        <auy-comp-badge text="Sucesso" variant="success" outline></auy-comp-badge>
+        <auy-comp-badge text="Erro" variant="error" outline></auy-comp-badge>
+      </div>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Tamanhos</h3>
+      <div class="demo-variant-row">
+        <auy-comp-badge text="Small" size="sm"></auy-comp-badge>
+        <auy-comp-badge text="Medium" size="md"></auy-comp-badge>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- 32. SEARCH                                                 -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <section class="demo-section" id="search">
-    <h2><span class="tag">auy-comp-search</span> 24. Search (Command Palette)</h2>
-    <p class="note">
-      <button id="search-trigger" variant="primary sm">Abrir Busca</button>
-      ou pressione <kbd>Ctrl+K</kbd>
-    </p>
+    <h2><span class="wc-tag">auy-comp-search</span> 32. Search (Command Palette)</h2>
+    <p class="note">Busca modal com atalho <kbd>Ctrl+K</kbd>. Variantes, tamanhos, posições.</p>
+
+    <div class="demo-subsection">
+      <h3>Padrão (Ctrl+K)</h3>
+      <div class="demo-variant-row">
+        <button id="search-trigger" variant="primary sm">Abrir Busca</button>
+        <span class="note">ou pressione <kbd>Ctrl+K</kbd></span>
+      </div>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Variantes</h3>
+      <div class="demo-variant-row">
+        <button id="search-trigger-elevated" variant="secondary sm">Elevated</button>
+        <button id="search-trigger-bordered" variant="secondary sm">Bordered</button>
+        <button id="search-trigger-center" variant="ghost sm">Centro (sm)</button>
+        <button id="search-trigger-top-lg" variant="ghost sm">Topo (lg)</button>
+        <button id="search-trigger-full" variant="ghost sm">Full</button>
+      </div>
+    </div>
+
     <auy-comp-search id="demo-search" placeholder="Buscar no sistema..."></auy-comp-search>
+    <auy-comp-search id="demo-search-elevated" variant="elevated" placeholder="Busca elevada..." position="center"></auy-comp-search>
+    <auy-comp-search id="demo-search-bordered" variant="bordered" placeholder="Busca com borda..."></auy-comp-search>
+    <auy-comp-search id="demo-search-center" size="sm" position="center" placeholder="Busca centralizada..."></auy-comp-search>
+    <auy-comp-search id="demo-search-top" size="lg" position="top" placeholder="Busca no topo..."></auy-comp-search>
+    <auy-comp-search id="demo-search-full" size="full" position="center" variant="elevated" placeholder="Busca full..."></auy-comp-search>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 25. CODE EDITOR                                            -->
+  <!-- 33. CODE EDITOR                                            -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <section class="demo-section" id="code-editor">
-    <h2><span class="tag">auy-comp-code-editor</span> 25. Code Editor</h2>
+    <h2><span class="wc-tag">auy-comp-code-editor</span> 33. Code Editor</h2>
+    <p class="note">Editor com line numbers, Tab handling, suporte a CodeMirror 6 via <code>cmOptions</code>.</p>
+
     <auy-comp-code-editor id="demo-editor" value="// Digite seu código aqui&#10;function hello() {&#10;  console.log('auy-ui!');&#10;}" language="javascript"></auy-comp-code-editor>
-    <p class="note">
+    <div class="demo-variant-row" style="margin-block-start: var(--auy-space-md);">
       <button id="editor-get" variant="secondary sm">Obter valor</button>
-    </p>
-  </section>
-
-  <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 26. CONTAINER & SECTION                                    -->
-  <!-- ════════════════════════════════════════════════════════════ -->
-  <section class="demo-section" id="container-section">
-    <h2><span class="tag">div[data-container] + section</span> 26. Container &amp; Section</h2>
-    <div data-container style="background:color-mix(in oklch, var(--auy-color-border) 8%, transparent);border-radius:var(--auy-radius-md);padding:var(--auy-space-md);">
-      <section>
-        <h2>Seção dentro de Container</h2>
-        <p>Container centraliza com max-width e Section adiciona padding vertical com heading e description.</p>
-        <p>Este conteúdo está dentro de <code>div[data-container]</code> (max-width centralizado) e <code>section</code> (padding + heading + description).</p>
-        <button variant="primary">Ação no container</button>
-      </section>
+      <button id="editor-set" variant="ghost sm">Inserir código</button>
     </div>
-    <p class="note">Use <code>data-container</code> para centralização com max-width.</p>
   </section>
 
   <!-- ════════════════════════════════════════════════════════════ -->
-  <!-- 28. METADATA                                               -->
+  <!-- 34. METADATA                                               -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <section class="demo-section" id="metadata">
-    <h2><span class="tag">auy-comp-metadata</span> 27. Metadata</h2>
+    <h2><span class="wc-tag">auy-comp-metadata</span> 34. Metadata</h2>
+    <p class="note">Injeta meta tags SEO, Open Graph, Twitter Cards e JSON-LD no <code>&lt;head&gt;</code>. Props reativas.</p>
+
     <auy-comp-metadata id="demo-metadata"></auy-comp-metadata>
-    <p class="note">Injeta meta tags SEO/OG/Twitter/JSON-LD no <code>&lt;head&gt;</code>. Configure via propriedades.</p>
-    <button id="meta-trigger" variant="primary sm">Injetar Meta Tags</button>
-    <button id="meta-clear" variant="secondary sm">Limpar</button>
+    <div class="demo-variant-row">
+      <button id="meta-trigger" variant="primary sm">Injetar Meta Tags</button>
+      <button id="meta-clear" variant="secondary sm">Limpar</button>
+    </div>
   </section>
 
   <hr />
-  <p style="text-align:center;color:var(--auy-color-text-muted);font-size:var(--auy-text-sm);padding:var(--auy-space-lg) 0;">
-    auy-ui — <strong>Componentes HTML + CSS</strong> · Importado via <code>./src/mod.ts</code>
+  <p class="demo-footer">
+    auy-ui — Catálogo de Componentes · Importado via <code>./src/mod.ts</code>
   </p>
 
-  <!-- Toast stack for auy-comp-toast -->
-  <div class="toast-stack" id="toast-stack"></div>
+  <!-- Toast stack para auy-comp-toast legacy -->
+  <div id="toast-stack" style="position:fixed;inset-block-start:var(--auy-space-md);inset-inline-end:var(--auy-space-md);display:grid;gap:var(--auy-space-sm);pointer-events:none;z-index:var(--auy-z-toast);"></div>
 
   <!-- ════════════════════════════════════════════════════════════ -->
   <!-- MODULE IMPORT + JS SETUP                                   -->
@@ -720,19 +1461,87 @@
       });
     });
 
+    // ── Button WC ──
+    document.getElementById('btn-loading-demo')?.addEventListener('click', (e) => {
+      const btn = e.target;
+      btn.loading = true;
+      setTimeout(() => { btn.loading = false; }, 2000);
+    });
+
+    // ── Alert WC ──
+    document.getElementById('alert-trigger')?.addEventListener('click', () => {
+      const mount = document.getElementById('alert-mount-point');
+      if (!mount) return;
+      const existing = mount.querySelector('auy-comp-alert');
+      if (existing) existing.remove();
+      const alert = document.createElement('auy-comp-alert');
+      alert.variant = 'info';
+      alert.title = 'Alerta Dinâmico';
+      alert.open = true;
+      alert.textContent = 'Este alerta foi criado dinamicamente via JS.';
+      setTimeout(() => alert.open = false, 3000);
+      mount.appendChild(alert);
+    });
+
+    // ── Modal WC ──
+    function openModal(id) { document.getElementById(id)?.setAttribute('open', ''); }
+    function closeModal(id) { document.getElementById(id)?.removeAttribute('open'); }
+
+    document.getElementById('modal-open-default')?.addEventListener('click', () => openModal('modal-default'));
+    document.getElementById('modal-default-cancel')?.addEventListener('click', () => closeModal('modal-default'));
+
+    document.getElementById('modal-open-info')?.addEventListener('click', () => openModal('modal-info'));
+    document.getElementById('modal-open-success')?.addEventListener('click', () => openModal('modal-success'));
+    document.getElementById('modal-open-warning')?.addEventListener('click', () => openModal('modal-warning'));
+    document.getElementById('modal-open-error')?.addEventListener('click', () => openModal('modal-error'));
+
+    document.getElementById('modal-open-sm')?.addEventListener('click', () => openModal('modal-sm'));
+    document.getElementById('modal-open-md')?.addEventListener('click', () => openModal('modal-md'));
+    document.getElementById('modal-open-lg')?.addEventListener('click', () => openModal('modal-lg'));
+    document.getElementById('modal-open-xl')?.addEventListener('click', () => openModal('modal-xl'));
+    document.getElementById('modal-open-full')?.addEventListener('click', () => openModal('modal-full'));
+
+    // Close buttons inside size demo modals
+    ['modal-sm','modal-md','modal-xl','modal-full'].forEach(id => {
+      const btn = document.querySelector(`#${id} [slot="footer"] auy-comp-button[variant="ghost"]`);
+      btn?.addEventListener('click', () => closeModal(id));
+    });
+
+    // ── Nested modal ──
+    document.getElementById('modal-open-nested')?.addEventListener('click', () => openModal('modal-nested-1'));
+    document.getElementById('modal-nested-1-cancel')?.addEventListener('click', () => closeModal('modal-nested-1'));
+    document.getElementById('modal-nested-1-next')?.addEventListener('click', () => openModal('modal-nested-2'));
+    document.getElementById('modal-nested-2-cancel')?.addEventListener('click', () => closeModal('modal-nested-2'));
+    document.getElementById('modal-nested-2-next')?.addEventListener('click', () => openModal('modal-nested-3'));
+    document.getElementById('modal-nested-3-cancel')?.addEventListener('click', () => {
+      closeModal('modal-nested-3');
+      closeModal('modal-nested-2');
+      closeModal('modal-nested-1');
+    });
+
+    // ── Accordion WC ──
+    const accordionItems = [
+      { id: 'q1', title: 'O que é auy-ui?', content: 'Design system acessível com CSS classless + Web Components.' },
+      { id: 'q2', title: 'Precisa de JavaScript?', content: 'Não para o básico! CSS funciona standalone.' },
+      { id: 'q3', title: 'Quantos temas existem?', content: '22 temas de cor com dark mode automático.' },
+      { id: 'q4', title: 'Suporta SSR?', content: 'Sim! SSR com @lit-labs/ssr e Declarative Shadow DOM.' },
+    ];
+    const accSingle = document.getElementById('accordion-single');
+    if (accSingle) accSingle.items = accordionItems;
+    const accMultiple = document.getElementById('accordion-multiple');
+    if (accMultiple) accMultiple.items = accordionItems.map((item, i) => ({ ...item, open: i === 0 }));
+
     // ── Tabs ──
     const tabs = document.getElementById('demo-tabs');
-    if (tabs) tabs.tabs = [
-      { id: 'tab1', label: 'Conteúdo' },
-      { id: 'tab2', label: 'Código' },
-      { id: 'tab3', label: 'Preview' },
-    ];
-    // Add panel content
-    const tabPanels = () => {
-      if (!tabs) return;
+    if (tabs) {
+      tabs.tabs = [
+        { id: 'tab1', label: 'Conteúdo' },
+        { id: 'tab2', label: 'Código' },
+        { id: 'tab3', label: 'Preview' },
+      ];
       const p1 = document.createElement('div');
       p1.slot = 'panel-tab1';
-      p1.textContent = 'Conteúdo da primeira aba. Navegue entre as abas usando as setas do teclado.';
+      p1.textContent = 'Conteúdo da primeira aba. Navegue usando as setas do teclado.';
       tabs.appendChild(p1);
       const p2 = document.createElement('div');
       p2.slot = 'panel-tab2';
@@ -742,21 +1551,72 @@
       p3.slot = 'panel-tab3';
       p3.textContent = 'Preview da aba.';
       tabs.appendChild(p3);
-    };
-    tabPanels();
+    }
+
+    // ── Select WC ──
+    const selectDemo = document.getElementById('select-demo');
+    if (selectDemo) {
+      selectDemo.options = [
+        { value: 'br', label: 'Brasil' },
+        { value: 'us', label: 'Estados Unidos' },
+        { value: 'pt', label: 'Portugal' },
+        { value: 'es', label: 'Espanha' },
+        { value: 'fr', label: 'França' },
+        { value: 'it', label: 'Itália' },
+        { value: 'de', label: 'Alemanha' },
+      ];
+      selectDemo.addEventListener('change', (e) => {
+        const info = document.getElementById('select-value');
+        if (info) info.textContent = `Selecionado: ${e.detail.label} (${e.detail.value})`;
+      });
+    }
+    const selectDemo2 = document.getElementById('select-demo-2');
+    if (selectDemo2) {
+      selectDemo2.options = [
+        { value: 'dev', label: 'Desenvolvedor' },
+        { value: 'design', label: 'Designer' },
+        { value: 'pm', label: 'Product Manager' },
+        { value: 'qa', label: 'QA' },
+      ];
+    }
+    const selectDept = document.querySelector('auy-comp-select[name="departamento"]');
+    if (selectDept) {
+      selectDept.options = [
+        { value: 'ti', label: 'Tecnologia' },
+        { value: 'rh', label: 'Recursos Humanos' },
+        { value: 'fin', label: 'Financeiro' },
+        { value: 'com', label: 'Comercial' },
+      ];
+    }
+
+    // ── Color Input ──
+    const c1 = document.getElementById('color-no-alpha');
+    if (c1) c1.showAlpha = false;
+    const c2 = document.getElementById('color-no-recent');
+    if (c2) c2.showRecent = false;
+    const c3 = document.getElementById('color-minimal');
+    if (c3) { c3.showAlpha = false; c3.showRecent = false; c3.showEyedropper = false; }
+
+    // ── Pagination ──
+    const pagination = document.getElementById('demo-pagination');
+    if (pagination) {
+      pagination.addEventListener('page-change', (e) => {
+        const info = document.getElementById('page-info');
+        if (info) info.textContent = `Página ${e.detail.page} de ${Math.ceil(100 / 10)}`;
+      });
+    }
 
     // ── Breadcrumb ──
     const bc = document.getElementById('demo-breadcrumb');
     if (bc) {
-      const items = [
+      const bcItems = [
         { label: 'Home', href: '/' },
         { label: 'Componentes', href: '/components' },
-        { label: 'Navegação', href: '/components/nav' },
-        { label: 'Breadcrumb' },
+        { label: 'Catálogo' },
       ];
       const ol = bc.querySelector('ol');
       if (ol) {
-        items.forEach((item, i) => {
+        bcItems.forEach((item, i) => {
           const li = document.createElement('li');
           if (item.href) {
             const a = document.createElement('a');
@@ -772,16 +1632,34 @@
       }
     }
 
-    // ── Table ──
-    const table = document.getElementById('demo-table');
-    if (table) {
-      const columns = [
-        { key: 'nome', label: 'Nome' },
-        { key: 'email', label: 'E-mail' },
-        { key: 'cargo', label: 'Cargo' },
-        { key: 'status', label: 'Status' },
-      ];
-      const rows = [
+    const bcItems = [
+      { label: 'Home', href: '/', icon: 'home' },
+      { label: 'Componentes', href: '/components', icon: 'table' },
+      { label: 'Catálogo', icon: 'file' },
+    ];
+    const bcShort = [
+      { label: 'Usuários', href: '/users', icon: 'user' },
+      { label: 'Perfil', icon: 'settings' },
+    ];
+
+    for (const [id, items] of Object.entries({
+      'demo-bc-default': bcItems,
+      'demo-bc-arrow': bcItems,
+      'demo-bc-depth': bcItems,
+      'demo-bc-solid': bcItems,
+      'demo-bc-icons': bcItems,
+      'demo-bc-icons-depth': bcItems,
+      'demo-bc-icons-solid': bcShort,
+    })) {
+      const el = document.getElementById(id);
+      if (el) el.items = items;
+    }
+
+    // ── Table CSS ──
+    const tableCss = document.getElementById('demo-table-css');
+    if (tableCss) {
+      const cols = ['Nome', 'E-mail', 'Cargo', 'Status'];
+      const data = [
         { nome: 'Maria Silva', email: 'maria@exemplo.com', cargo: 'Analista', status: 'Ativo' },
         { nome: 'João Santos', email: 'joao@exemplo.com', cargo: 'Gerente', status: 'Ativo' },
         { nome: 'Ana Costa', email: 'ana@exemplo.com', cargo: 'Designer', status: 'Férias' },
@@ -790,55 +1668,84 @@
       ];
       const thead = document.createElement('thead');
       const tr = document.createElement('tr');
-      columns.forEach(col => {
+      cols.forEach(col => {
         const th = document.createElement('th');
-        th.textContent = col.label;
+        th.textContent = col;
         tr.appendChild(th);
       });
       thead.appendChild(tr);
-      table.appendChild(thead);
+      tableCss.appendChild(thead);
       const tbody = document.createElement('tbody');
-      rows.forEach(row => {
+      data.forEach(row => {
         const tr2 = document.createElement('tr');
-        columns.forEach(col => {
-          const td = document.createElement('td');
-          td.textContent = row[col.key];
-          tr2.appendChild(td);
-        });
+        tr2.innerHTML = `<td>${row.nome}</td><td>${row.email}</td><td>${row.cargo}</td><td>${row.status}</td>`;
         tbody.appendChild(tr2);
       });
-      table.appendChild(tbody);
+      tableCss.appendChild(tbody);
+      const caption = document.createElement('caption');
+      caption.textContent = 'Funcionários ativos no sistema';
+      tableCss.prepend(caption);
+    }
+
+    // ── Table WC ──
+    const tableData = {
+      columns: [
+        { key: 'nome', label: 'Nome', sortable: true },
+        { key: 'email', label: 'Email', sortable: true },
+        { key: 'cargo', label: 'Cargo' },
+        { key: 'salario', label: 'Salário', format: 'currency', sortable: true },
+        { key: 'data', label: 'Admissão', format: 'date', sortable: true },
+        { key: 'status', label: 'Status' },
+      ],
+      rows: [
+        { nome: 'Maria Silva', email: 'maria@exemplo.com', cargo: 'Analista', salario: 5200, data: '2020-03-15', status: 'Ativo' },
+        { nome: 'João Santos', email: 'joao@exemplo.com', cargo: 'Gerente', salario: 12800, data: '2019-07-01', status: 'Ativo' },
+        { nome: 'Ana Costa', email: 'ana@exemplo.com', cargo: 'Designer', salario: 6800, data: '2021-11-20', status: 'Férias' },
+        { nome: 'Pedro Oliveira', email: 'pedro@exemplo.com', cargo: 'Dev Senior', salario: 15000, data: '2018-01-10', status: 'Ativo' },
+        { nome: 'Carla Souza', email: 'carla@exemplo.com', cargo: 'Suporte', salario: 3500, data: '2022-05-08', status: 'Inativo' },
+        { nome: 'Lucas Mendes', email: 'lucas@exemplo.com', cargo: 'Dev Junior', salario: 4800, data: '2023-09-01', status: 'Ativo' },
+        { nome: 'Fernanda Lima', email: 'fernanda@exemplo.com', cargo: 'Product Owner', salario: 14200, data: '2020-06-15', status: 'Ativo' },
+        { nome: 'Rafael Costa', email: 'rafael@exemplo.com', cargo: 'QA', salario: 5500, data: '2021-02-28', status: 'Ativo' },
+        { nome: 'Juliana Alves', email: 'juliana@exemplo.com', cargo: 'Analista', salario: 4900, data: '2022-08-14', status: 'Inativo' },
+        { nome: 'Thiago Nunes', email: 'thiago@exemplo.com', cargo: 'Dev Senior', salario: 16200, data: '2017-04-22', status: 'Ativo' },
+        { nome: 'Beatriz Rocha', email: 'beatriz@exemplo.com', cargo: 'Marketing', salario: 6100, data: '2021-12-01', status: 'Férias' },
+        { nome: 'Gustavo Cruz', email: 'gustavo@exemplo.com', cargo: 'Dev Junior', salario: 4200, data: '2024-01-15', status: 'Ativo' },
+      ],
+    };
+
+    for (const [id, opts] of Object.entries({
+      'demo-table-wc-full': { sortable: true, filterable: true, selectable: true, pageSize: 5, title: 'Quadro de Funcionários', showTotalRow: true, description: 'Relação de funcionários ativos e inativos do quadro principal.' },
+      'demo-table-wc-no-header': { sortable: true, pageSize: 3 },
+      'demo-table-wc-filter': { sortable: true, filterable: true, pageSize: 4, title: 'Funcionários Ativos' },
+      'demo-table-wc-filter-total': { sortable: true, filterable: true, showTotalRow: true, pageSize: 5 },
+      'demo-table-wc-compact': { pageSize: 12, sortable: false },
+    })) {
+      const el = document.getElementById(id);
+      if (el) {
+        Object.assign(el, { ...tableData, ...opts });
+      }
     }
 
     // ── Search ──
-    const search = document.getElementById('demo-search');
-    if (search) search.items = [
+    const searchItems = [
       { label: 'Dashboard', description: 'Painel principal', category: 'Páginas' },
       { label: 'Usuários', description: 'Gerenciamento de usuários', category: 'Páginas' },
       { label: 'Relatórios', description: 'Relatórios e análises', category: 'Páginas' },
       { label: 'Configurações', description: 'Configurações do sistema', category: 'Sistema' },
       { label: 'Auditoria', description: 'Logs de auditoria', category: 'Sistema' },
+      { label: 'Perfil', description: 'Editar perfil do usuário', category: 'Conta' },
+      { label: 'Sair', description: 'Encerrar sessão', category: 'Conta' },
     ];
-    document.getElementById('search-trigger')?.addEventListener('click', () => {
-      const s = document.getElementById('demo-search');
-      if (s) s.open = true;
-    });
-
-    // ── Pagination ──
-    const pagination = document.getElementById('demo-pagination');
-    if (pagination) {
-      pagination.addEventListener('page-change', (e) => {
-        const info = document.getElementById('page-info');
-        if (info) info.textContent = `Página ${e.detail.page} de ${Math.ceil(100 / 10)}`;
-      });
+    for (const id of ['demo-search', 'demo-search-elevated', 'demo-search-bordered', 'demo-search-center', 'demo-search-top', 'demo-search-full']) {
+      const s = document.getElementById(id);
+      if (s) s.items = searchItems;
     }
-
-    // ── Modal ──
-    document.getElementById('modal-trigger')?.addEventListener('click', () => document.getElementById('demo-modal')?.showModal());
-    document.getElementById('modal-cancel')?.addEventListener('click', () => document.getElementById('demo-modal')?.close());
-    document.getElementById('modal-confirm')?.addEventListener('click', () => document.getElementById('demo-modal')?.close());
-    document.getElementById('modal-lg-trigger')?.addEventListener('click', () => document.getElementById('modal-lg')?.showModal());
-    document.getElementById('modal-lg-accept')?.addEventListener('click', () => document.getElementById('modal-lg')?.close());
+    document.getElementById('search-trigger')?.addEventListener('click', () => { const s = document.getElementById('demo-search'); if (s) s.open = true; });
+    document.getElementById('search-trigger-elevated')?.addEventListener('click', () => { const s = document.getElementById('demo-search-elevated'); if (s) s.open = true; });
+    document.getElementById('search-trigger-bordered')?.addEventListener('click', () => { const s = document.getElementById('demo-search-bordered'); if (s) s.open = true; });
+    document.getElementById('search-trigger-center')?.addEventListener('click', () => { const s = document.getElementById('demo-search-center'); if (s) s.open = true; });
+    document.getElementById('search-trigger-top-lg')?.addEventListener('click', () => { const s = document.getElementById('demo-search-top'); if (s) s.open = true; });
+    document.getElementById('search-trigger-full')?.addEventListener('click', () => { const s = document.getElementById('demo-search-full'); if (s) s.open = true; });
 
     // ── Legacy Toast (auy-comp-toast) ──
     function showToast(msg, variant) {
@@ -857,36 +1764,44 @@
     document.getElementById('toast-warning')?.addEventListener('click', () => showToast('Atenção: verifique os dados.', 'warning'));
     document.getElementById('toast-error')?.addEventListener('click', () => showToast('Erro ao processar a requisição.', 'error'));
 
-    // ── Toast Container (auy-comp-toast-container) ──
-    const tContainer = document.getElementById('toast-container');
-    // Create toast container dynamically
-    if (!tContainer) {
-      const container = document.createElement('auy-comp-toast-container');
-      container.id = 'toast-container';
-      container.position = 'top-right';
-      document.body.appendChild(container);
-    }
-    const tc = document.getElementById('toast-container');
-    if (tc) {
-      document.getElementById('tc-info')?.addEventListener('click', () => tc.show('Informação carregada.', 'info'));
-      document.getElementById('tc-success')?.addEventListener('click', () => tc.show('Sucesso!', 'success'));
-      document.getElementById('tc-warning')?.addEventListener('click', () => tc.show('Atenção!', 'warning'));
-      document.getElementById('tc-error')?.addEventListener('click', () => tc.show('Erro crítico!', 'error'));
+    // ── Toast Container ──
+    const tContainer = document.getElementById('toast-container') ||
+      (() => {
+        const c = document.createElement('auy-comp-toast-container');
+        c.id = 'toast-container';
+        c.position = 'top-right';
+        document.body.appendChild(c);
+        return c;
+      })();
+    if (tContainer) {
+      document.getElementById('tc-info')?.addEventListener('click', () => tContainer.show('Informação carregada.', 'info'));
+      document.getElementById('tc-success')?.addEventListener('click', () => tContainer.show('Sucesso!', 'success'));
+      document.getElementById('tc-warning')?.addEventListener('click', () => tContainer.show('Atenção!', 'warning'));
+      document.getElementById('tc-error')?.addEventListener('click', () => tContainer.show('Erro crítico!', 'error'));
     }
 
+    // ── File Input form ──
+    document.getElementById('file-form')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Formulário enviado! (arquivo capturado pelo componente em Light DOM)');
+    });
 
     // ── Code editor ──
     document.getElementById('editor-get')?.addEventListener('click', () => {
       const editor = document.getElementById('demo-editor');
       if (editor) alert(editor.value || '(vazio)');
     });
+    document.getElementById('editor-set')?.addEventListener('click', () => {
+      const editor = document.getElementById('demo-editor');
+      if (editor) editor.value = '// Código inserido dinamicamente\nconsole.log("hello world");';
+    });
 
     // ── Metadata ──
     document.getElementById('meta-trigger')?.addEventListener('click', () => {
       const meta = document.getElementById('demo-metadata');
       if (meta) {
-        meta.title = 'auy-ui — Demo de Componentes';
-        meta.description = 'Página demonstrando todos os componentes HTML + CSS do auy-ui.';
+        meta.title = 'auy-ui — Catálogo de Componentes';
+        meta.description = 'Página demonstrando todos os componentes do auy-ui.';
         meta.ogTitle = 'auy-ui Design System';
         meta.ogDescription = 'Catálogo completo de Web Components acessíveis.';
         meta.ogUrl = window.location.href;

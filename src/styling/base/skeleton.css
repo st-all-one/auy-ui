@@ -1,0 +1,84 @@
+@layer base {
+  [aria-busy="true"]:where(:not(button, body, [role="button"], [type="submit"], [type="reset"], [type="button"])) {
+    position: relative;
+    overflow: hidden;
+    pointer-events: none;
+    user-select: none;
+    cursor: progress;
+    isolation: isolate;
+  }
+
+  [aria-busy="true"]:where(:not(button, body, [role="button"], [type="submit"], [type="reset"], [type="button"])) * {
+    color: transparent !important;
+  }
+
+  [aria-busy="true"]:where(:not(button, body, [role="button"], [type="submit"], [type="reset"], [type="button"])) > :where(h1, h2, h3, h4, h5, h6, p, li, dd, dt, figcaption, td, th, blockquote, pre) {
+    visibility: visible;
+    display: block;
+    background: color-mix(in oklch, var(--auy-color-text, oklch(0% 0 0)) 8%, transparent);
+    border-radius: var(--auy-radius-sm);
+    border: none;
+  }
+
+  [aria-busy="true"]:where(:not(button, body, [role="button"], [type="submit"], [type="reset"], [type="button"])) > :where(h1) { block-size: 1.75em; inline-size: 55%; margin-block: 0.25em 0.5em; }
+  [aria-busy="true"]:where(:not(button, body, [role="button"], [type="submit"], [type="reset"], [type="button"])) > :where(h2) { block-size: 1.5em; inline-size: 50%; margin-block: 0.25em 0.5em; }
+  [aria-busy="true"]:where(:not(button, body, [role="button"], [type="submit"], [type="reset"], [type="button"])) > :where(h3) { block-size: 1.25em; inline-size: 45%; margin-block: 0.25em 0.5em; }
+  [aria-busy="true"]:where(:not(button, body, [role="button"], [type="submit"], [type="reset"], [type="button"])) > :where(h4, h5, h6) { block-size: 1.1em; inline-size: 40%; margin-block: 0.25em 0.5em; }
+  [aria-busy="true"]:where(:not(button, body, [role="button"], [type="submit"], [type="reset"], [type="button"])) > :where(p) { block-size: 1em; margin-block: 0 0.75em; }
+  [aria-busy="true"]:where(:not(button, body, [role="button"], [type="submit"], [type="reset"], [type="button"])) > p:last-of-type { inline-size: 60%; }
+  [aria-busy="true"]:where(:not(button, body, [role="button"], [type="submit"], [type="reset"], [type="button"])) > :where(li) { block-size: 1em; inline-size: 90%; margin-block: 0 0.5em; }
+  [aria-busy="true"]:where(:not(button, body, [role="button"], [type="submit"], [type="reset"], [type="button"])) > :where(pre) { block-size: 4em; }
+  [aria-busy="true"]:where(:not(button, body, [role="button"], [type="submit"], [type="reset"], [type="button"])) > :where(blockquote) { block-size: 3em; inline-size: 80%; }
+
+  [aria-busy="true"]:where(:not(button, body, [role="button"], [type="submit"], [type="reset"], [type="button"])) > :where(img, video, iframe, canvas, svg) {
+    visibility: visible;
+    opacity: 0;
+    min-block-size: 8rem;
+  }
+
+  [aria-busy="true"]:where(:not(button, body, [role="button"], [type="submit"], [type="reset"], [type="button"]))::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklch, oklch(100% 0 0) 12%, transparent) 50%,
+      transparent
+    );
+    background-size: 200% 100%;
+    animation: auy-skeleton-shimmer 1.5s ease-in-out infinite;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  @keyframes auy-skeleton-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [aria-busy="true"]:where(:not(button, body, [role="button"], [type="submit"], [type="reset"], [type="button"]))::after {
+      animation: none;
+    }
+  }
+
+  /* ── data-skeleton modifier ── */
+  :where([data-skeleton]) {
+    display: block;
+    background: color-mix(in oklch, var(--auy-color-text, oklch(0% 0 0)) 6%, transparent);
+    border-radius: var(--auy-radius-sm);
+    min-block-size: 1em;
+    animation: auy-skeleton-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes auy-skeleton-pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where([data-skeleton]) { animation: none; }
+  }
+}

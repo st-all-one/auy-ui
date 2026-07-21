@@ -1,13 +1,4 @@
-export { AuyCompAudio } from './audio.ts';
-export { AuyCompTabs } from './tabs.ts';
-export type { Tab } from './tabs.ts';
-export { AuyCompToast } from './toast.ts';
-export { AuyCompToastContainer } from './toast-container.ts';
-export { AuyCompPagination } from './pagination.ts';
-export { AuyCompCodeEditor } from './code-editor.ts';
-export { AuyCompSearch } from './search.ts';
-export { AuyCompMetadata } from './metadata.ts';
-export { AuyCompFileInput } from './file-input.ts';
-export { AuyCompColorInput } from './color-input.ts';
-export { formatDate, formatCurrency, formatNumber, formatRelativeTime, pluralize, truncate, slugify, maskCPF, maskCNPJ, maskPhone, stripMask, capitalize } from './format.ts';
+export * from './_internal/format.ts';
+export * from './light-dom/mod.ts';
+export * from './shadow-dom/mod.ts';
 export { ICONS, type IconName } from './_internal/icons.ts';

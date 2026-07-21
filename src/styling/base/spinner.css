@@ -1,12 +1,12 @@
 @layer base {
   :where(.spinner) {
     display: inline-flex;
-    inline-size: var(--auy-spinner-size, 1.5rem);
-    block-size: var(--auy-spinner-size, 1.5rem);
+    inline-size: var(--spinner-size, var(--auy-spinner-size, 1.5rem));
+    block-size: var(--spinner-size, var(--auy-spinner-size, 1.5rem));
     border-radius: 50%;
-    border: 2px solid color-mix(in oklch, currentColor 20%, transparent);
-    border-block-start-color: currentColor;
-    animation: auy-spin calc(var(--auy-spinner-speed, 0.8s) * 1s) linear infinite;
+    border: 0.125rem solid color-mix(in oklch, var(--spinner-color, currentColor) 20%, transparent);
+    border-block-start-color: var(--spinner-color, currentColor);
+    animation: auy-spin var(--auy-spinner-speed, 0.8s) linear infinite;
   }
 
   @media (prefers-reduced-motion: reduce) {

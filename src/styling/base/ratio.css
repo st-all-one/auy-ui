@@ -1,0 +1,31 @@
+@layer base {
+  [data-ratio] {
+    position: relative;
+    inline-size: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: var(--auy-radius-md);
+    background: color-mix(in oklch, var(--auy-color-text, oklch(0% 0 0)) 4%, transparent);
+  }
+
+  [data-ratio] > :where(img, video, iframe) {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  [data-ratio="21/9"] { aspect-ratio: 21 / 9; }
+  [data-ratio="16/9"] { aspect-ratio: 16 / 9; }
+  [data-ratio="3/2"]  { aspect-ratio: 3 / 2; }
+  [data-ratio="5/3"]  { aspect-ratio: 5 / 3; }
+  [data-ratio="4/3"]  { aspect-ratio: 4 / 3; }
+  [data-ratio="1/1"]  { aspect-ratio: 1 / 1; }
+  [data-ratio="square"] { aspect-ratio: 1 / 1; }
+  [data-ratio="9/16"] { aspect-ratio: 9 / 16; }
+
+  [data-ratio~="cover"] > :where(img, video, iframe) { object-fit: cover; }
+  [data-ratio~="contain"] > :where(img, video, iframe) { object-fit: contain; }
+  [data-ratio~="fill"] > :where(img, video, iframe) { object-fit: fill; }
+}
