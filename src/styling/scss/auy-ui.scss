@@ -1,0 +1,107 @@
+@charset "UTF-8";
+
+// 1. Settings (SCSS variables with defaults)
+@use 'settings' as *;
+
+// 2. Palette generator
+@use 'palette' as *;
+
+// 3. Themes generator
+@use 'themes/all' as *;
+
+// 4. Generate :root defaults using SCSS variables
+@layer tokens {
+  :root {
+    // Primary color
+    --auy-color-primary: hsl($auy-primary-h, $auy-primary-s, $auy-primary-l);
+    --auy-color-primary-hover: hsl($auy-primary-h, $auy-primary-s, calc($auy-primary-l - 5%));
+    --auy-color-primary-active: hsl($auy-primary-h, $auy-primary-s, calc($auy-primary-l - 8%));
+    --auy-color-primary-focus: hsla($auy-primary-h, $auy-primary-s, calc($auy-primary-l + 5%), 0.35);
+    --auy-color-primary-inverse: hsl(0, 0%, 100%);
+
+    // Secondary
+    --auy-color-secondary: hsl(260, 3%, 45%);
+    --auy-color-secondary-hover: hsl(260, 3%, 40%);
+    --auy-color-secondary-active: hsl(260, 3%, 37%);
+    --auy-color-secondary-focus: hsla(260, 3%, 45%, 0.35);
+    --auy-color-secondary-inverse: hsl(0, 0%, 100%);
+
+    // Surface colors
+    --auy-color-surface: hsl(260, 5%, $auy-surface-l);
+    --auy-color-surface-alt: hsl(260, 5%, $auy-surface-alt-l);
+    --auy-color-text: hsl(260, 3%, $auy-text-l);
+    --auy-color-text-muted: hsl(260, 3%, $auy-text-muted-l);
+    --auy-color-border: hsla(0, 0%, 0%, 0.1);
+    --auy-color-overlay: hsla(0, 0%, 0%, 0.4);
+
+    // Semantic colors
+    --auy-color-error: hsl($auy-error-h, $auy-error-s, $auy-error-l);
+    --auy-color-success: hsl($auy-success-h, $auy-success-s, $auy-success-l);
+    --auy-color-warning: hsl($auy-warning-h, $auy-warning-s, $auy-warning-l);
+    --auy-color-info: hsl($auy-primary-h, $auy-primary-s, $auy-primary-l);
+    --auy-color-del: var(--auy-color-error);
+    --auy-color-ins: var(--auy-color-success);
+  }
+
+  // Generate primary palette
+  $primary-color: hsl($auy-primary-h, $auy-primary-s, $auy-primary-l);
+  @include generate-palette('primary', $primary-color);
+
+  // Generate neutral palette
+  --auy-neutral-50: hsl(260, 5%, 98%);
+  --auy-neutral-100: hsl(260, 5%, 95%);
+  --auy-neutral-200: hsl(260, 5%, 90%);
+  --auy-neutral-300: hsl(260, 5%, 80%);
+  --auy-neutral-400: hsl(260, 5%, 65%);
+  --auy-neutral-500: hsl(260, 5%, 50%);
+  --auy-neutral-600: hsl(260, 5%, 40%);
+  --auy-neutral-700: hsl(260, 5%, 30%);
+  --auy-neutral-800: hsl(260, 5%, 20%);
+  --auy-neutral-900: hsl(260, 5%, 12%);
+  --auy-neutral-950: hsl(260, 5%, 5%);
+
+  // Generate semantic palettes
+  $error-color: hsl($auy-error-h, $auy-error-s, $auy-error-l);
+  $success-color: hsl($auy-success-h, $auy-success-s, $auy-success-l);
+  $warning-color: hsl($auy-warning-h, $auy-warning-s, $auy-warning-l);
+
+  @include generate-palette('success', $success-color);
+  @include generate-palette('warning', $warning-color);
+  @include generate-palette('error', $error-color);
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --auy-color-surface: hsl(260, 2%, $auy-dark-surface-l);
+      --auy-color-surface-alt: hsl(260, 2%, calc($auy-dark-surface-l + 3%));
+      --auy-color-text: hsl(260, 1%, 90%);
+      --auy-color-text-muted: hsl(260, 2%, 60%);
+      --auy-color-border: hsla(0, 0%, 100%, 0.12);
+      --auy-color-primary: hsl($auy-primary-h, $auy-primary-s, $auy-dark-primary-l);
+      --auy-color-primary-hover: hsl($auy-primary-h, $auy-primary-s, calc($auy-dark-primary-l + 5%));
+      --auy-color-primary-active: hsl($auy-primary-h, $auy-primary-s, $auy-dark-primary-l);
+      --auy-color-primary-focus: hsla($auy-primary-h, $auy-primary-s, calc($auy-dark-primary-l + 5%), 0.3);
+      --auy-color-overlay: hsla(0, 0%, 0%, 0.6);
+    }
+  }
+
+  @media (prefers-contrast: more) {
+    :root {
+      --auy-color-text: hsl(260, 5%, 10%);
+      --auy-color-border: hsla(0, 0%, 0%, 0.5);
+      --auy-color-text-muted: hsl(260, 5%, 35%);
+      --auy-color-surface: hsl(0, 0%, 100%);
+      --auy-color-primary: hsl($auy-primary-h, calc($auy-primary-s + 5%), calc($auy-primary-l - 10%));
+      --auy-color-primary-hover: hsl($auy-primary-h, calc($auy-primary-s + 5%), calc($auy-primary-l - 15%));
+    }
+  }
+
+  @media (prefers-contrast: more) and (prefers-color-scheme: dark) {
+    :root {
+      --auy-color-text: hsl(0, 0%, 95%);
+      --auy-color-border: hsla(0, 0%, 100%, 0.4);
+      --auy-color-text-muted: hsl(0, 0%, 75%);
+      --auy-color-surface: hsl(0, 0%, 0%);
+      --auy-color-primary: hsl($auy-primary-h, calc($auy-primary-s + 5%), calc($auy-dark-primary-l + 10%));
+    }
+  }
+}

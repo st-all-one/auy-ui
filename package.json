@@ -14,20 +14,30 @@
     "./components": "./dist/components.js",
     "./layouts": "./dist/layouts.js",
     "./css": "./dist/auy-ui.css",
+    "./css/min": "./dist/auy-ui.min.css",
+    "./css/nofonts": "./dist/auy-ui-nofonts.min.css",
+    "./css/classless": "./dist/auy-classless.min.css",
+    "./css/classless-nofonts": "./dist/auy-classless-nofonts.min.css",
     "./mod.min": "./dist/mod.min.js",
     "./dist/*": "./dist/*"
   },
   "files": [
     "dist",
-    "src/styles"
+    "src/styles",
+    "src/styling",
+    "wiki",
+    "scss"
   ],
   "scripts": {
     "dev": "vite",
     "build": "vite build && node scripts/postbuild.mjs",
-    "build:css": "echo 'CSS is bundled via dist/auy-ui.css during npm run build'",
+    "build:css": "node scripts/build-css.mjs",
+    "build:classless": "node scripts/build-classless.mjs",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit",
+    "lint:css": "stylelint 'src/styling/**/*.css'",
+    "lint:css:fix": "stylelint 'src/styling/**/*.css' --fix",
     "test": "web-test-runner"
   },
   "dependencies": {
@@ -43,7 +53,11 @@
     "@web/test-runner": "^1.0.0",
     "@web/test-runner-playwright": "^1.0.0",
     "axe-core": "^4.12.1",
+    "csso": "^5.0.5",
     "lightningcss": "^1.29.2",
+    "stylelint": "^17.14.1",
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-order": "^8.1.1",
     "terser": "^5.49.0",
     "typescript": "^5.7.3",
     "vite": "^8.1.5"

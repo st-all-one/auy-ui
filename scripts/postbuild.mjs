@@ -52,4 +52,9 @@ console.log(`Final ${MIN_OUT}: ${(minified.length / 1024).toFixed(1)} KB (saved 
 
 execSync(`rm ${MIN_RAW}`, { stdio: 'ignore' });
 
-// CSS bundle is built by vite to dist/auy-ui.css directly
+// Run standalone CSS build
+console.log('📦 Running standalone CSS build...');
+execSync(`node ${import.meta.dirname}/build-css.mjs`, { stdio: 'inherit' });
+
+console.log('📦 Running classless CSS build...');
+execSync(`node ${import.meta.dirname}/build-classless.mjs`, { stdio: 'inherit' });

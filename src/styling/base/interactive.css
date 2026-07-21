@@ -272,9 +272,6 @@
     transition: display var(--auy-transition, 200ms) allow-discrete, opacity var(--auy-transition, 200ms), transform var(--auy-transition, 200ms);
   }
   :where(details[data-dropdown][open] > :not(summary)) { display: block; opacity: 1; transform: translateY(0); }
-  @starting-style {
-    :where(details[data-dropdown][open] > :not(summary)) { opacity: 0; transform: translateY(-0.25rem); }
-  }
   :where(details[data-dropdown][data-align="end"] > :not(summary)) { inset-inline-start: auto; inset-inline-end: 0; }
 
   @media (prefers-reduced-motion: reduce) {

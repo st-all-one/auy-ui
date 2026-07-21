@@ -1,0 +1,395 @@
+/* ── Theme fallbacks for browsers that don't support OKLCH ── */
+/* HSL equivalents derived from the OKLCH originals in each theme file */
+
+@supports not (color: oklch(0% 0 0)) {
+  /* ── Amber ── */
+  [data-auy-theme="amber"] {
+    --auy-color-primary: hsl(85, 40%, 55%);
+    --auy-color-primary-hover: hsl(85, 40%, 50%);
+    --auy-color-primary-active: hsl(85, 44%, 47%);
+    --auy-color-primary-focus: hsla(85, 50%, 60%, 0.35);
+    --auy-color-primary-inverse: hsl(260, 6%, 15%);
+    --auy-color-warning: hsl(85, 40%, 65%);
+    --auy-color-info: hsl(250, 40%, 50%);
+  }
+
+  /* ── Azure ── */
+  [data-auy-theme="azure"] {
+    --auy-color-primary: hsl(250, 40%, 50%);
+    --auy-color-primary-hover: hsl(250, 40%, 45%);
+    --auy-color-primary-active: hsl(250, 42%, 42%);
+    --auy-color-primary-focus: hsla(250, 50%, 55%, 0.35);
+    --auy-color-primary-inverse: hsl(0, 0%, 100%);
+    --auy-color-info: hsl(250, 40%, 50%);
+  }
+
+  /* ── Blue ── */
+  [data-auy-theme="blue"] {
+    --auy-color-primary: hsl(260, 36%, 50%);
+    --auy-color-primary-hover: hsl(260, 36%, 45%);
+    --auy-color-primary-active: hsl(260, 40%, 42%);
+    --auy-color-primary-focus: hsla(260, 46%, 55%, 0.35);
+    --auy-color-primary-inverse: hsl(0, 0%, 100%);
+    --auy-color-info: hsl(250, 40%, 50%);
+  }
+
+  /* ── Cyan ── */
+  [data-auy-theme="cyan"] {
+    --auy-color-primary: hsl(200, 24%, 50%);
+    --auy-color-primary-hover: hsl(200, 24%, 45%);
+    --auy-color-primary-active: hsl(200, 28%, 42%);
+    --auy-color-primary-focus: hsla(200, 34%, 55%, 0.35);
+    --auy-color-primary-inverse: hsl(0, 0%, 100%);
+  }
+
+  /* ── Emerald ── */
+  [data-auy-theme="emerald"] {
+    --auy-color-primary: hsl(160, 40%, 50%);
+    --auy-color-primary-hover: hsl(160, 40%, 45%);
+    --auy-color-primary-active: hsl(160, 44%, 42%);
+    --auy-color-primary-focus: hsla(160, 50%, 55%, 0.35);
+    --auy-color-primary-inverse: hsl(0, 0%, 100%);
+    --auy-color-info: hsl(220, 40%, 50%);
+    --auy-color-success: hsl(145, 40%, 55%);
+  }
+
+  /* ── Fuchsia ── */
+  [data-auy-theme="fuchsia"] {
+    --auy-color-primary: hsl(330, 44%, 50%);
+    --auy-color-primary-hover: hsl(330, 44%, 45%);
+    --auy-color-primary-active: hsl(330, 48%, 42%);
+    --auy-color-primary-focus: hsla(330, 54%, 55%, 0.35);
+    --auy-color-primary-inverse: hsl(0, 0%, 100%);
+  }
+
+  /* ── Green ── */
+  [data-auy-theme="green"] {
+    --auy-color-primary: hsl(145, 36%, 50%);
+    --auy-color-primary-hover: hsl(145, 36%, 45%);
+    --auy-color-primary-active: hsl(145, 40%, 42%);
+    --auy-color-primary-focus: hsla(145, 46%, 55%, 0.35);
+    --auy-color-primary-inverse: hsl(0, 0%, 100%);
+  }
+
+  /* ── Grey ── */
+  [data-auy-theme="grey"] {
+    --auy-color-primary: hsl(260, 4%, 45%);
+    --auy-color-primary-hover: hsl(260, 4%, 40%);
+    --auy-color-primary-active: hsl(260, 8%, 37%);
+    --auy-color-primary-focus: hsla(260, 14%, 50%, 0.35);
+    --auy-color-primary-inverse: hsl(0, 0%, 100%);
+  }
+
+  /* ── Indigo ── */
+  [data-auy-theme="indigo"] {
+    --auy-color-primary: hsl(270, 44%, 40%);
+    --auy-color-primary-hover: hsl(270, 44%, 35%);
+    --auy-color-primary-active: hsl(270, 48%, 32%);
+    --auy-color-primary-focus: hsla(270, 54%, 45%, 0.35);
+    --auy-color-primary-inverse: hsl(0, 0%, 100%);
+    --auy-color-info: hsl(250, 40%, 50%);
+  }
+
+  /* ── Jade ── */
+  [data-auy-theme="jade"] {
+    --auy-color-primary: hsl(170, 36%, 50%);
+    --auy-color-primary-hover: hsl(170, 36%, 45%);
+    --auy-color-primary-active: hsl(170, 40%, 42%);
+    --auy-color-primary-focus: hsla(170, 46%, 55%, 0.35);
+    --auy-color-primary-inverse: hsl(0, 0%, 100%);
+  }
+
+  /* ── Lime ── */
+  [data-auy-theme="lime"] {
+    --auy-color-primary: hsl(130, 36%, 55%);
+    --auy-color-primary-hover: hsl(130, 36%, 50%);
+    --auy-color-primary-active: hsl(130, 40%, 47%);
+    --auy-color-primary-focus: hsla(130, 46%, 60%, 0.35);
+    --auy-color-primary-inverse: hsl(260, 6%, 15%);
+  }
+
+  /* ── Orange ── */
+  [data-auy-theme="orange"] {
+    --auy-color-primary: hsl(70, 40%, 55%);
+    --auy-color-primary-hover: hsl(70, 40%, 50%);
+    --auy-color-primary-active: hsl(70, 44%, 47%);
+    --auy-color-primary-focus: hsla(70, 50%, 60%, 0.35);
+    --auy-color-primary-inverse: hsl(0, 0%, 100%);
+  }
+
+  /* ── Pink ── */
+  [data-auy-theme="pink"] {
+    --auy-color-primary: hsl(360, 40%, 50%);
+    --auy-color-primary-hover: hsl(360, 40%, 45%);
+    --auy-color-primary-active: hsl(360, 44%, 42%);
+    --auy-color-primary-focus: hsla(360, 50%, 55%, 0.35);
+    --auy-color-primary-inverse: hsl(0, 0%, 100%);
+  }
+
+  /* ── Pumpkin ── */
+  [data-auy-theme="pumpkin"] {
+    --auy-color-primary: hsl(60, 40%, 55%);
+    --auy-color-primary-hover: hsl(60, 40%, 50%);
+    --auy-color-primary-active: hsl(60, 44%, 47%);
+    --auy-color-primary-focus: hsla(60, 50%, 60%, 0.35);
+    --auy-color-primary-inverse: hsl(0, 0%, 100%);
+  }
+
+  /* ── Purple ── */
+  [data-auy-theme="purple"] {
+    --auy-color-primary: hsl(300, 44%, 45%);
+    --auy-color-primary-hover: hsl(300, 44%, 40%);
+    --auy-color-primary-active: hsl(300, 48%, 37%);
+    --auy-color-primary-focus: hsla(300, 54%, 50%, 0.35);
+    --auy-color-primary-inverse: hsl(0, 0%, 100%);
+  }
+
+  /* ── Red ── */
+  [data-auy-theme="red"] {
+    --auy-color-primary: hsl(30, 44%, 50%);
+    --auy-color-primary-hover: hsl(30, 44%, 45%);
+    --auy-color-primary-active: hsl(30, 48%, 42%);
+    --auy-color-primary-focus: hsla(30, 54%, 55%, 0.35);
+    --auy-color-primary-inverse: hsl(0, 0%, 100%);
+  }
+
+  /* ── Ruby ── */
+  [data-auy-theme="ruby"] {
+    --auy-color-primary: hsl(20, 44%, 50%);
+    --auy-color-primary-hover: hsl(20, 44%, 45%);
+    --auy-color-primary-active: hsl(20, 48%, 42%);
+    --auy-color-primary-focus: hsla(20, 54%, 55%, 0.35);
+    --auy-color-primary-inverse: hsl(0, 0%, 100%);
+    --auy-color-error: hsl(30, 44%, 55%);
+    --auy-color-info: hsl(250, 40%, 50%);
+  }
+
+  /* ── Sand ── */
+  [data-auy-theme="sand"] {
+    --auy-color-primary: hsl(80, 12%, 50%);
+    --auy-color-primary-hover: hsl(80, 12%, 45%);
+    --auy-color-primary-active: hsl(80, 16%, 42%);
+    --auy-color-primary-focus: hsla(80, 22%, 55%, 0.35);
+    --auy-color-primary-inverse: hsl(260, 6%, 15%);
+  }
+
+  /* ── Slate ── */
+  [data-auy-theme="slate"] {
+    --auy-color-primary: hsl(260, 4%, 40%);
+    --auy-color-primary-hover: hsl(260, 4%, 35%);
+    --auy-color-primary-active: hsl(260, 8%, 32%);
+    --auy-color-primary-focus: hsla(260, 14%, 45%, 0.35);
+    --auy-color-primary-inverse: hsl(0, 0%, 100%);
+  }
+
+  /* ── Violet ── */
+  [data-auy-theme="violet"] {
+    --auy-color-primary: hsl(290, 44%, 50%);
+    --auy-color-primary-hover: hsl(290, 44%, 45%);
+    --auy-color-primary-active: hsl(290, 48%, 42%);
+    --auy-color-primary-focus: hsla(290, 54%, 55%, 0.35);
+    --auy-color-primary-inverse: hsl(0, 0%, 100%);
+    --auy-color-info: hsl(290, 40%, 50%);
+  }
+
+  /* ── Yellow ── */
+  [data-auy-theme="yellow"] {
+    --auy-color-primary: hsl(100, 40%, 60%);
+    --auy-color-primary-hover: hsl(100, 40%, 55%);
+    --auy-color-primary-active: hsl(100, 44%, 52%);
+    --auy-color-primary-focus: hsla(100, 50%, 65%, 0.35);
+    --auy-color-primary-inverse: hsl(260, 6%, 15%);
+  }
+
+  /* ── Zinc ── */
+  [data-auy-theme="zinc"] {
+    --auy-color-primary: hsl(260, 2%, 50%);
+    --auy-color-primary-hover: hsl(260, 2%, 45%);
+    --auy-color-primary-active: hsl(260, 6%, 42%);
+    --auy-color-primary-focus: hsla(260, 12%, 55%, 0.35);
+    --auy-color-primary-inverse: hsl(0, 0%, 100%);
+  }
+}
+
+/* Dark mode theme fallbacks */
+@supports not (color: oklch(0% 0 0)) {
+  @media (prefers-color-scheme: dark) {
+    /* ── Amber ── */
+    [data-auy-theme="amber"] {
+      --auy-color-primary: hsl(85, 40%, 65%);
+      --auy-color-primary-hover: hsl(85, 40%, 70%);
+      --auy-color-primary-active: hsl(85, 44%, 65%);
+      --auy-color-primary-focus: hsla(85, 50%, 70%, 0.3);
+    }
+
+    /* ── Azure ── */
+    [data-auy-theme="azure"] {
+      --auy-color-primary: hsl(250, 40%, 60%);
+      --auy-color-primary-hover: hsl(250, 40%, 65%);
+      --auy-color-primary-active: hsl(250, 42%, 60%);
+      --auy-color-primary-focus: hsla(250, 50%, 65%, 0.3);
+      --auy-color-info: hsl(250, 40%, 60%);
+    }
+
+    /* ── Blue ── */
+    [data-auy-theme="blue"] {
+      --auy-color-primary: hsl(260, 36%, 60%);
+      --auy-color-primary-hover: hsl(260, 36%, 65%);
+      --auy-color-primary-active: hsl(260, 40%, 60%);
+      --auy-color-primary-focus: hsla(260, 46%, 65%, 0.3);
+    }
+
+    /* ── Cyan ── */
+    [data-auy-theme="cyan"] {
+      --auy-color-primary: hsl(200, 24%, 60%);
+      --auy-color-primary-hover: hsl(200, 24%, 65%);
+      --auy-color-primary-active: hsl(200, 28%, 60%);
+      --auy-color-primary-focus: hsla(200, 34%, 65%, 0.3);
+    }
+
+    /* ── Emerald ── */
+    [data-auy-theme="emerald"] {
+      --auy-color-primary: hsl(160, 40%, 60%);
+      --auy-color-primary-hover: hsl(160, 40%, 65%);
+      --auy-color-primary-active: hsl(160, 44%, 60%);
+      --auy-color-primary-focus: hsla(160, 50%, 65%, 0.3);
+      --auy-color-info: hsl(220, 40%, 60%);
+    }
+
+    /* ── Fuchsia ── */
+    [data-auy-theme="fuchsia"] {
+      --auy-color-primary: hsl(330, 44%, 60%);
+      --auy-color-primary-hover: hsl(330, 44%, 65%);
+      --auy-color-primary-active: hsl(330, 48%, 60%);
+      --auy-color-primary-focus: hsla(330, 54%, 65%, 0.3);
+    }
+
+    /* ── Green ── */
+    [data-auy-theme="green"] {
+      --auy-color-primary: hsl(145, 36%, 60%);
+      --auy-color-primary-hover: hsl(145, 36%, 65%);
+      --auy-color-primary-active: hsl(145, 40%, 60%);
+      --auy-color-primary-focus: hsla(145, 46%, 65%, 0.3);
+    }
+
+    /* ── Grey ── */
+    [data-auy-theme="grey"] {
+      --auy-color-primary: hsl(260, 4%, 55%);
+      --auy-color-primary-hover: hsl(260, 4%, 60%);
+      --auy-color-primary-active: hsl(260, 8%, 55%);
+      --auy-color-primary-focus: hsla(260, 14%, 60%, 0.3);
+    }
+
+    /* ── Indigo ── */
+    [data-auy-theme="indigo"] {
+      --auy-color-primary: hsl(270, 44%, 55%);
+      --auy-color-primary-hover: hsl(270, 44%, 60%);
+      --auy-color-primary-active: hsl(270, 48%, 55%);
+      --auy-color-primary-focus: hsla(270, 54%, 60%, 0.3);
+    }
+
+    /* ── Jade ── */
+    [data-auy-theme="jade"] {
+      --auy-color-primary: hsl(170, 36%, 60%);
+      --auy-color-primary-hover: hsl(170, 36%, 65%);
+      --auy-color-primary-active: hsl(170, 40%, 60%);
+      --auy-color-primary-focus: hsla(170, 46%, 65%, 0.3);
+    }
+
+    /* ── Lime ── */
+    [data-auy-theme="lime"] {
+      --auy-color-primary: hsl(130, 36%, 65%);
+      --auy-color-primary-hover: hsl(130, 36%, 70%);
+      --auy-color-primary-active: hsl(130, 40%, 65%);
+      --auy-color-primary-focus: hsla(130, 46%, 70%, 0.3);
+    }
+
+    /* ── Orange ── */
+    [data-auy-theme="orange"] {
+      --auy-color-primary: hsl(70, 40%, 65%);
+      --auy-color-primary-hover: hsl(70, 40%, 70%);
+      --auy-color-primary-active: hsl(70, 44%, 65%);
+      --auy-color-primary-focus: hsla(70, 50%, 70%, 0.3);
+    }
+
+    /* ── Pink ── */
+    [data-auy-theme="pink"] {
+      --auy-color-primary: hsl(360, 40%, 60%);
+      --auy-color-primary-hover: hsl(360, 40%, 65%);
+      --auy-color-primary-active: hsl(360, 44%, 60%);
+      --auy-color-primary-focus: hsla(360, 50%, 65%, 0.3);
+    }
+
+    /* ── Pumpkin ── */
+    [data-auy-theme="pumpkin"] {
+      --auy-color-primary: hsl(60, 40%, 65%);
+      --auy-color-primary-hover: hsl(60, 40%, 70%);
+      --auy-color-primary-active: hsl(60, 44%, 65%);
+      --auy-color-primary-focus: hsla(60, 50%, 70%, 0.3);
+    }
+
+    /* ── Purple ── */
+    [data-auy-theme="purple"] {
+      --auy-color-primary: hsl(300, 44%, 58%);
+      --auy-color-primary-hover: hsl(300, 44%, 63%);
+      --auy-color-primary-active: hsl(300, 48%, 58%);
+      --auy-color-primary-focus: hsla(300, 54%, 63%, 0.3);
+    }
+
+    /* ── Red ── */
+    [data-auy-theme="red"] {
+      --auy-color-primary: hsl(30, 44%, 60%);
+      --auy-color-primary-hover: hsl(30, 44%, 65%);
+      --auy-color-primary-active: hsl(30, 48%, 60%);
+      --auy-color-primary-focus: hsla(30, 54%, 65%, 0.3);
+    }
+
+    /* ── Ruby ── */
+    [data-auy-theme="ruby"] {
+      --auy-color-primary: hsl(20, 44%, 60%);
+      --auy-color-primary-hover: hsl(20, 44%, 65%);
+      --auy-color-primary-active: hsl(20, 48%, 60%);
+      --auy-color-primary-focus: hsla(20, 54%, 65%, 0.3);
+    }
+
+    /* ── Sand ── */
+    [data-auy-theme="sand"] {
+      --auy-color-primary: hsl(80, 12%, 60%);
+      --auy-color-primary-hover: hsl(80, 12%, 65%);
+      --auy-color-primary-active: hsl(80, 16%, 60%);
+      --auy-color-primary-focus: hsla(80, 22%, 65%, 0.3);
+    }
+
+    /* ── Slate ── */
+    [data-auy-theme="slate"] {
+      --auy-color-primary: hsl(260, 4%, 55%);
+      --auy-color-primary-hover: hsl(260, 4%, 60%);
+      --auy-color-primary-active: hsl(260, 8%, 55%);
+      --auy-color-primary-focus: hsla(260, 14%, 60%, 0.3);
+    }
+
+    /* ── Violet ── */
+    [data-auy-theme="violet"] {
+      --auy-color-primary: hsl(290, 44%, 60%);
+      --auy-color-primary-hover: hsl(290, 44%, 65%);
+      --auy-color-primary-active: hsl(290, 48%, 60%);
+      --auy-color-primary-focus: hsla(290, 54%, 65%, 0.3);
+    }
+
+    /* ── Yellow ── */
+    [data-auy-theme="yellow"] {
+      --auy-color-primary: hsl(100, 40%, 70%);
+      --auy-color-primary-hover: hsl(100, 40%, 75%);
+      --auy-color-primary-active: hsl(100, 44%, 70%);
+      --auy-color-primary-focus: hsla(100, 50%, 75%, 0.3);
+    }
+
+    /* ── Zinc ── */
+    [data-auy-theme="zinc"] {
+      --auy-color-primary: hsl(260, 2%, 60%);
+      --auy-color-primary-hover: hsl(260, 2%, 65%);
+      --auy-color-primary-active: hsl(260, 6%, 60%);
+      --auy-color-primary-focus: hsla(260, 12%, 65%, 0.3);
+    }
+  }
+}

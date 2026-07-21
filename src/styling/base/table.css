@@ -49,10 +49,20 @@
     border-block-start: 1px solid var(--auy-color-border);
   }
 
+  :where(tfoot) {
+    border-block-start: 0.125rem solid var(--auy-color-border);
+    font-weight: 500;
+  }
+
+  :where(tfoot) td,
+  :where(tfoot) th {
+    border-block-end: none;
+  }
+
   :where(thead) { position: sticky; inset-block-start: 0; z-index: 1; }
 
   /* ── Responsive: card layout on small containers ── */
-  @container (max-width: 600px) {
+  @container (max-width: 600px) { /* --auy-breakpoint-table: 600px — responsive table threshold */
     :where(thead) { display: none; }
     :where(tbody tr) { display: flex; flex-direction: column; padding: 0.5rem 0; border-block-end: 1px solid var(--auy-color-border); }
     :where(td) { display: flex; padding: 0.25rem 1rem; border-block-end: none; }

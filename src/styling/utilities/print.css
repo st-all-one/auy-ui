@@ -1,12 +1,7 @@
 @layer utilities {
   @media print {
     @page {
-      size: A4;
       margin: 15mm;
-    }
-
-    @page :first {
-      margin-top: 25mm;
     }
 
     * {
@@ -24,14 +19,7 @@
     }
 
     nav,
-    auy-sidebar,
-    auy-header,
-    auy-accessibility-bar,
-    auy-internal-toast,
-    auy-internal-spinner,
-    auy-skeleton,
-    auy-internal-modal,
-    auy-internal-tooltip {
+    [role="navigation"] {
       display: none !important;
     }
 
@@ -50,10 +38,7 @@
       content: ' (' attr(href) ')';
     }
 
-    nav a[href]::after,
-    auy-sidebar a[href]::after,
-    auy-header a[href]::after,
-    auy-internal-breadcrumb a[href]::after {
+    nav a[href]::after {
       content: none;
     }
 

@@ -21,6 +21,7 @@
     color: var(--auy-color-primary-inverse);
     text-decoration: none;
     text-align: center;
+    inline-size: auto;
   }
 
   :where(button, [role="button"], [type="submit"], [type="button"]):hover {
@@ -42,34 +43,6 @@
     opacity: 0.5;
     cursor: not-allowed;
     pointer-events: none;
-  }
-
-  :where(input[type="submit"], input[type="reset"], input[type="button"]) {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    font-family: inherit;
-    font-size: var(--auy-text-sm);
-    font-weight: 500;
-    line-height: 1.5;
-    min-block-size: 2.75rem;
-    padding: 0.625rem 1rem;
-    border: 1px solid transparent;
-    border-radius: var(--auy-radius-md);
-    cursor: pointer;
-    user-select: none;
-    touch-action: manipulation;
-    transition: background-color var(--auy-transition), border-color var(--auy-transition);
-    background-color: var(--auy-color-primary);
-    color: var(--auy-color-primary-inverse);
-    inline-size: auto;
-  }
-
-  :where(input[type="submit"]):hover,
-  :where(input[type="button"]):hover {
-    background-color: var(--auy-color-primary-hover);
-    color: var(--auy-color-primary-inverse);
   }
 
   :where(button[variant~="secondary"], [role="button"][variant~="secondary"]) {
@@ -151,23 +124,13 @@
     font-size: var(--auy-text-base);
   }
 
-  :where(button[type="reset"]) {
+  :where([type="reset"]) {
     background-color: transparent;
     color: var(--auy-color-text);
     border-color: var(--auy-color-border);
   }
 
-  :where(button[type="reset"]):hover {
-    background-color: color-mix(in oklch, var(--auy-color-border) 15%, transparent);
-  }
-
-  :where(input[type="reset"]) {
-    background-color: transparent;
-    color: var(--auy-color-text);
-    border-color: var(--auy-color-border);
-  }
-
-  :where(input[type="reset"]):hover {
+  :where([type="reset"]):hover {
     background-color: color-mix(in oklch, var(--auy-color-border) 15%, transparent);
   }
 
@@ -190,8 +153,8 @@
     border-radius: 50%;
     animation: auy-spin 0.6s linear infinite;
   }
-}
 
-@keyframes auy-spin {
-  to { transform: rotate(360deg); }
+  @keyframes auy-spin {
+    to { transform: rotate(360deg); }
+  }
 }

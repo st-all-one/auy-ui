@@ -19,7 +19,10 @@ export default defineConfig({
         ios: 16,
         edge: 111,
       },
-      drafts: { nesting: true },
+      drafts: {
+        nesting: true,
+        customMedia: true,
+      },
       unusedSymbols: [],
     },
     devSourcemap: false,

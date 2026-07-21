@@ -164,17 +164,6 @@
     }
   }
 
-  /* ── Small ── */
-  :where(small) {
-    font-size: 0.8em;
-    color: var(--auy-color-text-muted);
-    line-height: 1.5;
-  }
-
-  :where(p) small {
-    display: inline;
-  }
-
   /* ── Definition lists ── */
   :where(dl) {
     margin-block: 0.75em;

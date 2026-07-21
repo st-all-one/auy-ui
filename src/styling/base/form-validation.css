@@ -1,0 +1,18 @@
+@layer base {
+  /* ── Form group ── */
+  :where(.form-group) { display: grid; gap: 0.25rem; }
+  :where(.form-group .form-help) { font-size: var(--auy-text-xs); color: var(--auy-color-text-muted); display: flex; align-items: center; gap: 0.25rem; }
+  :where(.form-group .form-error) { font-size: var(--auy-text-xs); color: var(--auy-color-error); display: none; align-items: center; gap: 0.25rem; }
+  :where(.form-group .form-success-icon) { display: none; color: var(--auy-color-success); }
+  :where(.form-group .form-error-icon) { display: none; color: var(--auy-color-error); }
+
+  /* Validation-driven visibility (no JS) */
+  :where(.form-group:has(:user-invalid) .form-error) { display: flex; }
+  :where(.form-group:has(:user-invalid) .form-help) { display: none; }
+  :where(.form-group:has(:user-valid) .form-success-icon) { display: inline-flex; }
+  :where(.form-group:has(:user-invalid) .form-error-icon) { display: inline-flex; }
+
+  /* Required indicator */
+  :where(.required-indicator) { color: var(--auy-color-error); margin-inline-start: 0.125rem; display: none; }
+  :where(.form-group:has(:required) .required-indicator) { display: inline; }
+}

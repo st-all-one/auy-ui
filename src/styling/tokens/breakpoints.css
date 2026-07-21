@@ -1,0 +1,9 @@
+@layer tokens {
+  :root {
+    --auy-breakpoint-sm: 576px;
+    --auy-breakpoint-md: 768px;
+    --auy-breakpoint-lg: 1024px;
+    --auy-breakpoint-xl: 1280px;
+    --auy-breakpoint-2xl: 1536px;
+  }
+}

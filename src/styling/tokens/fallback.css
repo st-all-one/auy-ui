@@ -1,0 +1,137 @@
+/* ── Fallback colors for browsers that don't support OKLCH ── */
+/* HSL equivalents derived from the OKLCH originals in colors.css and palette.css */
+
+/* Colors fallback */
+@supports not (color: oklch(0% 0 0)) {
+  :root {
+    --auy-color-primary: hsl(250, 40%, 50%);
+    --auy-color-primary-hover: hsl(250, 40%, 45%);
+    --auy-color-primary-active: hsl(250, 42%, 42%);
+    --auy-color-primary-focus: hsla(250, 50%, 55%, 0.35);
+    --auy-color-primary-inverse: hsl(0, 0%, 100%);
+
+    --auy-color-secondary: hsl(260, 6%, 45%);
+    --auy-color-secondary-hover: hsl(260, 6%, 40%);
+    --auy-color-secondary-active: hsl(260, 6%, 37%);
+    --auy-color-secondary-focus: hsla(260, 6%, 45%, 0.35);
+    --auy-color-secondary-inverse: hsl(0, 0%, 100%);
+
+    --auy-color-surface: hsl(260, 3%, 98%);
+    --auy-color-surface-alt: hsl(260, 3%, 96%);
+    --auy-color-text: hsl(260, 10%, 20%);
+    --auy-color-text-muted: hsl(260, 6%, 45%);
+    --auy-color-border: hsla(0, 0%, 0%, 0.1);
+    --auy-color-overlay: hsla(0, 0%, 0%, 0.4);
+
+    --auy-color-error: hsl(30, 65%, 55%);
+    --auy-color-success: hsl(145, 65%, 55%);
+    --auy-color-warning: hsl(85, 65%, 65%);
+    --auy-color-info: hsl(250, 65%, 50%);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --auy-color-surface: hsl(260, 8%, 15%);
+      --auy-color-surface-alt: hsl(260, 8%, 18%);
+      --auy-color-text: hsl(260, 3%, 90%);
+      --auy-color-text-muted: hsl(260, 4%, 60%);
+      --auy-color-border: hsla(0, 0%, 100%, 0.12);
+      --auy-color-primary: hsl(250, 40%, 60%);
+      --auy-color-primary-hover: hsl(250, 40%, 65%);
+      --auy-color-primary-active: hsl(250, 42%, 60%);
+      --auy-color-primary-focus: hsla(250, 50%, 65%, 0.3);
+      --auy-color-overlay: hsla(0, 0%, 0%, 0.6);
+    }
+  }
+
+  @media (prefers-contrast: more) {
+    :root {
+      --auy-color-text: hsl(260, 15%, 10%);
+      --auy-color-border: hsla(0, 0%, 0%, 0.5);
+      --auy-color-text-muted: hsl(260, 10%, 35%);
+      --auy-color-surface: hsl(0, 0%, 100%);
+      --auy-color-primary: hsl(250, 50%, 40%);
+      --auy-color-primary-hover: hsl(250, 50%, 35%);
+    }
+  }
+
+  @media (prefers-contrast: more) and (prefers-color-scheme: dark) {
+    :root {
+      --auy-color-text: hsl(0, 0%, 95%);
+      --auy-color-border: hsla(0, 0%, 100%, 0.4);
+      --auy-color-text-muted: hsl(0, 0%, 75%);
+      --auy-color-surface: hsl(0, 0%, 0%);
+      --auy-color-primary: hsl(250, 50%, 70%);
+    }
+  }
+}
+
+/* Palette fallback — pre-computed HSL values for neutral and semantic palettes */
+@supports not (color: oklch(0% 0 0)) {
+  :root {
+    /* Neutral palette */
+    --auy-neutral-50:  hsl(260, 3%, 98%);
+    --auy-neutral-100: hsl(260, 4%, 95%);
+    --auy-neutral-200: hsl(260, 5%, 90%);
+    --auy-neutral-300: hsl(260, 5%, 80%);
+    --auy-neutral-400: hsl(260, 5%, 65%);
+    --auy-neutral-500: hsl(260, 5%, 50%);
+    --auy-neutral-600: hsl(260, 5%, 40%);
+    --auy-neutral-700: hsl(260, 5%, 30%);
+    --auy-neutral-800: hsl(260, 5%, 20%);
+    --auy-neutral-900: hsl(260, 5%, 12%);
+    --auy-neutral-950: hsl(260, 5%, 5%);
+
+    /* Primary palette (base: hsl(250, 40%, 50%)) */
+    --auy-primary-50:  hsl(250, 4%, 95%);
+    --auy-primary-100: hsl(250, 8%, 90%);
+    --auy-primary-200: hsl(250, 14%, 83%);
+    --auy-primary-300: hsl(250, 20%, 75%);
+    --auy-primary-400: hsl(250, 28%, 65%);
+    --auy-primary-500: hsl(250, 40%, 50%);
+    --auy-primary-600: hsl(250, 40%, 43%);
+    --auy-primary-700: hsl(250, 40%, 33%);
+    --auy-primary-800: hsl(250, 40%, 23%);
+    --auy-primary-900: hsl(250, 40%, 13%);
+    --auy-primary-950: hsl(250, 40%, 5%);
+
+    /* Success palette (base: hsl(145, 65%, 55%)) */
+    --auy-success-50:  hsl(145, 7%, 96%);
+    --auy-success-100: hsl(145, 13%, 91%);
+    --auy-success-200: hsl(145, 23%, 84%);
+    --auy-success-300: hsl(145, 33%, 78%);
+    --auy-success-400: hsl(145, 46%, 69%);
+    --auy-success-500: hsl(145, 65%, 55%);
+    --auy-success-600: hsl(145, 65%, 47%);
+    --auy-success-700: hsl(145, 65%, 36%);
+    --auy-success-800: hsl(145, 65%, 25%);
+    --auy-success-900: hsl(145, 65%, 14%);
+    --auy-success-950: hsl(145, 65%, 6%);
+
+    /* Warning palette (base: hsl(85, 65%, 65%)) */
+    --auy-warning-50:  hsl(85, 7%, 97%);
+    --auy-warning-100: hsl(85, 13%, 92%);
+    --auy-warning-200: hsl(85, 23%, 86%);
+    --auy-warning-300: hsl(85, 33%, 79%);
+    --auy-warning-400: hsl(85, 46%, 71%);
+    --auy-warning-500: hsl(85, 65%, 65%);
+    --auy-warning-600: hsl(85, 65%, 55%);
+    --auy-warning-700: hsl(85, 65%, 42%);
+    --auy-warning-800: hsl(85, 65%, 29%);
+    --auy-warning-900: hsl(85, 65%, 16%);
+    --auy-warning-950: hsl(85, 65%, 7%);
+
+    /* Error palette (base: hsl(30, 65%, 55%)) */
+    --auy-error-50:  hsl(30, 7%, 96%);
+    --auy-error-100: hsl(30, 13%, 91%);
+    --auy-error-200: hsl(30, 23%, 84%);
+    --auy-error-300: hsl(30, 33%, 77%);
+    --auy-error-400: hsl(30, 46%, 68%);
+    --auy-error-500: hsl(30, 65%, 55%);
+    --auy-error-600: hsl(30, 65%, 47%);
+    --auy-error-700: hsl(30, 65%, 36%);
+    --auy-error-800: hsl(30, 65%, 25%);
+    --auy-error-900: hsl(30, 65%, 14%);
+    --auy-error-950: hsl(30, 65%, 6%);
+  }
+}

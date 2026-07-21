@@ -182,6 +182,34 @@
   <header>
     <h1 class="demo-page-title">auy-ui Elements Demo</h1>
     <p class="demo-page-subtitle">Every standard HTML element styled with <code>auy-ui.css</code></p>
+    <div style="display:flex;align-items:center;gap:var(--auy-space-sm);flex-wrap:wrap;margin-block-start:var(--auy-space-md);font-size:var(--auy-text-sm)">
+      <label for="theme-select" style="font-weight:500;margin:0">Tema:</label>
+      <select id="theme-select" style="inline-size:auto;min-block-size:auto;padding:0.35rem 1.5rem 0.35rem 0.5rem;font-size:var(--auy-text-sm)">
+        <option value="amber">Amber</option>
+        <option value="azure" selected>Azure</option>
+        <option value="blue">Blue</option>
+        <option value="cyan">Cyan</option>
+        <option value="emerald">Emerald</option>
+        <option value="fuchsia">Fuchsia</option>
+        <option value="green">Green</option>
+        <option value="grey">Grey</option>
+        <option value="indigo">Indigo</option>
+        <option value="jade">Jade</option>
+        <option value="lime">Lime</option>
+        <option value="orange">Orange</option>
+        <option value="pink">Pink</option>
+        <option value="pumpkin">Pumpkin</option>
+        <option value="purple">Purple</option>
+        <option value="red">Red</option>
+        <option value="ruby">Ruby</option>
+        <option value="sand">Sand</option>
+        <option value="slate">Slate</option>
+        <option value="violet">Violet</option>
+        <option value="yellow">Yellow</option>
+        <option value="zinc">Zinc</option>
+      </select>
+      <button type="button" id="theme-reset" variant="ghost" style="font-size:var(--auy-text-xs);padding:0.25rem 0.5rem;min-block-size:auto">Padrão (blue)</button>
+    </div>
   </header>
 
   <hr>
@@ -1445,6 +1473,27 @@ line 2: count = 42</pre>
       if (msg) msg.textContent = 'Dialog fechado: ' + (d.returnValue || 'fechado');
     });
   });
+</script>
+<script>
+  (function() {
+    var select = document.getElementById('theme-select');
+    var reset = document.getElementById('theme-reset');
+    if (!select) return;
+    // Load saved theme
+    var saved = localStorage.getItem('auy-demo-theme');
+    if (saved) { document.documentElement.setAttribute('data-auy-theme', saved); select.value = saved; }
+    select.addEventListener('change', function() {
+      document.documentElement.setAttribute('data-auy-theme', this.value);
+      localStorage.setItem('auy-demo-theme', this.value);
+    });
+    if (reset) {
+      reset.addEventListener('click', function() {
+        document.documentElement.removeAttribute('data-auy-theme');
+        select.value = 'azure';
+        localStorage.removeItem('auy-demo-theme');
+      });
+    }
+  })();
 </script>
 <div id="dialog-result" aria-live="polite" aria-atomic="true" style="position:absolute;inline-size:1px;block-size:1px;overflow:hidden;clip:rect(0,0,0,0)"></div>
 </body>

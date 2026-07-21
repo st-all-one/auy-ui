@@ -1,0 +1,56 @@
+{
+  "extends": "stylelint-config-standard",
+  "plugins": ["stylelint-order"],
+  "rules": {
+    "custom-property-pattern": [
+      "^(--auy-[a-z]+(-[a-z0-9]+)*$|--_[a-z]+)",
+      {
+        "message": "Custom properties must use --auy- prefix or --_ for internal use"
+      }
+    ],
+    "selector-class-pattern": [
+      "^(auy-)?[a-z]+([a-z0-9]+)?(__[a-z0-9]+)?(--[a-z0-9]+)?$",
+      {
+        "message": "Classes must follow BEM: .component__element--modifier"
+      }
+    ],
+    "selector-id-pattern": null,
+    "keyframes-name-pattern": "^auy-[a-z-]+$",
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": [
+          "layer", "starting-style", "container", "custom-media",
+          "import", "charset"
+        ]
+      }
+    ],
+    "at-rule-empty-line-before": null,
+    "no-descending-specificity": null,
+    "comment-empty-line-before": null,
+    "custom-property-empty-line-before": null,
+    "declaration-empty-line-before": "never",
+    "declaration-block-single-line-max-declarations": null,
+    "max-nesting-depth": 3,
+    "number-max-precision": 6,
+    "unit-allowed-list": [
+      "rem", "em", "%", "px", "vw", "vh", "dvh", "svh",
+      "dvw", "svw", "deg", "s", "ms", "ch", "fr", "cm", "mm"
+    ],
+    "color-function-notation": "modern",
+    "alpha-value-notation": "number",
+    "import-notation": "string",
+    "declaration-property-value-no-unknown": null,
+    "no-duplicate-selectors": true,
+    "order/order": [
+      ["custom-properties", "dollar-variables", "declarations", "at-rules", "rules"],
+      { "severity": "warning" }
+    ],
+    "order/properties-order": null
+  },
+  "ignoreFiles": [
+    "dist/**", "node_modules/**",
+    "PICO_EXAMPLE/**", "BULMA_DOCS/**",
+    "scripts/**", "scss/**"
+  ]
+}

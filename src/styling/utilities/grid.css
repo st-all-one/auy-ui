@@ -33,7 +33,7 @@
   [data-gap~="xl"] { gap: var(--auy-space-xl); }
   [data-gap~="none"] { gap: 0; }
 
-  @media (max-width: 640px) {
+  @media (max-width: 640px) { /* --auy-media-sm: 576px (used 640px for slightly earlier collapse) */
     [data-grid~="2"],
     [data-grid~="3"],
     [data-grid~="4"],

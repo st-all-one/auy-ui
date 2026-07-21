@@ -109,6 +109,13 @@
     font-weight: 600;
     color: var(--auy-color-text-muted);
     font-size: var(--auy-text-sm);
+    font-style: normal;
+  }
+
+  :where(optgroup option) {
+    font-weight: 400;
+    color: var(--auy-color-text);
+    padding-inline-start: 1em;
   }
 
   :where(option) {
@@ -138,4 +145,63 @@
     color: oklch(45% 0.01 260);
     opacity: 0.8;
   }
+
+  /* ── Snippet Preview ── */
+  :where(.snippet-preview) {
+    border-inline-start: 3px solid var(--auy-color-border);
+    padding-inline-start: 0.75rem;
+  }
+  :where(.snippet-preview__url) {
+    font-size: var(--auy-text-xs);
+    color: var(--auy-color-success);
+    font-style: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  :where(.snippet-preview__title) {
+    font-size: var(--auy-text-lg);
+    color: var(--auy-color-primary);
+    cursor: pointer;
+    display: inline;
+    line-height: 1.3;
+    word-break: break-word;
+  }
+  :where(.snippet-preview__title:hover) {
+    text-decoration: underline;
+  }
+  :where(.snippet-preview__desc) {
+    font-size: var(--auy-text-sm);
+    color: var(--auy-color-text-muted);
+    word-break: break-word;
+    line-height: 1.4;
+  }
+
+  /* ── Character Counter ── */
+  :where(.char-counter) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--auy-space-xs);
+    font-size: var(--auy-text-xs);
+    color: var(--auy-color-text-muted);
+    flex-wrap: wrap;
+  }
+
+  /* ── Character Progress Bar ── */
+  :where(.char-progress) {
+    block-size: 3px;
+    border-radius: var(--auy-radius-full);
+    background: color-mix(in oklch, var(--auy-color-border) 50%, transparent);
+    overflow: hidden;
+    margin-block-start: var(--auy-space-2xs);
+  }
+  :where(.char-progress__bar) {
+    block-size: 100%;
+    border-radius: var(--auy-radius-full);
+    transition: inline-size var(--auy-transition-fast), background var(--auy-transition-fast);
+    background: var(--auy-color-success);
+  }
+  :where(.char-progress__bar--warn) { background: var(--auy-color-warning); }
+  :where(.char-progress__bar--danger) { background: var(--auy-color-error); }
 }

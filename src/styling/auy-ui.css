@@ -7,6 +7,11 @@
 @import './tokens/spacing.css';
 @import './tokens/typography.css';
 @import './tokens/surface.css';
+@import './tokens/breakpoints.css';
+
+@import './tokens/fallback.css';
+@import './themes/all.css';
+@import './themes/fallback.css';
 
 @import './base/typography.css';
 @import './base/link.css';
@@ -19,9 +24,10 @@
 @import './base/sectioning.css';
 @import './base/phrasing.css';
 @import './base/interactive.css';
+@import './base/form-choice.css';
+@import './base/form-control.css';
+@import './base/form-validation.css';
 @import './base/form-extras.css';
-@import './base/embed-extras.css';
-@import './base/table-extras.css';
 @import './base/badge.css';
 @import './base/alert.css';
 @import './base/card.css';

@@ -44,7 +44,7 @@
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-inline-size: 20ch;
   }
 
-  @container (max-width: 400px) {
+  @container (max-width: 400px) { /* --auy-breakpoint-breadcrumb: 400px — breadcrumb truncation threshold */
     :where(nav[aria-label="Breadcrumb"] li:not(:last-of-type) .label) {
       max-inline-size: 10ch; overflow: hidden; text-overflow: ellipsis;
     }
