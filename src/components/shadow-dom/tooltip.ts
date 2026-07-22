@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
+import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
 
 let tooltipIdCounter = 0;
 
@@ -11,7 +12,7 @@ let tooltipIdCounter = 0;
  * @csspart arrow - Seta apontando para o gatilho
  */
 @customElement('auy-comp-tooltip')
-export class AuyCompTooltip extends LitElement {
+export class AuyCompTooltip extends StyleCustomizableMixin(LitElement) {
   static override styles = css`
     @layer components {
       :host {
@@ -251,6 +252,7 @@ export class AuyCompTooltip extends LitElement {
 
   override render() {
     return html`
+      ${this._renderCustomStyles()}
       <span part="trigger" class="trigger"
         @mouseenter=${this._onShow}
         @mouseleave=${this._onHide}

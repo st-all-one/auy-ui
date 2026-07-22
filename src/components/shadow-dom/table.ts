@@ -2,6 +2,9 @@ import { LitElement, html, css, nothing } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
 import { ifDefined } from 'lit/directives/if-defined.js'
 
+import { DataAwareMixin } from '../_internal/data-aware.mixin.ts'
+import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts'
+
 /** Interface para definição de coluna */
 export interface Column {
   /** Chave do campo nos dados */
@@ -35,10 +38,14 @@ export interface Column {
  * @csspart loading - Estado de carregamento
  */
 @customElement('auy-comp-table')
-export class AuyCompTable extends LitElement {
+export class AuyCompTable extends StyleCustomizableMixin(DataAwareMixin(LitElement)) {
   static override shadowRootOptions: ShadowRootInit = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
+  }
+
+  static override get observedDataEvents(): string[] {
+    return ['sort-change', 'row-select']
   }
 
   static override styles = css`
@@ -430,6 +437,30 @@ export class AuyCompTable extends LitElement {
   private _nfCurrency = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
   private _dfDate = new Intl.DateTimeFormat('pt-BR', { timeZone: 'UTC' })
 
+  protected override _parseResponse(data: unknown): void {
+    const d = data as Record<string, unknown>
+    if (d.columns) this.columns = d.columns as Column[]
+    if (d.rows) this.rows = d.rows as Record<string, unknown>[]
+  }
+
+  protected override _getDefaultParams(): URLSearchParams {
+    const params = new URLSearchParams()
+    params.set('page', String(this.currentPage))
+    params.set('perPage', String(this.pageSize))
+    if (this._sortColumn) params.set('sort', this._sortColumn)
+    if (this._sortDirection) params.set('dir', this._sortDirection)
+    return params
+  }
+
+  protected override _applyMeta(meta: Record<string, unknown>): void {
+    if (meta.total !== undefined) {
+      // Server-side total: usado quando data-input esta ativo
+      // Recalcula _totalPages baseado no total do servidor
+      const total = Number(meta.total)
+      this._totalPages = Math.max(1, Math.ceil(total / this.pageSize))
+    }
+  }
+
   override willUpdate(changed: Map<string, unknown>) {
     if (changed.has('rows') || changed.has('_filterText') || changed.has('_sortColumn') || changed.has('_sortDirection')) {
       this._processRows()
@@ -530,6 +561,9 @@ export class AuyCompTable extends LitElement {
       bubbles: true,
       composed: true,
     }))
+    if (this.dataInput) {
+      this._fetchData(this._getDefaultParams())
+    }
   }
 
   private readonly _handleFilterInput = (e: Event) => {
@@ -756,6 +790,7 @@ export class AuyCompTable extends LitElement {
 
     const filterIconOpen = this._filterOpen ? 'open' : '';
     return html`
+      ${this._renderCustomStyles()}
       <div part="wrapper">
         ${this.title ? html`
           <div

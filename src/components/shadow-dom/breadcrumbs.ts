@@ -2,6 +2,8 @@ import { LitElement, html, css, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { customElement, property } from 'lit/decorators.js';
 import { ICONS, type IconName } from '../_internal/icons.js';
+import { DataAwareMixin } from '../_internal/data-aware.mixin.ts';
+import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
 
 /** Item de navegação das migalhas */
 export interface BreadcrumbItem {
@@ -18,7 +20,7 @@ export interface BreadcrumbItem {
  * @csspart nav - Elemento de navegação
  */
 @customElement('auy-comp-breadcrumbs')
-export class AuyCompBreadcrumbs extends LitElement {
+export class AuyCompBreadcrumbs extends StyleCustomizableMixin(DataAwareMixin(LitElement)) {
   static override styles = css`
     :host {
       display: block;
@@ -191,6 +193,12 @@ export class AuyCompBreadcrumbs extends LitElement {
   /** Exibe ícones ao lado do rótulo */
   @property({ type: Boolean }) icons = false;
 
+  protected override _parseResponse(data: unknown): void {
+    if (Array.isArray(data)) {
+      this.items = data as BreadcrumbItem[];
+    }
+  }
+
   private _renderIcon(name: IconName) {
     const svgStr = ICONS[name];
     if (!svgStr) return nothing;
@@ -242,6 +250,7 @@ export class AuyCompBreadcrumbs extends LitElement {
     if (!this.items.length) return nothing;
 
     return html`
+      ${this._renderCustomStyles()}
       <nav aria-label="Breadcrumb">
         <ol>
           ${this.items.map((item, i, arr) => this._renderItem(item, i, arr))}

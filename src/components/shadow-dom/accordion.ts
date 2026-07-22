@@ -2,6 +2,8 @@ import { LitElement, html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { ICONS } from '../_internal/icons.ts';
+import { DataAwareMixin } from '../_internal/data-aware.mixin.ts';
+import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
 
 /** Item do acordeão */
 export interface AccordionItem {
@@ -21,11 +23,15 @@ export interface AccordionItem {
  * @csspart summary - Cabeçalho clicável de cada item
  */
 @customElement('auy-comp-accordion')
-export class AuyCompAccordion extends LitElement {
+export class AuyCompAccordion extends StyleCustomizableMixin(DataAwareMixin(LitElement)) {
   static override shadowRootOptions = {
     ...LitElement.shadowRootOptions,
     delegatesFocus: true,
   };
+
+  static override get observedDataEvents(): string[] {
+    return ['toggle']
+  }
 
   static override styles = css`
     @layer components {
@@ -164,6 +170,12 @@ export class AuyCompAccordion extends LitElement {
   /** Ícone do indicador: chevron | plus */
   @property({ type: String }) icon: 'chevron' | 'plus' = 'chevron';
 
+  protected override _parseResponse(data: unknown): void {
+    if (Array.isArray(data)) {
+      this.items = data as AccordionItem[];
+    }
+  }
+
   @state() private _openMap: Record<string, boolean> = {};
 
   override willUpdate(changed: Map<string, unknown>) {
@@ -223,6 +235,7 @@ export class AuyCompAccordion extends LitElement {
 
   override render() {
     return html`
+      ${this._renderCustomStyles()}
       ${this.items.map(item => html`
         <details class="accordion-item" ?open=${this._openMap[item.id] ?? false}>
           <summary part="summary" @click=${(e: Event) => { e.preventDefault(); this._toggle(item.id); }}>

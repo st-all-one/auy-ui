@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { keyed } from 'lit/directives/keyed.js';
+import { DataAwareMixin } from '../_internal/data-aware.mixin.ts';
 
 function highlight(text: string, query: string) {
   if (!query) return [text];
@@ -186,7 +187,11 @@ const searchStyles = `
 
 /** Componente de busca com overlay, filtro local e suporte a dados remotos. */
 @customElement('auy-comp-search')
-export class AuyCompSearch extends LitElement {
+export class AuyCompSearch extends DataAwareMixin(LitElement) {
+  static override get observedDataEvents(): string[] {
+    return ['search-select', 'search-close']
+  }
+
   override createRenderRoot() {
     return this;
   }
@@ -199,6 +204,16 @@ export class AuyCompSearch extends LitElement {
   @property({ type: Boolean, reflect: true }) open = false;
   /** Tecla de atalho (ex: "k" para Ctrl+K). */
   @property({ type: String }) shortcut = 'k';
+
+  protected override _parseResponse(data: unknown): void {
+    if (Array.isArray(data)) {
+      this.items = data;
+    } else if (data && typeof data === 'object') {
+      const d = data as Record<string, unknown>;
+      if (Array.isArray(d.results)) this.items = d.results;
+      else if (Array.isArray(d.items)) this.items = d.items;
+    }
+  }
 
   /** URL para busca remota via fetch. */
   @property({ type: String }) src = '';

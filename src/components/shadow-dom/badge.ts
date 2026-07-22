@@ -1,8 +1,9 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
 
 @customElement('auy-comp-badge')
-export class AuyCompBadge extends LitElement {
+export class AuyCompBadge extends StyleCustomizableMixin(LitElement) {
   static override styles = css`
     @layer components {
       :host {
@@ -79,6 +80,7 @@ export class AuyCompBadge extends LitElement {
 
   override render() {
     return html`
+      ${this._renderCustomStyles()}
       <span
         part="badge"
         data-badge

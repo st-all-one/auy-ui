@@ -1,6 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { customElement, property, state } from 'lit/decorators.js';
+import { DataAwareMixin } from '../_internal/data-aware.mixin.ts';
 
 const FILE_ICONS: Record<string, string> = {
   pdf: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/><line x1="9" y1="11" x2="12" y2="11"/></svg>',
@@ -216,7 +217,11 @@ const fiStyles = css`
 
 /** Componente de upload de arquivos com drag-and-drop, preview e envio. */
 @customElement('auy-comp-file-input')
-export class AuyCompFileInput extends LitElement {
+export class AuyCompFileInput extends DataAwareMixin(LitElement) {
+  static override get observedDataEvents(): string[] {
+    return ['change', 'upload-complete', 'upload-error']
+  }
+
   override createRenderRoot() {
     return this;
   }
@@ -235,6 +240,14 @@ export class AuyCompFileInput extends LitElement {
   @property({ type: String }) headers = '';
   /** Tamanho do chunk para upload particionado (0 = desabilitado). */
   @property({ type: Number }) chunkSize = 0;
+
+  protected override _parseResponse(data: unknown): void {
+    const d = data as Record<string, unknown>
+    if (d.action) this.action = String(d.action)
+    if (d.accept) this.accept = String(d.accept)
+    if (d.maxSize !== undefined) this.maxSize = Number(d.maxSize)
+    if (d.headers) this.headers = String(d.headers)
+  }
 
   @state() private _files: File[] = [];
   private _previewUrls: string[] = [];

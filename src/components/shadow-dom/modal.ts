@@ -1,6 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
 
 type ModalVariant = 'default' | 'info' | 'success' | 'warning' | 'error';
 
@@ -29,7 +30,11 @@ const VARIANT_ICONS: Record<ModalVariant, string> = {
  * @csspart divider - Linha divisória
  */
 @customElement('auy-comp-modal')
-export class AuyCompModal extends LitElement {
+export class AuyCompModal extends StyleCustomizableMixin(LitElement) {
+  static override get observedDataEvents(): string[] {
+    return ['open', 'close']
+  }
+
   static override shadowRootOptions: ShadowRootInit = { mode: 'open', delegatesFocus: true };
 
   static override styles = css`
@@ -335,6 +340,7 @@ export class AuyCompModal extends LitElement {
     const hasHeader = this.title || this.variant !== 'default' || !!this.closable;
 
     return html`
+      ${this._renderCustomStyles()}
       <dialog
         role="dialog"
         aria-modal="true"

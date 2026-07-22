@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
 
 /**
  * Toast component for displaying brief, auto-dismissible notifications.
@@ -24,7 +25,11 @@ import { classMap } from 'lit/directives/class-map.js';
  * @csspart dismiss - The dismiss button.
  */
 @customElement('auy-comp-toast')
-export class AuyCompToast extends LitElement {
+export class AuyCompToast extends StyleCustomizableMixin(LitElement) {
+  static override get observedDataEvents(): string[] {
+    return ['show', 'hide']
+  }
+
   static override styles = css`
     @layer components {
       :host {
@@ -247,6 +252,7 @@ export class AuyCompToast extends LitElement {
 
   override render() {
     return html`
+      ${this._renderCustomStyles()}
       <div
         part="toast"
         class=${classMap({ toast: true, 'toast--open': this.open, [`toast--${this.variant}`]: true })}

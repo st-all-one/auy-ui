@@ -1,5 +1,6 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { DataAwareMixin } from '../_internal/data-aware.mixin.ts';
 
 let dateInputIdCounter = 0;
 
@@ -86,7 +87,11 @@ const diStyles = css`
 
 /** Componente de input de data nativo com label e estilos customizados. */
 @customElement('auy-comp-date-input')
-export class AuyCompDateInput extends LitElement {
+export class AuyCompDateInput extends DataAwareMixin(LitElement) {
+  static override get observedDataEvents(): string[] {
+    return ['change']
+  }
+
   override createRenderRoot() {
     return this;
   }
@@ -107,6 +112,13 @@ export class AuyCompDateInput extends LitElement {
   @property({ type: Boolean, reflect: true }) required = false;
   /** Atributo name do input nativo. */
   @property({ type: String }) name = '';
+
+  protected override _parseResponse(data: unknown): void {
+    const d = data as Record<string, string>
+    if (d.value !== undefined) this.value = d.value
+    if (d.min) this.min = d.min
+    if (d.max) this.max = d.max
+  }
 
   private _inputId = `auy-date-input-${++dateInputIdCounter}`;
 

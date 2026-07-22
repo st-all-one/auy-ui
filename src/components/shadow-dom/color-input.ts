@@ -1,5 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
+import { DataAwareMixin } from '../_internal/data-aware.mixin.ts';
+import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
 
 /* ── Color math ── */
 
@@ -147,7 +149,10 @@ type Format = 'hex' | 'rgb' | 'hsl' | 'oklch';
  * @csspart label - The label element.
  */
 @customElement('auy-comp-color-input')
-export class AuyCompColorInput extends LitElement {
+export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(LitElement)) {
+  static override get observedDataEvents(): string[] {
+    return ['change']
+  }
   static override styles = css`
     @layer components {
       :host { display: block; }
@@ -494,6 +499,11 @@ export class AuyCompColorInput extends LitElement {
   @property({ type: Boolean }) showRecent = true;
   /** Max number of recent colors to show. */
   @property({ type: Number }) recentCount = 8;
+
+  protected override _parseResponse(data: unknown): void {
+    const d = data as Record<string, string>
+    if (d.value) this.value = d.value
+  }
 
   /** Hue (0-360). */
   @state() private _H = hexToHsv('#3B82F6')[0];
@@ -905,6 +915,7 @@ export class AuyCompColorInput extends LitElement {
     const alphaPct = Math.round(this._alpha * 100);
 
     return html`
+      ${this._renderCustomStyles()}
       ${this.label ? html`<label part="label">${this.label}</label>` : nothing}
       <div part="picker" class="picker" style="--_tri-dot:${hex};--_ring-glow:${hex}40;">
 

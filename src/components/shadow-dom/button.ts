@@ -4,6 +4,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { AuyShadowElement } from '../_internal/AuyShadowElement.base.ts';
+import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
 import { ICONS } from '../_internal/icons.ts';
 import type { IconName } from '../_internal/icons.ts';
 
@@ -17,7 +18,7 @@ import type { IconName } from '../_internal/icons.ts';
  * @csspart spinner - Indicador de carregamento
  */
 @customElement('auy-comp-button')
-export class AuyCompButton extends AuyShadowElement {
+export class AuyCompButton extends StyleCustomizableMixin(AuyShadowElement) {
   static override styles = css`
     @layer components {
       :host {
@@ -379,6 +380,7 @@ export class AuyCompButton extends AuyShadowElement {
 
     if (isLink) {
       return html`
+        ${this._renderCustomStyles()}
         <a
           part="link"
           class=${classMap(btnClasses)}
@@ -397,6 +399,7 @@ export class AuyCompButton extends AuyShadowElement {
     }
 
     return html`
+      ${this._renderCustomStyles()}
       <button
         part="button"
         class=${classMap(btnClasses)}

@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
 
 /** Representa um toast individual dentro do container. */
 interface ToastItem {
@@ -11,7 +12,7 @@ interface ToastItem {
 
 /** Container gerenciador de toasts com posicionamento fixo e auto-dismiss. */
 @customElement('auy-comp-toast-container')
-export class AuyCompToastContainer extends LitElement {
+export class AuyCompToastContainer extends StyleCustomizableMixin(LitElement) {
   static override styles = css`
     @layer components {
       :host {
@@ -254,6 +255,7 @@ export class AuyCompToastContainer extends LitElement {
     if (this._toasts.length === 0) return null;
 
     return html`
+      ${this._renderCustomStyles()}
       ${this._toasts.map(t => html`
         <div
           part="toast"

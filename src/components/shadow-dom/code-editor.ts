@@ -1,5 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
+import { DataAwareMixin } from '../_internal/data-aware.mixin.ts';
+import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
 
 /**
  * Code editor component with optional CodeMirror 6 integration.
@@ -31,7 +33,10 @@ import { customElement, property, state, query } from 'lit/decorators.js';
  * @csspart cm-host - The CodeMirror host container.
  */
 @customElement('auy-comp-code-editor')
-export class AuyCompCodeEditor extends LitElement {
+export class AuyCompCodeEditor extends StyleCustomizableMixin(DataAwareMixin(LitElement)) {
+  static override get observedDataEvents(): string[] {
+    return ['input', 'change']
+  }
   static override styles = css`
     @layer components {
       :host {
@@ -129,6 +134,12 @@ export class AuyCompCodeEditor extends LitElement {
   /** JSON string of CodeMirror 6 options. */
   @property({ type: String }) cmOptions = '';
 
+  protected override _parseResponse(data: unknown): void {
+    const d = data as Record<string, string>
+    if (d.value !== undefined) this.value = d.value
+    if (d.language) this.language = d.language
+  }
+
   /** Array of line number strings for the gutter. */
   @state() private _lines: string[] = ['1'];
   /** Whether CodeMirror has been dynamically loaded. */
@@ -154,6 +165,7 @@ export class AuyCompCodeEditor extends LitElement {
   override render() {
     if (this._cmLoaded) {
       return html`
+        ${this._renderCustomStyles()}
         <div part="editor" class="editor" style="height: ${this.height}">
           <div part="cm-host" class="cm-host"></div>
         </div>
@@ -161,6 +173,7 @@ export class AuyCompCodeEditor extends LitElement {
     }
 
     return html`
+      ${this._renderCustomStyles()}
       <div part="editor" class="editor" style="height: ${this.height}">
         ${this.lineNumbers
           ? html`

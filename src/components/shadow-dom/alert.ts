@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property, queryAssignedElements } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
 
 
 /**
@@ -18,7 +19,11 @@ import { classMap } from 'lit/directives/class-map.js';
  * @csspart dismiss - Botão de fechar
  */
 @customElement('auy-comp-alert')
-export class AuyCompAlert extends LitElement {
+export class AuyCompAlert extends StyleCustomizableMixin(LitElement) {
+  static override get observedDataEvents(): string[] {
+    return ['show', 'dismiss']
+  }
+
   static override styles = css`
     @layer components {
       :host {
@@ -269,6 +274,7 @@ export class AuyCompAlert extends LitElement {
     }
 
     return html`
+      ${this._renderCustomStyles()}
       <div
         part="alert"
         class=${classMap({

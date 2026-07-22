@@ -1,6 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { DataAwareMixin } from '../_internal/data-aware.mixin.ts';
 
 let selectIdCounter = 0;
 
@@ -170,7 +171,11 @@ const styles = css`
 
 /** Componente de seleção (combobox) com suporte a busca e teclado. */
 @customElement('auy-comp-select')
-export class AuyCompSelect extends LitElement {
+export class AuyCompSelect extends DataAwareMixin(LitElement) {
+  static override get observedDataEvents(): string[] {
+    return ['change']
+  }
+
   override createRenderRoot() {
     return this;
   }
@@ -202,6 +207,12 @@ export class AuyCompSelect extends LitElement {
 
   @query('.trigger') private _trigger!: HTMLElement;
   @query('.search-input') private _searchInput!: HTMLInputElement;
+
+  protected override _parseResponse(data: unknown): void {
+    if (Array.isArray(data)) {
+      this.options = data as SelectOption[];
+    }
+  }
 
   private _selectId = `auy-select-${++selectIdCounter}`;
   private _listboxId = `auy-select-listbox-${selectIdCounter}`;

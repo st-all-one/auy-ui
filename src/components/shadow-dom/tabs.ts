@@ -2,6 +2,9 @@ import { LitElement, html, css } from 'lit';
 import { customElement, property, query, queryAll } from 'lit/decorators.js';
 import { keyed } from 'lit/directives/keyed.js';
 
+import { DataAwareMixin } from '../_internal/data-aware.mixin.ts';
+import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
+
 /**
  * Represents a single tab item.
  *
@@ -37,7 +40,11 @@ export interface Tab {
  * @csspart panel - Each individual tab panel.
  */
 @customElement('auy-comp-tabs')
-export class AuyCompTabs extends LitElement {
+export class AuyCompTabs extends StyleCustomizableMixin(DataAwareMixin(LitElement)) {
+  static override get observedDataEvents(): string[] {
+    return ['tab-change']
+  }
+
   static override styles = css`
     @layer components {
       :host {
@@ -187,6 +194,12 @@ export class AuyCompTabs extends LitElement {
   /** All tab button elements. */
   @queryAll('[part="tab"]') private _tabButtons!: NodeListOf<HTMLElement>;
 
+  protected override _parseResponse(data: unknown): void {
+    if (Array.isArray(data)) {
+      this.tabs = data as Tab[];
+    }
+  }
+
   private _selectedId(): string {
     if (this.activeTab && this.tabs.some(t => t.id === this.activeTab)) {
       return this.activeTab;
@@ -283,6 +296,7 @@ export class AuyCompTabs extends LitElement {
     if (this.tabs.length > 0) {
       const activeId = this._selectedId();
       return html`
+        ${this._renderCustomStyles()}
         <div part="tabs" role="tablist" @keydown=${this._onKeyDown}>
           ${keyed(this.tabs, this.tabs.map((tab, i) => {
             const isActive = tab.id === activeId;
@@ -320,6 +334,7 @@ export class AuyCompTabs extends LitElement {
     }
 
     return html`
+      ${this._renderCustomStyles()}
       <div part="tabs" role="tablist">
         <slot name="tab"></slot>
         <div part="indicator"></div>

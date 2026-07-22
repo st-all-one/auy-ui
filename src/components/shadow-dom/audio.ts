@@ -1,5 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { DataAwareMixin } from '../_internal/data-aware.mixin.ts';
+import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
 
 const ICONS = {
   play: html`<svg viewBox="0 0 24 24" fill="currentColor" style="inline-size:1.25rem;block-size:1.25rem;"><path d="M8 5.14v14.72a1 1 0 0 0 1.5.86l11-7.36a1 1 0 0 0 0-1.72l-11-7.36A1 1 0 0 0 8 5.14z"/></svg>`,
@@ -15,7 +17,10 @@ const ICONS = {
 
 /** Player de áudio com controles de reprodução, volume, velocidade e transcrição. */
 @customElement('auy-comp-audio')
-export class AuyCompAudio extends LitElement {
+export class AuyCompAudio extends StyleCustomizableMixin(DataAwareMixin(LitElement)) {
+  static override get observedDataEvents(): string[] {
+    return ['ended']
+  }
   static override styles = css`
     :host {
       display: block;
@@ -285,6 +290,12 @@ export class AuyCompAudio extends LitElement {
   /** Exibe a seção de transcrição. */
   @property({ type: Boolean }) showTranscript = false;
 
+  protected override _parseResponse(data: unknown): void {
+    const d = data as Record<string, string>
+    if (d.src) this.src = d.src
+    if (d.title) this.title = d.title
+  }
+
   /** Indica se o áudio está sendo reproduzido. */
   @state() private _playing = false;
   /** Tempo atual da reprodução em segundos. */
@@ -432,6 +443,7 @@ export class AuyCompAudio extends LitElement {
     const speeds = [0.5, 0.75, 1, 1.25, 1.5, 2];
 
     return html`
+      ${this._renderCustomStyles()}
       <div class="player" @keydown=${this._handleKey}>
         <div class="header">
           <span class="title">${this.title || 'Player de Áudio'}</span>

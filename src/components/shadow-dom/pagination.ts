@@ -2,9 +2,15 @@ import { LitElement, html, css, nothing } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
 import { classMap } from 'lit/directives/class-map.js'
 
+import { DataAwareMixin, type DataEnvelope } from '../_internal/data-aware.mixin.ts'
+import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts'
+
 /** Componente de paginação com navegação por página, elipse e botões anterior/próximo. */
 @customElement('auy-comp-pagination')
-export class AuyCompPagination extends LitElement {
+export class AuyCompPagination extends StyleCustomizableMixin(DataAwareMixin(LitElement)) {
+  static override get observedDataEvents(): string[] {
+    return ['page-change']
+  }
   static override styles = css`
     @layer components {
       :host {
@@ -118,6 +124,17 @@ export class AuyCompPagination extends LitElement {
     }
   }
 
+  protected override _parseResponse(_data: unknown): void {
+    // data-input response: pagination roteia para data-target via mixin
+    // O proprio componente nao processa data diretamente
+  }
+
+  protected override _applyMeta(meta: Record<string, unknown>): void {
+    if (meta.total !== undefined) this.total = Number(meta.total)
+    if (meta.perPage !== undefined) this.perPage = Number(meta.perPage)
+    if (meta.page !== undefined) this.current = Number(meta.page)
+  }
+
   private _goTo(page: number): void {
     if (this.disabled) return
     if (page < 1 || page > this._totalPages) return
@@ -130,6 +147,12 @@ export class AuyCompPagination extends LitElement {
         composed: true,
       })
     )
+    if (this.dataInput) {
+      const params = new URLSearchParams()
+      params.set('page', String(this.current))
+      params.set('perPage', String(this.perPage))
+      this._fetchData(params)
+    }
   }
 
   private readonly _handlePageClick = (e: Event) => {
@@ -175,6 +198,7 @@ export class AuyCompPagination extends LitElement {
     const pages = this._pages
 
     return html`
+      ${this._renderCustomStyles()}
       <nav part="nav" aria-label="Paginação">
         <button
           part="btn prev"
