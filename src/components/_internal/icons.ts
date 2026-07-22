@@ -1,6 +1,53 @@
 /** Collection of SVG icons for use throughout the application. */
 
 import { svg } from 'lit';
+import { t, type LocaleKey } from './locale.ts';
+
+const ICON_TITLE_MAP: Record<string, LocaleKey> = {
+  chevronDown: 'iconChevronDown',
+  chevronUp: 'iconChevronUp',
+  chevronLeft: 'iconChevronLeft',
+  chevronRight: 'iconChevronRight',
+  menu: 'iconMenu',
+  close: 'iconClose',
+  plus: 'iconAdd',
+  minus: 'iconSubtract',
+  search: 'iconSearch',
+  home: 'iconHome',
+  settings: 'iconSettings',
+  user: 'iconUser',
+  edit: 'iconEdit',
+  trash: 'iconDelete',
+  save: 'iconSave',
+  download: 'iconDownload',
+  upload: 'iconUpload',
+  refresh: 'iconRefresh',
+  check: 'iconCheck',
+  alert: 'iconAlert',
+  info: 'iconInfo',
+  error: 'iconError',
+  warning: 'iconWarning',
+  success: 'iconSuccess',
+  externalLink: 'iconExternalLink',
+  eye: 'iconEye',
+  eyeOff: 'iconEyeOff',
+  filter: 'iconFilter',
+  sort: 'iconSort',
+  moreVertical: 'iconMoreOptions',
+  calendar: 'iconCalendar',
+  clock: 'iconClock',
+  file: 'iconFile',
+  image: 'iconImage',
+  table: 'iconTable',
+  fontSize: 'iconFontSize',
+  contrast: 'iconContrast',
+};
+
+export function getIcon(name: IconName): string {
+  const key = ICON_TITLE_MAP[name];
+  const title = key ? t(key) : name;
+  return ICONS[name].replace(/<title>.*?<\/title>/, `<title>${title}</title>`);
+}
 
 export const ICONS = {
   chevronDown: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false" role="img" aria-hidden="true"><title>Chevron para baixo</title><path d="M6 9l6 6 6-6"/></svg>',

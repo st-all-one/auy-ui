@@ -1,0 +1,97 @@
+@layer components {
+  :where(.toast-container) {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    gap: var(--auy-space-sm);
+    padding: var(--auy-space-md);
+    pointer-events: none;
+    z-index: var(--auy-z-toast);
+    max-block-size: 100dvh;
+    overflow-y: auto;
+  }
+
+  :where([data-position="top-right"]) {
+    inset-block-start: var(--auy-safe-area-top, 0);
+    inset-inline-end: 0;
+  }
+
+  :where([data-position="top-left"]) {
+    inset-block-start: var(--auy-safe-area-top, 0);
+    inset-inline-start: 0;
+  }
+
+  :where([data-position="top-center"]) {
+    inset-block-start: var(--auy-safe-area-top, 0);
+    inset-inline-start: 50%;
+    translate: -50% 0;
+  }
+
+  :where([data-position="bottom-right"]) {
+    inset-block-end: var(--auy-safe-area-bottom, 0);
+    inset-inline-end: 0;
+    flex-direction: column-reverse;
+  }
+
+  :where([data-position="bottom-left"]) {
+    inset-block-end: var(--auy-safe-area-bottom, 0);
+    inset-inline-start: 0;
+    flex-direction: column-reverse;
+  }
+
+  :where([data-position="bottom-center"]) {
+    inset-block-end: var(--auy-safe-area-bottom, 0);
+    inset-inline-start: 50%;
+    translate: -50% 0;
+    flex-direction: column-reverse;
+  }
+
+  :where(.toast-item) {
+    pointer-events: auto;
+    animation: toast-slide-in var(--auy-transition) ease-out;
+  }
+
+  :where(.toast-item--removing) {
+    animation: toast-slide-out var(--auy-transition-fast) ease-in forwards;
+  }
+
+  @keyframes toast-slide-in {
+    from {
+      opacity: 0;
+      translate: 100%;
+    }
+  }
+
+  @keyframes toast-slide-out {
+    to {
+      opacity: 0;
+      translate: 100%;
+    }
+  }
+
+  @starting-style {
+    :where(.toast-item) {
+      opacity: 0;
+      translate: 100%;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :where(.toast-container) {
+      color-scheme: dark;
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.toast-container) { border: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where(.toast-item) { animation: none; }
+    :where(.toast-item--removing) { animation: none; opacity: 0; }
+  }
+
+  @media print {
+    :where(.toast-container) { display: none; }
+  }
+}

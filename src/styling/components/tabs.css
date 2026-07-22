@@ -1,0 +1,117 @@
+@layer components {
+  :where(.tabs) {
+    display: flex;
+    gap: 0;
+    border-block-end: 1px solid var(--auy-color-border);
+    position: relative;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  :where(.tabs::-webkit-scrollbar) { display: none; }
+
+  :where(.tabs[data-orientation="vertical"]) {
+    flex-direction: column;
+    border-block-end: none;
+    border-inline-end: 1px solid var(--auy-color-border);
+    overflow-x: visible;
+    overflow-y: auto;
+  }
+
+  :where(.tab) {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--auy-space-xs);
+    padding: var(--auy-space-sm) var(--auy-space-md);
+    border: none;
+    background: transparent;
+    color: var(--auy-color-text-muted);
+    font-family: inherit;
+    font-size: var(--auy-text-sm);
+    font-weight: var(--auy-font-weight-medium);
+    line-height: var(--auy-line-height-sm);
+    cursor: pointer;
+    white-space: nowrap;
+    touch-action: manipulation;
+    position: relative;
+    transition: color var(--auy-transition) ease;
+  }
+
+  :where(.tab:hover) {
+    color: var(--auy-color-text);
+  }
+
+  :where(.tab:focus-visible) {
+    outline: 0.125rem solid var(--auy-color-primary);
+    outline-offset: -0.125rem;
+    border-radius: var(--auy-radius-sm);
+  }
+
+  :where(.tab--active) {
+    color: var(--auy-color-primary);
+  }
+
+  :where(.tabs[data-orientation="vertical"]) :where(.tab) {
+    justify-content: flex-start;
+    inline-size: 100%;
+    border-inline-end: 2px solid transparent;
+  }
+
+  :where(.tabs[data-orientation="vertical"]) :where(.tab--active) {
+    border-inline-end-color: var(--auy-color-primary);
+  }
+
+  :where(.tab-indicator) {
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline-start: 0;
+    block-size: 2px;
+    background: var(--auy-color-primary);
+    transition: inset-inline-start var(--auy-transition) ease, inline-size var(--auy-transition) ease;
+  }
+
+  :where(.tabs[data-orientation="vertical"]) :where(.tab-indicator) {
+    inset-block-end: auto;
+    inset-inline-start: auto;
+    inset-inline-end: 0;
+    inset-block-start: 0;
+    inline-size: 2px;
+    block-size: 0;
+    transition: inset-block-start var(--auy-transition) ease, block-size var(--auy-transition) ease;
+  }
+
+  :where(.panel-container) {
+    position: relative;
+  }
+
+  :where(.panel) {
+    display: none;
+    padding: var(--auy-space-lg) 0;
+  }
+
+  :where(.panel[aria-hidden="false"]) {
+    display: block;
+  }
+
+  @media (forced-colors: active) {
+    :where(.tab--active) {
+      border-block-end: 2px solid Highlight;
+    }
+    :where(.tabs[data-orientation="vertical"]) :where(.tab--active) {
+      border-block-end: none;
+      border-inline-end: 2px solid Highlight;
+    }
+    :where(.tab-indicator) { background: Highlight; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where(.tab) { transition: none; }
+    :where(.tab-indicator) { transition: none; }
+  }
+
+  @media print {
+    :where(.tabs) { border-block-end-color: currentColor; }
+    :where(.tab-indicator) { display: none; }
+  }
+}

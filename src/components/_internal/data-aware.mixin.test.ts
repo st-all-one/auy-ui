@@ -11,7 +11,7 @@ const mockMap = new Map<string, { status: number; body: unknown }>();
 function mockFetch(input: string | URL | Request, _init?: RequestInit): Promise<Response> {
   const url = typeof input === 'string' ? input
     : input instanceof URL ? input.href
-    : input.url;
+    : (input as Request).url;
   const pathname = new URL(url).pathname;
 
   for (const [key, val] of mockMap) {
@@ -36,23 +36,23 @@ class TestDataConsumer extends DataAwareMixin(LitElement) {
   receivedData: unknown = null;
   fetchCount = 0;
 
-  static override get observedDataEvents(): string[] {
+  static get observedDataEvents(): string[] {
     return ['custom-event'];
   }
 
-  override render() {
+  render() {
     return '';
   }
 
-  protected override _parseResponse(data: unknown): void {
+  protected _parseResponse(data: unknown): void {
     this.receivedData = data;
   }
 
-  protected override _getDefaultParams(): URLSearchParams {
+  protected _getDefaultParams(): URLSearchParams {
     return new URLSearchParams({ defaultParam: '1' });
   }
 
-  override async _fetchData(extraParams?: URLSearchParams): Promise<void> {
+  async _fetchData(extraParams?: URLSearchParams): Promise<void> {
     this.fetchCount++;
     return super._fetchData(extraParams);
   }
@@ -68,11 +68,11 @@ declare global {
 class TestDataTarget extends DataAwareMixin(LitElement) {
   receivedData: unknown = null;
 
-  override render() {
+  render() {
     return '';
   }
 
-  protected override _parseResponse(data: unknown): void {
+  protected _parseResponse(data: unknown): void {
     this.receivedData = data;
   }
 }
@@ -189,7 +189,7 @@ describe('DataAwareMixin', () => {
   it('applies default params from _getDefaultParams', async () => {
     const fetchedUrls: string[] = [];
     globalThis.fetch = (input: string | URL | Request) => {
-      const url = typeof input === 'string' ? input : input.url;
+      const url = typeof input === 'string' ? input : (input as Request).url;
       fetchedUrls.push(url);
       return Promise.resolve(
         new Response(JSON.stringify({ data: 'ok', error: null }), {
@@ -199,7 +199,7 @@ describe('DataAwareMixin', () => {
       );
     };
 
-    const el = await fixture<TestDataConsumer>(html`
+    await fixture<TestDataConsumer>(html`
       <test-data-consumer data-input="/api/default-test"></test-data-consumer>
     `);
 
@@ -329,7 +329,7 @@ describe('DataAwareMixin - data-on-*', () => {
   it('interpolates detail prop in URL template', async () => {
     const fetchedUrls: string[] = [];
     globalThis.fetch = (input: string | URL | Request) => {
-      fetchedUrls.push(typeof input === 'string' ? input : input.url);
+      fetchedUrls.push(typeof input === 'string' ? input : (input as Request).url);
       return Promise.resolve(
         new Response(JSON.stringify({ data: 'ok', error: null }), {
           status: 200,
@@ -350,7 +350,7 @@ describe('DataAwareMixin - data-on-*', () => {
   it('interpolates this prop in URL template', async () => {
     const fetchedUrls: string[] = [];
     globalThis.fetch = (input: string | URL | Request) => {
-      fetchedUrls.push(typeof input === 'string' ? input : input.url);
+      fetchedUrls.push(typeof input === 'string' ? input : (input as Request).url);
       return Promise.resolve(
         new Response(JSON.stringify({ data: 'ok', error: null }), {
           status: 200,

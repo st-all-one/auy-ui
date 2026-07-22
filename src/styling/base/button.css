@@ -18,6 +18,7 @@
     touch-action: manipulation;
     transition: background-color var(--auy-transition), border-color var(--auy-transition), color var(--auy-transition), box-shadow var(--auy-transition);
     background-color: var(--auy-color-primary);
+    background-color: attr(data-accent type(<color>), var(--auy-color-primary));
     color: var(--auy-color-primary-inverse);
     text-decoration: none;
     text-align: center;
@@ -25,12 +26,14 @@
   }
 
   :where(button, [role="button"], [type="submit"], [type="button"]):hover {
-    background-color: var(--auy-color-primary-hover);
+    background-color: color-mix(in oklch, var(--auy-color-primary) 85%, black);
+    background-color: color-mix(in oklch, attr(data-accent type(<color>), var(--auy-color-primary)) 85%, black);
     color: var(--auy-color-primary-inverse);
   }
 
   :where(button, [role="button"], [type="submit"], [type="button"]):active {
-    background-color: var(--auy-color-primary-active);
+    background-color: color-mix(in oklch, var(--auy-color-primary) 75%, black);
+    background-color: color-mix(in oklch, attr(data-accent type(<color>), var(--auy-color-primary)) 75%, black);
     color: var(--auy-color-primary-inverse);
   }
 
@@ -79,17 +82,21 @@
   :where(button[variant~="outline"], [role="button"][variant~="outline"]) {
     background-color: transparent;
     color: var(--auy-color-primary);
+    color: attr(data-accent type(<color>), var(--auy-color-primary));
     border-color: var(--auy-color-primary);
+    border-color: attr(data-accent type(<color>), var(--auy-color-primary));
   }
 
   :where(button[variant~="outline"]):hover,
   :where([role="button"][variant~="outline"]):hover {
     background-color: color-mix(in oklch, var(--auy-color-primary) 8%, transparent);
+    background-color: color-mix(in oklch, attr(data-accent type(<color>), var(--auy-color-primary)) 8%, transparent);
   }
 
   :where(button[variant~="link"], [role="button"][variant~="link"]) {
     background-color: transparent;
     color: var(--auy-color-primary);
+    color: attr(data-accent type(<color>), var(--auy-color-primary));
     padding: 0;
     border: none;
     text-decoration: underline;
@@ -98,7 +105,8 @@
 
   :where(button[variant~="link"]):hover,
   :where([role="button"][variant~="link"]):hover {
-    color: var(--auy-color-primary-hover);
+    color: color-mix(in oklch, var(--auy-color-primary) 85%, black);
+    color: color-mix(in oklch, attr(data-accent type(<color>), var(--auy-color-primary)) 85%, black);
   }
 
   :where(button[variant~="contrast"], [role="button"][variant~="contrast"]) {

@@ -38,9 +38,11 @@
 | # | Utilitário | Módulo | Descrição |
 |---|---|---|---|
 | 22 | [Formatação](22-formatacao.md) | `internal/format` | Funções de formatação de data, moeda, número, texto e máscaras |
+| 23 | [Dados](23-dados.md) | `data-aware.mixin` | `data-input`, `data-target`, `data-on-*` para integração declarativa com APIs |
 
 ## Próximos Passos
 
 - [Visão Geral do Styling](../styling/00-index.md)
 - [Convenção de Nomes](../styling/01-convencao-nomes.md)
 - [Tokens: Visão Geral](../styling/02-tokens.md)
+- [Integração com Dados via API](23-dados.md)

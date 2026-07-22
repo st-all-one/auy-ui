@@ -34,7 +34,38 @@ export class AuyAdminSidebar extends AuyLightElement {
     .toggle-btn:focus-visible { outline: 0.125rem solid var(--auy-color-primary, #3b82f6); outline-offset: 0.125rem; }
 
     .nav-wrapper { flex: 1; overflow-y: auto; overflow-x: hidden; }
+    @supports (scroll-button-width: thin) {
+      .nav-wrapper { scroll-button-width: thin; }
+      .nav-wrapper::scroll-button(*) {
+        background: var(--auy-color-surface);
+        border: 1px solid var(--auy-color-border);
+        border-radius: var(--auy-radius-sm);
+        color: var(--auy-color-text);
+        cursor: pointer;
+        opacity: 0.7;
+        font-size: var(--auy-text-sm);
+        transition: opacity var(--auy-transition, 200ms);
+      }
+      .nav-wrapper::scroll-button(*):hover {
+        opacity: 1;
+        background: color-mix(in oklch, var(--auy-color-primary) 10%, var(--auy-color-surface));
+        color: var(--auy-color-primary);
+      }
+      .nav-wrapper::scroll-button(*):active {
+        opacity: 1;
+        background: color-mix(in oklch, var(--auy-color-primary) 20%, var(--auy-color-surface));
+      }
+    }
     .nav { padding: 0.5rem; }
+    @supports selector(a:target-current) {
+      .nav a:target-current,
+      .nav ::slotted(a):target-current {
+        font-weight: var(--auy-font-weight-semibold);
+        color: var(--auy-color-primary);
+        background: color-mix(in oklch, var(--auy-color-primary) 10%, transparent);
+        border-radius: var(--auy-radius-sm);
+      }
+    }
 
     ::slotted(auy-admin-sidebar-item) { display: block; }
 
@@ -74,7 +105,7 @@ export class AuyAdminSidebar extends AuyLightElement {
           </button>
         </div>
         <div class="nav-wrapper">
-          <nav class="nav" aria-label="Principal">
+          <nav class="nav" aria-label="Principal" scroll-target-group="sidebar-links">
             <slot></slot>
             ${this.items.length > 0 ? html`${this.items.map(item => html`
               <auy-admin-sidebar-item href=${item.href} icon=${item.icon || ''} ?current=${item.current} ?active=${item.active}>

@@ -41,6 +41,23 @@
 
 @import './tokens/palette.css';
 
+@import './components/modal.css';
+@import './components/alert.css';
+@import './components/toast.css';
+@import './components/toast-container.css';
+@import './components/tooltip.css';
+@import './components/tabs.css';
+@import './components/accordion.css';
+@import './components/pagination.css';
+@import './components/audio.css';
+@import './components/color-input.css';
+@import './components/code-editor.css';
+@import './components/date-input.css';
+@import './components/file-input.css';
+@import './components/search.css';
+@import './components/select.css';
+@import './components/form-group.css';
+
 @import './utilities/accessibility.css';
 @import './utilities/reduce-motion.css';
 @import './utilities/truncate.css';

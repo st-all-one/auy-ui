@@ -1,0 +1,172 @@
+@layer components {
+  :where(.modal) {
+    --modal-color: var(--auy-color-info);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--auy-color-surface);
+    color: var(--auy-color-text);
+    border-radius: var(--auy-radius-lg);
+    box-shadow: var(--auy-shadow-lg);
+    max-inline-size: min(calc(100% - 2rem), 32rem);
+    max-block-size: calc(100dvh - 4rem);
+    overflow: hidden;
+  }
+
+  :where(.modal[open]) {
+    display: flex;
+  }
+
+  :where(.modal__head) {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--auy-space-sm);
+    padding: var(--auy-space-lg);
+    padding-block-end: 0;
+  }
+
+  :where(.modal__head-icon) {
+    flex-shrink: 0;
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    margin-block-start: 0.125rem;
+    color: var(--modal-color);
+  }
+
+  :where(.modal__head-icon--info) { --modal-color: var(--auy-color-info); }
+  :where(.modal__head-icon--success) { --modal-color: var(--auy-color-success); }
+  :where(.modal__head-icon--warning) { --modal-color: var(--auy-color-warning); }
+  :where(.modal__head-icon--error) { --modal-color: var(--auy-color-error); }
+
+  :where(.modal__head-body) {
+    flex: 1;
+    display: grid;
+    gap: var(--auy-space-2xs);
+  }
+
+  :where(.modal__title) {
+    font-size: var(--auy-text-lg);
+    font-weight: var(--auy-font-weight-semibold);
+    line-height: var(--auy-line-height-sm);
+    margin: 0;
+  }
+
+  :where(.modal__description) {
+    font-size: var(--auy-text-sm);
+    color: var(--auy-color-text-muted);
+    margin: 0;
+    line-height: var(--auy-line-height);
+  }
+
+  :where(.modal__close) {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 2rem;
+    block-size: 2rem;
+    padding: 0;
+    border: none;
+    border-radius: var(--auy-radius-sm);
+    background: transparent;
+    color: var(--auy-color-text-muted);
+    cursor: pointer;
+    font-size: 1.25rem;
+    line-height: 1;
+    touch-action: manipulation;
+  }
+
+  :where(.modal__close:hover) {
+    background: var(--auy-color-surface-alt);
+    color: var(--auy-color-text);
+  }
+
+  :where(.modal__close:focus-visible) {
+    outline: 0.125rem solid var(--auy-color-primary);
+    outline-offset: 0.125rem;
+  }
+
+  :where(.modal__divider) {
+    block-size: 1px;
+    background: var(--auy-color-border);
+    margin: 0;
+    border: none;
+  }
+
+  :where(.modal__body) {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--auy-space-lg);
+    font-size: var(--auy-text-sm);
+    line-height: var(--auy-line-height);
+    overscroll-behavior: contain;
+  }
+
+  :where(.modal__body--no-title) {
+    padding-block-start: var(--auy-space-lg);
+  }
+
+  :where(.modal__footer) {
+    display: flex;
+    align-items: center;
+    gap: var(--auy-space-sm);
+    padding: var(--auy-space-lg);
+    padding-block-start: 0;
+  }
+
+  :where(.modal[data-size="sm"]) { max-inline-size: min(calc(100% - 2rem), 24rem); }
+  :where(.modal[data-size="lg"]) { max-inline-size: min(calc(100% - 2rem), 48rem); }
+  :where(.modal[data-size="xl"]) { max-inline-size: min(calc(100% - 2rem), 64rem); }
+  :where(.modal[data-size="full"]) {
+    max-inline-size: calc(100% - 2rem);
+    max-block-size: calc(100dvh - 2rem);
+    inline-size: 100%;
+  }
+
+  :where(dialog) {
+    border: none;
+    padding: 0;
+    background: transparent;
+    color: inherit;
+  }
+
+  :where(dialog)::backdrop {
+    background: var(--auy-color-overlay);
+  }
+
+  :where(dialog[open]) {
+    opacity: 1;
+    scale: 1;
+  }
+
+  @starting-style {
+    :where(dialog[open]) {
+      opacity: 0;
+      scale: 0.95;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :where(.modal) {
+      background: oklch(from var(--auy-color-surface) 20% 0.02 h);
+      color: oklch(from var(--auy-color-info) 85% 0.1 h);
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(.modal) { border: 1px solid CanvasText; }
+    :where(.modal__close) { border: 1px solid ButtonText; }
+    :where(.modal__divider) { background: CanvasText; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where(.modal) { transition: none; }
+    :where(dialog) { transition: none; }
+  }
+
+  @media print {
+    :where(.modal) { box-shadow: none; border: 1px solid currentColor; }
+    :where(.modal__close) { display: none; }
+    :where(.modal__footer) { display: none; }
+  }
+}

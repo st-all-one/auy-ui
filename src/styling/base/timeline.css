@@ -5,6 +5,7 @@
     max-block-size: 31.25rem;
     overflow-y: auto;
     overscroll-behavior: contain;
+    scroll-button-width: thin;
   }
 
   :where(.timeline)::before {
@@ -28,6 +29,16 @@
     padding-block-end: 0;
   }
 
+  :where(.timeline__item) {
+    animation: tl-fade-in 0.3s ease-out both;
+    animation-delay: calc(sibling-index() * 60ms);
+  }
+
+  @keyframes tl-fade-in {
+    from { opacity: 0; transform: translateY(0.5rem); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
   :where(.timeline__dot) {
     position: absolute;
     inset-inline-start: calc(-2rem + 0.375rem);
@@ -42,14 +53,15 @@
     box-shadow: var(--auy-shadow-sm);
     flex-shrink: 0;
     background: var(--auy-color-primary);
+    background: attr(data-dot-color type(<color>), var(--auy-color-primary));
     color: oklch(100% 0 0);
     font-size: 0.6rem;
     line-height: 1;
   }
 
-  :where(.timeline__dot--created) { background: var(--auy-color-success); }
-  :where(.timeline__dot--deleted) { background: var(--auy-color-error); }
-  :where(.timeline__dot--updated) { background: var(--auy-color-primary); }
+  :where(.timeline__dot--created) { background: var(--auy-color-success); background: attr(data-dot-color type(<color>), var(--auy-color-success)); }
+  :where(.timeline__dot--deleted) { background: var(--auy-color-error); background: attr(data-dot-color type(<color>), var(--auy-color-error)); }
+  :where(.timeline__dot--updated) { background: var(--auy-color-primary); background: attr(data-dot-color type(<color>), var(--auy-color-primary)); }
 
   :where(.timeline__card) {
     flex: 1;
@@ -149,6 +161,26 @@
     white-space: nowrap;
   }
 
+  :where(.timeline)::scroll-button(*) {
+    background: var(--auy-color-surface);
+    border: 1px solid var(--auy-color-border);
+    border-radius: var(--auy-radius-sm);
+    color: var(--auy-color-text);
+    cursor: pointer;
+    opacity: 0.85;
+    font-size: var(--auy-text-sm);
+    transition: opacity var(--auy-transition, 200ms);
+  }
+  :where(.timeline)::scroll-button(*):hover {
+    opacity: 1;
+    background: color-mix(in oklch, var(--auy-color-primary) 10%, var(--auy-color-surface));
+    color: var(--auy-color-primary);
+  }
+  :where(.timeline)::scroll-button(*):active {
+    opacity: 1;
+    background: color-mix(in oklch, var(--auy-color-primary) 20%, var(--auy-color-surface));
+  }
+
   @media (forced-colors: active) {
     :where(.timeline__dot) { border-color: ButtonText; }
     :where(.timeline__card) { border: 1px solid ButtonText; }
@@ -156,6 +188,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     :where(.timeline) { scroll-behavior: auto; }
+    :where(.timeline__item) { animation: none; }
   }
 
   @media print {

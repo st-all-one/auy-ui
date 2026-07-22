@@ -11,6 +11,7 @@
     border-radius: var(--auy-radius-sm);
     color: oklch(100% 0 0);
     background: var(--auy-color-primary);
+    background: attr(data-badge-color type(<color>), var(--auy-color-primary));
     white-space: nowrap;
     user-select: none;
     border: 1px solid transparent;
@@ -37,25 +38,28 @@
     font-size: var(--auy-text-xs);
     font-weight: 700;
     background: var(--auy-color-primary);
+    background: attr(data-badge-color type(<color>), var(--auy-color-primary));
     color: oklch(100% 0 0);
   }
 
-  :where([data-badge-variant="success"]) { background: var(--auy-color-success); }
-  :where([data-badge-variant="error"]) { background: var(--auy-color-error); }
-  :where([data-badge-variant="warning"]) { background: var(--auy-color-warning); color: oklch(15% 0.02 260); }
-  :where([data-badge-variant="info"]) { background: var(--auy-color-info); }
-  :where([data-badge-variant="neutral"]) { background: color-mix(in oklch, var(--auy-color-border) 60%, transparent); color: var(--auy-color-text); }
+  :where([data-badge-variant="success"]) { background: var(--auy-color-success); background: attr(data-badge-color type(<color>), var(--auy-color-success)); }
+  :where([data-badge-variant="error"]) { background: var(--auy-color-error); background: attr(data-badge-color type(<color>), var(--auy-color-error)); }
+  :where([data-badge-variant="warning"]) { background: var(--auy-color-warning); background: attr(data-badge-color type(<color>), var(--auy-color-warning)); color: oklch(15% 0.02 260); }
+  :where([data-badge-variant="info"]) { background: var(--auy-color-info); background: attr(data-badge-color type(<color>), var(--auy-color-info)); }
+  :where([data-badge-variant="neutral"]) { background: color-mix(in oklch, var(--auy-color-border) 60%, transparent); background: attr(data-badge-color type(<color>), color-mix(in oklch, var(--auy-color-border) 60%, transparent)); color: var(--auy-color-text); }
 
   :where([data-badge-outline]) {
     background: transparent;
     border-color: var(--auy-color-primary);
+    border-color: attr(data-badge-color type(<color>), var(--auy-color-primary));
     color: var(--auy-color-primary);
+    color: attr(data-badge-color type(<color>), var(--auy-color-primary));
   }
-  :where([data-badge-outline][data-badge-variant="success"]) { border-color: var(--auy-color-success); color: var(--auy-color-success); }
-  :where([data-badge-outline][data-badge-variant="error"]) { border-color: var(--auy-color-error); color: var(--auy-color-error); }
-  :where([data-badge-outline][data-badge-variant="warning"]) { border-color: var(--auy-color-warning); color: oklch(45% 0.15 85); }
-  :where([data-badge-outline][data-badge-variant="info"]) { border-color: var(--auy-color-info); color: var(--auy-color-info); }
-  :where([data-badge-outline][data-badge-variant="neutral"]) { border-color: var(--auy-color-text-muted); color: var(--auy-color-text-muted); }
+  :where([data-badge-outline][data-badge-variant="success"]) { border-color: var(--auy-color-success); border-color: attr(data-badge-color type(<color>), var(--auy-color-success)); color: var(--auy-color-success); color: attr(data-badge-color type(<color>), var(--auy-color-success)); }
+  :where([data-badge-outline][data-badge-variant="error"]) { border-color: var(--auy-color-error); border-color: attr(data-badge-color type(<color>), var(--auy-color-error)); color: var(--auy-color-error); color: attr(data-badge-color type(<color>), var(--auy-color-error)); }
+  :where([data-badge-outline][data-badge-variant="warning"]) { border-color: attr(data-badge-color type(<color>), var(--auy-color-warning)); color: oklch(45% 0.15 85); }
+  :where([data-badge-outline][data-badge-variant="info"]) { border-color: var(--auy-color-info); border-color: attr(data-badge-color type(<color>), var(--auy-color-info)); color: var(--auy-color-info); color: attr(data-badge-color type(<color>), var(--auy-color-info)); }
+  :where([data-badge-outline][data-badge-variant="neutral"]) { border-color: var(--auy-color-text-muted); border-color: attr(data-badge-color type(<color>), var(--auy-color-text-muted)); color: var(--auy-color-text-muted); }
 
   :where([data-badge-icon]) { display: inline-flex; align-items: center; font-size: 0.9em; line-height: 1; }
 

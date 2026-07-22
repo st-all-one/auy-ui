@@ -194,6 +194,8 @@
   :where(select) {
     appearance: none;
     -webkit-appearance: none;
+    appearance: base-select;
+    -webkit-appearance: base-select;
     -moz-appearance: none;
     padding-inline-end: var(--auy-space-xl);
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='currentColor' d='M4.646 5.646a.5.5 0 0 1 .708 0L8 8.293l2.646-2.647a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
@@ -202,6 +204,21 @@
     background-size: 16px;
     cursor: pointer;
   }
+
+@supports selector(select::picker(select)) {
+  :where(select)::picker(select) {
+    background: var(--auy-color-surface);
+    border: 1px solid var(--auy-color-border);
+    border-radius: var(--auy-radius-md);
+    box-shadow: var(--auy-shadow-md);
+    padding: var(--auy-space-2xs);
+  }
+}
+@supports selector(select::selectedcontent) {
+  :where(select)::selectedcontent {
+    font-weight: var(--auy-font-weight-medium);
+  }
+}
 
   :where(select)[multiple] {
     background-image: none;

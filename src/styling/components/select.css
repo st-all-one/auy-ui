@@ -1,0 +1,146 @@
+@layer components {
+  :where(.select) {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 2.75rem;
+    padding: var(--auy-space-xs) var(--auy-space-sm);
+    padding-inline-end: 2.25rem;
+    border: 1px solid var(--auy-color-border);
+    border-radius: var(--auy-radius-md);
+    background: transparent;
+    color: var(--auy-color-text);
+    font-family: inherit;
+    font-size: var(--auy-text-sm);
+    line-height: var(--auy-line-height);
+    cursor: pointer;
+    user-select: none;
+    touch-action: manipulation;
+    transition: border-color var(--auy-transition) ease, box-shadow var(--auy-transition) ease;
+  }
+
+  :where(.select:hover) {
+    border-color: var(--auy-color-text-muted);
+  }
+
+  :where(.select:focus-visible) {
+    outline: 0.125rem solid var(--auy-color-primary);
+    outline-offset: 0.0625rem;
+  }
+
+  :where(.select[aria-expanded="true"]) {
+    border-color: var(--auy-color-primary);
+    box-shadow: 0 0 0 0.125rem var(--auy-color-primary-focus);
+  }
+
+  :where(.select__value) {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  :where(.select__placeholder) {
+    color: var(--auy-color-text-muted);
+  }
+
+  :where(.select__arrow) {
+    position: absolute;
+    inset-inline-end: var(--auy-space-sm);
+    inline-size: 1rem;
+    block-size: 1rem;
+    color: var(--auy-color-text-muted);
+    pointer-events: none;
+    transition: rotate var(--auy-transition) ease;
+  }
+
+  :where(.select[aria-expanded="true"]) :where(.select__arrow) {
+    rotate: 180deg;
+  }
+
+  :where(.select__dropdown) {
+    position: absolute;
+    z-index: var(--auy-z-overlay);
+    inset-block-start: calc(100% + var(--auy-space-2xs));
+    inset-inline-start: 0;
+    inline-size: 100%;
+    min-inline-size: 12rem;
+    max-block-size: 16rem;
+    overflow-y: auto;
+    border: 1px solid var(--auy-color-border);
+    border-radius: var(--auy-radius-md);
+    background: var(--auy-color-surface);
+    box-shadow: var(--auy-shadow-lg);
+    padding: var(--auy-space-2xs) 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--auy-transition-fast) ease, visibility var(--auy-transition-fast) ease;
+  }
+
+  :where(.select[aria-expanded="true"]) :where(.select__dropdown) {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  :where(.select__option) {
+    display: flex;
+    align-items: center;
+    gap: var(--auy-space-sm);
+    padding: var(--auy-space-xs) var(--auy-space-md);
+    font-size: var(--auy-text-sm);
+    line-height: var(--auy-line-height);
+    cursor: pointer;
+    transition: background var(--auy-transition-fast) ease;
+  }
+
+  :where(.select__option:hover) {
+    background: var(--auy-color-surface-alt);
+  }
+
+  :where(.select__option--active) {
+    background: color-mix(in oklch, var(--auy-color-primary) 10%, transparent);
+    color: var(--auy-color-primary);
+  }
+
+  :where(.select__option--highlighted) {
+    background: var(--auy-color-surface-alt);
+  }
+
+  :where(.select__option:focus-visible) {
+    outline: 0.125rem solid var(--auy-color-primary);
+    outline-offset: -0.125rem;
+  }
+
+  :where(.select__search) {
+    inline-size: 100%;
+    padding: var(--auy-space-xs) var(--auy-space-md);
+    border: none;
+    border-block-end: 1px solid var(--auy-color-border);
+    background: transparent;
+    color: var(--auy-color-text);
+    font-family: inherit;
+    font-size: var(--auy-text-sm);
+  }
+
+  :where(.select__search:focus) {
+    outline: none;
+  }
+
+  @media (forced-colors: active) {
+    :where(.select) { border-color: ButtonText; }
+    :where(.select[aria-expanded="true"]) { border-color: Highlight; }
+    :where(.select__dropdown) { border-color: CanvasText; }
+    :where(.select__option--active) { outline: 2px solid Highlight; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where(.select) { transition: none; }
+    :where(.select__arrow) { transition: none; }
+    :where(.select__dropdown) { transition: none; }
+    :where(.select__option) { transition: none; }
+  }
+
+  @media print {
+    :where(.select__dropdown) { display: none; }
+  }
+}

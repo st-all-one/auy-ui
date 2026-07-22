@@ -1,17 +1,15 @@
-import { LitElement, nothing, type PropertyValues } from 'lit';
+import { LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
 
-/** Envelope JSON padrao RFC 8259 para todas as respostas data-input */
 export interface DataEnvelope<T = unknown> {
   data: T;
   meta?: Record<string, unknown>;
   error?: string | null;
 }
 
-/** Interface que cada componente com DataAwareMixin implementa */
 export interface DataAwareInterface {
   dataInput: string;
-  dataMethod: 'GET' | 'POST';
+  dataMethod: string;
   dataTarget: string;
   loading: boolean;
   error: string | null;
@@ -19,31 +17,29 @@ export interface DataAwareInterface {
   _parseResponse(data: unknown): void;
 }
 
-type Constructor<T = LitElement> = new (...args: unknown[]) => T;
+type Constructor<T = LitElement> = new (...args: any[]) => T;
 
 export const DataAwareMixin = <T extends Constructor<LitElement>>(superClass: T) => {
   class DataAwareElement extends superClass {
-    /** URL para fetch de dados (data-input) */
+    static _requestCache = new Map<string, { data: DataEnvelope; expires: number }>();
+
     @property({ type: String, attribute: 'data-input', reflect: true })
     dataInput = '';
 
-    /** Metodo HTTP para o fetch */
     @property({ type: String, attribute: 'data-method', reflect: true })
-    dataMethod: 'GET' | 'POST' = 'GET';
+    dataMethod = 'GET';
 
-    /** Seletor CSS do elemento alvo para roteamento da resposta */
     @property({ type: String, attribute: 'data-target', reflect: true })
     dataTarget = '';
 
-    /** Estado de carregamento */
     @property({ type: Boolean, reflect: true })
     loading = false;
 
-    /** Mensagem de erro */
     @property({ type: String, reflect: true })
     error: string | null = null;
 
     private _abortController: AbortController | null = null;
+    private _dataActionController: AbortController | null = null;
     private _initialDataFetched = false;
 
     override connectedCallback(): void {
@@ -53,42 +49,34 @@ export const DataAwareMixin = <T extends Constructor<LitElement>>(superClass: T)
 
     override disconnectedCallback(): void {
       this._abortController?.abort();
+      this._dataActionController?.abort();
       super.disconnectedCallback();
     }
 
-    override updated(changedProperties: PropertyValues): void {
+    override updated(changedProperties: Map<string, unknown>): void {
       super.updated(changedProperties);
       if (changedProperties.has('dataInput') && this.dataInput && !this._initialDataFetched) {
         this._initialDataFetched = true;
         this._fetchData();
-      } else if (changedProperties.has('dataInput') && this.dataInput && this.hasUpdated) {
+      } else if (changedProperties.has('dataInput') && this.dataInput && (this as unknown as { hasUpdated: boolean }).hasUpdated) {
         this._fetchData();
       }
     }
 
-    /** Retorna parametros de URL padrao (sobrescrever em subclasses) */
     protected _getDefaultParams(): URLSearchParams {
       return new URLSearchParams();
     }
 
-    /** Processa o payload recebido (sobrescrever em subclasses) */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected _parseResponse(_data: unknown): void {
-      // no-op por padrao
     }
 
-    /** Aplica metadados (sobrescrever em subclasses) */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected _applyMeta(_meta: Record<string, unknown>): void {
-      // no-op por padrao
     }
 
-    /** Lista de eventos que este componente expoe para data-on-* */
     static get observedDataEvents(): string[] {
       return [];
     }
 
-    /** Faz fetch dos dados, parseia o envelope e roteia para data-target */
     async _fetchData(extraParams?: URLSearchParams): Promise<void> {
       this._abortController?.abort();
       this._abortController = new AbortController();
@@ -113,18 +101,79 @@ export const DataAwareMixin = <T extends Constructor<LitElement>>(superClass: T)
           extraParams.forEach((v, k) => url.searchParams.set(k, v));
         }
 
-        const response = await fetch(url.toString(), {
-          method: this.dataMethod,
-          signal: this._abortController.signal,
-          headers: { Accept: 'application/json' },
-        });
+        const method = this.dataMethod.toUpperCase();
+
+        const timeout = Number(this.getAttribute('data-fetch-timeout') || 15000);
+        const timeoutSignal = typeof AbortSignal.timeout === 'function'
+          ? AbortSignal.timeout(timeout)
+          : null;
+        const signal = timeoutSignal
+          ? AbortSignal.any([this._abortController.signal, timeoutSignal])
+          : this._abortController.signal;
+
+        const headers: Record<string, string> = {
+          Accept: 'application/json',
+        };
+        const contentType = this.getAttribute('data-content-type');
+        if (contentType) headers['Content-Type'] = contentType;
+        if (method !== 'GET' && method !== 'HEAD' && !contentType) {
+          headers['Content-Type'] = 'application/json';
+        }
+
+        const customHeaders = this.getAttribute('data-headers');
+        if (customHeaders) {
+          try {
+            Object.assign(headers, JSON.parse(customHeaders));
+          } catch {
+          }
+        }
+
+        const fetchOptions: RequestInit = { method, signal, headers };
+
+        if (method !== 'GET' && method !== 'HEAD') {
+          const bodyAttr = this.getAttribute('data-body');
+          if (bodyAttr) {
+            fetchOptions.body = bodyAttr;
+          } else if (method === 'POST' || method === 'PUT' || method === 'PATCH') {
+            fetchOptions.body = '{}';
+          }
+        }
+
+        const cacheTTL = Number(this.getAttribute('data-cache-ttl') || 0);
+        const cacheKey = method + ':' + url.toString();
+        if (cacheTTL > 0 && method === 'GET') {
+          const cached = DataAwareElement._requestCache.get(cacheKey);
+          if (cached && cached.expires > Date.now()) {
+            const env = cached.data;
+            this._parseResponse(env.data);
+            if (env.meta) this._applyMeta(env.meta);
+            this.loading = false;
+            this.dispatchEvent(new CustomEvent('auy:load', {
+              detail: { status: 'loaded', data: env.data, meta: env.meta },
+              bubbles: true, composed: true,
+            }));
+            if (this.dataTarget) this.#routeToTarget(env.data);
+            return;
+          }
+        }
+
+        const response = await fetch(url.toString(), fetchOptions);
 
         if (!response.ok) {
-          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          const text = await response.text().catch(() => '');
+          throw new Error(`HTTP ${response.status}: ${response.statusText}${text ? ' - ' + text.slice(0, 200) : ''}`);
         }
 
         const envelope: DataEnvelope = await response.json();
         if (envelope.error) throw new Error(envelope.error);
+
+        if (cacheTTL > 0 && method === 'GET') {
+          DataAwareElement._requestCache.set(cacheKey, {
+            data: envelope,
+            expires: Date.now() + cacheTTL,
+          });
+          DataAwareElement._cleanCache();
+        }
 
         this._parseResponse(envelope.data);
         if (envelope.meta) this._applyMeta(envelope.meta);
@@ -152,14 +201,19 @@ export const DataAwareMixin = <T extends Constructor<LitElement>>(superClass: T)
       }
     }
 
+    static _cleanCache(): void {
+      const now = Date.now();
+      for (const [key, entry] of DataAwareElement._requestCache) {
+        if (entry.expires <= now) DataAwareElement._requestCache.delete(key);
+      }
+    }
+
     #routeToTarget(data: unknown): void {
       const root = this.getRootNode() as Document | ShadowRoot;
       let target: Element | null = root.querySelector(this.dataTarget);
-      if (!target) {
-        target = document.querySelector(this.dataTarget);
-      }
-      if (target && '_parseResponse' in (target as DataAwareInterface)) {
-        (target as DataAwareInterface)._parseResponse(data);
+      if (!target) target = document.querySelector(this.dataTarget);
+      if (target && '_parseResponse' in target) {
+        (target as unknown as DataAwareInterface)._parseResponse(data);
       }
     }
 
@@ -179,20 +233,34 @@ export const DataAwareMixin = <T extends Constructor<LitElement>>(superClass: T)
     }
 
     async #executeDataAction(action: string, event: Event): Promise<void> {
+      this._dataActionController?.abort();
+      this._dataActionController = new AbortController();
+
       const trimmed = action.trim();
       const parts = trimmed.split(' ');
-      const method = parts.length === 2 ? parts[0] : 'GET';
-      const urlTemplate = parts.length === 2 ? parts[1] : parts[0];
+      const method = parts.length >= 2 ? parts[0] : 'GET';
+      const urlTemplate = parts.length >= 2 ? parts.slice(1).join(' ') : parts[0];
       const interpolated = this.#interpolate(urlTemplate, event);
       const url = new URL(interpolated, window.location.origin).toString();
       const eventType = event.type;
       const targetSelector = this.getAttribute(`data-on-${eventType}-target`) || this.dataTarget;
 
       try {
-        const response = await fetch(url, {
-          method,
-          headers: { Accept: 'application/json' },
-        });
+        const timeout = Number(this.getAttribute('data-fetch-timeout') || 15000);
+        const timeoutSignal = typeof AbortSignal.timeout === 'function'
+          ? AbortSignal.timeout(timeout)
+          : null;
+        const signal = timeoutSignal
+          ? AbortSignal.any([this._dataActionController.signal, timeoutSignal])
+          : this._dataActionController.signal;
+
+        const headers: Record<string, string> = { Accept: 'application/json' };
+        const customHeaders = this.getAttribute('data-headers');
+        if (customHeaders) {
+          try { Object.assign(headers, JSON.parse(customHeaders)); } catch {}
+        }
+
+        const response = await fetch(url, { method, signal, headers });
         if (!response.ok) return;
         const envelope: DataEnvelope = await response.json();
         if (envelope.error) return;
@@ -201,12 +269,11 @@ export const DataAwareMixin = <T extends Constructor<LitElement>>(superClass: T)
           const root = this.getRootNode() as Document | ShadowRoot;
           let target: Element | null = root.querySelector(targetSelector);
           if (!target) target = document.querySelector(targetSelector);
-          if (target && '_parseResponse' in (target as DataAwareInterface)) {
-            (target as DataAwareInterface)._parseResponse(envelope.data);
+          if (target && '_parseResponse' in target) {
+            (target as unknown as DataAwareInterface)._parseResponse(envelope.data);
           }
         }
       } catch {
-        // Silently fail for data-on actions
       }
     }
 

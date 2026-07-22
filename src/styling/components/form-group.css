@@ -1,0 +1,78 @@
+@layer components {
+  :where(.form-group) {
+    display: grid;
+    gap: var(--auy-space-xs);
+    font-size: var(--auy-text-sm);
+    line-height: var(--auy-line-height);
+  }
+
+  :where(.form-group__label) {
+    font-weight: var(--auy-font-weight-medium);
+    color: var(--auy-color-text);
+    cursor: pointer;
+  }
+
+  :where(.form-group__hint) {
+    font-size: var(--auy-text-xs);
+    color: var(--auy-color-text-muted);
+    margin: 0;
+  }
+
+  :where(.form-group__error) {
+    display: none;
+    font-size: var(--auy-text-xs);
+    color: var(--auy-color-error);
+    margin: 0;
+    align-items: center;
+    gap: var(--auy-space-2xs);
+  }
+
+  :where(.form-group--invalid) :where(.form-group__error) {
+    display: flex;
+  }
+
+  :where(.form-group--invalid) :where(.form-group__label) {
+    color: var(--auy-color-error);
+  }
+
+  :where(.form-group__constraints) {
+    display: grid;
+    gap: var(--auy-space-2xs);
+    font-size: var(--auy-text-xs);
+    color: var(--auy-color-text-muted);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  :where(.form-group__constraints li) {
+    display: flex;
+    align-items: center;
+    gap: var(--auy-space-2xs);
+  }
+
+  :where(.form-group--valid) :where(.form-group__constraints) {
+    color: var(--auy-color-success);
+  }
+
+  :where(.form-group--invalid) :where(.form-group__hint) {
+    display: none;
+  }
+
+  :where(.form-group--valid) :where(.form-group__hint) {
+    display: none;
+  }
+
+  @media (forced-colors: active) {
+    :where(.form-group--invalid) :where(.form-group__label) { color: Mark; }
+    :where(.form-group__error) { color: Mark; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where(.form-group) { transition: none; }
+  }
+
+  @media print {
+    :where(.form-group__error) { display: flex !important; }
+  }
+}

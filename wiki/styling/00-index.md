@@ -2,13 +2,14 @@
 
 **auy-ui/styling** é um framework CSS focado em design acessível, responsivo e consistente. Utiliza OKLCH para cores, `@layer` para cascata previsível, `:where()` para especificidade zero, e 22 temas de cores.
 
-## Os 3 Pilares
+## Os 4 Pilares
 
 | Módulo | Descrição |
 |---|---|
 | **styling** | Framework CSS — tokens, base, componentes, utilitários |
 | **components** | Web Components com Lit (custom elements reutilizáveis) |
 | **layouts** | Sistemas de layout CSS (container queries, subgrid) |
+| **data** | Integração declarativa com APIs via `data-input`, `data-target`, `data-on-*` |
 
 ## Como Importar
 
@@ -79,4 +80,6 @@ Navegadores sem suporte a OKLCH recebem automaticamente equivalentes em HSL incl
 - [Base: Elementos HTML](03-base.md)
 - [Componentes](05-components.md)
 - [Utilitários](04-utilities.md)
-- [Customização](07-customizacao.md)
+- [Customização via Variáveis CSS](07-customizacao.md)
+- [Customização de Estilos (`style-add` / `style-replace`)](09-estilo-customizado.md)
+- [Integração com Dados via API](../components/23-dados.md)

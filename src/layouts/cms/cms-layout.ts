@@ -123,6 +123,29 @@ export class AuyCmsLayout extends AuyLightElement {
         border: none;
       }
 
+      @supports (scroll-button-width: thin) {
+        [part="sidebar"] { scroll-button-width: thin; }
+        [part="sidebar"]::scroll-button(*) {
+          background: var(--auy-color-surface);
+          border: 1px solid var(--auy-color-border);
+          border-radius: var(--auy-radius-sm);
+          color: var(--auy-color-text);
+          cursor: pointer;
+          opacity: 0.7;
+          font-size: var(--auy-text-sm);
+          transition: opacity var(--auy-transition, 200ms);
+        }
+        [part="sidebar"]::scroll-button(*):hover {
+          opacity: 1;
+          background: color-mix(in oklch, var(--auy-color-primary) 10%, var(--auy-color-surface));
+          color: var(--auy-color-primary);
+        }
+        [part="sidebar"]::scroll-button(*):active {
+          opacity: 1;
+          background: color-mix(in oklch, var(--auy-color-primary) 20%, var(--auy-color-surface));
+        }
+      }
+
       [part="main"] {
         flex: 1;
         overflow-y: auto;
@@ -136,6 +159,29 @@ export class AuyCmsLayout extends AuyLightElement {
       }
       :host([theme="dark"]) [part="main"] {
         background: var(--auy-color-bg-dark, oklch(8% 0.01 260));
+      }
+
+      @supports (scroll-button-width: thin) {
+        [part="main"] { scroll-button-width: thin; }
+        [part="main"]::scroll-button(*) {
+          background: var(--auy-color-surface);
+          border: 1px solid var(--auy-color-border);
+          border-radius: var(--auy-radius-sm);
+          color: var(--auy-color-text);
+          cursor: pointer;
+          opacity: 0.7;
+          font-size: var(--auy-text-sm);
+          transition: opacity var(--auy-transition, 200ms);
+        }
+        [part="main"]::scroll-button(*):hover {
+          opacity: 1;
+          background: color-mix(in oklch, var(--auy-color-primary) 10%, var(--auy-color-surface));
+          color: var(--auy-color-primary);
+        }
+        [part="main"]::scroll-button(*):active {
+          opacity: 1;
+          background: color-mix(in oklch, var(--auy-color-primary) 20%, var(--auy-color-surface));
+        }
       }
 
       [part="backdrop"] {

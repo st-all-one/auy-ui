@@ -1,0 +1,103 @@
+@layer components {
+  :where(.accordion-item) {
+    border-block-end: 1px solid var(--auy-color-border);
+  }
+
+  :where(.accordion-item:first-child) {
+    border-block-start: 1px solid var(--auy-color-border);
+  }
+
+  :where(summary) {
+    display: flex;
+    align-items: center;
+    gap: var(--auy-space-sm);
+    padding: var(--auy-space-md);
+    cursor: pointer;
+    list-style: none;
+    font-weight: var(--auy-font-weight-medium);
+    font-size: var(--auy-text-sm);
+    line-height: var(--auy-line-height-sm);
+    user-select: none;
+    touch-action: manipulation;
+  }
+
+  :where(summary::-webkit-details-marker) { display: none; }
+
+  :where(summary::marker) { display: none; content: ''; }
+
+  :where(summary:hover) {
+    background: var(--auy-color-surface-alt);
+  }
+
+  :where(summary:focus-visible) {
+    outline: 0.125rem solid var(--auy-color-primary);
+    outline-offset: -0.125rem;
+    border-radius: var(--auy-radius-sm);
+  }
+
+  :where(.accordion-icon) {
+    flex-shrink: 0;
+    inline-size: 1rem;
+    block-size: 1rem;
+    color: var(--auy-color-text-muted);
+    transition: rotate var(--auy-transition) ease;
+  }
+
+  :where(.accordion-icon--chevron) {
+    rotate: -90deg;
+  }
+
+  :where(.accordion-item[open]) :where(.accordion-icon--chevron) {
+    rotate: 0deg;
+  }
+
+  :where(.accordion-icon--plus) {
+    transition: rotate var(--auy-transition) ease;
+  }
+
+  :where(.accordion-item[open]) :where(.accordion-icon--plus) {
+    rotate: 45deg;
+  }
+
+  :where(.accordion-title) {
+    flex: 1;
+    margin: 0;
+    font-size: inherit;
+    font-weight: inherit;
+  }
+
+  :where(.accordion-content) {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--auy-transition) ease;
+    padding-inline: var(--auy-space-md);
+  }
+
+  :where(.accordion-item[open]) :where(.accordion-content) {
+    grid-template-rows: 1fr;
+  }
+
+  :where(.accordion-content) > * {
+    overflow: hidden;
+  }
+
+  :where(.accordion-content) > :where(:first-child) {
+    padding-block-end: var(--auy-space-md);
+  }
+
+  @media (forced-colors: active) {
+    :where(.accordion-item) { border-block-color: CanvasText; }
+    :where(summary) { border: 1px solid transparent; }
+    :where(summary:focus-visible) { outline-color: Highlight; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where(.accordion-content) { transition: none; }
+    :where(.accordion-icon) { transition: none; }
+  }
+
+  @media print {
+    :where(.accordion-content) { grid-template-rows: 1fr; }
+    :where(.accordion-icon) { display: none; }
+  }
+}
