@@ -8,43 +8,66 @@ export interface DataEnvelope<T = unknown> {
   error?: string | null;
 }
 
+/** Configuracao completa para envio de dados via data-output.
+ *
+ * Aceita string URL, `"METHOD /url"` ou JSON completo.
+ * `"/api/log"`          → POST
+ * `"PUT /api/log"`      → PUT
+ * `'{"url":"/api/log","method":"PUT","headers":{"X-CSRF":"abc"}}'` → config completa
+ */
+export interface DataOutputInit {
+  /** URL de destino (obrigatorio) */
+  url: string;
+  /** Metodo HTTP (padrao: POST) */
+  method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+  /** Headers adicionais (ex: Authorization, X-CSRF) */
+  headers?: Record<string, string>;
+  /** Modo de credenciais (padrao: same-origin) */
+  credentials?: RequestCredentials;
+}
+
 /** Interface que cada componente com DataAwareMixin implementa */
 export interface DataAwareInterface {
   dataInput: string;
-  dataMethod: 'GET' | 'POST';
   dataTarget: string;
   dataOutput: string;
-  dataOutputMethod: 'POST' | 'PUT';
   loading: boolean;
   error: string | null;
   _fetchData(extraParams?: URLSearchParams): Promise<void>;
   _parseResponse(data: unknown): void;
   _sendOutput(data: unknown): void;
+  _triggerFetch(): void;
+  _resolveOutputConfig(): DataOutputInit | null;
 }
 
 type Constructor<T = LitElement> = new (...args: unknown[]) => T;
 
 export const DataAwareMixin = <T extends Constructor<LitElement>>(superClass: T) => {
   class DataAwareElement extends superClass {
-    /** URL para fetch de dados (data-input) */
+    /** Fonte de dados para o componente.
+     *
+     *  - `"/api/recurso"`                      → GET fetch
+     *  - `"GET /api/recurso"`                  → GET fetch
+     *  - `"POST /api/recurso"`                 → POST fetch
+     *  - `'{"url":"/api","method":"POST","headers":{"X-CSRF":"abc"}}'`  → fetch com config
+     *  - `"texto_sem_barra"`                   → valor inline string
+     *  - `'[{"id":1}]'`                        → valor inline JSON
+     */
     @property({ type: String, attribute: 'data-input', reflect: true })
     dataInput = '';
-
-    /** Metodo HTTP para o fetch */
-    @property({ type: String, attribute: 'data-method', reflect: true })
-    dataMethod: 'GET' | 'POST' = 'GET';
 
     /** Seletor CSS do elemento alvo para roteamento da resposta */
     @property({ type: String, attribute: 'data-target', reflect: true })
     dataTarget = '';
 
-    /** URL para envio de dados (data-output) */
+    /** Destino para envio de dados (data-output).
+     *
+     *  - `"/api/log"`                              → POST
+     *  - `"PUT /api/log"`                           → PUT
+     *  - `'{"url":"/api/log","method":"PUT","headers":{"X-CSRF":"abc"}}'`  → config completa
+     */
     @property({ type: String, attribute: 'data-output', reflect: true })
     dataOutput = '';
-
-    /** Metodo HTTP para envio de dados */
-    @property({ type: String, attribute: 'data-output-method', reflect: true })
-    dataOutputMethod: 'POST' | 'PUT' = 'POST';
 
     /** Estado de carregamento */
     @property({ type: Boolean, reflect: true })
@@ -57,6 +80,8 @@ export const DataAwareMixin = <T extends Constructor<LitElement>>(superClass: T)
     private _abortController: AbortController | null = null;
     private _outputAbortController: AbortController | null = null;
     private _initialDataFetched = false;
+    private _fetchUrl = '';
+    private _fetchMethod = 'GET';
 
     override connectedCallback(): void {
       super.connectedCallback();
@@ -71,12 +96,53 @@ export const DataAwareMixin = <T extends Constructor<LitElement>>(superClass: T)
 
     override updated(changedProperties: PropertyValues): void {
       super.updated(changedProperties);
-      if (changedProperties.has('dataInput') && this.dataInput && !this._initialDataFetched) {
+      if (!changedProperties.has('dataInput') || !this.dataInput) return;
+
+      const parsed = this.#parseInput();
+      if (parsed.type === 'fetch') {
+        this._fetchUrl = parsed.url;
+        this._fetchMethod = parsed.method;
+        if (!this._initialDataFetched) {
+          this._initialDataFetched = true;
+          this._fetchData();
+        } else if (this.hasUpdated) {
+          this._fetchData();
+        }
+      } else if (parsed.type === 'inline') {
         this._initialDataFetched = true;
-        this._fetchData();
-      } else if (changedProperties.has('dataInput') && this.dataInput && this.hasUpdated) {
-        this._fetchData();
+        this._parseResponse(parsed.value);
       }
+    }
+
+    #parseInput(): { type: 'fetch'; url: string; method: string } | { type: 'inline'; value: unknown } | null {
+      if (!this.dataInput) return null;
+      const raw = this.dataInput.trim();
+
+      // JSON config → fetch (se tiver url) ou inline data
+      if (raw.startsWith('{')) {
+        try {
+          const parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') {
+            if (typeof parsed.url === 'string') {
+              return { type: 'fetch', url: parsed.url, method: parsed.method ?? 'GET' };
+            }
+            return { type: 'inline', value: parsed };
+          }
+        } catch { /* fall through */ }
+      }
+
+      // "METHOD /path" ou "METHOD https://..."
+      const match = raw.match(/^(GET|POST)\s+(.+)$/);
+      if (match) return { type: 'fetch', url: match[2].trim(), method: match[1] };
+
+      // "/path..." ou "https://..." → GET fetch
+      if (raw.startsWith('/') || raw.startsWith('http://') || raw.startsWith('https://')) {
+        return { type: 'fetch', url: raw, method: 'GET' };
+      }
+
+      // Inline: tenta JSON, fallback string
+      try { return { type: 'inline', value: JSON.parse(raw) }; } catch { /* keep string */ }
+      return { type: 'inline', value: raw };
     }
 
     /** Retorna parametros de URL padrao (sobrescrever em subclasses) */
@@ -103,6 +169,7 @@ export const DataAwareMixin = <T extends Constructor<LitElement>>(superClass: T)
 
     /** Faz fetch dos dados, parseia o envelope e roteia para data-target */
     async _fetchData(extraParams?: URLSearchParams): Promise<void> {
+      if (!this._fetchUrl) return;
       this._abortController?.abort();
       this._abortController = new AbortController();
 
@@ -116,7 +183,7 @@ export const DataAwareMixin = <T extends Constructor<LitElement>>(superClass: T)
       }));
 
       try {
-        const url = new URL(this.dataInput, window.location.origin);
+        const url = new URL(this._fetchUrl, window.location.origin);
 
         const defaults = this._getDefaultParams();
         defaults.forEach((v, k) => {
@@ -127,7 +194,7 @@ export const DataAwareMixin = <T extends Constructor<LitElement>>(superClass: T)
         }
 
         const response = await fetch(url.toString(), {
-          method: this.dataMethod,
+          method: this._fetchMethod,
           signal: this._abortController.signal,
           headers: { Accept: 'application/json' },
         });
@@ -176,9 +243,58 @@ export const DataAwareMixin = <T extends Constructor<LitElement>>(superClass: T)
       }
     }
 
+    /** Forca um re-fetch sem precisar alterar data-input */
+    protected _triggerFetch(): void {
+      const parsed = this.#parseInput();
+      if (parsed?.type === 'fetch') {
+        this._fetchUrl = parsed.url;
+        this._fetchMethod = parsed.method;
+        this._fetchData();
+      }
+    }
+
+    /** Interpreta o valor de data-output como URL string, METHOD URL ou config JSON */
+    protected _resolveOutputConfig(): DataOutputInit | null {
+      if (!this.dataOutput) return null;
+      const raw = this.dataOutput.trim();
+
+      // JSON config → { url, method?, headers?, credentials? }
+      if (raw.startsWith('{')) {
+        try {
+          const parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object' && typeof parsed.url === 'string') {
+            return {
+              url: parsed.url,
+              method: parsed.method ?? 'POST',
+              headers: parsed.headers,
+              credentials: parsed.credentials ?? 'same-origin',
+            };
+          }
+        } catch { /* fall through */ }
+      }
+
+      // "METHOD /path" → método explícito
+      const match = raw.match(/^(GET|POST|PUT|PATCH|DELETE)\s+(.+)$/);
+      if (match) {
+        return {
+          url: match[2].trim(),
+          method: match[1] as DataOutputInit['method'] ?? 'POST',
+          credentials: 'same-origin',
+        };
+      }
+
+      // URL string simples → POST
+      return {
+        url: raw,
+        method: 'POST' as const,
+        credentials: 'same-origin',
+      };
+    }
+
     /** Envia dados para a URL definida em data-output */
     protected _sendOutput(data: unknown): void {
-      if (!this.dataOutput) return;
+      const cfg = this._resolveOutputConfig();
+      if (!cfg) return;
 
       let body: string;
       try {
@@ -197,16 +313,17 @@ export const DataAwareMixin = <T extends Constructor<LitElement>>(superClass: T)
 
       const { signal } = this._outputAbortController;
 
-      fetch(this.dataOutput, {
-        method: this.dataOutputMethod,
-        headers: { 'Content-Type': 'application/json' },
+      fetch(cfg.url, {
+        method: cfg.method,
+        headers: { 'Content-Type': 'application/json', ...cfg.headers },
         body,
+        credentials: cfg.credentials,
         signal,
       })
         .then(res => {
           if (!res.ok) {
             this.dispatchEvent(new CustomEvent('auy:output-error', {
-              detail: { error: `HTTP ${res.status}`, status: res.status, url: this.dataOutput },
+              detail: { error: `HTTP ${res.status}`, status: res.status, url: cfg.url },
               bubbles: true,
               composed: true,
             }));
@@ -215,7 +332,7 @@ export const DataAwareMixin = <T extends Constructor<LitElement>>(superClass: T)
         .catch(err => {
           if (err instanceof DOMException && err.name === 'AbortError') return;
           this.dispatchEvent(new CustomEvent('auy:output-error', {
-            detail: { error: err instanceof Error ? err.message : 'Erro desconhecido no output', url: this.dataOutput },
+            detail: { error: err instanceof Error ? err.message : 'Erro desconhecido no output', url: cfg.url },
             bubbles: true,
             composed: true,
           }));

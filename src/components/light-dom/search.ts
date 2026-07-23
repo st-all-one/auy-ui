@@ -212,8 +212,10 @@ export class AuyCompSearch extends DataAwareMixin(AuyLightElement) {
     }
   }
 
-  /** URL para busca remota via fetch. */
-  @property({ type: String }) src = '';
+  protected override _getDefaultParams(): URLSearchParams {
+    return new URLSearchParams(this._query ? { q: this._query } : undefined);
+  }
+
   /** Tempo de debounce em ms para busca remota. */
   @property({ type: Number }) debounceMs = 300;
   /** Variante visual do painel de busca. */
@@ -227,7 +229,6 @@ export class AuyCompSearch extends DataAwareMixin(AuyLightElement) {
   @state() private _selectedIndex = 0;
   @state() private _filtered: { label: string; description?: string; href?: string; icon?: string; category?: string }[] = [];
   @state() private _debounceTimer: ReturnType<typeof setTimeout> | null = null;
-  private _fetchController: AbortController | null = null;
 
   override willUpdate(changed: Map<string, unknown>) {
     if (changed.has('items') || changed.has('_query')) {
@@ -278,33 +279,12 @@ export class AuyCompSearch extends DataAwareMixin(AuyLightElement) {
     );
   }
 
-  private async _fetchResults(query: string) {
-    if (!this.src) return;
-    this._fetchController?.abort();
-    this._fetchController = new AbortController();
-    try {
-      const url = new URL(this.src, window.location.href);
-      url.searchParams.set('q', query);
-      const res = await fetch(url.toString(), { signal: this._fetchController.signal });
-      if (!res.ok) throw new Error('Search failed');
-      const data = await res.json();
-      if (Array.isArray(data)) {
-        this.items = data;
-      } else if (data.results) {
-        this.items = data.results;
-      }
-    } catch (e: unknown) {
-      if (e instanceof DOMException && e.name === 'AbortError') return;
-      this.items = [];
-    }
-  }
-
   private _onInput(e: InputEvent) {
     this._query = (e.target as HTMLInputElement).value;
     this._selectedIndex = 0;
-    if (this.src) {
+    if (this.dataInput) {
       clearTimeout(this._debounceTimer!);
-      this._debounceTimer = window.setTimeout(() => this._fetchResults(this._query), this.debounceMs);
+      this._debounceTimer = window.setTimeout(() => this._triggerFetch(), this.debounceMs);
     }
   }
 

@@ -231,19 +231,13 @@ export class AuyCompFileInput extends DataAwareMixin(AuyLightElement) {
   @property({ type: String }) accept = '';
   /** Tamanho máximo por arquivo em bytes. */
   @property({ type: Number }) maxSize = 5 * 1024 * 1024;
-  /** URL de destino para o upload via fetch. */
-  @property({ type: String }) action = '';
-  /** Headers adicionais para a requisição de upload em JSON. */
-  @property({ type: String }) headers = '';
   /** Tamanho do chunk para upload particionado (0 = desabilitado). */
   @property({ type: Number }) chunkSize = 0;
 
   protected override _parseResponse(data: unknown): void {
     const d = data as Record<string, unknown>
-    if (d.action) this.action = String(d.action)
     if (d.accept) this.accept = String(d.accept)
     if (d.maxSize !== undefined) this.maxSize = Number(d.maxSize)
-    if (d.headers) this.headers = String(d.headers)
   }
 
   @state() private _files: File[] = [];
@@ -328,25 +322,22 @@ export class AuyCompFileInput extends DataAwareMixin(AuyLightElement) {
     this._dispatchChange();
   }
 
-  /** Envia os arquivos via fetch para a URL definida em `action`. */
+  /** Envia os arquivos via fetch para a URL/config definida em `data-output`. */
   async upload(): Promise<Response | null> {
-    if (this._files.length === 0 || !this.action) return null;
+    const cfg = this._resolveOutputConfig();
+    if (!cfg || this._files.length === 0) return null;
 
     const formData = new FormData();
     for (const file of this._files) {
       formData.append('files', file);
     }
 
-    const headersObj: Record<string, string> = {};
-    if (this.headers) {
-      try { Object.assign(headersObj, JSON.parse(this.headers)); } catch { /* ignore */ }
-    }
-
     try {
-      const res = await fetch(this.action, {
-        method: 'POST',
-        headers: headersObj,
+      const res = await fetch(cfg.url, {
+        method: cfg.method ?? 'POST',
+        headers: cfg.headers,
         body: formData,
+        credentials: cfg.credentials,
       });
 
       this.dispatchEvent(new CustomEvent('upload-complete', {

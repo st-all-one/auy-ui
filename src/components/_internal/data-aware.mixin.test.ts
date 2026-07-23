@@ -289,6 +289,82 @@ describe('DataAwareMixin', () => {
     expect(errorEvent).to.not.be.null;
     expect(errorEvent!.detail.message).to.include('HTTP 500');
   });
+
+  it('usa POST quando data-input comeca com "POST "', async () => {
+    const methodUrls: string[] = [];
+    globalThis.fetch = (input: string | URL | Request, init?: RequestInit) => {
+      methodUrls.push(`${init?.method ?? 'GET'} ${typeof input === 'string' ? input : input.url}`);
+      return Promise.resolve(
+        new Response(JSON.stringify({ data: 'ok', error: null }), { status: 200, headers: { 'Content-Type': 'application/json' } }),
+      );
+    };
+
+    const el = await fixture<TestDataConsumer>(html`
+      <test-data-consumer data-input="POST /api/envio"></test-data-consumer>
+    `);
+
+    await waitUntil(() => el.receivedData !== null, 'data not received', { timeout: 3000 });
+    expect(methodUrls[0]).to.include('POST');
+    expect(methodUrls[0]).to.include('/api/envio');
+  });
+
+  it('usa GET quando data-input comeca com "GET "', async () => {
+    const methodUrls: string[] = [];
+    globalThis.fetch = (input: string | URL | Request, init?: RequestInit) => {
+      methodUrls.push(`${init?.method ?? 'GET'} ${typeof input === 'string' ? input : input.url}`);
+      return Promise.resolve(
+        new Response(JSON.stringify({ data: 'ok', error: null }), { status: 200, headers: { 'Content-Type': 'application/json' } }),
+      );
+    };
+
+    const el = await fixture<TestDataConsumer>(html`
+      <test-data-consumer data-input="GET /api/items"></test-data-consumer>
+    `);
+
+    await waitUntil(() => el.receivedData !== null, 'data not received', { timeout: 3000 });
+    expect(methodUrls[0]).to.include('GET');
+  });
+
+  it('trata data-input sem "/" como valor inline string', async () => {
+    const el = await fixture<TestDataConsumer>(html`
+      <test-data-consumer data-input="valor_direto"></test-data-consumer>
+    `);
+
+    await new Promise(r => setTimeout(r, 50));
+    expect(el.receivedData).to.equal('valor_direto');
+  });
+
+  it('trata data-input sem "/" como valor inline JSON', async () => {
+    const el = await fixture<TestDataConsumer>(html`
+      <test-data-consumer data-input='[{"id":1},{"id":2}]'></test-data-consumer>
+    `);
+
+    await new Promise(r => setTimeout(r, 50));
+    expect(el.receivedData).to.deep.equal([{ id: 1 }, { id: 2 }]);
+  });
+
+  it('trata data-input sem "/" como valor inline JSON objeto', async () => {
+    const el = await fixture<TestDataConsumer>(html`
+      <test-data-consumer data-input='{"chave":"valor","num":42}'></test-data-consumer>
+    `);
+
+    await new Promise(r => setTimeout(r, 50));
+    expect(el.receivedData).to.deep.equal({ chave: 'valor', num: 42 });
+  });
+
+  it('data-input JSON config com url faz fetch', async () => {
+    mockMap.set('/api/from-json', {
+      status: 200,
+      body: { data: { ok: true }, meta: {}, error: null },
+    });
+
+    const el = await fixture<TestDataConsumer>(html`
+      <test-data-consumer data-input='{"url":"/api/from-json","method":"POST"}'></test-data-consumer>
+    `);
+
+    await waitUntil(() => el.receivedData !== null, 'fetch not completed', { timeout: 3000 });
+    expect(el.receivedData).to.deep.equal({ ok: true });
+  });
 });
 
 describe('DataAwareMixin - data-on-*', () => {
@@ -379,5 +455,247 @@ describe('DataAwareMixin - data-on-*', () => {
     el.dispatchEvent(new CustomEvent('custom-event', { detail: {} }));
     expect(eventFired).to.be.true;
     // No fetch should be triggered — no error is expected
+  });
+});
+
+describe('DataAwareMixin - _sendOutput', () => {
+  let sentRequests: Array<{ url: string; method?: string; headers?: Record<string, string>; body?: string; credentials?: RequestCredentials }>;
+
+  beforeEach(() => {
+    sentRequests = [];
+    origFetch = globalThis.fetch;
+    globalThis.fetch = (input: string | URL | Request, init?: RequestInit) => {
+      sentRequests.push({
+        url: typeof input === 'string' ? input : input.url,
+        method: init?.method as string | undefined,
+        headers: init?.headers as Record<string, string> | undefined,
+        body: init?.body as string | undefined,
+        credentials: init?.credentials as RequestCredentials | undefined,
+      });
+      return Promise.resolve(
+        new Response(JSON.stringify({ data: 'ok', error: null }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      );
+    };
+  });
+
+  afterEach(() => {
+    globalThis.fetch = origFetch;
+  });
+
+  it('envia POST com URL string simples', async () => {
+    const el = await fixture<TestDataConsumer>(html`
+      <test-data-consumer data-output="/api/log"></test-data-consumer>
+    `);
+
+    el._sendOutput({ action: 'test', value: 42 });
+    await new Promise(r => setTimeout(r, 50));
+
+    expect(sentRequests.length).to.equal(1);
+    expect(sentRequests[0].url).to.include('/api/log');
+    expect(sentRequests[0].method).to.equal('POST');
+    expect(sentRequests[0].credentials).to.equal('same-origin');
+    expect(JSON.parse(sentRequests[0].body!)).to.deep.equal({ action: 'test', value: 42 });
+  });
+
+  it('usa POST padrao quando URL string simples', async () => {
+    const el = await fixture<TestDataConsumer>(html`
+      <test-data-consumer data-output="/api/log"></test-data-consumer>
+    `);
+
+    el._sendOutput({ action: 'update' });
+    await new Promise(r => setTimeout(r, 50));
+
+    expect(sentRequests[0].method).to.equal('POST');
+  });
+
+  it('aceita method via config JSON', async () => {
+    const el = await fixture<TestDataConsumer>(html`
+      <test-data-consumer
+        data-output='{"url":"/api/custom","method":"PUT","headers":{"X-CSRF":"abc123"},"credentials":"include"}'
+      ></test-data-consumer>
+    `);
+
+    el._sendOutput({ data: 'test' });
+    await new Promise(r => setTimeout(r, 50));
+
+    expect(sentRequests.length).to.equal(1);
+    expect(sentRequests[0].url).to.include('/api/custom');
+    expect(sentRequests[0].method).to.equal('PUT');
+    expect(sentRequests[0].credentials).to.equal('include');
+  });
+
+  // keep the old test name but no longer uses data-output-method attribute
+  it('aceita config JSON completa no atributo', async () => {
+    const el = await fixture<TestDataConsumer>(html`
+      <test-data-consumer
+        data-output='{"url":"/api/custom","method":"PUT","headers":{"X-CSRF":"abc123"},"credentials":"include"}'
+      ></test-data-consumer>
+    `);
+
+    el._sendOutput({ data: 'test' });
+    await new Promise(r => setTimeout(r, 50));
+
+    expect(sentRequests.length).to.equal(1);
+    expect(sentRequests[0].url).to.include('/api/custom');
+    expect(sentRequests[0].method).to.equal('PUT');
+    expect(sentRequests[0].credentials).to.equal('include');
+    expect(sentRequests[0].body).to.include('test');
+  });
+
+  it('data-output aceita "PUT /api/x"', async () => {
+    const el = await fixture<TestDataConsumer>(html`
+      <test-data-consumer data-output="PUT /api/atualizar"></test-data-consumer>
+    `);
+
+    el._sendOutput({ data: 'update' });
+    await new Promise(r => setTimeout(r, 50));
+
+    expect(sentRequests.length).to.equal(1);
+    expect(sentRequests[0].url).to.include('/api/atualizar');
+    expect(sentRequests[0].method).to.equal('PUT');
+  });
+
+  it('data-output aceita "DELETE /api/x"', async () => {
+    const el = await fixture<TestDataConsumer>(html`
+      <test-data-consumer data-output="DELETE /api/remove"></test-data-consumer>
+    `);
+
+    el._sendOutput({ data: 'delete' });
+    await new Promise(r => setTimeout(r, 50));
+
+    expect(sentRequests.length).to.equal(1);
+    expect(sentRequests[0].method).to.equal('DELETE');
+    expect(sentRequests[0].url).to.include('/api/remove');
+  });
+
+  it('data-output aceita "PATCH /api/x"', async () => {
+    const el = await fixture<TestDataConsumer>(html`
+      <test-data-consumer data-output="PATCH /api/patch-item"></test-data-consumer>
+    `);
+
+    el._sendOutput({ data: 'patch' });
+    await new Promise(r => setTimeout(r, 50));
+
+    expect(sentRequests.length).to.equal(1);
+    expect(sentRequests[0].method).to.equal('PATCH');
+    expect(sentRequests[0].url).to.include('/api/patch-item');
+  });
+
+  it('dispara auy:output-error em HTTP 4xx/5xx', async () => {
+    globalThis.fetch = () => Promise.resolve(
+      new Response(null, { status: 500, statusText: 'Server Error' }),
+    );
+
+    const el = await fixture<TestDataConsumer>(html`
+      <test-data-consumer data-output="/api/fail"></test-data-consumer>
+    `);
+
+    const errors: CustomEvent[] = [];
+    el.addEventListener('auy:output-error', (e) => errors.push(e as CustomEvent));
+
+    el._sendOutput({ data: 'x' });
+    await new Promise(r => setTimeout(r, 50));
+
+    expect(errors.length).to.equal(1);
+    expect(errors[0].detail.error).to.include('HTTP 500');
+  });
+
+  it('dispara auy:output-error quando JSON.stringify falha', async () => {
+    const el = await fixture<TestDataConsumer>(html`
+      <test-data-consumer data-output="/api/log"></test-data-consumer>
+    `);
+
+    const errors: CustomEvent[] = [];
+    el.addEventListener('auy:output-error', (e) => errors.push(e as CustomEvent));
+
+    // Objeto com referência circular
+    const circular: Record<string, unknown> = { a: 1 };
+    circular.self = circular;
+    el._sendOutput(circular);
+    await new Promise(r => setTimeout(r, 50));
+
+    expect(errors.length).to.equal(1);
+    expect(errors[0].detail.error).to.include('serializar');
+    expect(sentRequests.length).to.equal(0);
+  });
+
+  it('nao faz nada quando data-output esta vazio', async () => {
+    const el = await fixture<TestDataConsumer>(html`
+      <test-data-consumer></test-data-consumer>
+    `);
+
+    el._sendOutput({ data: 'x' });
+    await new Promise(r => setTimeout(r, 50));
+
+    expect(sentRequests.length).to.equal(0);
+  });
+
+  it('cancela requisicao anterior em nova chamada', async () => {
+    let abortCount = 0;
+    globalThis.fetch = (_input: string | URL | Request, init?: RequestInit) => {
+      return new Promise((_resolve, reject) => {
+        const signal = init?.signal;
+        if (signal) {
+          signal.addEventListener('abort', () => {
+            abortCount++;
+            reject(new DOMException('Aborted', 'AbortError'));
+          });
+        }
+      });
+    };
+
+    const el = await fixture<TestDataConsumer>(html`
+      <test-data-consumer data-output="/api/log"></test-data-consumer>
+    `);
+
+    el._sendOutput({ seq: 1 });
+    el._sendOutput({ seq: 2 });
+    await new Promise(r => setTimeout(r, 50));
+
+    expect(abortCount).to.be.at.least(1);
+  });
+
+  it('aceita config JSON com url e method, headers opcionais', async () => {
+    const el = await fixture<TestDataConsumer>(html`
+      <test-data-consumer
+        data-output='{"url":"/api/minimal"}'
+      ></test-data-consumer>
+    `);
+
+    el._sendOutput({ ok: true });
+    await new Promise(r => setTimeout(r, 50));
+
+    expect(sentRequests.length).to.equal(1);
+    expect(sentRequests[0].url).to.include('/api/minimal');
+    expect(sentRequests[0].method).to.equal('POST'); // padrão
+    expect(sentRequests[0].credentials).to.equal('same-origin'); // padrão
+  });
+
+  it('aborta requisicao ao desconectar', async () => {
+    let abortCount = 0;
+    globalThis.fetch = (_input: string | URL | Request, init?: RequestInit) => {
+      return new Promise((_resolve, reject) => {
+        const signal = init?.signal;
+        if (signal) {
+          signal.addEventListener('abort', () => {
+            abortCount++;
+            reject(new DOMException('Aborted', 'AbortError'));
+          });
+        }
+      });
+    };
+
+    const el = await fixture<TestDataConsumer>(html`
+      <test-data-consumer data-output="/api/log"></test-data-consumer>
+    `);
+
+    el._sendOutput({ data: 'to-abort' });
+    el.remove(); // disconnectedCallback → aborta
+    await new Promise(r => setTimeout(r, 50));
+
+    expect(abortCount).to.be.at.least(1);
   });
 });
