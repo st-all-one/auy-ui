@@ -45,7 +45,7 @@
   }
 
   @container (max-width: 400px) { /* --auy-breakpoint-breadcrumb: 400px — breadcrumb truncation threshold */
-    :where(nav[aria-label="Breadcrumb"] li:not(:last-of-type) .label) {
+    :where(nav[aria-label="Breadcrumb"] li:not(:last-of-type) [data-auy-part="label"]) {
       max-inline-size: 10ch; overflow: hidden; text-overflow: ellipsis;
     }
   }

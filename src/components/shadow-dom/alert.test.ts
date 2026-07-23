@@ -4,21 +4,21 @@ import './alert.js';
 describe('AuyCompAlert', () => {
   it('renderiza com variante info', async () => {
     const el = await fixture<HTMLElement>(html`<auy-comp-alert variant="info">Mensagem</auy-comp-alert>`);
-    const alert = el.shadowRoot!.querySelector('.alert');
+    const alert = el.shadowRoot!.querySelector('[data-auy="alert"]');
     expect(alert).to.exist;
-    expect(alert!.classList.contains('alert--info')).to.be.true;
+    expect(alert!.matches('[data-auy-variant="info"]')).to.be.true;
   });
 
   it('mostra título', async () => {
     const el = await fixture<HTMLElement>(html`<auy-comp-alert title="Aviso">Mensagem</auy-comp-alert>`);
-    const title = el.shadowRoot!.querySelector('.alert__title');
+    const title = el.shadowRoot!.querySelector('[data-auy-part="title"]');
     expect(title).to.exist;
     expect(title!.textContent).to.include('Aviso');
   });
 
   it('dispensa ao clicar no X', async () => {
     const el = await fixture<HTMLElement>(html`<auy-comp-alert open>Mensagem</auy-comp-alert>`);
-    const btn = el.shadowRoot!.querySelector('.alert__dismiss') as HTMLButtonElement;
+    const btn = el.shadowRoot!.querySelector('[data-auy-part="dismiss"]') as HTMLButtonElement;
     expect(btn).to.exist;
     btn.click();
     await (el as any).updateComplete;
@@ -34,13 +34,13 @@ describe('AuyCompAlert', () => {
 
   it('error usa aria-live assertive', async () => {
     const el = await fixture<HTMLElement>(html`<auy-comp-alert variant="error">Erro</auy-comp-alert>`);
-    const alert = el.shadowRoot!.querySelector('.alert');
+    const alert = el.shadowRoot!.querySelector('[data-auy="alert"]');
     expect(alert!.getAttribute('aria-live')).to.equal('assertive');
   });
 
   it('não mostra botão dismiss se dismissible=false', async () => {
     const el = await fixture<HTMLElement>(html`<auy-comp-alert open .dismissible=${false}>Mensagem</auy-comp-alert>`);
-    const btn = el.shadowRoot!.querySelector('.alert__dismiss');
+    const btn = el.shadowRoot!.querySelector('[data-auy-part="dismiss"]');
     expect(btn).to.not.exist;
   });
 });

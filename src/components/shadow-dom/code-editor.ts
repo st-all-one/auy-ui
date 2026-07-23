@@ -1,5 +1,6 @@
-import { LitElement, html, css, nothing } from 'lit';
+import { html, css, nothing } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
+import { AuyShadowElement } from '../_internal/AuyShadowElement.base.ts';
 import { DataAwareMixin } from '../_internal/data-aware.mixin.ts';
 import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
 
@@ -33,7 +34,7 @@ import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts
  * @csspart cm-host - The CodeMirror host container.
  */
 @customElement('auy-comp-code-editor')
-export class AuyCompCodeEditor extends StyleCustomizableMixin(DataAwareMixin(LitElement)) {
+export class AuyCompCodeEditor extends StyleCustomizableMixin(DataAwareMixin(AuyShadowElement)) {
   static override get observedDataEvents(): string[] {
     return ['input', 'change']
   }
@@ -44,7 +45,7 @@ export class AuyCompCodeEditor extends StyleCustomizableMixin(DataAwareMixin(Lit
         contain: layout style;
       }
 
-      .editor {
+      [data-auy-part="editor"] {
         display: flex;
         border: 1px solid var(--auy-color-border);
         border-radius: var(--auy-radius-md);
@@ -55,7 +56,7 @@ export class AuyCompCodeEditor extends StyleCustomizableMixin(DataAwareMixin(Lit
         background: var(--auy-color-surface);
       }
 
-      .gutter {
+      [data-auy-part="gutter"] {
         display: flex;
         flex-direction: column;
         padding: 0.5rem;
@@ -98,19 +99,19 @@ export class AuyCompCodeEditor extends StyleCustomizableMixin(DataAwareMixin(Lit
         background: var(--auy-color-primary-muted, oklch(from var(--auy-color-primary) 80% 0.15 h / 0.2));
       }
 
-      .cm-host {
+      [data-auy-part="cm-host"] {
         flex: 1;
         overflow: auto;
       }
 
       @media (forced-colors: active) {
-        .editor {
+        [data-auy-part="editor"] {
           border: 1px solid ButtonText;
         }
       }
 
       @media print {
-        .editor {
+        [data-auy-part="editor"] {
           border-color: #000;
         }
       }
@@ -148,9 +149,9 @@ export class AuyCompCodeEditor extends StyleCustomizableMixin(DataAwareMixin(Lit
   /** The textarea element. */
   @query('textarea') private _textarea!: HTMLTextAreaElement;
   /** The line-number gutter element. */
-  @query('.gutter') private _gutter!: HTMLElement;
+  @query('[data-auy-part="gutter"]') private _gutter!: HTMLElement;
   /** The container for CodeMirror. */
-  @query('.cm-host') private _cmHost!: HTMLElement;
+  @query('[data-auy-part="cm-host"]') private _cmHost!: HTMLElement;
 
   override shouldUpdate(changed: Map<string, unknown>) {
     return changed.has('value') || changed.has('lineNumbers') || changed.has('cmOptions') || changed.has('height') || changed.has('readonly') || changed.has('placeholder') || changed.has('_cmLoaded');
@@ -166,18 +167,18 @@ export class AuyCompCodeEditor extends StyleCustomizableMixin(DataAwareMixin(Lit
     if (this._cmLoaded) {
       return html`
         ${this._renderCustomStyles()}
-        <div part="editor" class="editor" style="height: ${this.height}">
-          <div part="cm-host" class="cm-host"></div>
+<div part="editor" data-auy-part="editor" style="height: ${this.height}">
+          <div part="cm-host" data-auy-part="cm-host"></div>
         </div>
       `;
     }
 
     return html`
       ${this._renderCustomStyles()}
-      <div part="editor" class="editor" style="height: ${this.height}">
+      <div part="editor" data-auy-part="editor" style="height: ${this.height}">
         ${this.lineNumbers
           ? html`
-              <div part="gutter" class="gutter" aria-hidden="true">
+              <div part="gutter" data-auy-part="gutter" aria-hidden="true">
                 ${this._lines.map(n => html`<span>${n}</span>`)}
               </div>
             `

@@ -11,7 +11,7 @@ describe('AuyCompButton', () => {
 
   it('applies correct variant', async () => {
     const el = await fixture<HTMLElement>(html`<auy-comp-button variant="error">Erro</auy-comp-button>`);
-    const btn = el.shadowRoot!.querySelector('.btn--error')!;
+    const btn = el.shadowRoot!.querySelector('[data-auy-variant="error"]')!;
     expect(btn).to.exist;
   });
 
@@ -40,7 +40,7 @@ describe('AuyCompButton', () => {
 
   it('applies sizes', async () => {
     const el = await fixture<HTMLElement>(html`<auy-comp-button size="lg">Grande</auy-comp-button>`);
-    const btn = el.shadowRoot!.querySelector('.btn--lg')!;
+    const btn = el.shadowRoot!.querySelector('[data-auy-size="lg"]')!;
     expect(btn).to.exist;
   });
 });

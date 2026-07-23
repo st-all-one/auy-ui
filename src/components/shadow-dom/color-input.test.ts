@@ -21,7 +21,7 @@ describe('AuyCompColorInput', () => {
 
   it('renders format chips', async () => {
     const el = await fixture<HTMLElement>(html`<auy-comp-color-input></auy-comp-color-input>`);
-    const chips = el.shadowRoot?.querySelectorAll('.format-chip');
+    const chips = el.shadowRoot?.querySelectorAll('[data-auy-part="format-chip"]');
     expect(chips?.length).to.equal(4);
   });
 });

@@ -1,5 +1,6 @@
-import { LitElement, html, css, nothing } from 'lit';
+import { html, css, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { AuyShadowElement } from '../_internal/AuyShadowElement.base.ts';
 import { DataAwareMixin } from '../_internal/data-aware.mixin.ts';
 import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
 
@@ -17,7 +18,7 @@ const ICONS = {
 
 /** Player de áudio com controles de reprodução, volume, velocidade e transcrição. */
 @customElement('auy-comp-audio')
-export class AuyCompAudio extends StyleCustomizableMixin(DataAwareMixin(LitElement)) {
+export class AuyCompAudio extends StyleCustomizableMixin(DataAwareMixin(AuyShadowElement)) {
   static override get observedDataEvents(): string[] {
     return ['ended']
   }
@@ -27,14 +28,14 @@ export class AuyCompAudio extends StyleCustomizableMixin(DataAwareMixin(LitEleme
       contain: layout style;
     }
 
-    .player {
+    [data-auy-part="player"] {
       border: 1px solid var(--auy-color-border);
       border-radius: var(--auy-radius-lg);
       background: var(--auy-color-surface);
       overflow: hidden;
     }
 
-    .header {
+    [data-auy-part="header"] {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -42,7 +43,7 @@ export class AuyCompAudio extends StyleCustomizableMixin(DataAwareMixin(LitEleme
       padding: var(--auy-space-md) var(--auy-space-md) 0;
     }
 
-    .title {
+    [data-auy-part="title"] {
       font-size: var(--auy-text-sm);
       font-weight: var(--auy-font-weight-semibold);
       color: var(--auy-color-text);
@@ -51,13 +52,13 @@ export class AuyCompAudio extends StyleCustomizableMixin(DataAwareMixin(LitEleme
       gap: var(--auy-space-2xs);
     }
 
-    .wave {
+    [data-auy-part="wave"] {
       display: flex;
       align-items: flex-end;
       gap: 2px;
       block-size: 1.25rem;
     }
-    .wave span {
+    [data-auy-part="wave"] span {
       display: inline-block;
       inline-size: 3px;
       background: var(--auy-color-primary);
@@ -66,25 +67,25 @@ export class AuyCompAudio extends StyleCustomizableMixin(DataAwareMixin(LitEleme
       transition: block-size 0.15s;
     }
 
-    .body {
+    [data-auy-part="body"] {
       padding: var(--auy-space-md);
       display: flex;
       flex-direction: column;
       gap: var(--auy-space-sm);
     }
 
-    .progress-row {
+    [data-auy-part="progress-row"] {
       display: flex;
       align-items: center;
       gap: var(--auy-space-sm);
     }
 
-    .progress-track {
+    [data-auy-part="progress-track"] {
       flex: 1;
       position: relative;
       cursor: pointer;
     }
-    .progress-track input[type="range"] {
+    [data-auy-part="progress-track"] input[type="range"] {
       display: block;
       inline-size: 100%;
       margin: 0;
@@ -92,7 +93,7 @@ export class AuyCompAudio extends StyleCustomizableMixin(DataAwareMixin(LitEleme
       cursor: pointer;
     }
 
-    .time {
+    [data-auy-part="time"] {
       display: flex;
       justify-content: space-between;
       font-size: var(--auy-text-xs);
@@ -101,14 +102,14 @@ export class AuyCompAudio extends StyleCustomizableMixin(DataAwareMixin(LitEleme
       margin-block-start: var(--auy-space-2xs);
     }
 
-    .controls {
+    [data-auy-part="controls"] {
       display: flex;
       align-items: center;
       gap: var(--auy-space-xs);
       flex-wrap: wrap;
     }
 
-    .icon-btn {
+    [data-auy-part="icon-btn"] {
       all: unset;
       box-sizing: border-box;
       display: inline-flex;
@@ -123,52 +124,52 @@ export class AuyCompAudio extends StyleCustomizableMixin(DataAwareMixin(LitEleme
       flex-shrink: 0;
       color: var(--auy-color-text-muted);
     }
-    .icon-btn:hover {
+    [data-auy-part="icon-btn"]:hover {
       background: color-mix(in oklch, var(--auy-color-border) 15%, transparent);
       color: var(--auy-color-text);
     }
-    .icon-btn:active {
+    [data-auy-part="icon-btn"]:active {
       transform: scale(0.92);
     }
-    .icon-btn:focus-visible {
+    [data-auy-part="icon-btn"]:focus-visible {
       outline: 0.125rem solid var(--auy-color-primary);
       outline-offset: 0.125rem;
     }
 
-    .icon-btn--play {
+    [data-auy-part="icon-btn"][data-auy-variant="play"] {
       inline-size: 2.75rem;
       block-size: 2.75rem;
       background: var(--auy-color-primary);
       color: var(--auy-color-primary-inverse);
       box-shadow: 0 0.125rem 0.375rem color-mix(in oklch, var(--auy-color-primary) 25%, transparent);
     }
-    .icon-btn--play:hover {
+    [data-auy-part="icon-btn"][data-auy-variant="play"]:hover {
       background: var(--auy-color-primary);
       color: var(--auy-color-primary-inverse);
       transform: scale(1.06);
     }
-    .icon-btn--play:active {
+    [data-auy-part="icon-btn"][data-auy-variant="play"]:active {
       transform: scale(0.94);
     }
 
-    .vol-wrap {
+    [data-auy-part="vol-wrap"] {
       display: flex;
       align-items: center;
       gap: var(--auy-space-2xs);
       margin-inline-start: auto;
     }
-    .vol-bar {
+    [data-auy-part="vol-bar"] {
       inline-size: 3.75rem;
       accent-color: var(--auy-color-primary);
       cursor: pointer;
       margin: 0;
     }
 
-    .speed-wrap {
+    [data-auy-part="speed-wrap"] {
       position: relative;
     }
 
-    .speed-btn {
+    [data-auy-part="speed-btn"] {
       all: unset;
       box-sizing: border-box;
       display: inline-flex;
@@ -186,16 +187,16 @@ export class AuyCompAudio extends StyleCustomizableMixin(DataAwareMixin(LitEleme
       transition: border-color var(--auy-transition-fast), color var(--auy-transition-fast);
       line-height: 1;
     }
-    .speed-btn:hover {
+    [data-auy-part="speed-btn"]:hover {
       border-color: var(--auy-color-primary);
       color: var(--auy-color-primary);
     }
-    .speed-btn:focus-visible {
+    [data-auy-part="speed-btn"]:focus-visible {
       outline: 0.125rem solid var(--auy-color-primary);
       outline-offset: 0.0625rem;
     }
 
-    .speed-menu {
+    [data-auy-part="speed-menu"] {
       position: absolute;
       inset-block-start: 100%;
       inset-inline-end: 0;
@@ -210,11 +211,11 @@ export class AuyCompAudio extends StyleCustomizableMixin(DataAwareMixin(LitEleme
       display: none;
       min-inline-size: 8rem;
     }
-    .speed-menu--open {
+    [data-auy-part="speed-menu"][data-auy-state="open"] {
       display: block;
     }
 
-    .speed-opt {
+    [data-auy-part="speed-opt"] {
       all: unset;
       display: block;
       inline-size: 100%;
@@ -227,19 +228,19 @@ export class AuyCompAudio extends StyleCustomizableMixin(DataAwareMixin(LitEleme
       white-space: nowrap;
       color: var(--auy-color-text);
     }
-    .speed-opt:hover {
+    [data-auy-part="speed-opt"]:hover {
       background: color-mix(in oklch, var(--auy-color-border) 15%, transparent);
     }
-    .speed-opt:focus-visible {
+    [data-auy-part="speed-opt"]:focus-visible {
       outline: 0.125rem solid var(--auy-color-primary);
       outline-offset: 0.0625rem;
     }
-    .speed-opt--active {
+    [data-auy-part="speed-opt"][data-auy-state="active"] {
       color: var(--auy-color-primary);
       font-weight: var(--auy-font-weight-semibold);
     }
 
-    .dload {
+    [data-auy-part="dload"] {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -250,34 +251,34 @@ export class AuyCompAudio extends StyleCustomizableMixin(DataAwareMixin(LitEleme
       text-decoration: none;
       transition: background var(--auy-transition-fast), color var(--auy-transition-fast);
     }
-    .dload:hover {
+    [data-auy-part="dload"]:hover {
       background: color-mix(in oklch, var(--auy-color-border) 15%, transparent);
       color: var(--auy-color-primary);
     }
-    .dload:focus-visible {
+    [data-auy-part="dload"]:focus-visible {
       outline: 0.125rem solid var(--auy-color-primary);
       outline-offset: 0.125rem;
     }
 
-    .transcript {
+    [data-auy-part="transcript"] {
       border-block-start: 1px solid var(--auy-color-border);
       padding: var(--auy-space-md);
       padding-block-start: var(--auy-space-sm);
     }
 
-    .spacer { flex: 1; }
+    [data-auy-part="spacer"] { flex: 1; }
 
     @media (forced-colors: active) {
-      .icon-btn--play { border: 1px solid ButtonText; }
+      [data-auy-part="icon-btn"][data-auy-variant="play"] { border: 1px solid ButtonText; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .wave span { transition: none; }
-      .icon-btn { transition: none; }
-      .icon-btn:hover { transform: none; }
-      .icon-btn:active { transform: none; }
+      [data-auy-part="wave"] span { transition: none; }
+      [data-auy-part="icon-btn"] { transition: none; }
+      [data-auy-part="icon-btn"]:hover { transform: none; }
+      [data-auy-part="icon-btn"]:active { transform: none; }
     }
     @media print {
-      .icon-btn--play { display: none; }
+      [data-auy-part="icon-btn"][data-auy-variant="play"] { display: none; }
     }
   `;
 
@@ -408,7 +409,7 @@ export class AuyCompAudio extends StyleCustomizableMixin(DataAwareMixin(LitEleme
   private _startWave() {
     this._stopWave();
     this._waveInterval = setInterval(() => {
-      const spans = this.shadowRoot?.querySelectorAll('.wave span');
+      const spans = this.shadowRoot?.querySelectorAll('[data-auy-part="wave"] span');
       if (!spans) return;
       spans.forEach(s => {
         (s as HTMLElement).style.blockSize = `${Math.floor(Math.random() * 14) + 5}px`;
@@ -421,7 +422,7 @@ export class AuyCompAudio extends StyleCustomizableMixin(DataAwareMixin(LitEleme
       clearInterval(this._waveInterval);
       this._waveInterval = null;
     }
-    const spans = this.shadowRoot?.querySelectorAll('.wave span');
+    const spans = this.shadowRoot?.querySelectorAll('[data-auy-part="wave"] span');
     if (spans) {
       spans.forEach(s => { (s as HTMLElement).style.blockSize = '5px'; });
     }
@@ -444,10 +445,10 @@ export class AuyCompAudio extends StyleCustomizableMixin(DataAwareMixin(LitEleme
 
     return html`
       ${this._renderCustomStyles()}
-      <div class="player" @keydown=${this._handleKey}>
-        <div class="header">
-          <span class="title">${this.title || 'Player de Áudio'}</span>
-          <div class="wave" aria-hidden="true">
+      <div data-auy-part="player" @keydown=${this._handleKey}>
+        <div data-auy-part="header">
+          <span data-auy-part="title">${this.title || 'Player de Áudio'}</span>
+          <div data-auy-part="wave" aria-hidden="true">
             <span></span><span></span><span></span><span></span><span></span>
           </div>
         </div>
@@ -464,9 +465,9 @@ export class AuyCompAudio extends StyleCustomizableMixin(DataAwareMixin(LitEleme
           style="display:none"
         ></audio>
 
-        <div class="body">
-          <div class="progress-row">
-            <div class="progress-track">
+        <div data-auy-part="body">
+          <div data-auy-part="progress-row">
+            <div data-auy-part="progress-track">
               <input
                 type="range"
                 min="0"
@@ -479,34 +480,34 @@ export class AuyCompAudio extends StyleCustomizableMixin(DataAwareMixin(LitEleme
                 aria-label="Progresso da reprodução"
                 step="0.1"
               />
-              <div class="time">
+              <div data-auy-part="time">
                 <span>${this._formatTime(this._currentTime)}</span>
                 <span>${this._formatTime(this._duration)}</span>
               </div>
             </div>
           </div>
 
-          <div class="controls">
+          <div data-auy-part="controls">
             <button
-              class="icon-btn icon-btn--play"
+              data-auy-part="icon-btn" data-auy-variant="play"
               @click=${this._togglePlay}
               aria-label=${this._playing ? 'Pausar áudio' : 'Reproduzir áudio'}
               title=${this._playing ? 'Pausar' : 'Reproduzir'}
             >${this._playing ? ICONS.pause : ICONS.play}</button>
 
-            <button class="icon-btn" @click=${() => this._skip(-10)} aria-label="Voltar 10 segundos" title="-10s">${ICONS.skipBack}</button>
-            <button class="icon-btn" @click=${() => this._skip(10)} aria-label="Avançar 10 segundos" title="+10s">${ICONS.skipForward}</button>
+            <button data-auy-part="icon-btn" @click=${() => this._skip(-10)} aria-label="Voltar 10 segundos" title="-10s">${ICONS.skipBack}</button>
+            <button data-auy-part="icon-btn" @click=${() => this._skip(10)} aria-label="Avançar 10 segundos" title="+10s">${ICONS.skipForward}</button>
 
-            <div class="spacer"></div>
+            <div data-auy-part="spacer"></div>
 
-            <div class="speed-wrap">
-              <button class="speed-btn" @click=${() => { this._speedOpen = !this._speedOpen; }} aria-haspopup="true" aria-expanded=${this._speedOpen} aria-label="Velocidade de reprodução">
+            <div data-auy-part="speed-wrap">
+              <button data-auy-part="speed-btn" @click=${() => { this._speedOpen = !this._speedOpen; }} aria-haspopup="true" aria-expanded=${this._speedOpen} aria-label="Velocidade de reprodução">
                 ${this._speed}x ${ICONS.chevronDown}
               </button>
-              <div class="speed-menu ${this._speedOpen ? 'speed-menu--open' : ''}" role="menu">
+              <div data-auy-part="speed-menu" data-auy-state=${this._speedOpen ? 'open' : nothing} role="menu">
                 ${speeds.map(s => html`
                   <button
-                    class="speed-opt ${s === this._speed ? 'speed-opt--active' : ''}"
+                    data-auy-part="speed-opt" data-auy-state=${s === this._speed ? 'active' : nothing}
                     @click=${() => this._setSpeed(s)}
                     role="menuitem"
                   >${s}x${s === 1 ? ' (Normal)' : s < 1 ? ' (Mais lento)' : ' (Mais rápido)'}</button>
@@ -514,11 +515,11 @@ export class AuyCompAudio extends StyleCustomizableMixin(DataAwareMixin(LitEleme
               </div>
             </div>
 
-            <div class="vol-wrap">
-              <button class="icon-btn" @click=${this._toggleMute} aria-label=${this._muted ? 'Ativar som' : 'Mutar áudio'} title=${this._muted ? 'Ativar' : 'Mutar'}>${this._volumeIcon()}</button>
+            <div data-auy-part="vol-wrap">
+              <button data-auy-part="icon-btn" @click=${this._toggleMute} aria-label=${this._muted ? 'Ativar som' : 'Mutar áudio'} title=${this._muted ? 'Ativar' : 'Mutar'}>${this._volumeIcon()}</button>
               <input
                 type="range"
-                class="vol-bar"
+                data-auy-part="vol-bar"
                 min="0" max="1" step="0.05"
                 .value=${this._muted ? 0 : this._volume}
                 @input=${this._onVolume}
@@ -527,13 +528,13 @@ export class AuyCompAudio extends StyleCustomizableMixin(DataAwareMixin(LitEleme
             </div>
 
             ${this.showDownload && this.src ? html`
-              <a href=${this.src} class="dload" download aria-label="Baixar áudio" title="Download">${ICONS.download}</a>
+              <a href=${this.src} data-auy-part="dload" download aria-label="Baixar áudio" title="Download">${ICONS.download}</a>
             ` : nothing}
           </div>
         </div>
 
         ${this.showTranscript ? html`
-          <div class="transcript">
+          <div data-auy-part="transcript">
             <slot name="transcript">
               <details>
                 <summary>Exibir texto da narração</summary>

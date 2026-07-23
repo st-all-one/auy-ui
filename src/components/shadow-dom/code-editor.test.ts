@@ -16,13 +16,13 @@ describe('AuyCompCodeEditor', () => {
 
   it('shows line numbers by default', async () => {
     const el = await fixture<HTMLElement>(html`<auy-comp-code-editor></auy-comp-code-editor>`);
-    const gutter = el.shadowRoot?.querySelector('.gutter');
+    const gutter = el.shadowRoot?.querySelector('[data-auy-part="gutter"]');
     expect(gutter).to.exist;
   });
 
   it('hides line numbers when disabled', async () => {
     const el = await fixture<HTMLElement>(html`<auy-comp-code-editor ?lineNumbers=${false}></auy-comp-code-editor>`);
-    const gutter = el.shadowRoot?.querySelector('.gutter');
+    const gutter = el.shadowRoot?.querySelector('[data-auy-part="gutter"]');
     expect(gutter).to.not.exist;
   });
 });

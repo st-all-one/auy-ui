@@ -1,6 +1,7 @@
-import { LitElement, html, css, nothing } from 'lit';
+import { html, css, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { customElement, property } from 'lit/decorators.js';
+import { AuyShadowElement } from '../_internal/AuyShadowElement.base.ts';
 import { ICONS, type IconName } from '../_internal/icons.js';
 import { DataAwareMixin } from '../_internal/data-aware.mixin.ts';
 import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
@@ -20,7 +21,7 @@ export interface BreadcrumbItem {
  * @csspart nav - Elemento de navegação
  */
 @customElement('auy-comp-breadcrumbs')
-export class AuyCompBreadcrumbs extends StyleCustomizableMixin(DataAwareMixin(LitElement)) {
+export class AuyCompBreadcrumbs extends StyleCustomizableMixin(DataAwareMixin(AuyShadowElement)) {
   static override styles = css`
     :host {
       display: block;
@@ -56,7 +57,7 @@ export class AuyCompBreadcrumbs extends StyleCustomizableMixin(DataAwareMixin(Li
       margin-inline-start: 0;
     }
 
-    .sep {
+    [data-auy-part="sep"] {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -67,12 +68,12 @@ export class AuyCompBreadcrumbs extends StyleCustomizableMixin(DataAwareMixin(Li
       user-select: none;
     }
 
-    .sep svg {
+    [data-auy-part="sep"] svg {
       inline-size: 1em;
       block-size: 1em;
     }
 
-    a, .current {
+    a, [data-auy-part="current"] {
       display: inline-flex;
       align-items: center;
       gap: var(--auy-space-2xs);
@@ -85,7 +86,7 @@ export class AuyCompBreadcrumbs extends StyleCustomizableMixin(DataAwareMixin(Li
       transition: background var(--auy-transition-fast), color var(--auy-transition-fast);
     }
 
-    .item-icon {
+    [data-auy-part="item-icon"] {
       display: inline-flex;
       align-items: center;
       inline-size: 1em;
@@ -93,7 +94,7 @@ export class AuyCompBreadcrumbs extends StyleCustomizableMixin(DataAwareMixin(Li
       flex-shrink: 0;
       opacity: 0.7;
     }
-    .item-icon svg {
+    [data-auy-part="item-icon"] svg {
       inline-size: 100%;
       block-size: 100%;
     }
@@ -111,7 +112,7 @@ export class AuyCompBreadcrumbs extends StyleCustomizableMixin(DataAwareMixin(Li
       outline-offset: 0.0625rem;
     }
 
-    .current {
+    [data-auy-part="current"] {
       color: var(--auy-color-text);
       font-weight: var(--auy-font-weight-semibold);
       overflow: hidden;
@@ -124,15 +125,15 @@ export class AuyCompBreadcrumbs extends StyleCustomizableMixin(DataAwareMixin(Li
     }
 
     /* arrow */
-    :host([variant="arrow"]) .sep { margin-inline: var(--auy-space-xs); color: var(--auy-color-text-muted); opacity: 0.5; }
+    :host([variant="arrow"]) [data-auy-part="sep"] { margin-inline: var(--auy-space-xs); color: var(--auy-color-text-muted); opacity: 0.5; }
     :host([variant="arrow"]) a:hover { background: transparent; }
 
     /* depth — ohmyzsh-style: solid segments with interlocking > cuts */
     :host([variant="depth"]) nav { padding-block: 0; overflow: visible; }
     :host([variant="depth"]) ol { gap: 0; }
     :host([variant="depth"]) li { gap: 0; overflow: visible; }
-    :host([variant="depth"]) .sep { display: none; }
-    :host([variant="depth"]) a, :host([variant="depth"]) .current {
+    :host([variant="depth"]) [data-auy-part="sep"] { display: none; }
+    :host([variant="depth"]) a, :host([variant="depth"]) [data-auy-part="current"] {
       position: relative;
       z-index: 1;
       display: inline-flex;
@@ -147,16 +148,16 @@ export class AuyCompBreadcrumbs extends StyleCustomizableMixin(DataAwareMixin(Li
     }
     :host([variant="depth"]) a { color: var(--auy-color-text); }
     :host([variant="depth"]) a:hover { filter: brightness(0.92); }
-    :host([variant="depth"]) .current { color: white; z-index: 2; }
+    :host([variant="depth"]) [data-auy-part="current"] { color: white; z-index: 2; }
     :host([variant="depth"]) li:last-child a,
-    :host([variant="depth"]) li:last-child .current {
+    :host([variant="depth"]) li:last-child [data-auy-part="current"] {
       clip-path: none;
       margin-inline-end: 0;
       border-radius: 0 var(--auy-radius-sm) var(--auy-radius-sm) 0;
       padding-inline-end: var(--auy-space-sm);
     }
     :host([variant="depth"]) li:first-child a,
-    :host([variant="depth"]) li:first-child .current {
+    :host([variant="depth"]) li:first-child [data-auy-part="current"] {
       border-radius: var(--auy-radius-sm) 0 0 var(--auy-radius-sm);
     }
 
@@ -173,7 +174,7 @@ export class AuyCompBreadcrumbs extends StyleCustomizableMixin(DataAwareMixin(Li
     :host([variant="solid"]) a:hover {
       background: color-mix(in oklch, var(--auy-color-border) 25%, transparent);
     }
-    :host([variant="solid"]) .current {
+    :host([variant="solid"]) [data-auy-part="current"] {
       color: var(--auy-color-primary);
       font-weight: var(--auy-font-weight-bold);
     }
@@ -202,7 +203,7 @@ export class AuyCompBreadcrumbs extends StyleCustomizableMixin(DataAwareMixin(Li
   private _renderIcon(name: IconName) {
     const svgStr = ICONS[name];
     if (!svgStr) return nothing;
-    return html`<span class="item-icon">${unsafeHTML(svgStr)}</span>`;
+    return html`<span data-auy-part="item-icon">${unsafeHTML(svgStr)}</span>`;
   }
 
   private _depthPct(i: number, n: number): number {
@@ -226,7 +227,7 @@ export class AuyCompBreadcrumbs extends StyleCustomizableMixin(DataAwareMixin(Li
     `;
 
     const link = isLast || !item.href
-      ? html`<span class="current" aria-current="page" style=${style}>${content}</span>`
+      ? html`<span data-auy-part="current" aria-current="page" style=${style}>${content}</span>`
       : html`<a href=${item.href} style=${style}>${content}</a>`;
 
     return html`
@@ -239,11 +240,11 @@ export class AuyCompBreadcrumbs extends StyleCustomizableMixin(DataAwareMixin(Li
 
   private _renderSeparator() {
     if (this.variant === 'arrow') {
-      return html`<span class="sep" aria-hidden="true">
+      return html`<span data-auy-part="sep" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
       </span>`;
     }
-    return html`<span class="sep" aria-hidden="true">/</span>`;
+    return html`<span data-auy-part="sep" aria-hidden="true">/</span>`;
   }
 
   override render() {

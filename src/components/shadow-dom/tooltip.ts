@@ -1,5 +1,6 @@
-import { LitElement, html, css } from 'lit';
+import { html, css, nothing } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
+import { AuyShadowElement } from '../_internal/AuyShadowElement.base.ts';
 import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
 
 let tooltipIdCounter = 0;
@@ -12,18 +13,18 @@ let tooltipIdCounter = 0;
  * @csspart arrow - Seta apontando para o gatilho
  */
 @customElement('auy-comp-tooltip')
-export class AuyCompTooltip extends StyleCustomizableMixin(LitElement) {
+export class AuyCompTooltip extends StyleCustomizableMixin(AuyShadowElement) {
   static override styles = css`
     @layer components {
       :host {
         display: inline-block;
       }
 
-      .trigger {
+      [data-auy-part="trigger"] {
         display: inline-flex;
       }
 
-      .tooltip {
+      [data-auy-part="tooltip"] {
         position: fixed;
         z-index: var(--auy-z-tooltip);
         padding: var(--auy-space-xs) var(--auy-space-sm);
@@ -39,18 +40,18 @@ export class AuyCompTooltip extends StyleCustomizableMixin(LitElement) {
         max-inline-size: min(90vw, 20rem);
       }
 
-      .tooltip--active {
+      [data-auy-part="tooltip"][data-auy-state="active"] {
         opacity: 1;
       }
 
-      .arrow {
+      [data-auy-part="arrow"] {
         position: absolute;
         inline-size: 0;
         block-size: 0;
         border-style: solid;
       }
 
-      .tooltip--top .arrow {
+      [data-auy-part="tooltip"][data-auy-position="top"] [data-auy-part="arrow"] {
         inset-block-start: 100%;
         inset-inline-start: 50%;
         translate: -50% 0;
@@ -58,7 +59,7 @@ export class AuyCompTooltip extends StyleCustomizableMixin(LitElement) {
         border-color: var(--auy-color-text) transparent transparent transparent;
       }
 
-      .tooltip--bottom .arrow {
+      [data-auy-part="tooltip"][data-auy-position="bottom"] [data-auy-part="arrow"] {
         inset-block-end: 100%;
         inset-inline-start: 50%;
         translate: -50% 0;
@@ -66,7 +67,7 @@ export class AuyCompTooltip extends StyleCustomizableMixin(LitElement) {
         border-color: transparent transparent var(--auy-color-text) transparent;
       }
 
-      .tooltip--left .arrow {
+      [data-auy-part="tooltip"][data-auy-position="left"] [data-auy-part="arrow"] {
         inset-inline-start: 100%;
         inset-block-start: 50%;
         translate: 0 -50%;
@@ -74,7 +75,7 @@ export class AuyCompTooltip extends StyleCustomizableMixin(LitElement) {
         border-color: transparent transparent transparent var(--auy-color-text);
       }
 
-      .tooltip--right .arrow {
+      [data-auy-part="tooltip"][data-auy-position="right"] [data-auy-part="arrow"] {
         inset-inline-end: 100%;
         inset-block-start: 50%;
         translate: 0 -50%;
@@ -83,23 +84,23 @@ export class AuyCompTooltip extends StyleCustomizableMixin(LitElement) {
       }
 
       @media (prefers-reduced-motion: reduce) {
-        .tooltip { transition: none; }
+        [data-auy-part="tooltip"] { transition: none; }
       }
 
       @media (forced-colors: active) {
-        .tooltip {
+        [data-auy-part="tooltip"] {
           border: 1px solid CanvasText;
           background: Canvas;
           color: CanvasText;
         }
-        .tooltip--top .arrow { border-top-color: CanvasText; }
-        .tooltip--bottom .arrow { border-bottom-color: CanvasText; }
-        .tooltip--left .arrow { border-left-color: CanvasText; }
-        .tooltip--right .arrow { border-right-color: CanvasText; }
+        [data-auy-part="tooltip"][data-auy-position="top"] [data-auy-part="arrow"] { border-top-color: CanvasText; }
+        [data-auy-part="tooltip"][data-auy-position="bottom"] [data-auy-part="arrow"] { border-bottom-color: CanvasText; }
+        [data-auy-part="tooltip"][data-auy-position="left"] [data-auy-part="arrow"] { border-left-color: CanvasText; }
+        [data-auy-part="tooltip"][data-auy-position="right"] [data-auy-part="arrow"] { border-right-color: CanvasText; }
       }
 
       @media print {
-        .tooltip { display: none !important; }
+        [data-auy-part="tooltip"] { display: none !important; }
       }
     }
   `;
@@ -129,7 +130,7 @@ export class AuyCompTooltip extends StyleCustomizableMixin(LitElement) {
   @query('slot')
   private _slot!: HTMLSlotElement;
 
-  @query('.tooltip')
+  @query('[data-auy-part="tooltip"]')
   private _tooltipEl!: HTMLElement;
 
   private _timer: ReturnType<typeof setTimeout> | null = null;
@@ -253,7 +254,7 @@ export class AuyCompTooltip extends StyleCustomizableMixin(LitElement) {
   override render() {
     return html`
       ${this._renderCustomStyles()}
-      <span part="trigger" class="trigger"
+      <span part="trigger" data-auy-part="trigger"
         @mouseenter=${this._onShow}
         @mouseleave=${this._onHide}
         @focusin=${this._onShow}
@@ -265,13 +266,13 @@ export class AuyCompTooltip extends StyleCustomizableMixin(LitElement) {
       </span>
       <div
         part="tooltip"
-        class="tooltip tooltip--${this.position}${this._active ? ' tooltip--active' : ''}"
+        data-auy-part="tooltip" data-auy-position=${this.position} data-auy-state=${this._active ? 'active' : nothing}
         role="tooltip"
         id=${this._tooltipId}
         ?hidden=${!this._visible}
       >
         ${this.text}
-        <span part="arrow" class="arrow"></span>
+        <span part="arrow" data-auy-part="arrow"></span>
       </div>
     `;
   }

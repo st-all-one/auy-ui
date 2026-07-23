@@ -10,7 +10,7 @@ describe('AuyCompFormGroup', () => {
 
   it('shows hint text', async () => {
     const el = await fixture<HTMLElement>(html`<auy-comp-form-group hint="Seu nome completo"></auy-comp-form-group>`);
-    const hint = el.querySelector('.hint');
+    const hint = el.querySelector('[data-auy-part="hint"]');
     expect(hint?.textContent).to.include('Seu nome completo');
   });
 
@@ -22,7 +22,7 @@ describe('AuyCompFormGroup', () => {
 
   it('shows required asterisk', async () => {
     const el = await fixture<HTMLElement>(html`<auy-comp-form-group label="Email" required></auy-comp-form-group>`);
-    const star = el.querySelector('.required-star');
+    const star = el.querySelector('[data-auy-part="required-star"]');
     expect(star).to.exist;
   });
 

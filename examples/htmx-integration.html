@@ -333,7 +333,7 @@
               hx-swap="innerHTML"
               hx-indicator="#search-spinner"
             >
-            <span class="spinner htmx-indicator" style="--spinner-size: 20px" role="status" aria-label="Carregando"></span>
+            <span data-auy="spinner" class="htmx-indicator" style="--spinner-size: 20px" role="status" aria-label="Carregando"></span>
           </div>
           <button
             variant="ghost sm"
@@ -455,7 +455,7 @@
             </tbody>
           </table>
           <div id="table-indicator" class="htmx-indicator" style="text-align:center;padding:var(--auy-space-md);">
-            <span class="spinner" style="--spinner-size: 28px" role="status" aria-label="Carregando"></span>
+            <span data-auy="spinner" style="--spinner-size: 28px" role="status" aria-label="Carregando"></span>
           </div>
         </div>
 
@@ -518,7 +518,7 @@
           </div>
           <div class="form-actions">
             <span id="form-indicator" class="htmx-indicator">
-              <span class="spinner" style="--spinner-size: 18px" role="status" aria-label="Enviando"></span>
+              <span data-auy="spinner" style="--spinner-size: 18px" role="status" aria-label="Enviando"></span>
             </span>
             <button variant="secondary md" type="reset">Limpar</button>
             <button variant="primary md" type="submit">

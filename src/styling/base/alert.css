@@ -1,5 +1,5 @@
 @layer base {
-  :where(.alert) {
+  :where([data-auy="alert"]) {
     display: flex;
     align-items: flex-start;
     gap: var(--auy-space-sm);
@@ -11,38 +11,38 @@
     border-inline-start: 3px solid var(--auy-color-info);
   }
 
-  :where(.alert--success) { background: oklch(from var(--auy-color-success) 95% 0.02 h); border-inline-start-color: var(--auy-color-success); }
-  :where(.alert--warning) { background: oklch(from var(--auy-color-warning) 95% 0.02 h); border-inline-start-color: var(--auy-color-warning); }
-  :where(.alert--error) { background: oklch(from var(--auy-color-error) 95% 0.02 h); border-inline-start-color: var(--auy-color-error); }
+  :where([data-auy-variant="success"]) { background: oklch(from var(--auy-color-success) 95% 0.02 h); border-inline-start-color: var(--auy-color-success); }
+  :where([data-auy-variant="warning"]) { background: oklch(from var(--auy-color-warning) 95% 0.02 h); border-inline-start-color: var(--auy-color-warning); }
+  :where([data-auy-variant="error"]) { background: oklch(from var(--auy-color-error) 95% 0.02 h); border-inline-start-color: var(--auy-color-error); }
 
-  :where(.alert__icon) { flex-shrink: 0; inline-size: 1.25rem; block-size: 1.25rem; margin-block-start: 1px; }
-  :where(.alert__content) { flex: 1; display: grid; gap: 0.25rem; }
-  :where(.alert__title) { font-weight: 600; }
-  :where(.alert__dismiss) {
+  :where([data-auy="alert"] [data-auy-part="icon"]) { flex-shrink: 0; inline-size: 1.25rem; block-size: 1.25rem; margin-block-start: 1px; }
+  :where([data-auy="alert"] [data-auy-part="content"]) { flex: 1; display: grid; gap: 0.25rem; }
+  :where([data-auy="alert"] [data-auy-part="title"]) { font-weight: 600; font-size: var(--auy-text-sm); }
+  :where([data-auy="alert"] [data-auy-part="dismiss"]) {
     flex-shrink: 0; margin-inline-start: auto; padding: 0.25rem; cursor: pointer; opacity: 0.7;
     color: inherit; background: none; border: none; line-height: 1;
     font-size: 1.2em; touch-action: manipulation;
   }
-  :where(.alert__dismiss:hover) { opacity: 1; }
-  :where(.alert__dismiss:focus-visible) { outline: 0.125rem solid var(--auy-color-primary); outline-offset: 0.125rem; }
+  :where([data-auy="alert"] [data-auy-part="dismiss"]:hover) { opacity: 1; }
+  :where([data-auy="alert"] [data-auy-part="dismiss"]:focus-visible) { outline: 0.125rem solid var(--auy-color-primary); outline-offset: 0.125rem; }
 
   @media (prefers-color-scheme: dark) {
-    :where(.alert) { background: oklch(from var(--auy-color-info) 25% 0.06 h); color: oklch(from var(--auy-color-info) 85% 0.1 h); }
-    :where(.alert--success) { background: oklch(from var(--auy-color-success) 25% 0.06 h); color: oklch(from var(--auy-color-success) 85% 0.1 h); }
-    :where(.alert--warning) { background: oklch(from var(--auy-color-warning) 25% 0.06 h); color: oklch(from var(--auy-color-warning) 85% 0.12 h); }
-    :where(.alert--error) { background: oklch(from var(--auy-color-error) 25% 0.06 h); color: oklch(from var(--auy-color-error) 85% 0.1 h); }
+    :where([data-auy="alert"]) { background: oklch(from var(--auy-color-info) 25% 0.06 h); color: oklch(from var(--auy-color-info) 85% 0.1 h); }
+    :where([data-auy-variant="success"]) { background: oklch(from var(--auy-color-success) 25% 0.06 h); color: oklch(from var(--auy-color-success) 85% 0.1 h); }
+    :where([data-auy-variant="warning"]) { background: oklch(from var(--auy-color-warning) 25% 0.06 h); color: oklch(from var(--auy-color-warning) 85% 0.12 h); }
+    :where([data-auy-variant="error"]) { background: oklch(from var(--auy-color-error) 25% 0.06 h); color: oklch(from var(--auy-color-error) 85% 0.1 h); }
   }
 
   @media (forced-colors: active) {
-    :where(.alert) { border: 1px solid CanvasText; }
-    :where(.alert__dismiss) { border: 1px solid ButtonText; }
+    :where([data-auy="alert"]) { border: 1px solid CanvasText; }
+    :where([data-auy="alert"] [data-auy-part="dismiss"]) { border: 1px solid ButtonText; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    :where(.alert) { transition: none; }
+    :where([data-auy="alert"]) { transition: none; }
   }
 
   @media print {
-    :where(.alert__dismiss) { display: none; }
+    :where([data-auy="alert"] [data-auy-part="dismiss"]) { display: none; }
   }
 }

@@ -1,5 +1,6 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { AuyLightElement } from '../_internal/AuyLightElement.base.ts';
 
 const metaStyles = css`
   :host { display: none; }
@@ -7,10 +8,7 @@ const metaStyles = css`
 
 /** Componente para gerenciar metadados HTML (title, meta tags, Open Graph, Twitter Cards e JSON-LD). */
 @customElement('auy-comp-metadata')
-export class AuyCompMetadata extends LitElement {
-  override createRenderRoot() {
-    return this;
-  }
+export class AuyCompMetadata extends AuyLightElement {
 
   /** Título da página. */
   @property({ type: String }) title = '';

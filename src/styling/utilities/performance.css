@@ -1,22 +1,22 @@
 @layer utilities {
-  .content-visibility-auto {
+  [data-auy-ut~="content-visibility-auto"] {
     content-visibility: auto;
     contain-intrinsic-size: 1px 200px;
   }
 
-  .contain-layout-style {
+  [data-auy-ut~="contain-layout-style"] {
     contain: layout style;
   }
 
-  .contain-strict {
+  [data-auy-ut~="contain-strict"] {
     contain: strict;
   }
 
-  .contain-content {
+  [data-auy-ut~="contain-content"] {
     contain: content;
   }
 
-  .content-visibility-hidden {
+  [data-auy-ut~="content-visibility-hidden"] {
     content-visibility: hidden;
   }
 }

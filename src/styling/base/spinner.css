@@ -1,5 +1,5 @@
 @layer base {
-  :where(.spinner) {
+  :where([data-auy="spinner"]) {
     display: inline-flex;
     inline-size: var(--spinner-size, var(--auy-spinner-size, 1.5rem));
     block-size: var(--spinner-size, var(--auy-spinner-size, 1.5rem));
@@ -10,6 +10,6 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    :where(.spinner) { animation-duration: 0s; }
+    :where([data-auy="spinner"]) { animation-duration: 0s; }
   }
 }

@@ -1,5 +1,5 @@
 @layer base {
-  :where(.card) {
+  :where([data-auy="card"]) {
     display: flex;
     flex-direction: column;
     border-radius: var(--auy-radius-lg);
@@ -11,14 +11,14 @@
     gap: var(--auy-space-sm);
   }
 
-  :where(.card--elevated) {
+  :where([data-auy-variant="elevated"]) {
     box-shadow: var(--auy-shadow-sm);
   }
-  :where(.card--outlined) {
+  :where([data-auy-variant="outlined"]) {
     border: 1px solid var(--auy-color-border);
   }
 
-  :where(.card > img, .card > picture, .card__media) {
+  :where([data-auy="card"] > img, [data-auy="card"] > picture, [data-auy="card"] [data-auy-part="media"]) {
     display: block;
     inline-size: calc(100% + var(--auy-space-lg) * 2);
     max-inline-size: none;
@@ -26,31 +26,31 @@
     aspect-ratio: 16 / 9;
     object-fit: cover;
   }
-  :where(.card > img:first-child, .card > picture:first-child, .card__media:first-child) {
+  :where([data-auy="card"] > img:first-child, [data-auy="card"] > picture:first-child, [data-auy="card"] [data-auy-part="media"]:first-child) {
     margin-block-start: calc(-1 * var(--auy-space-lg));
     border-start-start-radius: var(--auy-radius-lg);
     border-start-end-radius: var(--auy-radius-lg);
   }
-  :where(.card > img:last-child, .card > picture:last-child, .card__media:last-child) {
+  :where([data-auy="card"] > img:last-child, [data-auy="card"] > picture:last-child, [data-auy="card"] [data-auy-part="media"]:last-child) {
     margin-block-end: calc(-1 * var(--auy-space-lg));
     border-end-start-radius: var(--auy-radius-lg);
     border-end-end-radius: var(--auy-radius-lg);
   }
 
-  :where(.card__header) {
+  :where([data-auy="card"] [data-auy-part="header"]) {
     display: flex;
     flex-direction: column;
     gap: var(--auy-space-xs);
   }
 
-  :where(.card__body) {
+  :where([data-auy="card"] [data-auy-part="body"]) {
     display: flex;
     flex-direction: column;
     gap: var(--auy-space-sm);
     flex: 1 0 auto;
   }
 
-  :where(.card__footer) {
+  :where([data-auy="card"] [data-auy-part="footer"]) {
     display: flex;
     flex-wrap: wrap;
     gap: var(--auy-space-sm);
@@ -58,7 +58,7 @@
     margin-block-start: var(--auy-space-sm);
   }
 
-  :where(.card__title) {
+  :where([data-auy="card"] [data-auy-part="title"]) {
     font-size: var(--auy-text-lg);
     font-weight: 600;
     margin: 0;
@@ -66,46 +66,46 @@
     color: var(--auy-color-text);
   }
 
-  :where(.card__subtitle) {
+  :where([data-auy="card"] [data-auy-part="subtitle"]) {
     font-size: var(--auy-text-sm);
     color: var(--auy-color-text-muted);
     margin: 0;
     line-height: 1.4;
   }
 
-  :where(.card__description) {
+  :where([data-auy="card"] [data-auy-part="description"]) {
     font-size: var(--auy-text-sm);
     color: var(--auy-color-text-muted);
     margin: 0;
     line-height: 1.6;
   }
 
-  :where(a.card) {
+  :where(a[data-auy="card"]) {
     text-decoration: none;
     color: inherit;
     cursor: pointer;
     touch-action: manipulation;
   }
-  :where(a.card):hover {
+  :where(a[data-auy="card"]):hover {
     transform: translateY(-0.125rem);
     box-shadow: var(--auy-shadow-md);
   }
-  :where(a.card):focus-visible {
+  :where(a[data-auy="card"]):focus-visible {
     outline: 0.125rem solid var(--auy-color-primary);
     outline-offset: 0.125rem;
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    :where(.card) {
+    :where([data-auy="card"]) {
       transition: transform var(--auy-transition), box-shadow var(--auy-transition), border-color var(--auy-transition);
     }
   }
 
   @media (forced-colors: active) {
-    :where(a.card) { border: 1px solid ButtonText; }
+    :where(a[data-auy="card"]) { border: 1px solid ButtonText; }
   }
 
   @media print {
-    :where(.card) { break-inside: avoid; }
+    :where([data-auy="card"]) { break-inside: avoid; }
   }
 }

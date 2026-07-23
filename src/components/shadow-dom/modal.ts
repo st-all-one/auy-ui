@@ -1,6 +1,7 @@
-import { LitElement, html, css, nothing } from 'lit';
+import { html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+import { AuyShadowElement } from '../_internal/AuyShadowElement.base.ts';
 import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
 
 type ModalVariant = 'default' | 'info' | 'success' | 'warning' | 'error';
@@ -30,12 +31,10 @@ const VARIANT_ICONS: Record<ModalVariant, string> = {
  * @csspart divider - Linha divisória
  */
 @customElement('auy-comp-modal')
-export class AuyCompModal extends StyleCustomizableMixin(LitElement) {
+export class AuyCompModal extends StyleCustomizableMixin(AuyShadowElement) {
   static override get observedDataEvents(): string[] {
     return ['open', 'close']
   }
-
-  static override shadowRootOptions: ShadowRootInit = { mode: 'open', delegatesFocus: true };
 
   static override styles = css`
     @layer components {
@@ -80,26 +79,26 @@ export class AuyCompModal extends StyleCustomizableMixin(LitElement) {
         transition: background 0.2s ease;
       }
 
-      dialog[data-size="sm"] {
+      dialog[data-auy-size="sm"] {
         inline-size: min(calc(100% - 2rem), 24rem);
       }
 
-      dialog[data-size="lg"] {
+      dialog[data-auy-size="lg"] {
         inline-size: min(calc(100% - 2rem), 48rem);
       }
 
-      dialog[data-size="xl"] {
+      dialog[data-auy-size="xl"] {
         inline-size: min(calc(100% - 2rem), 64rem);
       }
 
-      dialog[data-size="full"] {
+      dialog[data-auy-size="full"] {
         inline-size: min(calc(100% - 2rem), calc(100% - 2rem));
         block-size: min(calc(100dvh - 2rem), 90dvh);
         border-radius: var(--auy-radius-md);
         max-block-size: calc(100dvh - 2rem);
       }
 
-      .head {
+      [data-auy-part="head"] {
         display: flex;
         align-items: flex-start;
         gap: var(--auy-space-md);
@@ -107,7 +106,7 @@ export class AuyCompModal extends StyleCustomizableMixin(LitElement) {
         padding-block-end: var(--auy-space-sm);
       }
 
-      .head-icon {
+      [data-auy-part="head-icon"] {
         flex-shrink: 0;
         display: inline-flex;
         align-items: center;
@@ -116,24 +115,24 @@ export class AuyCompModal extends StyleCustomizableMixin(LitElement) {
         block-size: 1.75rem;
         margin-block-start: 0.125rem;
       }
-      .head-icon svg {
+      [data-auy-part="head-icon"] svg {
         inline-size: 100%;
         block-size: 100%;
       }
 
-      .head-icon--info { color: var(--auy-color-info); }
-      .head-icon--success { color: var(--auy-color-success); }
-      .head-icon--warning { color: var(--auy-color-warning); }
-      .head-icon--error { color: var(--auy-color-error); }
+      [data-auy-part="head-icon"][data-auy-variant="info"] { color: var(--auy-color-info); }
+      [data-auy-part="head-icon"][data-auy-variant="success"] { color: var(--auy-color-success); }
+      [data-auy-part="head-icon"][data-auy-variant="warning"] { color: var(--auy-color-warning); }
+      [data-auy-part="head-icon"][data-auy-variant="error"] { color: var(--auy-color-error); }
 
-      .head-body {
+      [data-auy-part="head-body"] {
         flex: 1;
         display: flex;
         flex-direction: column;
         gap: var(--auy-space-xs);
       }
 
-      .title {
+      [data-auy-part="title"] {
         font-size: var(--auy-text-lg);
         font-weight: var(--auy-font-weight-semibold);
         line-height: 1.4;
@@ -141,14 +140,14 @@ export class AuyCompModal extends StyleCustomizableMixin(LitElement) {
         margin: 0;
       }
 
-      .description {
+      [data-auy-part="description"] {
         font-size: var(--auy-text-sm);
         color: var(--auy-color-text-muted);
         line-height: 1.5;
         margin: 0;
       }
 
-      .close {
+      [data-auy-part="close"] {
         flex-shrink: 0;
         min-inline-size: 2.75rem;
         min-block-size: 2.75rem;
@@ -167,31 +166,31 @@ export class AuyCompModal extends StyleCustomizableMixin(LitElement) {
         touch-action: manipulation;
         transition: opacity var(--auy-transition-fast), background var(--auy-transition-fast), color var(--auy-transition-fast);
       }
-      .close:hover {
+      [data-auy-part="close"]:hover {
         opacity: 1;
         background: color-mix(in oklch, var(--auy-color-border) 15%, transparent);
         color: var(--auy-color-text);
       }
-      .close:focus-visible {
+      [data-auy-part="close"]:focus-visible {
         outline: 0.125rem solid var(--auy-color-primary);
         outline-offset: 0.125rem;
       }
 
-      .divider {
+      [data-auy-part="divider"] {
         border: none;
         border-block-start: 1px solid var(--auy-color-border);
         margin: 0;
       }
 
-      .body {
+      [data-auy-part="body"] {
         padding: var(--auy-space-sm) var(--auy-space-lg) var(--auy-space-lg);
       }
 
-      .body--no-title {
+      [data-auy-part="body"][data-auy-state="no-title"] {
         padding-block-start: var(--auy-space-lg);
       }
 
-      .footer {
+      [data-auy-part="footer"] {
         padding: var(--auy-space-lg);
         padding-block-start: var(--auy-space-md);
         display: flex;
@@ -212,7 +211,7 @@ export class AuyCompModal extends StyleCustomizableMixin(LitElement) {
         dialog {
           border: 1px solid CanvasText;
         }
-        .close {
+        [data-auy-part="close"] {
           border: 1px solid ButtonText;
         }
       }
@@ -332,7 +331,7 @@ export class AuyCompModal extends StyleCustomizableMixin(LitElement) {
     const icon = VARIANT_ICONS[this.variant];
     if (!icon) return nothing;
     return html`
-      <span part="icon" class="head-icon head-icon--${this.variant}">${unsafeHTML(icon)}</span>
+      <span part="icon" data-auy-part="head-icon" data-auy-variant=${this.variant}>${unsafeHTML(icon)}</span>
     `;
   }
 
@@ -345,33 +344,33 @@ export class AuyCompModal extends StyleCustomizableMixin(LitElement) {
         role="dialog"
         aria-modal="true"
         aria-label=${this.title || nothing}
-        data-size=${this.size}
+        data-auy-size=${this.size}
         @close=${this._handleDialogClose}
         @cancel=${this._handleCancel}
         @click=${this._handleOverlayClick}
       >
         ${hasHeader ? html`
-          <div part="header" class="head">
+          <div part="header" data-auy-part="head">
             ${this._renderIcon()}
-            <div class="head-body">
+            <div data-auy-part="head-body">
               <slot name="header">
-                <h2 class="title" part="title">${this.title}</h2>
+                <h2 data-auy-part="title" part="title">${this.title}</h2>
                 ${this.description ? html`
-                  <p class="description" part="description">${this.description}</p>
+                  <p data-auy-part="description" part="description">${this.description}</p>
                 ` : ''}
               </slot>
             </div>
             ${this.closable ? html`
-              <button part="close-button" class="close" aria-label="Fechar" @click=${this._close}>&times;</button>
+              <button part="close-button" data-auy-part="close" aria-label="Fechar" @click=${this._close}>&times;</button>
             ` : ''}
           </div>
-          <hr class="divider" part="divider" />
+          <hr data-auy-part="divider" part="divider" />
         ` : ''}
-        <div part="body" class="body ${hasHeader ? '' : 'body--no-title'}">
+        <div part="body" data-auy-part="body" data-auy-state=${!hasHeader ? 'no-title' : nothing}>
           <slot></slot>
         </div>
-        <hr class="divider" part="divider" />
-        <div part="footer" class="footer">
+        <hr data-auy-part="divider" part="divider" />
+        <div part="footer" data-auy-part="footer">
           <slot name="footer"></slot>
         </div>
       </dialog>

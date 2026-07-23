@@ -70,13 +70,13 @@
   }
 
   /* ── Empty state ── */
-  :where(.table-empty) {
+  :where([data-auy="table-empty"]) {
     text-align: center;
     padding: var(--auy-space-xl) var(--auy-space-md);
     color: var(--auy-color-text-muted);
     font-size: var(--auy-text-sm);
   }
-  :where(.table-empty__icon) {
+  :where([data-auy="table-empty"] [data-auy-part="icon"]) {
     font-size: var(--auy-text-3xl);
     display: block;
     margin-block-end: var(--auy-space-sm);

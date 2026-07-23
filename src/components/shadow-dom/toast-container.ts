@@ -1,5 +1,6 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { AuyShadowElement } from '../_internal/AuyShadowElement.base.ts';
 import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
 
 /** Representa um toast individual dentro do container. */
@@ -12,7 +13,7 @@ interface ToastItem {
 
 /** Container gerenciador de toasts com posicionamento fixo e auto-dismiss. */
 @customElement('auy-comp-toast-container')
-export class AuyCompToastContainer extends StyleCustomizableMixin(LitElement) {
+export class AuyCompToastContainer extends StyleCustomizableMixin(AuyShadowElement) {
   static override styles = css`
     @layer components {
       :host {
@@ -49,7 +50,7 @@ export class AuyCompToastContainer extends StyleCustomizableMixin(LitElement) {
         translate: -50% 0;
       }
 
-      .toast {
+      [data-auy="toast"] {
         display: flex;
         align-items: center;
         gap: var(--auy-space-sm);
@@ -66,34 +67,34 @@ export class AuyCompToastContainer extends StyleCustomizableMixin(LitElement) {
         border-inline-start: 3px solid var(--auy-color-info);
       }
 
-      .toast--info {
+      [data-auy-variant="info"] {
         background: oklch(from var(--auy-color-info) 95% 0.04 h);
         border-inline-start-color: var(--auy-color-info);
       }
 
-      .toast--success {
+      [data-auy-variant="success"] {
         background: oklch(from var(--auy-color-success) 95% 0.04 h);
         border-inline-start-color: var(--auy-color-success);
       }
 
-      .toast--error {
+      [data-auy-variant="error"] {
         background: oklch(from var(--auy-color-error) 95% 0.04 h);
         border-inline-start-color: var(--auy-color-error);
       }
 
-      .toast--warning {
+      [data-auy-variant="warning"] {
         background: oklch(from var(--auy-color-warning) 95% 0.04 h);
         border-inline-start-color: var(--auy-color-warning);
       }
 
       @media (prefers-color-scheme: dark) {
-        .toast--info { background: oklch(from var(--auy-color-info) 25% 0.06 h); }
-        .toast--success { background: oklch(from var(--auy-color-success) 25% 0.06 h); }
-        .toast--error { background: oklch(from var(--auy-color-error) 25% 0.06 h); }
-        .toast--warning { background: oklch(from var(--auy-color-warning) 25% 0.06 h); }
+        [data-auy-variant="info"] { background: oklch(from var(--auy-color-info) 25% 0.06 h); }
+        [data-auy-variant="success"] { background: oklch(from var(--auy-color-success) 25% 0.06 h); }
+        [data-auy-variant="error"] { background: oklch(from var(--auy-color-error) 25% 0.06 h); }
+        [data-auy-variant="warning"] { background: oklch(from var(--auy-color-warning) 25% 0.06 h); }
       }
 
-      .toast.removing {
+      [data-auy="toast"][data-auy-state="removing"] {
         animation: toast-out var(--auy-transition, 200ms) ease forwards;
       }
 
@@ -119,11 +120,11 @@ export class AuyCompToastContainer extends StyleCustomizableMixin(LitElement) {
         }
       }
 
-      :host([position*="left"]) .toast {
+      :host([position*="left"]) [data-auy="toast"] {
         animation-name: toast-in-left;
       }
 
-      :host([position*="left"]) .toast.removing {
+      :host([position*="left"]) [data-auy="toast"][data-auy-state="removing"] {
         animation-name: toast-out-left;
       }
 
@@ -149,7 +150,7 @@ export class AuyCompToastContainer extends StyleCustomizableMixin(LitElement) {
         }
       }
 
-      .dismiss {
+      [data-auy-part="dismiss"] {
         all: unset;
         display: inline-flex;
         align-items: center;
@@ -166,32 +167,32 @@ export class AuyCompToastContainer extends StyleCustomizableMixin(LitElement) {
         touch-action: manipulation;
       }
 
-      .dismiss:hover {
+      [data-auy-part="dismiss"]:hover {
         opacity: 1;
       }
 
-      .dismiss:focus-visible {
+      [data-auy-part="dismiss"]:focus-visible {
         outline: 0.125rem solid var(--auy-color-primary);
         outline-offset: 0.125rem;
       }
 
-      .message {
+      [data-auy-part="message"] {
         flex: 1;
         min-inline-size: 0;
       }
 
       @media (forced-colors: active) {
-        .toast {
+        [data-auy="toast"] {
           border: 1px solid CanvasText;
         }
-        .dismiss:focus-visible {
+        [data-auy-part="dismiss"]:focus-visible {
           outline: 2px solid Highlight;
           outline-offset: 2px;
         }
       }
 
       @media (prefers-reduced-motion: reduce) {
-        .toast {
+        [data-auy="toast"] {
           animation: none;
         }
       }
@@ -229,7 +230,7 @@ export class AuyCompToastContainer extends StyleCustomizableMixin(LitElement) {
   dismiss(id: string) {
     const el = this.shadowRoot?.querySelector(`[data-id="${id}"]`);
     if (el) {
-      el.classList.add('removing');
+      el.setAttribute('data-auy-state', 'removing');
       setTimeout(() => {
         this._toasts = this._toasts.filter(t => t.id !== id);
       }, 200);
@@ -259,16 +260,16 @@ export class AuyCompToastContainer extends StyleCustomizableMixin(LitElement) {
       ${this._toasts.map(t => html`
         <div
           part="toast"
-          class="toast toast--${t.variant}"
+          data-auy="toast" data-auy-variant=${t.variant}
           data-id=${t.id}
           role="alert"
           aria-live="polite"
         >
           <span part="icon" aria-hidden="true">${this._getIcon(t.variant)}</span>
-          <span part="message" class="message">${t.message}</span>
+          <span part="message" data-auy-part="message">${t.message}</span>
           <button
             part="dismiss"
-            class="dismiss"
+            data-auy-part="dismiss"
             @click=${() => this._dismissToast(t.id)}
             aria-label="Fechar"
           >&times;</button>

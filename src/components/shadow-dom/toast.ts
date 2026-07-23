@@ -1,6 +1,6 @@
-import { LitElement, html, css } from 'lit';
+import { html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
+import { AuyShadowElement } from '../_internal/AuyShadowElement.base.ts';
 import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
 
 /**
@@ -25,7 +25,7 @@ import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts
  * @csspart dismiss - The dismiss button.
  */
 @customElement('auy-comp-toast')
-export class AuyCompToast extends StyleCustomizableMixin(LitElement) {
+export class AuyCompToast extends StyleCustomizableMixin(AuyShadowElement) {
   static override get observedDataEvents(): string[] {
     return ['show', 'hide']
   }
@@ -37,7 +37,7 @@ export class AuyCompToast extends StyleCustomizableMixin(LitElement) {
         contain: layout style;
       }
 
-      .toast {
+      [data-auy="toast"] {
         display: none;
         align-items: center;
         gap: var(--auy-space-sm);
@@ -55,20 +55,20 @@ export class AuyCompToast extends StyleCustomizableMixin(LitElement) {
                     opacity var(--auy-transition-base);
       }
 
-      .toast--open {
+      [data-auy-state="open"] {
         display: flex;
         transform: translateX(0);
         opacity: 1;
       }
 
       @starting-style {
-        .toast--open {
+        [data-auy-state="open"] {
           transform: translateX(100%);
           opacity: 0;
         }
       }
 
-      .icon {
+      [data-auy-part="icon"] {
         display: inline-flex;
         align-items: center;
         flex-shrink: 0;
@@ -76,18 +76,18 @@ export class AuyCompToast extends StyleCustomizableMixin(LitElement) {
         block-size: 1.25em;
       }
 
-      .icon svg {
+      [data-auy-part="icon"] svg {
         inline-size: 100%;
         block-size: 100%;
         fill: currentColor;
       }
 
-      .message {
+      [data-auy-part="message"] {
         flex: 1;
         min-inline-size: 0;
       }
 
-      .dismiss {
+      [data-auy-part="dismiss"] {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -108,60 +108,60 @@ export class AuyCompToast extends StyleCustomizableMixin(LitElement) {
         touch-action: manipulation;
       }
 
-      .dismiss:hover {
+      [data-auy-part="dismiss"]:hover {
         opacity: 1;
       }
 
-      .dismiss:focus-visible {
+      [data-auy-part="dismiss"]:focus-visible {
         outline: 0.125rem solid var(--auy-color-primary);
         outline-offset: 0.125rem;
       }
 
-      .toast--info {
+      [data-auy-variant="info"] {
         border-inline-start: 3px solid var(--auy-color-info);
         background: oklch(from var(--auy-color-info) 95% 0.04 h);
       }
 
-      .toast--success {
+      [data-auy-variant="success"] {
         border-inline-start: 3px solid var(--auy-color-success);
         background: oklch(from var(--auy-color-success) 95% 0.04 h);
       }
 
-      .toast--error {
+      [data-auy-variant="error"] {
         border-inline-start: 3px solid var(--auy-color-error);
         background: oklch(from var(--auy-color-error) 95% 0.04 h);
       }
 
-      .toast--warning {
+      [data-auy-variant="warning"] {
         border-inline-start: 3px solid var(--auy-color-warning);
         background: oklch(from var(--auy-color-warning) 95% 0.04 h);
       }
 
       @media (prefers-color-scheme: dark) {
-        .toast--info { background: oklch(from var(--auy-color-info) 25% 0.06 h); }
-        .toast--success { background: oklch(from var(--auy-color-success) 25% 0.06 h); }
-        .toast--error { background: oklch(from var(--auy-color-error) 25% 0.06 h); }
-        .toast--warning { background: oklch(from var(--auy-color-warning) 25% 0.06 h); }
+        [data-auy-variant="info"] { background: oklch(from var(--auy-color-info) 25% 0.06 h); }
+        [data-auy-variant="success"] { background: oklch(from var(--auy-color-success) 25% 0.06 h); }
+        [data-auy-variant="error"] { background: oklch(from var(--auy-color-error) 25% 0.06 h); }
+        [data-auy-variant="warning"] { background: oklch(from var(--auy-color-warning) 25% 0.06 h); }
       }
 
       @media (prefers-reduced-motion: reduce) {
-        .toast {
+        [data-auy="toast"] {
           transition: none;
         }
       }
 
       @media (forced-colors: active) {
-        .toast {
+        [data-auy="toast"] {
           border: 1px solid CanvasText;
         }
 
-        .dismiss {
+        [data-auy-part="dismiss"] {
           border: 1px solid ButtonText;
         }
       }
 
       @media print {
-        .toast {
+        [data-auy="toast"] {
           display: flex !important;
           transform: none !important;
           opacity: 1 !important;
@@ -255,20 +255,20 @@ export class AuyCompToast extends StyleCustomizableMixin(LitElement) {
       ${this._renderCustomStyles()}
       <div
         part="toast"
-        class=${classMap({ toast: true, 'toast--open': this.open, [`toast--${this.variant}`]: true })}
+        data-auy="toast" data-auy-state=${this.open ? 'open' : nothing} data-auy-variant=${this.variant}
         role="alert"
         aria-atomic="true"
       >
-        <span part="icon" class="icon">
+        <span part="icon" data-auy-part="icon">
           <slot name="icon">
             ${this._renderIcon()}
           </slot>
         </span>
-        <span part="message" class="message">
+        <span part="message" data-auy-part="message">
           <slot></slot>
         </span>
         ${this.dismissible
-          ? html`<button part="dismiss" class="dismiss" aria-label="Fechar" @click=${this._dismiss}>&times;</button>`
+          ? html`<button part="dismiss" data-auy-part="dismiss" aria-label="Fechar" @click=${this._dismiss}>&times;</button>`
           : ''}
       </div>
     `;

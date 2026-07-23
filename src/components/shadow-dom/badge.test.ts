@@ -12,24 +12,24 @@ describe('AuyCompBadge', () => {
   it('aplica variante', async () => {
     const el = await fixture<HTMLElement>(html`<auy-comp-badge text="Erro" variant="error"></auy-comp-badge>`);
     const badge = el.shadowRoot!.querySelector('[part="badge"]');
-    expect(badge!.getAttribute('data-badge-variant')).to.equal('error');
+    expect(badge!.getAttribute('data-auy-badge-variant')).to.equal('error');
   });
 
   it('aplica outline', async () => {
     const el = await fixture<HTMLElement>(html`<auy-comp-badge text="Teste" outline></auy-comp-badge>`);
     const badge = el.shadowRoot!.querySelector('[part="badge"]');
-    expect(badge!.hasAttribute('data-badge-outline')).to.be.true;
+    expect(badge!.hasAttribute('data-auy-badge-outline')).to.be.true;
   });
 
   it('aplica pill', async () => {
     const el = await fixture<HTMLElement>(html`<auy-comp-badge text="Pill" pill></auy-comp-badge>`);
     const badge = el.shadowRoot!.querySelector('[part="badge"]');
-    expect(badge!.hasAttribute('data-badge-pill')).to.be.true;
+    expect(badge!.hasAttribute('data-auy-badge-pill')).to.be.true;
   });
 
-  it('não define data-badge-variant para default', async () => {
+  it('não define data-auy-badge-variant para default', async () => {
     const el = await fixture<HTMLElement>(html`<auy-comp-badge text="Padrão"></auy-comp-badge>`);
     const badge = el.shadowRoot!.querySelector('[part="badge"]');
-    expect(badge!.hasAttribute('data-badge-variant')).to.be.false;
+    expect(badge!.hasAttribute('data-auy-badge-variant')).to.be.false;
   });
 });

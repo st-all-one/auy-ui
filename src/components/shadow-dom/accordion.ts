@@ -1,6 +1,7 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+import { AuyShadowElement } from '../_internal/AuyShadowElement.base.ts';
 import { ICONS } from '../_internal/icons.ts';
 import { DataAwareMixin } from '../_internal/data-aware.mixin.ts';
 import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
@@ -23,11 +24,7 @@ export interface AccordionItem {
  * @csspart summary - Cabeçalho clicável de cada item
  */
 @customElement('auy-comp-accordion')
-export class AuyCompAccordion extends StyleCustomizableMixin(DataAwareMixin(LitElement)) {
-  static override shadowRootOptions = {
-    ...LitElement.shadowRootOptions,
-    delegatesFocus: true,
-  };
+export class AuyCompAccordion extends StyleCustomizableMixin(DataAwareMixin(AuyShadowElement)) {
 
   static override get observedDataEvents(): string[] {
     return ['toggle']
@@ -41,11 +38,11 @@ export class AuyCompAccordion extends StyleCustomizableMixin(DataAwareMixin(LitE
         container-type: inline-size;
       }
 
-      .accordion-item {
+      [data-auy-part="accordion-item"] {
         border-block-end: 1px solid var(--auy-color-border);
       }
 
-      .accordion-item:first-child {
+      [data-auy-part="accordion-item"]:first-child {
         border-block-start: 1px solid var(--auy-color-border);
       }
 
@@ -79,19 +76,19 @@ export class AuyCompAccordion extends StyleCustomizableMixin(DataAwareMixin(LitE
         outline-offset: -0.125rem;
       }
 
-      .title-text {
+      [data-auy-part="title-text"] {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
       }
 
       @container (max-width: 300px) {
-        .title-text {
+        [data-auy-part="title-text"] {
           max-inline-size: 15ch;
         }
       }
 
-      .icon {
+      [data-auy-part="icon"] {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -101,32 +98,32 @@ export class AuyCompAccordion extends StyleCustomizableMixin(DataAwareMixin(LitE
         transition: transform var(--auy-transition-fast);
       }
 
-      .icon svg {
+      [data-auy-part="icon"] svg {
         inline-size: 100%;
         block-size: 100%;
         fill: none;
         stroke: currentColor;
       }
 
-      .icon--chevron {
+      [data-auy-part="icon"][data-auy-variant="chevron"] {
         transform: rotate(0deg);
       }
 
-      details[open] .icon--chevron {
+      details[open] [data-auy-part="icon"][data-auy-variant="chevron"] {
         transform: rotate(180deg);
       }
 
-      details[open] .icon--plus {
+      details[open] [data-auy-part="icon"][data-auy-variant="plus"] {
         transform: rotate(45deg);
       }
 
-      .content {
+      [data-auy-part="content"] {
         height: 0;
         overflow: hidden;
         transition: height var(--auy-transition);
       }
 
-      .content-inner {
+      [data-auy-part="content-inner"] {
         padding: 0 var(--auy-space-md) var(--auy-space-md);
         font-size: var(--auy-text-sm);
         color: var(--auy-color-text-muted);
@@ -134,16 +131,16 @@ export class AuyCompAccordion extends StyleCustomizableMixin(DataAwareMixin(LitE
       }
 
       @media (prefers-reduced-motion: reduce) {
-        .icon { transition: none; }
-        .content { transition: none; }
+        [data-auy-part="icon"] { transition: none; }
+        [data-auy-part="content"] { transition: none; }
       }
 
       @media (forced-colors: active) {
-        .accordion-item {
+        [data-auy-part="accordion-item"] {
           border: 1px solid ButtonText;
           border-block-end: none;
         }
-        .accordion-item:last-child {
+        [data-auy-part="accordion-item"]:last-child {
           border-block-end: 1px solid ButtonText;
         }
         summary:focus-visible {
@@ -153,10 +150,10 @@ export class AuyCompAccordion extends StyleCustomizableMixin(DataAwareMixin(LitE
       }
 
       @media print {
-        .accordion-item {
+        [data-auy-part="accordion-item"] {
           break-inside: avoid;
         }
-        .content {
+        [data-auy-part="content"] {
           height: auto !important;
         }
       }
@@ -189,10 +186,10 @@ export class AuyCompAccordion extends StyleCustomizableMixin(DataAwareMixin(LitE
   }
 
   private _animateItem(id: string, open: boolean) {
-    const content = this.shadowRoot?.querySelector(`.content[data-item="${id}"]`) as HTMLElement | null;
+    const content = this.shadowRoot?.querySelector(`[data-auy-part="content"][data-item="${id}"]`) as HTMLElement | null;
     if (!content) return;
 
-    const inner = content.querySelector('.content-inner') as HTMLElement | null;
+    const inner = content.querySelector('[data-auy-part="content-inner"]') as HTMLElement | null;
     if (!inner) return;
 
     const height = inner.scrollHeight;
@@ -237,15 +234,15 @@ export class AuyCompAccordion extends StyleCustomizableMixin(DataAwareMixin(LitE
     return html`
       ${this._renderCustomStyles()}
       ${this.items.map(item => html`
-        <details class="accordion-item" ?open=${this._openMap[item.id] ?? false}>
+        <details data-auy-part="accordion-item" ?open=${this._openMap[item.id] ?? false}>
           <summary part="summary" @click=${(e: Event) => { e.preventDefault(); this._toggle(item.id); }}>
-            <span class="icon icon--${this.icon}" aria-hidden="true">
+            <span data-auy-part="icon" data-auy-variant=${this.icon} aria-hidden="true">
               ${this.icon === 'chevron' ? unsafeHTML(ICONS.chevronDown) : unsafeHTML(ICONS.plus)}
             </span>
-            <span class="title-text">${item.title}</span>
+            <span data-auy-part="title-text">${item.title}</span>
           </summary>
-          <div class="content" data-item="${item.id}">
-            <div class="content-inner">
+          <div data-auy-part="content" data-item="${item.id}">
+            <div data-auy-part="content-inner">
               <slot name="item-${item.id}">${item.content}</slot>
             </div>
           </div>

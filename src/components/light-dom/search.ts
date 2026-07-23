@@ -1,7 +1,8 @@
-import { LitElement, html } from 'lit';
+import { html, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { keyed } from 'lit/directives/keyed.js';
 import { DataAwareMixin } from '../_internal/data-aware.mixin.ts';
+import { AuyLightElement } from '../_internal/AuyLightElement.base.ts';
 
 function highlight(text: string, query: string) {
   if (!query) return [text];
@@ -17,7 +18,7 @@ function highlight(text: string, query: string) {
 const searchStyles = `
   auy-comp-search { display: block; }
 
-  .overlay {
+  [data-auy-part="overlay"] {
     position: fixed;
     inset: 0;
     z-index: var(--auy-z-overlay);
@@ -28,13 +29,13 @@ const searchStyles = `
     padding-block-start: 15dvh;
     animation: overlay-in 200ms ease both;
   }
-  .overlay.open { display: flex; }
+  [data-auy-part="overlay"][data-auy-state="open"] { display: flex; }
 
-  auy-comp-search[position="center"] .overlay {
+  auy-comp-search[position="center"] [data-auy-part="overlay"] {
     align-items: center;
     padding-block-start: 0;
   }
-  auy-comp-search[position="top"] .overlay {
+  auy-comp-search[position="top"] [data-auy-part="overlay"] {
     align-items: flex-start;
     padding-block-start: 5dvh;
   }
@@ -44,7 +45,7 @@ const searchStyles = `
     to { opacity: 1; }
   }
 
-  .panel {
+  [data-auy-part="panel"] {
     background: var(--auy-color-surface);
     border-radius: var(--auy-radius-lg);
     box-shadow: var(--auy-shadow-lg);
@@ -55,24 +56,24 @@ const searchStyles = `
     overflow: hidden;
   }
 
-  auy-comp-search[size="sm"] .panel { inline-size: min(28rem, 90dvw); }
-  auy-comp-search[size="lg"] .panel { inline-size: min(52rem, 90dvw); }
-  auy-comp-search[size="full"] .panel { inline-size: min(60rem, 94dvw); max-block-size: 80dvh; }
+  auy-comp-search[size="sm"] [data-auy-part="panel"] { inline-size: min(28rem, 90dvw); }
+  auy-comp-search[size="lg"] [data-auy-part="panel"] { inline-size: min(52rem, 90dvw); }
+  auy-comp-search[size="full"] [data-auy-part="panel"] { inline-size: min(60rem, 94dvw); max-block-size: 80dvh; }
 
-  auy-comp-search[variant="elevated"] .panel {
+  auy-comp-search[variant="elevated"] [data-auy-part="panel"] {
     box-shadow: 0 1rem 3rem color-mix(in oklch, var(--auy-color-border) 40%, transparent);
   }
 
-  auy-comp-search[variant="bordered"] .panel {
+  auy-comp-search[variant="bordered"] [data-auy-part="panel"] {
     box-shadow: none;
     border: 1px solid var(--auy-color-border);
   }
 
-  auy-comp-search[variant="bordered"] .overlay {
+  auy-comp-search[variant="bordered"] [data-auy-part="overlay"] {
     background: var(--auy-color-overlay, oklch(0% 0 0 / 0.25));
   }
 
-  .input-wrap {
+  [data-auy-part="input-wrap"] {
     display: flex;
     align-items: center;
     gap: var(--auy-space-sm);
@@ -80,7 +81,7 @@ const searchStyles = `
     border-block-end: 1px solid var(--auy-color-border);
   }
 
-  .input-wrap input {
+  [data-auy-part="input-wrap"] input {
     flex: 1;
     border: none;
     outline: none;
@@ -91,15 +92,15 @@ const searchStyles = `
     touch-action: manipulation;
   }
 
-  .icon {
+  [data-auy-part="icon"] {
     display: inline-flex;
     align-items: center;
     color: var(--auy-color-text-muted);
     opacity: 0.5;
   }
-  .icon svg { inline-size: 1.25rem; block-size: 1.25rem; }
+  [data-auy-part="icon"] svg { inline-size: 1.25rem; block-size: 1.25rem; }
 
-  .close-btn {
+  [data-auy-part="close-btn"] {
     all: unset;
     box-sizing: border-box;
     display: inline-flex;
@@ -115,13 +116,13 @@ const searchStyles = `
     flex-shrink: 0;
     touch-action: manipulation;
   }
-  .close-btn:hover { background: color-mix(in srgb, currentColor 10%, transparent); }
-  .close-btn:focus-visible {
+  [data-auy-part="close-btn"]:hover { background: color-mix(in srgb, currentColor 10%, transparent); }
+  [data-auy-part="close-btn"]:focus-visible {
     outline: 0.125rem solid var(--auy-color-primary);
     outline-offset: 0.125rem;
   }
 
-  .hint {
+  [data-auy-part="hint"] {
     display: inline-flex;
     align-items: center;
     padding: 0.125rem 0.375rem;
@@ -132,7 +133,7 @@ const searchStyles = `
     color: var(--auy-color-text-muted);
   }
 
-  .results {
+  [data-auy-part="results"] {
     flex: 1;
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -142,7 +143,7 @@ const searchStyles = `
     margin: 0;
   }
 
-  .result-item {
+  [data-auy-part="result-item"] {
     display: flex;
     align-items: center;
     gap: var(--auy-space-sm);
@@ -151,20 +152,20 @@ const searchStyles = `
     cursor: pointer;
     touch-action: manipulation;
   }
-  .result-item.sel { background: color-mix(in oklch, var(--auy-color-primary) 10%, transparent); }
+  [data-auy-part="result-item"][data-auy-state="selected"] { background: color-mix(in oklch, var(--auy-color-primary) 10%, transparent); }
 
-  .result-content { flex: 1; display: grid; gap: 0.125rem; }
-  .result-label { font-size: var(--auy-text-sm); font-weight: var(--auy-font-weight-medium); color: var(--auy-color-text); }
-  .result-desc { font-size: var(--auy-text-xs); color: var(--auy-color-text-muted); }
-  .result-cat { font-size: var(--auy-text-xs); color: var(--auy-color-primary); }
+  [data-auy-part="result-content"] { flex: 1; display: grid; gap: 0.125rem; }
+  [data-auy-part="result-label"] { font-size: var(--auy-text-sm); font-weight: var(--auy-font-weight-medium); color: var(--auy-color-text); }
+  [data-auy-part="result-desc"] { font-size: var(--auy-text-xs); color: var(--auy-color-text-muted); }
+  [data-auy-part="result-cat"] { font-size: var(--auy-text-xs); color: var(--auy-color-primary); }
 
-  .empty {
+  [data-auy-part="empty"] {
     padding: var(--auy-space-xl);
     text-align: center;
     color: var(--auy-color-text-muted);
   }
 
-  .footer {
+  [data-auy-part="footer"] {
     display: flex;
     gap: var(--auy-space-md);
     padding: var(--auy-space-sm) var(--auy-space-md);
@@ -177,23 +178,19 @@ const searchStyles = `
   search { display: contents; }
 
   @media (forced-colors: active) {
-    .overlay { background: Canvas; }
-    .close-btn:focus-visible { outline: 2px solid Highlight; outline-offset: 2px; }
-    .result-item.sel { background: Highlight; color: HighlightText; }
+    [data-auy-part="overlay"] { background: Canvas; }
+    [data-auy-part="close-btn"]:focus-visible { outline: 2px solid Highlight; outline-offset: 2px; }
+    [data-auy-part="result-item"][data-auy-state="selected"] { background: Highlight; color: HighlightText; }
   }
-  @media (prefers-reduced-motion: reduce) { .overlay { animation: none; } }
-  @media print { .overlay { background: transparent; } }
+  @media (prefers-reduced-motion: reduce) { [data-auy-part="overlay"] { animation: none; } }
+  @media print { [data-auy-part="overlay"] { background: transparent; } }
 `;
 
 /** Componente de busca com overlay, filtro local e suporte a dados remotos. */
 @customElement('auy-comp-search')
-export class AuyCompSearch extends DataAwareMixin(LitElement) {
+export class AuyCompSearch extends DataAwareMixin(AuyLightElement) {
   static override get observedDataEvents(): string[] {
     return ['search-select', 'search-close']
-  }
-
-  override createRenderRoot() {
-    return this;
   }
 
   /** Lista de itens para exibir nos resultados. */
@@ -357,7 +354,7 @@ export class AuyCompSearch extends DataAwareMixin(LitElement) {
   }
 
   private _closeOnOverlay(e: MouseEvent) {
-    if ((e.target as HTMLElement).classList.contains('overlay')) {
+    if ((e.target as HTMLElement).matches('[data-auy-part="overlay"]')) {
       this._close();
     }
   }
@@ -376,11 +373,11 @@ export class AuyCompSearch extends DataAwareMixin(LitElement) {
     const filtered = this._filtered;
     return html`
       <style>${searchStyles}</style>
-      <div class="overlay ${this.open ? 'open' : ''}" @click=${this._closeOnOverlay}>
-        <div class="panel" role="dialog" aria-modal="true" aria-label="Busca">
+      <div data-auy-part="overlay" data-auy-state=${this.open ? 'open' : nothing} @click=${this._closeOnOverlay}>
+        <div data-auy-part="panel" role="dialog" aria-modal="true" aria-label="Busca">
           <search>
-          <div class="input-wrap">
-            <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></span>
+          <div data-auy-part="input-wrap">
+            <span data-auy-part="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></span>
             <input
               .value=${this._query}
               @input=${this._onInput}
@@ -389,14 +386,14 @@ export class AuyCompSearch extends DataAwareMixin(LitElement) {
               aria-label="Buscar"
               ?autofocus=${this.open}
             />
-            <button class="close-btn" @click=${this._close} aria-label="Fechar busca">×</button>
-            <kbd class="hint">ESC</kbd>
+            <button data-auy-part="close-btn" @click=${this._close} aria-label="Fechar busca">×</button>
+            <kbd data-auy-part="hint">ESC</kbd>
           </div>
           ${filtered.length > 0 ? html`
-            <ul class="results" role="listbox">
+            <ul data-auy-part="results" role="listbox">
               ${keyed(this._filtered, filtered.map((item, idx) => html`
                 <li
-                  class="result-item ${this._selectedIndex === idx ? 'sel' : ''}"
+                  data-auy-part="result-item" data-auy-state=${this._selectedIndex === idx ? 'selected' : nothing}
                   role="option"
                   data-index="${idx}"
                   aria-selected=${this._selectedIndex === idx ? 'true' : 'false'}
@@ -404,18 +401,18 @@ export class AuyCompSearch extends DataAwareMixin(LitElement) {
                   @mouseenter=${this._handleMouseEnter}
                 >
                   ${item.icon ? html`<span style="flex-shrink:0;inline-size:1.25rem;block-size:1.25rem;">${item.icon}</span>` : ''}
-                  <div class="result-content">
-                    <span class="result-label">${highlight(item.label, this._query)}</span>
-                    ${item.description ? html`<span class="result-desc">${highlight(item.description, this._query)}</span>` : ''}
+                  <div data-auy-part="result-content">
+                    <span data-auy-part="result-label">${highlight(item.label, this._query)}</span>
+                    ${item.description ? html`<span data-auy-part="result-desc">${highlight(item.description, this._query)}</span>` : ''}
                   </div>
-                  ${item.category ? html`<span class="result-cat">${item.category}</span>` : ''}
+                  ${item.category ? html`<span data-auy-part="result-cat">${item.category}</span>` : ''}
                 </li>
               `))}
             </ul>
           ` : html`
-            <div class="empty">Nenhum resultado encontrado</div>
+            <div data-auy-part="empty">Nenhum resultado encontrado</div>
           `}
-          <div class="footer">
+          <div data-auy-part="footer">
             <span>↑↓ Navegar</span>
             <span>↵ Selecionar</span>
             <span>ESC Fechar</span>

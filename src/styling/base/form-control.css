@@ -1,11 +1,11 @@
 @layer base {
   /* ── Validation states ── */
-  :where(input, select, textarea):user-valid {
+  :where(input, select, textarea):where(:user-valid) {
     border-color: var(--auy-color-success);
     background: color-mix(in oklch, var(--auy-color-success) 4%, transparent);
   }
 
-  :where(input, select, textarea):user-invalid {
+  :where(input, select, textarea):where(:user-invalid) {
     border-color: var(--auy-color-error);
     border-inline-start: 3px solid var(--auy-color-error);
     background: color-mix(in oklch, var(--auy-color-error) 4%, transparent);
@@ -79,7 +79,7 @@
   }
 
   /* ── File dropzone ── */
-  :where(.file-dropzone) {
+  :where([data-auy="file-dropzone"]) {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -93,19 +93,19 @@
     text-align: center;
   }
 
-  :where(.file-dropzone):hover {
+  :where([data-auy="file-dropzone"]):hover {
     border-color: var(--auy-color-primary);
     border-style: solid;
     background: color-mix(in oklch, var(--auy-color-primary) 4%, transparent);
   }
 
-  :where(.file-dropzone):focus-within {
+  :where([data-auy="file-dropzone"]):focus-within {
     outline: 0.125rem solid var(--auy-color-primary);
     outline-offset: 0.125rem;
     border-color: var(--auy-color-primary);
   }
 
-  :where(.file-dropzone > input[type="file"]) {
+  :where([data-auy="file-dropzone"] > input[type="file"]) {
     position: absolute;
     opacity: 0;
     inline-size: 0;
@@ -113,15 +113,15 @@
     pointer-events: none;
   }
 
-  :where(.file-dropzone__icon) {
+  :where([data-auy="file-dropzone"] [data-auy-part="icon"]) {
     color: var(--auy-color-text-muted);
     transition: color 200ms;
   }
-  :where(.file-dropzone):hover .file-dropzone__icon {
+  :where([data-auy="file-dropzone"]):hover [data-auy-part="icon"] {
     color: var(--auy-color-primary);
   }
 
-  :where(.file-dropzone__icon svg) {
+  :where([data-auy="file-dropzone"] [data-auy-part="icon"] svg) {
     display: block;
     inline-size: 2em;
     block-size: 2em;
@@ -132,17 +132,17 @@
     stroke-linejoin: round;
   }
 
-  :where(.file-dropzone__text) {
+  :where([data-auy="file-dropzone"] [data-auy-part="text"]) {
     font-size: var(--auy-text-sm);
     color: var(--auy-color-text);
   }
 
-  :where(.file-dropzone__hint) {
+  :where([data-auy="file-dropzone"] [data-auy-part="hint"]) {
     font-size: var(--auy-text-xs);
     color: var(--auy-color-text-muted);
   }
 
-  :where(.file-dropzone__action) {
+  :where([data-auy="file-dropzone"] [data-auy-part="action"]) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -158,29 +158,29 @@
     cursor: pointer;
     transition: background 200ms, transform 150ms ease;
   }
-  :where(.file-dropzone__action):hover {
+  :where([data-auy="file-dropzone"] [data-auy-part="action"]):hover {
     background: var(--auy-color-primary-hover);
     transform: scale(1.05);
   }
-  :where(.file-dropzone__action):active {
+  :where([data-auy="file-dropzone"] [data-auy-part="action"]):active {
     transform: scale(0.97);
   }
 
   /* ── File alternative: inline ── */
-  :where(.file-dropzone[data-file-style="inline"]) {
+  :where([data-auy="file-dropzone"][data-file-style="inline"]) {
     flex-direction: row;
     padding: var(--auy-space-sm) var(--auy-space-md);
     border-style: solid;
     border-width: 1px;
   }
-  :where(.file-dropzone[data-file-style="inline"]):hover {
+  :where([data-auy="file-dropzone"][data-file-style="inline"]):hover {
     border-style: solid;
   }
-  :where(.file-dropzone[data-file-style="inline"]) .file-dropzone__icon svg {
+  :where([data-auy="file-dropzone"][data-file-style="inline"]) [data-auy-part="icon"] svg {
     inline-size: 1.25em;
     block-size: 1.25em;
   }
-  :where(.file-dropzone[data-file-style="inline"]) .file-dropzone__action {
+  :where([data-auy="file-dropzone"][data-file-style="inline"]) [data-auy-part="action"] {
     margin-block-start: 0;
     margin-inline-start: auto;
   }
@@ -245,12 +245,12 @@
   }
 
   /* ── Input Group ── */
-  :where(.input-group) {
+  :where([data-auy="input-group"]) {
     display: flex;
     align-items: stretch;
     inline-size: 100%;
   }
-  :where(.input-group > .input-group__icon) {
+  :where([data-auy="input-group"] > [data-auy-part="icon"]) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -262,32 +262,32 @@
     line-height: 1;
     flex-shrink: 0;
   }
-  :where(.input-group > .input-group__icon:first-child) {
+  :where([data-auy="input-group"] > [data-auy-part="icon"]:first-child) {
     border-inline-end: none;
     border-start-start-radius: var(--auy-radius-md);
     border-end-start-radius: var(--auy-radius-md);
   }
-  :where(.input-group > .input-group__icon:last-child) {
+  :where([data-auy="input-group"] > [data-auy-part="icon"]:last-child) {
     border-inline-start: none;
     border-start-end-radius: var(--auy-radius-md);
     border-end-end-radius: var(--auy-radius-md);
   }
-  :where(.input-group > input, .input-group > select, .input-group > textarea) {
+  :where([data-auy="input-group"] > input, [data-auy="input-group"] > select, [data-auy="input-group"] > textarea) {
     border-start-start-radius: 0;
     border-end-start-radius: 0;
   }
-  :where(.input-group > .input-group__icon:first-child + input,
-         .input-group > .input-group__icon:first-child + select,
-         .input-group > .input-group__icon:first-child + textarea) {
+  :where([data-auy="input-group"] > [data-auy-part="icon"]:first-child + input,
+         [data-auy="input-group"] > [data-auy-part="icon"]:first-child + select,
+         [data-auy="input-group"] > [data-auy-part="icon"]:first-child + textarea) {
     border-start-start-radius: 0;
     border-end-start-radius: 0;
   }
-  :where(.input-group:has(:focus-visible)) {
+  :where([data-auy="input-group"]:has(:focus-visible)) {
     outline: 0.125rem solid var(--auy-color-primary);
     outline-offset: 0.125rem;
     border-radius: var(--auy-radius-md);
   }
-  :where(.input-group:has(:focus-visible)) > .input-group__icon {
+  :where([data-auy="input-group"]:has(:focus-visible)) > [data-auy-part="icon"] {
     border-color: var(--auy-color-primary);
   }
 

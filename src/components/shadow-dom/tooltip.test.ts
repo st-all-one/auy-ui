@@ -34,7 +34,7 @@ describe('AuyCompTooltip', () => {
     await tick();
     await (el as any).updateComplete;
     const tooltip = el.shadowRoot?.querySelector('[part="tooltip"]');
-    expect(tooltip?.classList.contains('tooltip--bottom')).to.be.true;
+    expect(tooltip?.getAttribute('data-auy-position') === 'bottom').to.be.true;
   });
 
   it('disabled does not show tooltip', async () => {

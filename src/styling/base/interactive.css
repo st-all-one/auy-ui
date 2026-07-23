@@ -93,7 +93,7 @@
     backdrop-filter: blur(4px);
   }
 
-  :where(.dialog-header) {
+  :where([data-auy-part="dialog-header"]) {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -102,11 +102,11 @@
     padding-block-end: 0;
   }
 
-  :where(.dialog-body) {
+  :where([data-auy-part="dialog-body"]) {
     padding: var(--auy-space-md);
   }
 
-  :where(.dialog-footer) {
+  :where([data-auy-part="dialog-footer"]) {
     padding: var(--auy-space-md);
     padding-block-start: 0;
     display: flex;
@@ -114,7 +114,7 @@
     gap: var(--auy-space-md);
   }
 
-  :where(.dialog-header button[aria-label="Close"]) {
+  :where([data-auy-part="dialog-header"] button[aria-label="Close"]) {
     min-inline-size: 2.75rem;
     min-block-size: 2.75rem;
     display: inline-flex;
@@ -129,7 +129,7 @@
   :where(dialog[role="alertdialog"]) {
     max-inline-size: 28rem;
   }
-  :where(dialog[role="alertdialog"] .dialog-body) {
+  :where(dialog[role="alertdialog"] [data-auy-part="dialog-body"]) {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -137,7 +137,7 @@
     gap: var(--auy-space-sm);
     padding-block: var(--auy-space-lg);
   }
-  :where(dialog[role="alertdialog"] .dialog-footer) {
+  :where(dialog[role="alertdialog"] [data-auy-part="dialog-footer"]) {
     padding-block-start: 0;
   }
 

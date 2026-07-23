@@ -1,13 +1,13 @@
-import { LitElement, html, css, nothing } from 'lit'
+import { html, css, nothing } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
-import { classMap } from 'lit/directives/class-map.js'
+import { AuyShadowElement } from '../_internal/AuyShadowElement.base.ts'
 
 import { DataAwareMixin, type DataEnvelope } from '../_internal/data-aware.mixin.ts'
 import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts'
 
 /** Componente de paginação com navegação por página, elipse e botões anterior/próximo. */
 @customElement('auy-comp-pagination')
-export class AuyCompPagination extends StyleCustomizableMixin(DataAwareMixin(LitElement)) {
+export class AuyCompPagination extends StyleCustomizableMixin(DataAwareMixin(AuyShadowElement)) {
   static override get observedDataEvents(): string[] {
     return ['page-change']
   }
@@ -44,7 +44,7 @@ export class AuyCompPagination extends StyleCustomizableMixin(DataAwareMixin(Lit
         touch-action: manipulation;
       }
 
-      button:hover:not(:disabled):not(.ellipsis) {
+      button:hover:not(:disabled):not([data-auy-part="ellipsis"]) {
         background: var(--auy-color-border);
       }
 
@@ -58,13 +58,13 @@ export class AuyCompPagination extends StyleCustomizableMixin(DataAwareMixin(Lit
         cursor: not-allowed;
       }
 
-      button.active {
+      button[data-auy-state="active"] {
         background: var(--auy-color-primary);
         color: var(--auy-color-primary-inverse);
         font-weight: var(--auy-font-weight-semibold);
       }
 
-      button.ellipsis {
+      button[data-auy-part="ellipsis"] {
         letter-spacing: 2px;
         cursor: default;
       }
@@ -75,7 +75,7 @@ export class AuyCompPagination extends StyleCustomizableMixin(DataAwareMixin(Lit
         }
       }
 
-      .visually-hidden {
+      [data-auy-ut~="visually-hidden"] {
         position: absolute;
         inline-size: 1px;
         block-size: 1px;
@@ -212,11 +212,11 @@ export class AuyCompPagination extends StyleCustomizableMixin(DataAwareMixin(Lit
         ${pages.map(
           (p) =>
             typeof p === 'string'
-              ? html`<button part="btn ellipsis" class="ellipsis" disabled aria-hidden="true"><span aria-hidden="true">${p}</span><span class="visually-hidden">Pular páginas</span></button>`
+              ? html`<button part="btn ellipsis" data-auy-part="ellipsis" disabled aria-hidden="true"><span aria-hidden="true">${p}</span><span data-auy-ut~="visually-hidden">Pular páginas</span></button>`
               : html`
                   <button
                     part="btn page"
-                    class=${classMap({ active: p === this.current })}
+                    data-auy-state=${p === this.current ? 'active' : nothing}
                     ?disabled=${this.disabled}
                     data-page="${p}"
                     @click=${this._handlePageClick}

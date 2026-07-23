@@ -1,16 +1,16 @@
 @layer base {
-  :where(.form-group) {
+  :where([data-auy="form-group"]) {
     display: grid;
     gap: 0.25rem;
   }
 
-  :where(.form-group label) {
+  :where([data-auy="form-group"] label) {
     font-size: var(--auy-text-sm);
     font-weight: 500;
     color: var(--auy-color-text);
   }
 
-  :where(.form-group .form-help) {
+  :where([data-auy="form-group"] [data-auy-part="help"]) {
     font-size: var(--auy-text-xs);
     color: var(--auy-color-text-muted);
     display: flex;
@@ -18,7 +18,7 @@
     gap: 0.25rem;
   }
 
-  :where(.form-group .form-error) {
+  :where([data-auy="form-group"] [data-auy-part="error"]) {
     font-size: var(--auy-text-xs);
     color: var(--auy-color-error);
     display: none;
@@ -27,14 +27,14 @@
     margin: 0;
   }
 
-  :where(.form-group .form-success-icon) { display: none; color: var(--auy-color-success); }
-  :where(.form-group .form-error-icon) { display: none; color: var(--auy-color-error); }
+  :where([data-auy="form-group"] [data-auy-part="success-icon"]) { display: none; color: var(--auy-color-success); }
+  :where([data-auy="form-group"] [data-auy-part="error-icon"]) { display: none; color: var(--auy-color-error); }
 
-  :where(.form-group:has(:user-invalid) .form-error) { display: flex; }
-  :where(.form-group:has(:user-invalid) .form-help) { display: none; }
-  :where(.form-group:has(:user-valid) .form-success-icon) { display: inline-flex; }
-  :where(.form-group:has(:user-invalid) .form-error-icon) { display: inline-flex; }
+  :where([data-auy="form-group"]:has(:user-invalid) [data-auy-part="error"]) { display: flex; }
+  :where([data-auy="form-group"]:has(:user-invalid) [data-auy-part="help"]) { display: none; }
+  :where([data-auy="form-group"]:has(:user-valid) [data-auy-part="success-icon"]) { display: inline-flex; }
+  :where([data-auy="form-group"]:has(:user-invalid) [data-auy-part="error-icon"]) { display: inline-flex; }
 
-  :where(.required-indicator) { color: var(--auy-color-error); margin-inline-start: 0.125rem; display: none; }
-  :where(.form-group:has(:required) .required-indicator) { display: inline; }
+  :where([data-auy-part="required-indicator"]) { color: var(--auy-color-error); margin-inline-start: 0.125rem; display: none; }
+  :where([data-auy="form-group"]:has(:required) [data-auy-part="required-indicator"]) { display: inline; }
 }

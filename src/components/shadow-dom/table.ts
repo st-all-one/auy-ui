@@ -1,6 +1,7 @@
-import { LitElement, html, css, nothing } from 'lit'
+import { html, css, nothing } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
 import { ifDefined } from 'lit/directives/if-defined.js'
+import { AuyShadowElement } from '../_internal/AuyShadowElement.base.ts'
 
 import { DataAwareMixin } from '../_internal/data-aware.mixin.ts'
 import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts'
@@ -38,11 +39,7 @@ export interface Column {
  * @csspart loading - Estado de carregamento
  */
 @customElement('auy-comp-table')
-export class AuyCompTable extends StyleCustomizableMixin(DataAwareMixin(LitElement)) {
-  static override shadowRootOptions: ShadowRootInit = {
-    ...LitElement.shadowRootOptions,
-    delegatesFocus: true,
-  }
+export class AuyCompTable extends StyleCustomizableMixin(DataAwareMixin(AuyShadowElement)) {
 
   static override get observedDataEvents(): string[] {
     return ['sort-change', 'row-select']
@@ -108,54 +105,55 @@ export class AuyCompTable extends StyleCustomizableMixin(DataAwareMixin(LitEleme
       margin-block-end: 0;
     }
     [part~='toolbar'][visible] {
-      max-block-size: 4rem;
+      max-block-size: 4.5rem;
       opacity: 1;
       margin-block-end: var(--auy-space-sm);
+    }
+
+    [part~='filter-wrap'] {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: color-mix(in oklch, var(--auy-color-border) 6%, transparent);
+      border: 1px solid var(--auy-color-border);
+      border-radius: var(--auy-radius-md);
+      transition: border-color var(--auy-transition-fast), box-shadow var(--auy-transition-fast);
+    }
+    [part~='filter-wrap']:focus-within {
+      border-color: var(--auy-color-primary);
+      box-shadow: 0 0 0 0.125rem var(--auy-color-primary-focus);
+      background: color-mix(in oklch, var(--auy-color-primary) 3%, var(--auy-color-surface));
+    }
+    [part~='filter-wrap']::before {
+      content: '';
+      flex-shrink: 0;
+      inline-size: 1rem;
+      block-size: 1rem;
+      margin-inline: 0.75rem;
+      background: var(--auy-color-text-muted);
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E") center/contain no-repeat;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E") center/contain no-repeat;
+      opacity: 0.5;
+    }
+    [part~='filter-wrap']:focus-within::before {
+      opacity: 0.8;
+      background: var(--auy-color-primary);
     }
 
     [part~='filter-input'] {
       box-sizing: border-box;
       inline-size: 100%;
-      padding: var(--auy-space-xs) var(--auy-space-sm) var(--auy-space-xs) 2.25rem;
+      padding: 0.5rem 0.75rem 0.5rem 0;
       font-family: inherit;
       font-size: var(--auy-text-sm);
       line-height: 1.5;
       color: var(--auy-color-text);
-      background: var(--auy-color-surface);
-      border: 1px solid var(--auy-color-border);
-      border-radius: var(--auy-radius-md);
+      background: none;
+      border: none;
       outline: none;
       -webkit-appearance: none;
       appearance: none;
       touch-action: manipulation;
-      transition: border-color var(--auy-transition-fast), box-shadow var(--auy-transition-fast);
-    }
-
-    [part~='filter-wrap'] {
-      position: relative;
-    }
-    [part~='filter-wrap']::before {
-      content: '';
-      position: absolute;
-      inset-inline-start: 0.625rem;
-      inset-block-start: 50%;
-      translate: 0 -50%;
-      inline-size: 1rem;
-      block-size: 1rem;
-      background: currentColor;
-      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E") center/contain no-repeat;
-      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E") center/contain no-repeat;
-      color: var(--auy-color-text-muted);
-      pointer-events: none;
-      opacity: 0.5;
-    }
-
-    [part~='filter-input']:focus-visible {
-      border-color: var(--auy-color-primary);
-      box-shadow: 0 0 0 0.125rem var(--auy-color-primary-focus);
-    }
-    [part~='filter-input']:focus-visible + [part~='filter-input'] {
-      border-color: var(--auy-color-primary);
     }
     [part~='filter-input']::placeholder {
       color: var(--auy-color-text-muted);
@@ -474,6 +472,14 @@ export class AuyCompTable extends StyleCustomizableMixin(DataAwareMixin(LitEleme
     }
     if (changed.has('_processedRows') || changed.has('currentPage')) {
       this._clampFocus()
+    }
+  }
+
+  override updated(changed: Map<string, unknown>) {
+    if (changed.has('_filterOpen') && this._filterOpen) {
+      this.updateComplete.then(() => {
+        this.shadowRoot?.querySelector<HTMLInputElement>('[part~="filter-input"]')?.focus()
+      })
     }
   }
 

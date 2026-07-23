@@ -21,7 +21,7 @@ describe('AuyCompAudio', () => {
 
   it('toggles play/pause on button click', async () => {
     const el = await fixture<HTMLElement>(html`<auy-comp-audio src="test.mp3"></auy-comp-audio>`);
-    const playBtn = el.shadowRoot?.querySelector('.btn--play') as HTMLButtonElement;
+    const playBtn = el.shadowRoot?.querySelector('[data-auy-part="icon-btn"][data-auy-variant="play"]') as HTMLButtonElement;
     expect(playBtn).to.exist;
     expect(playBtn?.getAttribute('aria-label')).to.equal('Reproduzir áudio');
   });

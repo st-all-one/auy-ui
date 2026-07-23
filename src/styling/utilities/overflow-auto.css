@@ -1,17 +1,17 @@
 @layer utilities {
-  .overflow-auto {
+  [data-auy-ut~="overflow-auto"] {
     overflow: auto;
   }
 
-  .overflow-x-auto {
+  [data-auy-ut~="overflow-x-auto"] {
     overflow-x: auto;
   }
 
-  .overflow-y-auto {
+  [data-auy-ut~="overflow-y-auto"] {
     overflow-y: auto;
   }
 
-  .overflow-hidden {
+  [data-auy-ut~="overflow-hidden"] {
     overflow: hidden;
   }
 }

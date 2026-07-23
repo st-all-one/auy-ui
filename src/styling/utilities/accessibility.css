@@ -1,5 +1,5 @@
 @layer utilities {
-  .sr-only {
+  [data-auy-ut~="sr-only"] {
     position: absolute;
     inline-size: 1px;
     block-size: 1px;
@@ -11,8 +11,8 @@
     border: 0;
   }
 
-  .sr-only-focusable:focus-within,
-  .sr-only-focusable:focus {
+  [data-auy-ut~="sr-only-focusable"]:focus-within,
+  [data-auy-ut~="sr-only-focusable"]:focus {
     inline-size: auto;
     block-size: auto;
     padding: 0.5rem 1rem;
@@ -27,7 +27,7 @@
     text-decoration: none;
   }
 
-  .skip-link {
+  [data-auy-ut~="skip-link"] {
     position: absolute;
     inset-block-start: -100%;
     inset-inline-start: var(--auy-space-md);
@@ -41,13 +41,13 @@
     font-weight: 500;
   }
 
-  .skip-link:focus {
+  [data-auy-ut~="skip-link"]:focus {
     inset-block-start: 0;
   }
 
   @media (forced-colors: active) {
-    .sr-only-focusable:focus-within,
-    .sr-only-focusable:focus {
+    [data-auy-ut~="sr-only-focusable"]:focus-within,
+    [data-auy-ut~="sr-only-focusable"]:focus {
       border: 2px solid ButtonText;
     }
   }

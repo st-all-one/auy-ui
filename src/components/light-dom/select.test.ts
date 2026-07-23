@@ -10,29 +10,29 @@ describe('AuyCompSelect', () => {
 
   it('renders with placeholder', async () => {
     const el = await fixture<HTMLElement>(html`<auy-comp-select .options=${options}></auy-comp-select>`);
-    const trigger = el.querySelector('.trigger');
+    const trigger = el.querySelector('[data-auy-part="trigger"]');
     expect(trigger?.textContent).to.include('Selecione...');
   });
 
   it('shows selected value', async () => {
     const el = await fixture<HTMLElement>(html`<auy-comp-select .options=${options} value="br"></auy-comp-select>`);
-    const trigger = el.querySelector('.trigger');
+    const trigger = el.querySelector('[data-auy-part="trigger"]');
     expect(trigger?.textContent).to.include('Brasil');
   });
 
   it('opens dropdown on click', async () => {
     const el = await fixture<HTMLElement>(html`<auy-comp-select .options=${options}></auy-comp-select>`);
-    const trigger = el.querySelector('.trigger') as HTMLElement;
+    const trigger = el.querySelector('[data-auy-part="trigger"]') as HTMLElement;
     trigger?.click();
-    const dropdown = el.querySelector('.dropdown');
-    expect(dropdown?.classList.contains('open')).to.be.true;
+    const dropdown = el.querySelector('[data-auy-part="dropdown"]');
+    expect(dropdown?.hasAttribute('data-auy-state-open')).to.be.true;
   });
 
   it('filters options with search', async () => {
     const el = await fixture<HTMLElement>(html`<auy-comp-select .options=${options}></auy-comp-select>`);
-    const trigger = el.querySelector('.trigger') as HTMLElement;
+    const trigger = el.querySelector('[data-auy-part="trigger"]') as HTMLElement;
     trigger?.click();
-    const search = el.querySelector('.search-input') as HTMLInputElement;
+    const search = el.querySelector('[data-auy-part="search-input"]') as HTMLInputElement;
     if (search) {
       search.value = 'Portugal';
       search.dispatchEvent(new InputEvent('input'));
@@ -44,9 +44,9 @@ describe('AuyCompSelect', () => {
 
   it('renders without search when searchable=false', async () => {
     const el = await fixture<HTMLElement>(html`<auy-comp-select .options=${options} ?searchable=${false}></auy-comp-select>`);
-    const trigger = el.querySelector('.trigger') as HTMLElement;
+    const trigger = el.querySelector('[data-auy-part="trigger"]') as HTMLElement;
     trigger?.click();
-    const search = el.querySelector('.search-input');
+    const search = el.querySelector('[data-auy-part="search-input"]');
     expect(search).to.not.exist;
   });
 
@@ -59,7 +59,7 @@ describe('AuyCompSelect', () => {
 
   it('dispatches change on selection', async () => {
     const el = await fixture<HTMLElement>(html`<auy-comp-select .options=${options}></auy-comp-select>`);
-    const trigger = el.querySelector('.trigger') as HTMLElement;
+    const trigger = el.querySelector('[data-auy-part="trigger"]') as HTMLElement;
     trigger?.click();
     const firstOption = el.querySelector('[role="option"]') as HTMLElement;
     let changed = false;

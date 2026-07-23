@@ -1,7 +1,8 @@
-import { LitElement, html, css, nothing } from 'lit';
+import { html, css, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { customElement, property, state } from 'lit/decorators.js';
 import { DataAwareMixin } from '../_internal/data-aware.mixin.ts';
+import { AuyLightElement } from '../_internal/AuyLightElement.base.ts';
 
 const FILE_ICONS: Record<string, string> = {
   pdf: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/><line x1="9" y1="11" x2="12" y2="11"/></svg>',
@@ -37,7 +38,7 @@ const fiStyles = css`
     margin-block-end: var(--auy-space-xs);
   }
 
-  .dropzone {
+  [data-auy-part="dropzone"] {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -54,40 +55,40 @@ const fiStyles = css`
     min-block-size: 8rem;
   }
 
-  .dropzone:hover,
-  .dropzone.dragover {
+  [data-auy-part="dropzone"]:hover,
+  [data-auy-part="dropzone"][data-auy-state="dragover"] {
     border-color: var(--auy-color-primary);
     background: color-mix(in oklch, var(--auy-color-primary) 5%, transparent);
   }
 
-  .dropzone:focus-visible {
+  [data-auy-part="dropzone"]:focus-visible {
     outline: 0.125rem solid var(--auy-color-primary);
     outline-offset: 0.125rem;
   }
 
-  .dropzone.has-files {
+  [data-auy-part="dropzone"][data-auy-state="has-files"] {
     padding: var(--auy-space-md);
     align-items: stretch;
   }
 
-  .empty-icon { font-size: var(--auy-text-4xl); line-height: 1; opacity: 0.4; }
+  [data-auy-part="empty-icon"] { font-size: var(--auy-text-4xl); line-height: 1; opacity: 0.4; }
 
-  .empty-text { font-size: var(--auy-text-sm); color: var(--auy-color-text-muted); text-align: center; }
+  [data-auy-part="empty-text"] { font-size: var(--auy-text-sm); color: var(--auy-color-text-muted); text-align: center; }
 
-  .hint { font-size: var(--auy-text-xs); color: var(--auy-color-text-muted); opacity: 0.7; }
+  [data-auy-part="hint"] { font-size: var(--auy-text-xs); color: var(--auy-color-text-muted); opacity: 0.7; }
 
   input[type="file"] {
     position: absolute; inset: 0; opacity: 0; cursor: pointer;
   }
 
-  .file-grid {
+  [data-auy-part="file-grid"] {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
     gap: var(--auy-space-sm);
     inline-size: 100%;
   }
 
-  .file-card {
+  [data-auy-part="file-card"] {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -99,11 +100,11 @@ const fiStyles = css`
     min-inline-size: 0;
   }
 
-  .file-card:hover {
+  [data-auy-part="file-card"]:hover {
     background: color-mix(in oklch, var(--auy-color-border) 18%, transparent);
   }
 
-  .file-card-thumb {
+  [data-auy-part="file-card-thumb"] {
     inline-size: 3rem;
     block-size: 3rem;
     border-radius: var(--auy-radius-sm);
@@ -112,7 +113,7 @@ const fiStyles = css`
     background: color-mix(in oklch, var(--auy-color-border) 8%, transparent);
   }
 
-  .file-card-icon {
+  [data-auy-part="file-card-icon"] {
     inline-size: 2.5rem;
     block-size: 2.5rem;
     display: flex;
@@ -121,12 +122,12 @@ const fiStyles = css`
     color: var(--auy-color-text-muted);
   }
 
-  .file-card-icon svg {
+  [data-auy-part="file-card-icon"] svg {
     inline-size: 100%;
     block-size: 100%;
   }
 
-  .file-card-name {
+  [data-auy-part="file-card-name"] {
     font-size: var(--auy-text-xs);
     color: var(--auy-color-text);
     text-align: center;
@@ -137,13 +138,13 @@ const fiStyles = css`
     line-height: 1.3;
   }
 
-  .file-card-size {
+  [data-auy-part="file-card-size"] {
     font-size: var(--auy-text-2xs);
     color: var(--auy-color-text-muted);
     opacity: 0.7;
   }
 
-  .file-card-remove {
+  [data-auy-part="file-card-remove"] {
     all: unset;
     position: absolute;
     inset-block-start: 0.125rem;
@@ -164,23 +165,23 @@ const fiStyles = css`
     touch-action: manipulation;
   }
 
-  .file-card:hover .file-card-remove,
-  .file-card-remove:focus-visible {
+  [data-auy-part="file-card"]:hover [data-auy-part="file-card-remove"],
+  [data-auy-part="file-card-remove"]:focus-visible {
     opacity: 1;
   }
 
-  .file-card-remove:hover {
+  [data-auy-part="file-card-remove"]:hover {
     background: var(--auy-color-error);
     color: oklch(100% 0 0);
   }
 
-  .file-card-remove:focus-visible {
+  [data-auy-part="file-card-remove"]:focus-visible {
     outline: 0.125rem solid var(--auy-color-primary);
     outline-offset: 0.125rem;
     opacity: 1;
   }
 
-  .add-more {
+  [data-auy-part="add-more"] {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -195,35 +196,31 @@ const fiStyles = css`
     cursor: pointer;
     transition: border-color var(--auy-transition), background var(--auy-transition);
   }
-  .add-more:hover {
+  [data-auy-part="add-more"]:hover {
     border-color: var(--auy-color-primary);
     background: color-mix(in oklch, var(--auy-color-primary) 4%, transparent);
   }
 
-  .add-more-icon {
+  [data-auy-part="add-more-icon"] {
     inline-size: 1.5rem;
     block-size: 1.5rem;
     opacity: 0.5;
   }
-  .add-more-icon svg { inline-size: 100%; block-size: 100%; }
+  [data-auy-part="add-more-icon"] svg { inline-size: 100%; block-size: 100%; }
 
   @media (forced-colors: active) {
-    .dropzone { border: 2px solid ButtonText; }
-    .dropzone:focus-visible { outline: 2px solid Highlight; outline-offset: 2px; }
-    .file-card-remove:focus-visible { outline: 2px solid Highlight; outline-offset: 2px; }
+    [data-auy-part="dropzone"] { border: 2px solid ButtonText; }
+    [data-auy-part="dropzone"]:focus-visible { outline: 2px solid Highlight; outline-offset: 2px; }
+    [data-auy-part="file-card-remove"]:focus-visible { outline: 2px solid Highlight; outline-offset: 2px; }
   }
-  @media print { .file-card { display: none; } }
+  @media print { [data-auy-part="file-card"] { display: none; } }
 `;
 
 /** Componente de upload de arquivos com drag-and-drop, preview e envio. */
 @customElement('auy-comp-file-input')
-export class AuyCompFileInput extends DataAwareMixin(LitElement) {
+export class AuyCompFileInput extends DataAwareMixin(AuyLightElement) {
   static override get observedDataEvents(): string[] {
     return ['change', 'upload-complete', 'upload-error']
-  }
-
-  override createRenderRoot() {
-    return this;
   }
 
   /** Rótulo do campo de upload. */
@@ -369,10 +366,10 @@ export class AuyCompFileInput extends DataAwareMixin(LitElement) {
 
   private _renderFilePreview(f: File, i: number) {
     if (this._previewUrls[i]) {
-      return html`<img class="file-card-thumb" src=${this._previewUrls[i]} alt="" />`;
+      return html`<img data-auy-part="file-card-thumb" src=${this._previewUrls[i]} alt="" />`;
     }
     return html`
-      <div class="file-card-icon">${unsafeHTML(getFileIcon(f.name, f.type))}</div>
+      <div data-auy-part="file-card-icon">${unsafeHTML(getFileIcon(f.name, f.type))}</div>
     `;
   }
 
@@ -384,24 +381,24 @@ export class AuyCompFileInput extends DataAwareMixin(LitElement) {
       ${this.label ? html`<label part="label">${this.label}</label>` : nothing}
       <div
         part="dropzone"
-        class="dropzone ${this._dragover ? 'dragover' : ''} ${hasFiles ? 'has-files' : ''}"
+        data-auy-part="dropzone" data-auy-state=${this._dragover ? 'dragover' : hasFiles ? 'has-files' : nothing}
         @dragover=${(e: DragEvent) => { e.preventDefault(); this._dragover = true; }}
         @dragleave=${() => { this._dragover = false; }}
         @drop=${this._handleDrop}
       >
         ${hasFiles ? html`
-          <div class="file-grid">
+          <div data-auy-part="file-grid">
             ${this._files.map((f, i) => html`
-              <div class="file-card">
+              <div data-auy-part="file-card">
                 ${this._renderFilePreview(f, i)}
-                <span class="file-card-name" title=${f.name}>${f.name}</span>
-                <span class="file-card-size">${this._formatSize(f.size)}</span>
-                <button class="file-card-remove" @click=${(e: Event) => { e.stopPropagation(); this._removeFile(i); }} aria-label="Remover ${f.name}">&times;</button>
+                <span data-auy-part="file-card-name" title=${f.name}>${f.name}</span>
+                <span data-auy-part="file-card-size">${this._formatSize(f.size)}</span>
+                <button data-auy-part="file-card-remove" @click=${(e: Event) => { e.stopPropagation(); this._removeFile(i); }} aria-label="Remover ${f.name}">&times;</button>
               </div>
             `)}
             ${this.multiple ? html`
-              <div class="add-more">
-                <div class="add-more-icon">
+              <div data-auy-part="add-more">
+                <div data-auy-part="add-more-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 </div>
                 <span>Adicionar mais</span>
@@ -409,12 +406,12 @@ export class AuyCompFileInput extends DataAwareMixin(LitElement) {
             ` : nothing}
           </div>
         ` : html`
-          <div class="empty-icon" aria-hidden="true">
+          <div data-auy-part="empty-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="inline-size:2rem;block-size:2rem;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
           </div>
-          <div class="empty-text">Arraste arquivos aqui ou clique para selecionar</div>
+          <div data-auy-part="empty-text">Arraste arquivos aqui ou clique para selecionar</div>
         `}
-        <div class="hint">${this.accept ? `Formatos: ${this.accept}` : ''}${this.maxSize && !this.accept ? `Tamanho máximo: ${this._formatSize(this.maxSize)}` : ''}${this.maxSize && this.accept ? ` · Máx: ${this._formatSize(this.maxSize)}` : ''}</div>
+        <div data-auy-part="hint">${this.accept ? `Formatos: ${this.accept}` : ''}${this.maxSize && !this.accept ? `Tamanho máximo: ${this._formatSize(this.maxSize)}` : ''}${this.maxSize && this.accept ? ` · Máx: ${this._formatSize(this.maxSize)}` : ''}</div>
         <input
           type="file"
           ?multiple=${this.multiple}

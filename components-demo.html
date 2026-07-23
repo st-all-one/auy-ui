@@ -231,7 +231,7 @@
 </head>
 <body>
 
-<a href="#components-main" class="skip-link">Pular para conteúdo principal</a>
+<a href="#components-main" data-auy-ut="skip-link">Pular para conteúdo principal</a>
 
 <div id="components-main">
 
@@ -461,25 +461,25 @@
   <!-- 4. SPINNER                                                  -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <section class="demo-section" id="spinner">
-    <h2><span class="tag">span.spinner</span> 4. Spinner</h2>
+    <h2><span class="tag">[data-auy="spinner"]</span> 4. Spinner</h2>
     <p class="note">Spinner CSS puro. Tamanho e cor via <code>--spinner-size</code> e <code>--spinner-color</code>.</p>
 
     <div class="demo-subsection">
       <h3>Tamanhos</h3>
       <div class="demo-variant-row">
-        <span class="spinner" style="--spinner-size: 16px" role="status" aria-label="Carregando"></span>
-        <span class="spinner" style="--spinner-size: 24px" role="status" aria-label="Carregando"></span>
-        <span class="spinner" style="--spinner-size: 48px" role="status" aria-label="Carregando"></span>
+        <span data-auy="spinner" style="--spinner-size: 16px" role="status" aria-label="Carregando"></span>
+        <span data-auy="spinner" style="--spinner-size: 24px" role="status" aria-label="Carregando"></span>
+        <span data-auy="spinner" style="--spinner-size: 48px" role="status" aria-label="Carregando"></span>
       </div>
     </div>
 
     <div class="demo-subsection">
       <h3>Cores personalizadas</h3>
       <div class="demo-variant-row">
-        <span class="spinner" style="--spinner-size: 24px; --spinner-color: var(--auy-color-primary)" role="status" aria-label="Carregando"></span>
-        <span class="spinner" style="--spinner-size: 24px; --spinner-color: var(--auy-color-success)" role="status" aria-label="Carregando"></span>
-        <span class="spinner" style="--spinner-size: 24px; --spinner-color: var(--auy-color-error)" role="status" aria-label="Carregando"></span>
-        <span class="spinner" style="--spinner-size: 24px; --spinner-color: var(--auy-color-warning)" role="status" aria-label="Carregando"></span>
+        <span data-auy="spinner" style="--spinner-size: 24px; --spinner-color: var(--auy-color-primary)" role="status" aria-label="Carregando"></span>
+        <span data-auy="spinner" style="--spinner-size: 24px; --spinner-color: var(--auy-color-success)" role="status" aria-label="Carregando"></span>
+        <span data-auy="spinner" style="--spinner-size: 24px; --spinner-color: var(--auy-color-error)" role="status" aria-label="Carregando"></span>
+        <span data-auy="spinner" style="--spinner-size: 24px; --spinner-color: var(--auy-color-warning)" role="status" aria-label="Carregando"></span>
       </div>
     </div>
   </section>
@@ -488,24 +488,24 @@
   <!-- 5. ALERT — CSS NATIVO                                      -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <section class="demo-section" id="alert-css">
-    <h2><span class="tag">.alert</span> 5. Alert CSS Nativo</h2>
+    <h2><span class="tag">[data-auy="alert"]</span> 5. Alert CSS Nativo</h2>
     <p class="note">Alerta inline com 4 variantes, botão de fechar e suporte a título.</p>
 
     <div class="demo-subsection">
       <h3>Variantes</h3>
       <div class="demo-variant-row" style="flex-direction:column;align-items:stretch;">
-        <div class="alert alert--info" role="alert">Informação importante para o usuário.</div>
-        <div class="alert alert--success" role="alert">Operação concluída com sucesso!</div>
-        <div class="alert alert--warning" role="alert">Atenção: verifique os dados.<button class="alert__dismiss" aria-label="Fechar">&times;</button></div>
-        <div class="alert alert--error" role="alert">Erro crítico no sistema.<button class="alert__dismiss" aria-label="Fechar">&times;</button></div>
+        <div data-auy="alert" data-auy-variant="info" role="alert">Informação importante para o usuário.</div>
+        <div data-auy="alert" data-auy-variant="success" role="alert">Operação concluída com sucesso!</div>
+        <div data-auy="alert" data-auy-variant="warning" role="alert">Atenção: verifique os dados.<button data-auy-part="dismiss" aria-label="Fechar">&times;</button></div>
+        <div data-auy="alert" data-auy-variant="error" role="alert">Erro crítico no sistema.<button data-auy-part="dismiss" aria-label="Fechar">&times;</button></div>
       </div>
     </div>
 
     <div class="demo-subsection">
       <h3>Com título</h3>
       <div class="demo-variant-row" style="flex-direction:column;align-items:stretch;">
-        <div class="alert alert--info" role="alert"><strong class="alert__title">Informação</strong> Mensagem com cabeçalho destacado.</div>
-        <div class="alert alert--success" role="alert"><strong class="alert__title">Parabéns!</strong> Sua conta foi criada com sucesso.</div>
+        <div data-auy="alert" data-auy-variant="info" role="alert"><strong data-auy-part="title">Informação</strong> Mensagem com cabeçalho destacado.</div>
+        <div data-auy="alert" data-auy-variant="success" role="alert"><strong data-auy-part="title">Parabéns!</strong> Sua conta foi criada com sucesso.</div>
       </div>
     </div>
   </section>
@@ -544,45 +544,45 @@
   <!-- 7. CARD                                                     -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <section class="demo-section" id="card">
-    <h2><span class="tag">.card</span> 7. Card</h2>
+    <h2><span class="tag">[data-auy="card"]</span> 7. Card</h2>
     <p class="note">Variantes default, elevated, outlined. Seções header, body, footer. Media flush. Aceita link.</p>
 
     <div class="demo-subsection">
       <h3>Variantes</h3>
       <div class="card-demo">
-        <article class="card card--default">
-          <div class="card__body">
-            <h3 class="card__title">Default</h3>
-            <p class="card__description">Superfície limpa sem borda nem sombra. Ideal para grids densos.</p>
+        <article data-auy="card" data-auy-variant="default">
+          <div data-auy-part="body">
+            <h3 data-auy-part="title">Default</h3>
+            <p data-auy-part="description">Superfície limpa sem borda nem sombra. Ideal para grids densos.</p>
           </div>
-          <div class="card__footer">
+          <div data-auy-part="footer">
             <button variant="ghost sm">Ação</button>
           </div>
         </article>
-        <article class="card card--elevated">
-          <div class="card__body">
-            <h3 class="card__title">Elevated</h3>
-            <p class="card__description">Sombra suave para destacar conteúdo em evidência na página.</p>
+        <article data-auy="card" data-auy-variant="elevated">
+          <div data-auy-part="body">
+            <h3 data-auy-part="title">Elevated</h3>
+            <p data-auy-part="description">Sombra suave para destacar conteúdo em evidência na página.</p>
           </div>
-          <div class="card__footer">
+          <div data-auy-part="footer">
             <button variant="primary sm">Saiba mais</button>
           </div>
         </article>
-        <article class="card card--outlined">
-          <div class="card__body">
-            <h3 class="card__title">Outlined</h3>
-            <p class="card__description">Borda sutil. Ótimo para seções editáveis ou selecionáveis.</p>
+        <article data-auy="card" data-auy-variant="outlined">
+          <div data-auy-part="body">
+            <h3 data-auy-part="title">Outlined</h3>
+            <p data-auy-part="description">Borda sutil. Ótimo para seções editáveis ou selecionáveis.</p>
           </div>
-          <div class="card__footer">
+          <div data-auy-part="footer">
             <button variant="ghost sm">Editar</button>
           </div>
         </article>
-        <a href="#" class="card card--elevated">
-          <div class="card__body">
-            <h3 class="card__title">Card como Link</h3>
-            <p class="card__description">Card clicável — levita ao passar o mouse.</p>
+        <a href="#" data-auy="card" data-auy-variant="elevated">
+          <div data-auy-part="body">
+            <h3 data-auy-part="title">Card como Link</h3>
+            <p data-auy-part="description">Card clicável — levita ao passar o mouse.</p>
           </div>
-          <div class="card__footer">
+          <div data-auy-part="footer">
             <span style="font-size:var(--auy-text-sm);color:var(--auy-color-primary)">Acessar &rarr;</span>
           </div>
         </a>
@@ -592,28 +592,28 @@
     <div class="demo-subsection">
       <h3>Com header, body e footer</h3>
       <div class="card-demo">
-        <article class="card card--outlined">
-          <div class="card__header">
-            <span class="card__subtitle">Categoria: Design</span>
-            <h3 class="card__title">Princípios de Interface</h3>
+        <article data-auy="card" data-auy-variant="outlined">
+          <div data-auy-part="header">
+            <span data-auy-part="subtitle">Categoria: Design</span>
+            <h3 data-auy-part="title">Princípios de Interface</h3>
           </div>
-          <div class="card__body">
-            <p class="card__description">Exploramos os fundamentos de design de interfaces — hierarquia visual, contraste, alinhamento e consistência — aplicados a componentes modernos.</p>
+          <div data-auy-part="body">
+            <p data-auy-part="description">Exploramos os fundamentos de design de interfaces — hierarquia visual, contraste, alinhamento e consistência — aplicados a componentes modernos.</p>
           </div>
-          <div class="card__footer">
+          <div data-auy-part="footer">
             <button variant="primary sm">Ler artigo</button>
             <button variant="ghost sm">Compartilhar</button>
           </div>
         </article>
-        <article class="card card--elevated">
-          <div class="card__header">
-            <span class="card__subtitle">Release v2.0</span>
-            <h3 class="card__title">auy-ui Design System</h3>
+        <article data-auy="card" data-auy-variant="elevated">
+          <div data-auy-part="header">
+            <span data-auy-part="subtitle">Release v2.0</span>
+            <h3 data-auy-part="title">auy-ui Design System</h3>
           </div>
-          <div class="card__body">
-            <p class="card__description">Novos componentes: tabela sortável, modal com dialog nativo, alertas com timeout, tooltips em 4 posições e mais.</p>
+          <div data-auy-part="body">
+            <p data-auy-part="description">Novos componentes: tabela sortável, modal com dialog nativo, alertas com timeout, tooltips em 4 posições e mais.</p>
           </div>
-          <div class="card__footer">
+          <div data-auy-part="footer">
             <button variant="primary sm">Documentação</button>
             <button variant="ghost sm">Changelog</button>
           </div>
@@ -835,15 +835,15 @@
     <div class="demo-subsection" style="max-inline-size:600px">
       <details open>
         <summary>O que é auy-ui?</summary>
-        <div class="content">Design system acessível com CSS classless + Web Components (Lit) para interatividade.</div>
+        <div>Design system acessível com CSS classless + Web Components (Lit) para interatividade.</div>
       </details>
       <details>
         <summary>Precisa de JavaScript?</summary>
-        <div class="content">Não para o básico! O CSS funciona standalone — os web components são upgrade progressivo.</div>
+        <div>Não para o básico! O CSS funciona standalone — os web components são upgrade progressivo.</div>
       </details>
       <details>
         <summary>Quantos temas existem?</summary>
-        <div class="content">22 temas de cor com dark mode automático em cada um.</div>
+        <div>22 temas de cor com dark mode automático em cada um.</div>
       </details>
     </div>
   </section>
@@ -912,7 +912,7 @@
 
     <div class="demo-subsection">
       <h3>Default — horizontal</h3>
-      <nav aria-label="Nav default">
+      <nav data-variant aria-label="Nav default">
         <a href="#" aria-current="page">Dashboard</a>
         <a href="#">Usuários</a>
         <a href="#">Relatórios</a>
@@ -957,11 +957,11 @@
 
     <div class="demo-subsection" style="max-inline-size:500px">
       <div class="col">
-        <div class="form-group"><label>Download</label><progress value="45" max="100"></progress></div>
-        <div class="form-group"><label>Upload</label><progress value="80" max="100" data-variant="success"></progress></div>
-        <div class="form-group"><label>Atenção</label><progress value="30" max="100" data-variant="warning"></progress></div>
-        <div class="form-group"><label>Completo</label><progress value="100" max="100" data-variant="success"></progress></div>
-        <div class="form-group"><label>Indeterminado</label><progress indeterminate></progress></div>
+        <div data-auy="form-group"><label>Download</label><progress value="45" max="100"></progress></div>
+        <div data-auy="form-group"><label>Upload</label><progress value="80" max="100" data-variant="success"></progress></div>
+        <div data-auy="form-group"><label>Atenção</label><progress value="30" max="100" data-variant="warning"></progress></div>
+        <div data-auy="form-group"><label>Completo</label><progress value="100" max="100" data-variant="success"></progress></div>
+        <div data-auy="form-group"><label>Indeterminado</label><progress indeterminate></progress></div>
       </div>
     </div>
   </section>
@@ -987,21 +987,21 @@
       <div class="demo-variant-row" style="align-items: start;">
         <div class="checkbox-col">
           <strong>Checkbox</strong>
-          <label class="form-group"><input type="checkbox"> Lembrar de mim</label>
-          <label class="form-group"><input type="checkbox" checked> Aceitar termos</label>
-          <label class="form-group"><input type="checkbox" disabled> Desabilitado</label>
+          <label data-auy="form-group"><input type="checkbox"> Lembrar de mim</label>
+          <label data-auy="form-group"><input type="checkbox" checked> Aceitar termos</label>
+          <label data-auy="form-group"><input type="checkbox" disabled> Desabilitado</label>
         </div>
         <div class="checkbox-col">
           <strong>Radio</strong>
-          <label class="form-group"><input type="radio" name="rg1"> Opção A</label>
-          <label class="form-group"><input type="radio" name="rg1" checked> Opção B</label>
-          <label class="form-group"><input type="radio" name="rg1" disabled> Disabled</label>
+          <label data-auy="form-group"><input type="radio" name="rg1"> Opção A</label>
+          <label data-auy="form-group"><input type="radio" name="rg1" checked> Opção B</label>
+          <label data-auy="form-group"><input type="radio" name="rg1" disabled> Disabled</label>
         </div>
         <div class="checkbox-col">
           <strong>Switch</strong>
-          <label class="form-group"><input type="checkbox" role="switch"> Notificações</label>
-          <label class="form-group"><input type="checkbox" role="switch" checked> Modo escuro</label>
-          <label class="form-group"><input type="checkbox" role="switch" disabled> Wi-Fi</label>
+          <label data-auy="form-group"><input type="checkbox" role="switch"> Notificações</label>
+          <label data-auy="form-group"><input type="checkbox" role="switch" checked> Modo escuro</label>
+          <label data-auy="form-group"><input type="checkbox" role="switch" disabled> Wi-Fi</label>
         </div>
       </div>
     </div>
@@ -1011,42 +1011,42 @@
   <!-- 19. FORM GROUP — CSS NATIVO                                -->
   <!-- ════════════════════════════════════════════════════════════ -->
   <section class="demo-section" id="form-group-css">
-    <h2><span class="tag">.form-group</span> 19. Form Group CSS Nativo</h2>
+    <h2><span class="tag">[data-auy="form-group"]</span> 19. Form Group CSS Nativo</h2>
     <p class="note">Grupo label + input. Validação sem JS via <code>:user-invalid</code> e <code>:has()</code>. Ícones de sucesso/erro automáticos.</p>
 
     <div class="demo-subsection form-demo">
       <div class="col">
-        <div class="form-group">
-          <label for="fg-nome">Nome completo <span class="required-indicator" aria-hidden="true">*</span></label>
+        <div data-auy="form-group">
+          <label for="fg-nome">Nome completo <span data-auy-part="required-indicator" aria-hidden="true">*</span></label>
           <input id="fg-nome" type="text" placeholder="Digite seu nome" required />
-          <small class="form-help">Sem abreviações</small>
-          <span class="form-error" role="alert">Campo obrigatório</span>
-          <span class="form-success-icon" aria-hidden="true">&#10003;</span>
-          <span class="form-error-icon" aria-hidden="true">&#9888;</span>
+          <small data-auy-part="help">Sem abreviações</small>
+          <span data-auy-part="error" role="alert">Campo obrigatório</span>
+          <span data-auy-part="success-icon" aria-hidden="true">&#10003;</span>
+          <span data-auy-part="error-icon" aria-hidden="true">&#9888;</span>
         </div>
-        <div class="form-group">
-          <label for="fg-email">E-mail <span class="required-indicator" aria-hidden="true">*</span></label>
+        <div data-auy="form-group">
+          <label for="fg-email">E-mail <span data-auy-part="required-indicator" aria-hidden="true">*</span></label>
           <input id="fg-email" type="email" placeholder="email@exemplo.com" required />
-          <small class="form-help">Usaremos apenas para login</small>
-          <span class="form-error" role="alert">E-mail inválido</span>
-          <span class="form-success-icon" aria-hidden="true">&#10003;</span>
-          <span class="form-error-icon" aria-hidden="true">&#9888;</span>
+          <small data-auy-part="help">Usaremos apenas para login</small>
+          <span data-auy-part="error" role="alert">E-mail inválido</span>
+          <span data-auy-part="success-icon" aria-hidden="true">&#10003;</span>
+          <span data-auy-part="error-icon" aria-hidden="true">&#9888;</span>
         </div>
-        <div class="form-group">
-          <label for="fg-senha">Senha <span class="required-indicator" aria-hidden="true">*</span></label>
+        <div data-auy="form-group">
+          <label for="fg-senha">Senha <span data-auy-part="required-indicator" aria-hidden="true">*</span></label>
           <input id="fg-senha" type="password" placeholder="Mínimo 8 caracteres" minlength="8" required />
-          <small class="form-help">Mínimo 8 caracteres</small>
-          <span class="form-error" role="alert">Mínimo 8 caracteres</span>
-          <span class="form-success-icon" aria-hidden="true">&#10003;</span>
-          <span class="form-error-icon" aria-hidden="true">&#9888;</span>
+          <small data-auy-part="help">Mínimo 8 caracteres</small>
+          <span data-auy-part="error" role="alert">Mínimo 8 caracteres</span>
+          <span data-auy-part="success-icon" aria-hidden="true">&#10003;</span>
+          <span data-auy-part="error-icon" aria-hidden="true">&#9888;</span>
         </div>
-        <div class="form-group">
+        <div data-auy="form-group">
           <label for="fg-tel">Telefone</label>
           <input id="fg-tel" type="tel" placeholder="(00) 00000-0000" pattern="^\(\d{2}\)\s\d{4,5}-\d{4}$" />
-          <small class="form-help">Com DDD, formato (00) 00000-0000</small>
-          <span class="form-error" role="alert">Formato inválido</span>
-          <span class="form-success-icon" aria-hidden="true">&#10003;</span>
-          <span class="form-error-icon" aria-hidden="true">&#9888;</span>
+          <small data-auy-part="help">Com DDD, formato (00) 00000-0000</small>
+          <span data-auy-part="error" role="alert">Formato inválido</span>
+          <span data-auy-part="success-icon" aria-hidden="true">&#10003;</span>
+          <span data-auy-part="error-icon" aria-hidden="true">&#9888;</span>
         </div>
       </div>
     </div>
@@ -1217,9 +1217,9 @@
 
     <div class="demo-subsection" style="max-inline-size:400px">
       <div class="col">
-        <div class="form-group"><label>Volume</label><input type="range" value="70"></div>
-        <div class="form-group"><label>Preço máximo</label><input type="range" value="50" min="0" max="200" step="5"></div>
-        <div class="form-group"><label>Temperatura</label><input type="range" value="22" min="-10" max="50"></div>
+        <div data-auy="form-group"><label>Volume</label><input type="range" value="70"></div>
+        <div data-auy="form-group"><label>Preço máximo</label><input type="range" value="50" min="0" max="200" step="5"></div>
+        <div data-auy="form-group"><label>Temperatura</label><input type="range" value="22" min="-10" max="50"></div>
       </div>
     </div>
   </section>

@@ -1,6 +1,7 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
 import { customElement, property, query, queryAll } from 'lit/decorators.js';
 import { keyed } from 'lit/directives/keyed.js';
+import { AuyShadowElement } from '../_internal/AuyShadowElement.base.ts';
 
 import { DataAwareMixin } from '../_internal/data-aware.mixin.ts';
 import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
@@ -40,7 +41,7 @@ export interface Tab {
  * @csspart panel - Each individual tab panel.
  */
 @customElement('auy-comp-tabs')
-export class AuyCompTabs extends StyleCustomizableMixin(DataAwareMixin(LitElement)) {
+export class AuyCompTabs extends StyleCustomizableMixin(DataAwareMixin(AuyShadowElement)) {
   static override get observedDataEvents(): string[] {
     return ['tab-change']
   }

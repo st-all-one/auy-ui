@@ -64,14 +64,14 @@ describe('AuyCompModal', () => {
   it('renderiza título', async () => {
     const el = await fixture<AuyCompModal>(html`<auy-comp-modal open title="Meu Modal"></auy-comp-modal>`);
     await el.updateComplete;
-    const title = el.shadowRoot?.querySelector('.title');
+    const title = el.shadowRoot?.querySelector('[data-auy-part="title"]');
     expect(title?.textContent).to.equal('Meu Modal');
   });
 
   it('renderiza conteúdo via slot', async () => {
     const el = await fixture<AuyCompModal>(html`<auy-comp-modal open><p>Conteúdo</p></auy-comp-modal>`);
     await el.updateComplete;
-    const slot = el.shadowRoot?.querySelector('.body slot') as HTMLSlotElement | null;
+    const slot = el.shadowRoot?.querySelector('[data-auy-part="body"] slot') as HTMLSlotElement | null;
     const assigned = slot?.assignedNodes({ flatten: true });
     expect(assigned?.length).to.be.greaterThan(0);
   });

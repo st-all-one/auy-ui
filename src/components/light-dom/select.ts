@@ -1,7 +1,7 @@
-import { LitElement, html, css, nothing } from 'lit';
+import { html, css, nothing } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
 import { DataAwareMixin } from '../_internal/data-aware.mixin.ts';
+import { AuyLightElement } from '../_internal/AuyLightElement.base.ts';
 
 let selectIdCounter = 0;
 
@@ -12,7 +12,7 @@ export interface SelectOption {
 }
 
 const styles = css`
-  .trigger {
+  [data-auy-part="trigger"] {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -33,35 +33,35 @@ const styles = css`
     min-block-size: 2.75rem;
   }
 
-  .trigger:hover {
+  [data-auy-part="trigger"]:hover {
     border-color: var(--auy-color-primary-hover);
   }
 
-  .trigger:focus-visible {
+  [data-auy-part="trigger"]:focus-visible {
     outline: 0.125rem solid var(--auy-color-primary);
     outline-offset: 0.125rem;
   }
 
-  .trigger[aria-expanded="true"] {
+  [data-auy-part="trigger"][aria-expanded="true"] {
     border-color: var(--auy-color-primary);
   }
 
-  .trigger.placeholder {
+  [data-auy-part="trigger"][data-auy-state="placeholder"] {
     color: var(--auy-color-text-muted);
   }
 
-  .arrow {
+  [data-auy-part="arrow"] {
     flex-shrink: 0;
     font-size: var(--auy-text-xs);
     transition: transform var(--auy-transition);
     color: var(--auy-color-text-muted);
   }
 
-  .arrow.open {
+  [data-auy-part="arrow"][data-auy-state="open"] {
     transform: rotate(180deg);
   }
 
-  .dropdown {
+  [data-auy-part="dropdown"] {
     position: absolute;
     inset-block-start: calc(100% + var(--auy-space-2xs));
     inset-inline-start: 0;
@@ -76,11 +76,11 @@ const styles = css`
     z-index: var(--auy-z-dropdown, 10);
   }
 
-  .dropdown.open {
+  [data-auy-part="dropdown"][data-auy-state="open"] {
     display: block;
   }
 
-  .search-input {
+  [data-auy-part="search-input"] {
     box-sizing: border-box;
     inline-size: 100%;
     padding: var(--auy-space-sm) var(--auy-space-md);
@@ -93,18 +93,18 @@ const styles = css`
     outline: none;
   }
 
-  .search-input:focus-visible {
+  [data-auy-part="search-input"]:focus-visible {
     outline: 0.125rem solid var(--auy-color-primary);
     outline-offset: -0.125rem;
   }
 
-  .option-list {
+  [data-auy-part="option-list"] {
     list-style: none;
     margin: 0;
     padding: var(--auy-space-2xs);
   }
 
-  .option {
+  [data-auy-part="option"] {
     padding: var(--auy-space-sm) var(--auy-space-md);
     border-radius: var(--auy-radius-sm);
     cursor: pointer;
@@ -116,33 +116,33 @@ const styles = css`
     white-space: nowrap;
   }
 
-  .option:hover {
+  [data-auy-part="option"]:hover {
     background: color-mix(in oklch, var(--auy-color-primary) 8%, transparent);
   }
 
-  .option[aria-selected="true"] {
+  [data-auy-part="option"][aria-selected="true"] {
     background: color-mix(in oklch, var(--auy-color-primary) 15%, transparent);
     font-weight: var(--auy-font-weight-medium);
   }
 
-  .option.focused {
+  [data-auy-part="option"][data-auy-state="focused"] {
     outline: 0.125rem solid var(--auy-color-primary);
     outline-offset: -0.125rem;
   }
 
-  .option[aria-disabled="true"] {
+  [data-auy-part="option"][aria-disabled="true"] {
     opacity: 0.4;
     cursor: not-allowed;
   }
 
-  .no-results {
+  [data-auy-part="no-results"] {
     padding: var(--auy-space-md);
     text-align: center;
     font-size: var(--auy-text-sm);
     color: var(--auy-color-text-muted);
   }
 
-  .wrap {
+  [data-auy-part="wrap"] {
     position: relative;
   }
 
@@ -155,29 +155,25 @@ const styles = css`
   }
 
   @media (forced-colors: active) {
-    .trigger, .dropdown { border: 1px solid ButtonText; }
-    .option:hover, .option[aria-selected="true"] { outline: 2px solid Highlight; }
+    [data-auy-part="trigger"], [data-auy-part="dropdown"] { border: 1px solid ButtonText; }
+    [data-auy-part="option"]:hover, [data-auy-part="option"][aria-selected="true"] { outline: 2px solid Highlight; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .trigger, .arrow { transition: none; }
+    [data-auy-part="trigger"], [data-auy-part="arrow"] { transition: none; }
   }
 
   @media print {
-    .dropdown { display: none !important; }
-    .trigger { border: 1px solid CanvasText; }
+    [data-auy-part="dropdown"] { display: none !important; }
+    [data-auy-part="trigger"] { border: 1px solid CanvasText; }
   }
 `;
 
 /** Componente de seleção (combobox) com suporte a busca e teclado. */
 @customElement('auy-comp-select')
-export class AuyCompSelect extends DataAwareMixin(LitElement) {
+export class AuyCompSelect extends DataAwareMixin(AuyLightElement) {
   static override get observedDataEvents(): string[] {
     return ['change']
-  }
-
-  override createRenderRoot() {
-    return this;
   }
 
   // Styles rendered inline via template for Light DOM support
@@ -205,8 +201,8 @@ export class AuyCompSelect extends DataAwareMixin(LitElement) {
   @state() private _query = '';
   @state() private _focusedIndex = 0;
 
-  @query('.trigger') private _trigger!: HTMLElement;
-  @query('.search-input') private _searchInput!: HTMLInputElement;
+  @query('[data-auy-part="trigger"]') private _trigger!: HTMLElement;
+  @query('[data-auy-part="search-input"]') private _searchInput!: HTMLInputElement;
 
   protected override _parseResponse(data: unknown): void {
     if (Array.isArray(data)) {
@@ -343,10 +339,10 @@ export class AuyCompSelect extends DataAwareMixin(LitElement) {
       <style>${styles}</style>
       <input type="hidden" name=${this.name || nothing} .value=${this.value} aria-hidden="true" />
       ${this.label ? html`<label for=${this._selectId}>${this.label}</label>` : nothing}
-      <div class="wrap">
+      <div data-auy-part="wrap">
         <div
           id=${this._selectId}
-          class="trigger ${selected ? '' : 'placeholder'}"
+          data-auy-part="trigger" data-auy-state=${!selected ? 'placeholder' : nothing}
           role="combobox"
           aria-expanded=${this._open ? 'true' : 'false'}
           aria-controls=${this._listboxId}
@@ -359,12 +355,12 @@ export class AuyCompSelect extends DataAwareMixin(LitElement) {
           @blur=${this._onBlur}
         >
           <span>${selected ? selected.label : this.placeholder}</span>
-          <span class="arrow ${this._open ? 'open' : ''}">▼</span>
+          <span data-auy-part="arrow" data-auy-state=${this._open ? 'open' : nothing}>▼</span>
         </div>
-        <div class="dropdown ${this._open ? 'open' : ''}">
+        <div data-auy-part="dropdown" data-auy-state=${this._open ? 'open' : nothing}>
           ${this.searchable ? html`
             <input
-              class="search-input"
+              data-auy-part="search-input"
               type="text"
               .value=${this._query}
               @input=${this._onSearch}
@@ -373,10 +369,10 @@ export class AuyCompSelect extends DataAwareMixin(LitElement) {
             />
           ` : nothing}
           ${filtered.length > 0 ? html`
-            <ul class="option-list" id=${this._listboxId} role="listbox">
+            <ul data-auy-part="option-list" id=${this._listboxId} role="listbox">
               ${filtered.map((opt, i) => html`
                 <li
-                  class="option ${classMap({ focused: i === this._focusedIndex })}"
+                  data-auy-part="option" data-auy-state=${i === this._focusedIndex ? 'focused' : nothing}
                   role="option"
                   data-index="${i}"
                   aria-selected=${opt.value === this.value ? 'true' : 'false'}
@@ -388,7 +384,7 @@ export class AuyCompSelect extends DataAwareMixin(LitElement) {
               `)}
             </ul>
           ` : html`
-            <div class="no-results">Nenhum resultado encontrado</div>
+            <div data-auy-part="no-results">Nenhum resultado encontrado</div>
           `}
         </div>
       </div>

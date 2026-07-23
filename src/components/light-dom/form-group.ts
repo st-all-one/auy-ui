@@ -1,5 +1,6 @@
-import { LitElement, html, css, nothing } from 'lit';
+import { html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { AuyLightElement } from '../_internal/AuyLightElement.base.ts';
 
 let formGroupIdCounter = 0;
 
@@ -106,15 +107,15 @@ function findInput(root: HTMLElement): HTMLInputElement | HTMLTextAreaElement | 
 }
 
 const fgStyles = css`
-  .fg-wrap {
+  [data-auy-part="fg-wrap"] {
     display: block;
   }
-  .fg-wrap[inline] {
+  [data-auy-part="fg-wrap"][inline] {
     display: flex;
     align-items: flex-start;
     gap: var(--auy-space-md);
   }
-  .fg-wrap[inline] .label-wrap {
+  [data-auy-part="fg-wrap"][inline] [data-auy-part="label-wrap"] {
     padding-block-start: var(--auy-space-sm);
     min-inline-size: 8rem;
   }
@@ -127,18 +128,18 @@ const fgStyles = css`
     margin-block-end: var(--auy-space-2xs);
   }
 
-  .required-star {
+  [data-auy-part="required-star"] {
     color: var(--auy-color-error);
     margin-inline-start: 0.125em;
   }
 
-  .hint {
+  [data-auy-part="hint"] {
     font-size: var(--auy-text-xs);
     color: var(--auy-color-text-muted);
     margin-block-start: var(--auy-space-2xs);
   }
 
-  .error {
+  [data-auy-part="error"] {
     font-size: var(--auy-text-xs);
     color: var(--auy-color-error);
     margin-block-start: var(--auy-space-2xs);
@@ -152,14 +153,14 @@ const fgStyles = css`
   }
 
   @media (forced-colors: active) {
-    .error {
+    [data-auy-part="error"] {
       border: 1px solid ButtonText;
       padding: var(--auy-space-2xs) var(--auy-space-xs);
     }
   }
 
   @media print {
-    .hint, .error {
+    [data-auy-part="hint"], [data-auy-part="error"] {
       display: none;
     }
   }
@@ -167,10 +168,7 @@ const fgStyles = css`
 
 /** Grupo de formulário com label, validação, máscara e exibição de erros. */
 @customElement('auy-comp-form-group')
-export class AuyCompFormGroup extends LitElement {
-  override createRenderRoot() {
-    return this;
-  }
+export class AuyCompFormGroup extends AuyLightElement {
 
   // Styles rendered inline via template for Light DOM support
 
@@ -305,12 +303,12 @@ export class AuyCompFormGroup extends LitElement {
 
     return html`
       <style>${fgStyles}</style>
-      <div class="fg-wrap" ?inline=${this.inline}>
+      <div data-auy-part="fg-wrap" ?inline=${this.inline}>
         ${this.label ? html`
-          <div class="label-wrap">
+          <div data-auy-part="label-wrap">
             <label for=${this.for || nothing}>
               <slot name="label">${this.label}</slot>
-              ${this.required ? html`<span class="required-star" aria-hidden="true">*</span>` : nothing}
+              ${this.required ? html`<span data-auy-part="required-star" aria-hidden="true">*</span>` : nothing}
             </label>
           </div>
         ` : nothing}
@@ -319,8 +317,8 @@ export class AuyCompFormGroup extends LitElement {
             aria-describedby=${descIds || nothing}
             aria-invalid=${this.error ? 'true' : nothing}
           ></slot>
-          ${this.hint ? html`<div class="hint" id=${this._hintId}>${this.hint}</div>` : nothing}
-          ${this.error ? html`<div class="error" id=${this._errorId} role="alert" aria-live="polite">${this.error}</div>` : nothing}
+          ${this.hint ? html`<div data-auy-part="hint" id=${this._hintId}>${this.hint}</div>` : nothing}
+          ${this.error ? html`<div data-auy-part="error" id=${this._errorId} role="alert" aria-live="polite">${this.error}</div>` : nothing}
         </div>
       </div>
     `;

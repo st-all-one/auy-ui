@@ -213,11 +213,11 @@ Os valores entre {{ }} são injetados pelo servidor Rust via Askama.
         <h2>Indicadores</h2>
         <div class="stats-grid">
           {% for stat in stats %}
-          <article class="card card--elevated">
-            <h3 class="card__title" style="font-size:0.875rem;color:var(--auy-color-text-muted);font-weight:500;">{{ stat.label }}</h3>
-            <p class="card__description"><span style="font-size:1.75rem;font-weight:700;color:{{ stat.color }};">{{ stat.value }}</span></p>
+          <article data-auy="card" data-auy-variant="elevated">
+            <h3 data-auy-part="title" style="font-size:0.875rem;color:var(--auy-color-text-muted);font-weight:500;">{{ stat.label }}</h3>
+            <p data-auy-part="description"><span style="font-size:1.75rem;font-weight:700;color:{{ stat.color }};">{{ stat.value }}</span></p>
             {% if stat.footer %}
-            <div class="card__footer" style="font-size:0.8rem;color:{{ stat.footer_color }};">{{ stat.footer }}</div>
+            <div data-auy-part="footer" style="font-size:0.8rem;color:{{ stat.footer_color }};">{{ stat.footer }}</div>
             {% endif %}
           </article>
           {% endfor %}

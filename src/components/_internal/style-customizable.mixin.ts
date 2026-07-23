@@ -25,6 +25,13 @@ export const StyleCustomizableMixin = <T extends Constructor<LitElement>>(superC
       if (changedProperties.has('styleReplace') && this.styleReplace) {
         this._applyStyleReplace();
       }
+      // Garante que o <style> customizado fique APÓS os estilos nativos no shadowRoot
+      if (this.shadowRoot && (this.styleAdd || this.styleReplace)) {
+        const customStyle = this.shadowRoot.querySelector<HTMLStyleElement>('style[auy-custom]');
+        if (customStyle) {
+          this.shadowRoot.appendChild(customStyle);
+        }
+      }
     }
 
     private _applyStyleReplace(): void {

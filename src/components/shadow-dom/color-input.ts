@@ -1,5 +1,6 @@
-import { LitElement, html, css, nothing } from 'lit';
+import { html, css, nothing } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
+import { AuyShadowElement } from '../_internal/AuyShadowElement.base.ts';
 import { DataAwareMixin } from '../_internal/data-aware.mixin.ts';
 import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
 
@@ -149,7 +150,7 @@ type Format = 'hex' | 'rgb' | 'hsl' | 'oklch';
  * @csspart label - The label element.
  */
 @customElement('auy-comp-color-input')
-export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(LitElement)) {
+export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(AuyShadowElement)) {
   static override get observedDataEvents(): string[] {
     return ['change']
   }
@@ -165,7 +166,7 @@ export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(Lit
         margin-block-end: var(--auy-space-xs);
       }
 
-      .picker {
+      [data-auy-part="picker"] {
         display: grid;
         gap: var(--auy-space-sm);
         padding: var(--auy-space-md);
@@ -175,7 +176,7 @@ export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(Lit
         box-sizing: border-box;
       }
 
-      .hsv-wrap {
+      [data-auy-part="hsv-wrap"] {
         position: relative;
         inline-size: min(100%, 260px);
         aspect-ratio: 1 / 1;
@@ -185,13 +186,13 @@ export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(Lit
         min-inline-size: 0;
       }
 
-      .hsv-wrap canvas {
+      [data-auy-part="hsv-wrap"] canvas {
         display: block;
         inline-size: 100%;
         block-size: 100%;
       }
 
-      .ring-indicator {
+      [data-auy-part="ring-indicator"] {
         position: absolute;
         pointer-events: none;
         inline-size: 14px; block-size: 14px;
@@ -204,7 +205,7 @@ export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(Lit
         transition: box-shadow 0.2s;
       }
 
-      .tri-indicator {
+      [data-auy-part="tri-indicator"] {
         position: absolute;
         pointer-events: none;
         inline-size: 14px; block-size: 14px;
@@ -219,7 +220,7 @@ export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(Lit
         justify-content: center;
       }
 
-      .tri-indicator::after {
+      [data-auy-part="tri-indicator"]::after {
         content: '';
         display: block;
         inline-size: 5px; block-size: 5px;
@@ -228,14 +229,14 @@ export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(Lit
         box-shadow: 0 0 0 1px rgba(255,255,255,.6);
       }
 
-      .preview-row {
+      [data-auy-part="preview-row"] {
         display: flex;
         align-items: center;
         gap: var(--auy-space-sm);
         min-inline-size: 0;
       }
 
-      .preview-stack {
+      [data-auy-part="preview-stack"] {
         display: flex;
         border-radius: var(--auy-radius-sm);
         overflow: hidden;
@@ -243,20 +244,20 @@ export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(Lit
         box-shadow: inset 0 0 0 1px rgba(0,0,0,.08);
       }
 
-      .preview-swatch {
+      [data-auy-part="preview-swatch"] {
         inline-size: 28px; block-size: 22px;
         transition: background 0.15s;
       }
 
-      .preview-swatch.old {
+      [data-auy-part="preview-swatch"][data-auy-state="old"] {
         border-inline-end: 1px solid rgba(0,0,0,.06);
       }
 
-      .preview-swatch + .preview-swatch {
+      [data-auy-part="preview-swatch"] + [data-auy-part="preview-swatch"] {
         border-inline-start: 1px solid rgba(255,255,255,.15);
       }
 
-      .hex-input {
+      [data-auy-part="hex-input"] {
         flex: 1;
         font-family: var(--auy-font-mono);
         font-size: var(--auy-text-sm);
@@ -270,22 +271,22 @@ export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(Lit
         min-inline-size: 0;
       }
 
-      .hex-input:focus {
+      [data-auy-part="hex-input"]:focus {
         border-block-end-color: var(--auy-color-primary);
       }
 
-      .hex-input::placeholder {
+      [data-auy-part="hex-input"]::placeholder {
         color: var(--auy-color-text-muted);
       }
 
-      .alpha-row {
+      [data-auy-part="alpha-row"] {
         display: flex;
         align-items: center;
         gap: var(--auy-space-sm);
         position: relative;
       }
 
-      .alpha-track-wrap {
+      [data-auy-part="alpha-track-wrap"] {
         flex: 1;
         min-inline-size: 0;
         position: relative;
@@ -294,7 +295,7 @@ export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(Lit
         overflow: hidden;
       }
 
-      .alpha-track-wrap::before {
+      [data-auy-part="alpha-track-wrap"]::before {
         content: '';
         position: absolute; inset: 0;
         background: repeating-conic-gradient(rgba(0,0,0,.08) 0% 25%, transparent 0% 50%) 0 0 / 8px 8px;
@@ -302,13 +303,13 @@ export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(Lit
         border-radius: inherit;
       }
 
-      .alpha-track-bg {
+      [data-auy-part="alpha-track-bg"] {
         position: absolute; inset: 0;
         z-index: 1;
         border-radius: inherit;
       }
 
-      .alpha-range {
+      [data-auy-part="alpha-range"] {
         -webkit-appearance: none;
         appearance: none;
         display: block;
@@ -322,12 +323,12 @@ export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(Lit
         background: transparent;
       }
 
-      .alpha-range::-webkit-slider-runnable-track {
+      [data-auy-part="alpha-range"]::-webkit-slider-runnable-track {
         block-size: 6px;
         border-radius: 3px;
       }
 
-      .alpha-range::-webkit-slider-thumb {
+      [data-auy-part="alpha-range"]::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
         inline-size: 16px; block-size: 16px;
@@ -339,12 +340,12 @@ export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(Lit
         cursor: pointer;
       }
 
-      .alpha-range::-moz-range-track {
+      [data-auy-part="alpha-range"]::-moz-range-track {
         block-size: 6px;
         border-radius: 3px;
       }
 
-      .alpha-range::-moz-range-thumb {
+      [data-auy-part="alpha-range"]::-moz-range-thumb {
         inline-size: 16px; block-size: 16px;
         border-radius: 50%;
         background: var(--auy-color-surface);
@@ -353,7 +354,7 @@ export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(Lit
         cursor: pointer;
       }
 
-      .alpha-label {
+      [data-auy-part="alpha-label"] {
         font-family: var(--auy-font-mono);
         font-size: var(--auy-text-xs);
         color: var(--auy-color-text-muted);
@@ -362,9 +363,9 @@ export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(Lit
         flex-shrink: 0;
       }
 
-      .formats { display: flex; flex-wrap: wrap; gap: var(--auy-space-2xs); min-inline-size: 0; }
+      [data-auy-part="formats"] { display: flex; flex-wrap: wrap; gap: var(--auy-space-2xs); min-inline-size: 0; }
 
-      .format-chip {
+      [data-auy-part="format-chip"] {
         display: inline-flex;
         align-items: center;
         gap: var(--auy-space-2xs);
@@ -381,17 +382,17 @@ export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(Lit
         touch-action: manipulation; white-space: nowrap;
       }
 
-      .format-chip:hover {
+      [data-auy-part="format-chip"]:hover {
         border-color: var(--auy-color-primary);
         background: color-mix(in oklch, var(--auy-color-primary) 6%, transparent);
       }
 
-      .format-chip:focus-visible {
+      [data-auy-part="format-chip"]:focus-visible {
         outline: .125rem solid var(--auy-color-primary);
         outline-offset: 1px;
       }
 
-      .format-chip .chip-swatch {
+      [data-auy-part="format-chip"] [data-auy-part="chip-swatch"] {
         display: inline-block;
         inline-size: 8px; block-size: 8px;
         border-radius: 2px;
@@ -399,41 +400,41 @@ export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(Lit
         box-shadow: inset 0 0 0 1px rgba(0,0,0,.1);
       }
 
-      .format-chip .chip-label {
+      [data-auy-part="format-chip"] [data-auy-part="chip-label"] {
         font-weight: var(--auy-font-weight-semibold);
         color: var(--auy-color-text);
       }
 
-      .format-chip.copied {
+      [data-auy-part="format-chip"][data-auy-state="copied"] {
         border-color: var(--auy-color-success);
         color: var(--auy-color-success);
       }
 
-      .format-chip.copied .chip-label,
-      .format-chip.copied .chip-value {
+      [data-auy-part="format-chip"][data-auy-state="copied"] [data-auy-part="chip-label"],
+      [data-auy-part="format-chip"][data-auy-state="copied"] [data-auy-part="chip-value"] {
         color: var(--auy-color-success);
       }
 
-      .format-chip.oklch-chip {
+      [data-auy-part="format-chip"][data-auy-variant="oklch"] {
         border-color: color-mix(in oklch, var(--auy-color-primary) 35%, transparent);
         background: color-mix(in oklch, var(--auy-color-primary) 8%, transparent);
       }
 
-      .format-chip.oklch-chip:hover {
+      [data-auy-part="format-chip"][data-auy-variant="oklch"]:hover {
         border-color: var(--auy-color-primary);
         background: color-mix(in oklch, var(--auy-color-primary) 12%, transparent);
       }
 
-      .toolbar {
+      [data-auy-part="toolbar"] {
         display: flex;
         gap: var(--auy-space-sm);
         align-items: center;
         min-inline-size: 0;
       }
 
-      .toolbar .formats { flex: 1; }
+      [data-auy-part="toolbar"] [data-auy-part="formats"] { flex: 1; }
 
-      .eyedropper {
+      [data-auy-part="eyedropper"] {
         display: inline-flex; align-items: center; justify-content: center;
         min-inline-size: 2.75rem; min-block-size: 2.75rem;
         border: 1px solid var(--auy-color-border);
@@ -445,10 +446,10 @@ export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(Lit
         padding: 0;
       }
 
-      .eyedropper:hover { background: var(--auy-color-surface-alt); }
-      .eyedropper:focus-visible { outline: .125rem solid var(--auy-color-primary); outline-offset: 2px; }
+      [data-auy-part="eyedropper"]:hover { background: var(--auy-color-surface-alt); }
+      [data-auy-part="eyedropper"]:focus-visible { outline: .125rem solid var(--auy-color-primary); outline-offset: 2px; }
 
-      .recent-row {
+      [data-auy-part="recent-row"] {
         display: flex;
         gap: var(--auy-space-2xs);
         padding-block-start: var(--auy-space-xs);
@@ -456,7 +457,7 @@ export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(Lit
         min-inline-size: 0;
       }
 
-      .recent-swatch {
+      [data-auy-part="recent-swatch"] {
         inline-size: 2.5rem; block-size: 2.5rem;
         border-radius: var(--auy-radius-sm);
         cursor: pointer;
@@ -465,17 +466,17 @@ export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(Lit
         flex-shrink: 0;
       }
 
-      .recent-swatch:hover {
+      [data-auy-part="recent-swatch"]:hover {
         border-color: var(--auy-color-text);
         transform: scale(1.15);
       }
 
-      .recent-swatch:focus-visible {
+      [data-auy-part="recent-swatch"]:focus-visible {
         outline: .125rem solid var(--auy-color-primary);
         outline-offset: 1px;
       }
 
-      .recent-label {
+      [data-auy-part="recent-label"] {
         font-size: var(--auy-text-xs);
         color: var(--auy-color-text-muted);
         margin-inline-end: auto;
@@ -483,7 +484,7 @@ export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(Lit
         align-items: center;
       }
 
-      @media (forced-colors: active) { .picker { border: 1px solid ButtonText; } }
+      @media (forced-colors: active) { [data-auy-part="picker"] { border: 1px solid ButtonText; } }
     }
   `;
 
@@ -519,7 +520,7 @@ export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(Lit
   @state() private _recent: string[] = [];
 
   /** The HSV canvas element. */
-  @query('.hsv-wrap canvas') private _canvas!: HTMLCanvasElement;
+  @query('[data-auy-part="hsv-wrap"] canvas') private _canvas!: HTMLCanvasElement;
 
   private _prevValue = '';
   private _dragTarget: 'ring' | 'tri' | null = null;
@@ -917,29 +918,29 @@ export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(Lit
     return html`
       ${this._renderCustomStyles()}
       ${this.label ? html`<label part="label">${this.label}</label>` : nothing}
-      <div part="picker" class="picker" style="--_tri-dot:${hex};--_ring-glow:${hex}40;">
+      <div part="picker" data-auy-part="picker" style="--_tri-dot:${hex};--_ring-glow:${hex}40;">
 
-        <div class="hsv-wrap"
+        <div data-auy-part="hsv-wrap"
           @mousedown=${this._onDown} @mousemove=${this._onMove}
           @mouseup=${this._onDragEnd} @mouseleave=${this._onDragEnd}
           @touchstart=${this._onDown} @touchmove=${this._onMove}
           @touchend=${this._onDragEnd}
         >
           <canvas></canvas>
-          <div class="ring-indicator"
+          <div data-auy-part="ring-indicator"
             style="inset-inline-start:${rx}%;inset-block-start:${ry}%;">
           </div>
-          <div class="tri-indicator"
+          <div data-auy-part="tri-indicator"
             style="inset-inline-start:${tx}%;inset-block-start:${ty}%;">
           </div>
         </div>
 
-        <div class="preview-row">
-          <div class="preview-stack">
-            <div class="preview-swatch old" style="background:${this._prevValue || hex}"></div>
-            <div class="preview-swatch" style="background:${rgbaColor}"></div>
+        <div data-auy-part="preview-row">
+          <div data-auy-part="preview-stack">
+            <div data-auy-part="preview-swatch" data-auy-state="old" style="background:${this._prevValue || hex}"></div>
+            <div data-auy-part="preview-swatch" style="background:${rgbaColor}"></div>
           </div>
-          <input class="hex-input"
+          <input data-auy-part="hex-input"
             .value=${hex}
             @input=${this._onHexInput}
             placeholder="#000000"
@@ -950,32 +951,32 @@ export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(Lit
         </div>
 
         ${this.showAlpha ? html`
-          <div class="alpha-row">
-            <div class="alpha-track-wrap">
-              <div class="alpha-track-bg" style="background:linear-gradient(to right, transparent, ${hex})"></div>
-              <input class="alpha-range" type="range" min="0" max="1" step="0.01" .value=${this._alpha} @input=${this._onAlphaRange} aria-label="Alpha" />
+          <div data-auy-part="alpha-row">
+            <div data-auy-part="alpha-track-wrap">
+              <div data-auy-part="alpha-track-bg" style="background:linear-gradient(to right, transparent, ${hex})"></div>
+              <input data-auy-part="alpha-range" type="range" min="0" max="1" step="0.01" .value=${this._alpha} @input=${this._onAlphaRange} aria-label="Alpha" />
             </div>
-            <span class="alpha-label">${alphaPct}%</span>
+            <span data-auy-part="alpha-label">${alphaPct}%</span>
           </div>
         ` : nothing}
 
-        <div class="toolbar">
-          <div class="formats">
+        <div data-auy-part="toolbar">
+          <div data-auy-part="formats">
             ${chips.map(f => html`
-              <span class="format-chip ${f === 'oklch' ? 'oklch-chip' : ''} ${this._copiedFormat === f ? 'copied' : ''}"
+              <span data-auy-part="format-chip" data-auy-variant=${f === 'oklch' ? 'oklch' : nothing} data-auy-state=${this._copiedFormat === f ? 'copied' : nothing}
                 @click=${(e: Event) => this._copy(f, e)}
                 role="button" tabindex="0"
                 aria-label="Copiar ${f.toUpperCase()}"
                 title="Clique para copiar"
               >
-                <span class="chip-swatch" style="background:${hex}"></span>
-                <span class="chip-label">${this._copiedFormat === f ? '✓' : f.toUpperCase()}</span>
-                <span class="chip-value">${this._copiedFormat === f ? 'Copiado!' : this._fmt(f)}</span>
+                <span data-auy-part="chip-swatch" style="background:${hex}"></span>
+                <span data-auy-part="chip-label">${this._copiedFormat === f ? '✓' : f.toUpperCase()}</span>
+                <span data-auy-part="chip-value">${this._copiedFormat === f ? 'Copiado!' : this._fmt(f)}</span>
               </span>
             `)}
           </div>
           ${this.showEyedropper && 'EyeDropper' in window ? html`
-            <button class="eyedropper" @click=${this._pickEyedropper} aria-label="Pipeta" title="Selecionar cor da tela">
+            <button data-auy-part="eyedropper" @click=${this._pickEyedropper} aria-label="Pipeta" title="Selecionar cor da tela">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M2 22l1-1h3l9-9"/>
                 <path d="M3 21l9-9"/>
@@ -987,10 +988,10 @@ export class AuyCompColorInput extends StyleCustomizableMixin(DataAwareMixin(Lit
         </div>
 
         ${this.showRecent && this._recent.length ? html`
-          <div class="recent-row">
-            <span class="recent-label">Recentes</span>
+          <div data-auy-part="recent-row">
+            <span data-auy-part="recent-label">Recentes</span>
             ${this._recent.slice(0, this.recentCount).map(c => html`
-              <button class="recent-swatch" style="background:${c}" @click=${() => this._selectRecent(c)} aria-label=${c} title=${c}></button>
+              <button data-auy-part="recent-swatch" style="background:${c}" @click=${() => this._selectRecent(c)} aria-label=${c} title=${c}></button>
             `)}
           </div>
         ` : nothing}

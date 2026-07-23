@@ -1,6 +1,6 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
 import { customElement, property, queryAssignedElements } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
+import { AuyShadowElement } from '../_internal/AuyShadowElement.base.ts';
 import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
 
 
@@ -19,7 +19,7 @@ import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts
  * @csspart dismiss - Botão de fechar
  */
 @customElement('auy-comp-alert')
-export class AuyCompAlert extends StyleCustomizableMixin(LitElement) {
+export class AuyCompAlert extends StyleCustomizableMixin(AuyShadowElement) {
   static override get observedDataEvents(): string[] {
     return ['show', 'dismiss']
   }
@@ -31,7 +31,7 @@ export class AuyCompAlert extends StyleCustomizableMixin(LitElement) {
         contain: layout style;
       }
 
-      .alert {
+      [data-auy="alert"] {
         display: flex;
         align-items: flex-start;
         gap: var(--auy-space-sm);
@@ -44,29 +44,29 @@ export class AuyCompAlert extends StyleCustomizableMixin(LitElement) {
         transition: opacity var(--auy-transition-base), transform var(--auy-transition-base);
       }
 
-      .alert--success {
+      [data-auy-variant="success"] {
         background: oklch(from var(--auy-color-success) 95% 0.02 h);
         border-inline-start-color: var(--auy-color-success);
       }
 
-      .alert--warning {
+      [data-auy-variant="warning"] {
         background: oklch(from var(--auy-color-warning) 95% 0.02 h);
         border-inline-start-color: var(--auy-color-warning);
       }
 
-      .alert--error {
+      [data-auy-variant="error"] {
         background: oklch(from var(--auy-color-error) 95% 0.02 h);
         border-inline-start-color: var(--auy-color-error);
       }
 
       @starting-style {
-        .alert {
+        [data-auy="alert"] {
           opacity: 0;
           transform: translateY(-0.5rem);
         }
       }
 
-      .alert__icon {
+      [data-auy-part="icon"] {
         display: inline-flex;
         align-items: center;
         flex-shrink: 0;
@@ -75,30 +75,31 @@ export class AuyCompAlert extends StyleCustomizableMixin(LitElement) {
         margin-block-start: 1px;
       }
 
-      .alert__icon svg {
+      [data-auy-part="icon"] svg {
         inline-size: 100%;
         block-size: 100%;
         fill: currentColor;
       }
 
-      .alert__content {
+      [data-auy-part="content"] {
         flex: 1;
         display: grid;
         gap: 0.25rem;
         min-inline-size: 0;
       }
 
-      .alert__title {
+      [data-auy-part="title"] {
         font-weight: var(--auy-font-weight-semibold);
+        font-size: var(--auy-text-sm);
       }
 
-      .alert__actions {
+      [data-auy-part="actions"] {
         display: flex;
         gap: var(--auy-space-sm);
         margin-block-start: var(--auy-space-xs);
       }
 
-      .alert__dismiss {
+      [data-auy-part="dismiss"] {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -117,55 +118,55 @@ export class AuyCompAlert extends StyleCustomizableMixin(LitElement) {
         touch-action: manipulation;
       }
 
-      .alert__dismiss:hover {
+      [data-auy-part="dismiss"]:hover {
         opacity: 1;
       }
 
-      .alert__dismiss:focus-visible {
+      [data-auy-part="dismiss"]:focus-visible {
         outline: 0.125rem solid var(--auy-color-primary);
         outline-offset: 0.125rem;
       }
 
       @media (prefers-color-scheme: dark) {
-        .alert {
+        [data-auy="alert"] {
           background: oklch(from var(--auy-color-info) 25% 0.06 h);
           color: oklch(from var(--auy-color-info) 85% 0.1 h);
         }
 
-        .alert--success {
+        [data-auy-variant="success"] {
           background: oklch(from var(--auy-color-success) 25% 0.06 h);
           color: oklch(from var(--auy-color-success) 85% 0.1 h);
         }
 
-        .alert--warning {
+        [data-auy-variant="warning"] {
           background: oklch(from var(--auy-color-warning) 25% 0.06 h);
           color: oklch(from var(--auy-color-warning) 85% 0.12 h);
         }
 
-        .alert--error {
+        [data-auy-variant="error"] {
           background: oklch(from var(--auy-color-error) 25% 0.06 h);
           color: oklch(from var(--auy-color-error) 85% 0.1 h);
         }
       }
 
       @media (forced-colors: active) {
-        .alert {
+        [data-auy="alert"] {
           border: 1px solid CanvasText;
         }
 
-        .alert__dismiss {
+        [data-auy-part="dismiss"] {
           border: 1px solid ButtonText;
         }
       }
 
       @media (prefers-reduced-motion: reduce) {
-        .alert {
+        [data-auy="alert"] {
           transition: none;
         }
       }
 
       @media print {
-        .alert {
+        [data-auy="alert"] {
           break-inside: avoid;
         }
       }
@@ -277,33 +278,28 @@ export class AuyCompAlert extends StyleCustomizableMixin(LitElement) {
       ${this._renderCustomStyles()}
       <div
         part="alert"
-        class=${classMap({
-          alert: true,
-          'alert--info': this.variant === 'info',
-          'alert--success': this.variant === 'success',
-          'alert--error': this.variant === 'error',
-          'alert--warning': this.variant === 'warning',
-        })}
+        data-auy="alert"
+        data-auy-variant=${this.variant}
         role=${this._role}
         aria-live=${this._ariaLive}
         aria-atomic="true"
       >
         ${this.icon
-          ? html`<span part="icon" class="alert__icon">${this._renderIcon()}</span>`
+          ? html`<span part="icon" data-auy-part="icon">${this._renderIcon()}</span>`
           : ''}
-        <div part="content" class="alert__content">
-          <div part="title" class="alert__title">
+        <div part="content" data-auy-part="content">
+          <div part="title" data-auy-part="title">
             <slot name="title">${this.title}</slot>
           </div>
           <div part="description">
             <slot></slot>
           </div>
-          <div part="actions" class="alert__actions">
+          <div part="actions" data-auy-part="actions">
             <slot name="action"></slot>
           </div>
         </div>
         ${this.dismissible
-          ? html`<button part="dismiss" class="alert__dismiss" aria-label="Fechar" @click=${this._handleDismiss}>&times;</button>`
+          ? html`<button part="dismiss" data-auy-part="dismiss" aria-label="Fechar" @click=${this._handleDismiss}>&times;</button>`
           : ''}
       </div>
     `;

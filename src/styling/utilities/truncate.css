@@ -1,11 +1,11 @@
 @layer utilities {
-  .truncate {
+  [data-auy-ut~="truncate"] {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  .truncate-multiline {
+  [data-auy-ut~="truncate-multiline"] {
     display: -webkit-box;
     -webkit-line-clamp: var(--truncate-lines, 3);
     -webkit-box-orient: vertical;

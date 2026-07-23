@@ -18,15 +18,15 @@
     margin-inline: auto;
   }
 
-  .container-inline {
+  [data-auy-ut~="container-inline"] {
     container-type: inline-size;
   }
 
-  .container-size {
+  [data-auy-ut~="container-size"] {
     container-type: size;
   }
 
-  .container-name-site {
+  [data-auy-ut~="container-name-site"] {
     container-name: site;
   }
 }

@@ -13,10 +13,13 @@ export interface DataAwareInterface {
   dataInput: string;
   dataMethod: 'GET' | 'POST';
   dataTarget: string;
+  dataOutput: string;
+  dataOutputMethod: 'POST' | 'PUT';
   loading: boolean;
   error: string | null;
   _fetchData(extraParams?: URLSearchParams): Promise<void>;
   _parseResponse(data: unknown): void;
+  _sendOutput(data: unknown): void;
 }
 
 type Constructor<T = LitElement> = new (...args: unknown[]) => T;
@@ -35,6 +38,14 @@ export const DataAwareMixin = <T extends Constructor<LitElement>>(superClass: T)
     @property({ type: String, attribute: 'data-target', reflect: true })
     dataTarget = '';
 
+    /** URL para envio de dados (data-output) */
+    @property({ type: String, attribute: 'data-output', reflect: true })
+    dataOutput = '';
+
+    /** Metodo HTTP para envio de dados */
+    @property({ type: String, attribute: 'data-output-method', reflect: true })
+    dataOutputMethod: 'POST' | 'PUT' = 'POST';
+
     /** Estado de carregamento */
     @property({ type: Boolean, reflect: true })
     loading = false;
@@ -44,6 +55,7 @@ export const DataAwareMixin = <T extends Constructor<LitElement>>(superClass: T)
     error: string | null = null;
 
     private _abortController: AbortController | null = null;
+    private _outputAbortController: AbortController | null = null;
     private _initialDataFetched = false;
 
     override connectedCallback(): void {
@@ -53,6 +65,7 @@ export const DataAwareMixin = <T extends Constructor<LitElement>>(superClass: T)
 
     override disconnectedCallback(): void {
       this._abortController?.abort();
+      this._outputAbortController?.abort();
       super.disconnectedCallback();
     }
 
@@ -161,6 +174,52 @@ export const DataAwareMixin = <T extends Constructor<LitElement>>(superClass: T)
       if (target && '_parseResponse' in (target as DataAwareInterface)) {
         (target as DataAwareInterface)._parseResponse(data);
       }
+    }
+
+    /** Envia dados para a URL definida em data-output */
+    protected _sendOutput(data: unknown): void {
+      if (!this.dataOutput) return;
+
+      let body: string;
+      try {
+        body = JSON.stringify(data);
+      } catch {
+        this.dispatchEvent(new CustomEvent('auy:output-error', {
+          detail: { error: 'Falha ao serializar dados para output' },
+          bubbles: true,
+          composed: true,
+        }));
+        return;
+      }
+
+      this._outputAbortController?.abort();
+      this._outputAbortController = new AbortController();
+
+      const { signal } = this._outputAbortController;
+
+      fetch(this.dataOutput, {
+        method: this.dataOutputMethod,
+        headers: { 'Content-Type': 'application/json' },
+        body,
+        signal,
+      })
+        .then(res => {
+          if (!res.ok) {
+            this.dispatchEvent(new CustomEvent('auy:output-error', {
+              detail: { error: `HTTP ${res.status}`, status: res.status, url: this.dataOutput },
+              bubbles: true,
+              composed: true,
+            }));
+          }
+        })
+        .catch(err => {
+          if (err instanceof DOMException && err.name === 'AbortError') return;
+          this.dispatchEvent(new CustomEvent('auy:output-error', {
+            detail: { error: err instanceof Error ? err.message : 'Erro desconhecido no output', url: this.dataOutput },
+            bubbles: true,
+            composed: true,
+          }));
+        });
     }
 
     #connectEventBindings(): void {

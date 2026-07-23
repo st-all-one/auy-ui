@@ -8,7 +8,7 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="theme-color" content="#4f6ef7">
   <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' ws://localhost:*">
+         content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; media-src 'self' data:; object-src 'self' data:; connect-src 'self' ws://localhost:*">
   <link rel="canonical" href="/elements-demo.html">
   <title>auy-ui — Elements Demo</title>
   <link rel="stylesheet" href="/src/styling/auy-ui.css" />
@@ -170,7 +170,7 @@
 </head>
 <body>
 
-<a href="#demo-main" class="skip-link">Pular para conteúdo principal</a>
+<a href="#demo-main" data-auy-ut="skip-link">Pular para conteúdo principal</a>
 <noscript>
   <div style="background:var(--auy-color-error);color:var(--auy-color-primary-inverse);padding:var(--auy-space-sm) var(--auy-space-md);text-align:center;font-size:var(--auy-text-sm)">
     Esta página requer JavaScript para funcionalidades interativas.
@@ -727,19 +727,19 @@ line 2: count = 42</pre>
             <label for="demo-search">Search</label>
             <input type="search" id="demo-search" placeholder="Search…" inputmode="search">
           </div>
-            <div class="form-group">
-            <label for="demo-cpf">CPF <span class="required-indicator">*</span></label>
+            <div data-auy="form-group">
+            <label for="demo-cpf">CPF <span data-auy-part="required-indicator">*</span></label>
             <input type="text" id="demo-cpf" placeholder="000.000.000-00" pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}" inputmode="numeric" maxlength="14" required
                    aria-describedby="cpf-help" aria-errormessage="cpf-error">
-            <span id="cpf-help" class="form-help">Apenas números, formato 000.000.000-00</span>
-            <span id="cpf-error" class="form-error" role="alert"><span class="form-error-icon">✕</span> CPF inválido — use 11 dígitos</span>
+            <span id="cpf-help" data-auy-part="help">Apenas números, formato 000.000.000-00</span>
+            <span id="cpf-error" data-auy-part="error" role="alert"><span data-auy-part="error-icon">✕</span> CPF inválido — use 11 dígitos</span>
           </div>
-            <div class="form-group">
+            <div data-auy="form-group">
             <label for="demo-cep">CEP</label>
             <input type="text" id="demo-cep" placeholder="00000-000" pattern="\d{5}-?\d{3}" inputmode="numeric" maxlength="9"
                    aria-describedby="cep-help" aria-errormessage="cep-error">
-            <span id="cep-help" class="form-help">Formato 00000-000</span>
-            <span id="cep-error" class="form-error" role="alert"><span class="form-error-icon">✕</span> CEP inválido</span>
+            <span id="cep-help" data-auy-part="help">Formato 00000-000</span>
+            <span id="cep-error" data-auy-part="error" role="alert"><span data-auy-part="error-icon">✕</span> CEP inválido</span>
           </div>
           <div>
             <label for="demo-disabled">Desabilitado (sem teclado virtual)</label>
@@ -763,12 +763,12 @@ line 2: count = 42</pre>
       <fieldset>
         <legend>Choice Inputs — Custom (<code>[data-custom]</code> + <code>.control</code>)</legend>
         <div class="demo-flex">
-          <label><input type="checkbox" data-custom checked><span class="control"></span> Checked</label>
-          <label><input type="checkbox" data-custom><span class="control"></span> Unchecked</label>
-          <label><input type="checkbox" data-custom disabled><span class="control"></span> Disabled</label>
-          <label><input type="radio" name="demo-radio-custom" data-custom checked><span class="control"></span> Opção A</label>
-          <label><input type="radio" name="demo-radio-custom" data-custom><span class="control"></span> Opção B</label>
-          <label><input type="radio" name="demo-radio-custom" data-custom disabled><span class="control"></span> Disabled</label>
+          <label><input type="checkbox" data-custom checked><span data-auy-ut="control"></span> Checked</label>
+          <label><input type="checkbox" data-custom><span data-auy-ut="control"></span> Unchecked</label>
+          <label><input type="checkbox" data-custom disabled><span data-auy-ut="control"></span> Disabled</label>
+          <label><input type="radio" name="demo-radio-custom" data-custom checked><span data-auy-ut="control"></span> Opção A</label>
+          <label><input type="radio" name="demo-radio-custom" data-custom><span data-auy-ut="control"></span> Opção B</label>
+          <label><input type="radio" name="demo-radio-custom" data-custom disabled><span data-auy-ut="control"></span> Disabled</label>
         </div>
       </fieldset>
 
@@ -822,25 +822,25 @@ line 2: count = 42</pre>
           </div>
           <div>
             <label style="font-weight:500;margin-block-end:0.25rem">File (dropzone)</label>
-            <label class="file-dropzone">
+            <label data-auy="file-dropzone">
               <input type="file">
-              <span class="file-dropzone__icon">
+              <span data-auy-part="icon">
                 <svg viewBox="0 0 24 24"><path d="M12 16V4M8 8l4-4 4 4"/><path d="M20 16v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2"/></svg>
               </span>
-              <span class="file-dropzone__text">Arraste arquivos aqui</span>
-              <span class="file-dropzone__hint">ou clique para selecionar</span>
-              <span class="file-dropzone__action">Escolher arquivo</span>
+              <span data-auy-part="text">Arraste arquivos aqui</span>
+              <span data-auy-part="hint">ou clique para selecionar</span>
+              <span data-auy-part="action">Escolher arquivo</span>
             </label>
           </div>
           <div>
             <label style="font-weight:500;margin-block-end:0.25rem">File (inline)</label>
-            <label class="file-dropzone" data-file-style="inline">
+            <label data-auy="file-dropzone" data-file-style="inline">
               <input type="file">
-              <span class="file-dropzone__icon">
+              <span data-auy-part="icon">
                 <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
               </span>
-              <span class="file-dropzone__text">Anexar documento</span>
-              <span class="file-dropzone__action">Selecionar</span>
+              <span data-auy-part="text">Anexar documento</span>
+              <span data-auy-part="action">Selecionar</span>
             </label>
           </div>
         </div>
@@ -1157,16 +1157,16 @@ line 2: count = 42</pre>
   <!-- ════════════════════════════════════════════════════════════ -->
   <section class="demo-section">
     <h3 class="demo-section-title">Media Player (<code>.media-player</code> + <code>&lt;audio&gt;</code> nativo)</h3>
-    <div class="media-player">
-      <div class="media-player__header">
-        <span class="media-player__title">Narração do Conteúdo</span>
-        <div class="media-player__wave" aria-hidden="true">
+    <div data-auy="media-player">
+      <div data-auy-part="header">
+        <span data-auy-part="title">Narração do Conteúdo</span>
+        <div data-auy-part="wave" aria-hidden="true">
           <span></span><span></span><span></span><span></span><span></span>
         </div>
       </div>
       <audio controls src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA="
              accent-color="var(--auy-color-primary)"></audio>
-      <details class="media-player__transcript">
+      <details data-auy-part="transcript">
         <summary>Exibir texto da narração</summary>
         <p style="font-size:var(--auy-text-sm);color:var(--auy-color-text-muted);margin:var(--auy-space-sm) 0 0">
           Transcrição completa do áudio para acessibilidade WCAG AAA.
@@ -1178,11 +1178,11 @@ line 2: count = 42</pre>
   <section class="demo-section">
     <h3 class="demo-section-title">Figure com <code>data-type</code> + <code>.hover-zoom</code> + <code>.figure-actions</code></h3>
     <div class="demo-grid-2">
-      <figure data-type="image" class="hover-zoom">
+      <figure data-type="image" data-auy-ut="hover-zoom">
         <div style="block-size:120px;background:linear-gradient(135deg,var(--auy-color-primary),var(--auy-color-info));border-radius:var(--auy-radius-md);display:flex;align-items:center;justify-content:center;color:#fff;font-size:2rem">🖼</div>
         <figcaption>
           <span>Imagem com <code>hover-zoom</code> e actions</span>
-          <div class="figure-actions">
+          <div data-auy-ut="figure-actions">
             <a href="#" onclick="event.preventDefault()">Download</a>
             <a href="#" onclick="event.preventDefault()">Abrir</a>
           </div>
@@ -1193,7 +1193,7 @@ line 2: count = 42</pre>
         <div style="block-size:120px;background:linear-gradient(135deg,#fdf2e9,#fadbd8);border-radius:var(--auy-radius-md);display:flex;align-items:center;justify-content:center;color:#c0392b;font-size:2rem">📄</div>
         <figcaption>
           <span>Documento PDF — fallback visual</span>
-          <div class="figure-actions">
+          <div data-auy-ut="figure-actions">
             <a href="#" onclick="event.preventDefault()">Visualizar</a>
           </div>
         </figcaption>
@@ -1203,7 +1203,7 @@ line 2: count = 42</pre>
         <div style="block-size:120px;background:linear-gradient(135deg,#e8f8f5,#d1f2eb);border-radius:var(--auy-radius-md);display:flex;align-items:center;justify-content:center;color:#28b463;font-size:2rem">📊</div>
         <figcaption>
           <span>Planilha de dados</span>
-          <div class="figure-actions">
+          <div data-auy-ut="figure-actions">
             <a href="#" onclick="event.preventDefault()">Download</a>
           </div>
         </figcaption>
@@ -1214,12 +1214,12 @@ line 2: count = 42</pre>
   <section class="demo-section">
     <h3 class="demo-section-title">Transparency Badge (<code>.transparency-badge</code>)</h3>
     <div style="display:flex;flex-wrap:wrap;gap:var(--auy-space-md)">
-      <div class="transparency-badge">
-        <span class="fa-spin-hover">🔄</span>
+      <div data-auy-ut="transparency-badge">
+        <span data-auy-ut="fa-spin-hover">🔄</span>
         <span>Atualizado em: <time datetime="2026-07-21T14:30:00">21/07/2026 14:30</time></span>
       </div>
-      <div class="transparency-badge">
-        <span class="fa-spin-hover">👤</span>
+      <div data-auy-ut="transparency-badge">
+        <span data-auy-ut="fa-spin-hover">👤</span>
         <span>Última edição por: Maria Silva</span>
       </div>
     </div>
@@ -1227,10 +1227,10 @@ line 2: count = 42</pre>
 
   <section class="demo-section">
     <h3 class="demo-section-title">Snippet Preview — SEO (<code>.snippet-preview</code>)</h3>
-    <div class="snippet-preview">
-      <div class="snippet-preview__url">https://www.exemplo.gov.br/pagina-exemplo</div>
-      <div class="snippet-preview__title">Título da Página — Exemplo Governamental</div>
-      <div class="snippet-preview__desc">Descrição da página que aparece nos resultados de busca. Recomenda-se entre 120 e 160 caracteres para uma boa exibição nos mecanismos de busca.</div>
+    <div data-auy="snippet-preview">
+      <div data-auy-part="url">https://www.exemplo.gov.br/pagina-exemplo</div>
+      <div data-auy-part="title">Título da Página — Exemplo Governamental</div>
+      <div data-auy-part="desc">Descrição da página que aparece nos resultados de busca. Recomenda-se entre 120 e 160 caracteres para uma boa exibição nos mecanismos de busca.</div>
     </div>
   </section>
 
@@ -1239,12 +1239,12 @@ line 2: count = 42</pre>
     <div style="max-inline-size:400px">
       <label style="font-size:var(--auy-text-sm);font-weight:500;color:var(--auy-color-text);display:block;margin-block-end:0.25rem">Meta Title</label>
       <input type="text" class="form-control" id="demo-seo-title" placeholder="Título para resultados de busca" maxlength="70" style="margin-block-end:0.25rem">
-      <div class="char-counter">
+      <div class="char-counter" data-auy="char-counter">
         <span>Recomendado: até <strong>60</strong> caracteres</span>
         <span><span id="demo-title-count">0</span>/70</span>
       </div>
-      <div class="char-progress">
-        <div class="char-progress__bar" id="demo-title-bar" style="inline-size:0%"></div>
+      <div class="char-progress" data-auy="char-progress">
+        <div class="char-progress__bar" id="demo-title-bar" style="inline-size:0%" data-auy-part="bar"></div>
       </div>
     </div>
   </section>
@@ -1252,58 +1252,58 @@ line 2: count = 42</pre>
   <section class="demo-section">
     <h3 class="demo-section-title">Input Group (<code>.input-group</code> + ícone)</h3>
     <div style="max-inline-size:400px">
-      <div class="input-group">
-        <span class="input-group__icon">🔍</span>
+      <div class="input-group" data-auy="input-group">
+        <span class="input-group__icon" data-auy-part="icon">🔍</span>
         <input type="search" placeholder="Buscar no sistema..." aria-label="Buscar">
       </div>
     </div>
     <div style="max-inline-size:400px;margin-block-start:var(--auy-space-md)">
-      <div class="input-group">
+      <div class="input-group" data-auy="input-group">
         <input type="url" placeholder="https://" aria-label="URL do site">
-        <span class="input-group__icon">🌐</span>
+        <span class="input-group__icon" data-auy-part="icon">🌐</span>
       </div>
     </div>
   </section>
 
   <section class="demo-section">
     <h3 class="demo-section-title">Timeline de Auditoria (<code>.timeline</code>)</h3>
-    <div class="timeline" style="max-block-size:20rem">
-      <div class="timeline__item">
-        <div class="timeline__dot timeline__dot--created">+</div>
-        <div class="timeline__card">
-          <div class="timeline__header">
-            <span class="timeline__author">Maria Silva</span>
-            <span class="timeline__time">há 2 horas</span>
+    <div class="timeline" style="max-block-size:20rem" data-auy="timeline">
+      <div class="timeline__item" data-auy-part="item">
+        <div class="timeline__dot timeline__dot--created" data-auy-part="dot" data-auy-variant="created">+</div>
+        <div class="timeline__card" data-auy-part="card">
+          <div class="timeline__header" data-auy-part="header">
+            <span class="timeline__author" data-auy-part="author">Maria Silva</span>
+            <span class="timeline__time" data-auy-part="time">há 2 horas</span>
           </div>
-          <span class="timeline__action">Criado</span>
+          <span class="timeline__action" data-auy-part="action">Criado</span>
         </div>
       </div>
-      <div class="timeline__item">
-        <div class="timeline__dot timeline__dot--updated">✎</div>
-        <div class="timeline__card">
-          <div class="timeline__header">
-            <span class="timeline__author">João Santos</span>
-            <span class="timeline__time">há 1 dia</span>
+      <div class="timeline__item" data-auy-part="item">
+        <div class="timeline__dot timeline__dot--updated" data-auy-part="dot" data-auy-variant="updated">✎</div>
+        <div class="timeline__card" data-auy-part="card">
+          <div class="timeline__header" data-auy-part="header">
+            <span class="timeline__author" data-auy-part="author">João Santos</span>
+            <span class="timeline__time" data-auy-part="time">há 1 dia</span>
           </div>
-          <span class="timeline__action">Editado</span>
-          <div class="timeline__diff">
-            <div class="timeline__diff-row">
-              <span class="timeline__diff-key">Status</span>
-              <span class="timeline__diff-old">rascunho</span>
-              <span class="timeline__diff-arrow">→</span>
-              <span class="timeline__diff-new">publicado</span>
+          <span class="timeline__action" data-auy-part="action">Editado</span>
+          <div class="timeline__diff" data-auy-part="diff">
+            <div class="timeline__diff-row" data-auy-part="diff-row">
+              <span class="timeline__diff-key" data-auy-part="diff-key">Status</span>
+              <span class="timeline__diff-old" data-auy-part="diff-old">rascunho</span>
+              <span class="timeline__diff-arrow" data-auy-part="diff-arrow">→</span>
+              <span class="timeline__diff-new" data-auy-part="diff-new">publicado</span>
             </div>
           </div>
         </div>
       </div>
-      <div class="timeline__item">
-        <div class="timeline__dot timeline__dot--deleted">✕</div>
-        <div class="timeline__card">
-          <div class="timeline__header">
-            <span class="timeline__author">Sistema</span>
-            <span class="timeline__time">há 3 dias</span>
+      <div class="timeline__item" data-auy-part="item">
+        <div class="timeline__dot timeline__dot--deleted" data-auy-part="dot" data-auy-variant="deleted">✕</div>
+        <div class="timeline__card" data-auy-part="card">
+          <div class="timeline__header" data-auy-part="header">
+            <span class="timeline__author" data-auy-part="author">Sistema</span>
+            <span class="timeline__time" data-auy-part="time">há 3 dias</span>
           </div>
-          <span class="timeline__action">Removido</span>
+          <span class="timeline__action" data-auy-part="action">Removido</span>
         </div>
       </div>
     </div>
@@ -1318,14 +1318,14 @@ line 2: count = 42</pre>
     </div>
     <dialog id="demo-dialog" data-size="sm">
       <form method="dialog">
-        <div class="dialog-header">
+        <div class="dialog-header" data-auy-part="dialog-header">
           <h3 style="margin:0;font-size:var(--auy-text-lg)">Confirmação</h3>
           <button type="submit" value="close" aria-label="Close" style="all:unset;cursor:pointer;font-size:var(--auy-text-xl);line-height:1;min-inline-size:2.75rem;min-block-size:2.75rem;display:inline-flex;align-items:center;justify-content:center">&times;</button>
         </div>
-        <div class="dialog-body">
+        <div class="dialog-body" data-auy-part="dialog-body">
           <p style="margin:0">Deseja realmente excluir este registro? Esta ação não pode ser desfeita.</p>
         </div>
-        <div class="dialog-footer">
+        <div class="dialog-footer" data-auy-part="dialog-footer">
           <button type="submit" value="cancel" variant="ghost">Cancelar</button>
           <button type="submit" value="confirm" variant="primary">Confirmar</button>
         </div>
@@ -1333,28 +1333,28 @@ line 2: count = 42</pre>
     </dialog>
     <dialog id="demo-dialog-lg" data-size="lg">
       <form method="dialog">
-        <div class="dialog-header">
+        <div class="dialog-header" data-auy-part="dialog-header">
           <h3 style="margin:0;font-size:var(--auy-text-lg)">Termos de Uso</h3>
           <button type="submit" value="close" aria-label="Close" style="all:unset;cursor:pointer;font-size:var(--auy-text-xl);line-height:1;min-inline-size:2.75rem;min-block-size:2.75rem;display:inline-flex;align-items:center;justify-content:center">&times;</button>
         </div>
-        <div class="dialog-body">
+        <div class="dialog-body" data-auy-part="dialog-body">
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
         </div>
-        <div class="dialog-footer">
+        <div class="dialog-footer" data-auy-part="dialog-footer">
           <button type="submit" value="accept" variant="primary">Aceitar</button>
         </div>
       </form>
     </dialog>
     <dialog id="demo-confirm" role="alertdialog">
       <form method="dialog">
-        <div class="dialog-header">
+        <div class="dialog-header" data-auy-part="dialog-header">
           <h3 style="margin:0;font-size:var(--auy-text-lg)">⚠️ Atenção</h3>
           <button type="submit" value="close" aria-label="Close" style="all:unset;cursor:pointer;font-size:var(--auy-text-xl);line-height:1;min-inline-size:2.75rem;min-block-size:2.75rem;display:inline-flex;align-items:center;justify-content:center">&times;</button>
         </div>
-        <div class="dialog-body">
+        <div class="dialog-body" data-auy-part="dialog-body">
           <p style="margin:0;font-size:var(--auy-text-sm)">Tem certeza que deseja prosseguir com esta ação?</p>
         </div>
-        <div class="dialog-footer">
+        <div class="dialog-footer" data-auy-part="dialog-footer">
           <button type="submit" value="cancel" variant="ghost">Cancelar</button>
           <button type="submit" value="confirm" variant="primary">Confirmar</button>
         </div>
@@ -1365,7 +1365,7 @@ line 2: count = 42</pre>
   <section class="demo-section">
     <h3 class="demo-section-title">Code Editor — Dark Theme (<code>textarea.code-editor</code>)</h3>
     <div style="max-inline-size:600px">
-      <textarea class="code-editor" rows="4" placeholder='{ "@context": "https://schema.org", "@type": "WebPage", ... }' style="inline-size:100%">{&quot;key&quot;: &quot;value&quot;}</textarea>
+      <textarea class="code-editor" rows="4" placeholder='{ "@context": "https://schema.org", "@type": "WebPage", ... }' style="inline-size:100%" data-auy-part="editor">{&quot;key&quot;: &quot;value&quot;}</textarea>
     </div>
   </section>
 
@@ -1403,8 +1403,8 @@ line 2: count = 42</pre>
         <tbody>
           <tr>
             <td colspan="1">
-              <div class="table-empty">
-                <span class="table-empty__icon">📭</span>
+              <div class="table-empty" data-auy="table-empty">
+                <span class="table-empty__icon" data-auy-part="icon">📭</span>
                 Nenhum registro encontrado.
               </div>
             </td>
@@ -1524,10 +1524,14 @@ line 2: count = 42</pre>
       if (bar) {
         const pct = Math.min((len / 70) * 100, 100);
         bar.style.inlineSize = pct + '%';
-        bar.className = 'char-progress__bar';
-        if (len <= 60) bar.classList.add('char-progress__bar');
-        else if (len <= 65) bar.classList.add('char-progress__bar--warn');
-        else bar.classList.add('char-progress__bar--danger');
+        bar.setAttribute('data-auy-part', 'bar');
+        if (len <= 60) {
+          bar.removeAttribute('data-auy-variant');
+        } else if (len <= 65) {
+          bar.setAttribute('data-auy-variant', 'warn');
+        } else {
+          bar.setAttribute('data-auy-variant', 'danger');
+        }
       }
     });
   }

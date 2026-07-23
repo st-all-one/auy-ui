@@ -1,9 +1,10 @@
-import { LitElement, html, css, nothing } from 'lit';
+import { html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { AuyShadowElement } from '../_internal/AuyShadowElement.base.ts';
 import { StyleCustomizableMixin } from '../_internal/style-customizable.mixin.ts';
 
 @customElement('auy-comp-badge')
-export class AuyCompBadge extends StyleCustomizableMixin(LitElement) {
+export class AuyCompBadge extends StyleCustomizableMixin(AuyShadowElement) {
   static override styles = css`
     @layer components {
       :host {
@@ -37,25 +38,25 @@ export class AuyCompBadge extends StyleCustomizableMixin(LitElement) {
         padding: 0.15em 0.5em;
       }
 
-      [data-badge-pill] {
+      [data-auy-badge-pill] {
         border-radius: var(--auy-radius-full);
         padding-inline: 0.8em;
       }
 
-      [data-badge-variant="success"] { background: var(--auy-color-success); color: var(--auy-color-primary-inverse); }
-      [data-badge-variant="error"] { background: var(--auy-color-error); color: var(--auy-color-primary-inverse); }
-      [data-badge-variant="warning"] { background: var(--auy-color-warning); color: var(--auy-color-text); }
-      [data-badge-variant="info"] { background: var(--auy-color-info); color: var(--auy-color-primary-inverse); }
+      [data-auy-badge-variant="success"] { background: var(--auy-color-success); color: var(--auy-color-primary-inverse); }
+      [data-auy-badge-variant="error"] { background: var(--auy-color-error); color: var(--auy-color-primary-inverse); }
+      [data-auy-badge-variant="warning"] { background: var(--auy-color-warning); color: var(--auy-color-text); }
+      [data-auy-badge-variant="info"] { background: var(--auy-color-info); color: var(--auy-color-primary-inverse); }
 
-      [data-badge-outline] {
+      [data-auy-badge-outline] {
         background: transparent;
         border-color: var(--auy-color-primary);
         color: var(--auy-color-primary);
       }
-      [data-badge-outline][data-badge-variant="success"] { border-color: var(--auy-color-success); color: var(--auy-color-success); }
-      [data-badge-outline][data-badge-variant="error"] { border-color: var(--auy-color-error); color: var(--auy-color-error); }
-      [data-badge-outline][data-badge-variant="warning"] { border-color: var(--auy-color-warning); color: var(--auy-color-warning); }
-      [data-badge-outline][data-badge-variant="info"] { border-color: var(--auy-color-info); color: var(--auy-color-info); }
+      [data-auy-badge-outline][data-auy-badge-variant="success"] { border-color: var(--auy-color-success); color: var(--auy-color-success); }
+      [data-auy-badge-outline][data-auy-badge-variant="error"] { border-color: var(--auy-color-error); color: var(--auy-color-error); }
+      [data-auy-badge-outline][data-auy-badge-variant="warning"] { border-color: var(--auy-color-warning); color: var(--auy-color-warning); }
+      [data-auy-badge-outline][data-auy-badge-variant="info"] { border-color: var(--auy-color-info); color: var(--auy-color-info); }
 
       @media (forced-colors: active) {
         [part="badge"] { border: 1px solid ButtonText; }
@@ -83,10 +84,10 @@ export class AuyCompBadge extends StyleCustomizableMixin(LitElement) {
       ${this._renderCustomStyles()}
       <span
         part="badge"
-        data-badge
-        data-badge-variant=${this.variant !== 'default' ? this.variant : nothing}
-        ?data-badge-pill=${this.pill}
-        ?data-badge-outline=${this.outline}
+        data-auy-badge
+        data-auy-badge-variant=${this.variant !== 'default' ? this.variant : nothing}
+        ?data-auy-badge-pill=${this.pill}
+        ?data-auy-badge-outline=${this.outline}
       >
         <slot>${this.text}</slot>
       </span>

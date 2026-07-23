@@ -1,6 +1,7 @@
-import { LitElement, html, css, nothing } from 'lit';
+import { html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { DataAwareMixin } from '../_internal/data-aware.mixin.ts';
+import { AuyLightElement } from '../_internal/AuyLightElement.base.ts';
 
 let dateInputIdCounter = 0;
 
@@ -13,7 +14,7 @@ const diStyles = css`
     margin-block-end: var(--auy-space-xs);
   }
 
-  .required-star {
+  [data-auy-part="required-star"] {
     color: var(--auy-color-error);
   }
 
@@ -87,13 +88,9 @@ const diStyles = css`
 
 /** Componente de input de data nativo com label e estilos customizados. */
 @customElement('auy-comp-date-input')
-export class AuyCompDateInput extends DataAwareMixin(LitElement) {
+export class AuyCompDateInput extends DataAwareMixin(AuyLightElement) {
   static override get observedDataEvents(): string[] {
     return ['change']
-  }
-
-  override createRenderRoot() {
-    return this;
   }
 
   // Styles via inline <style> for Light DOM support
@@ -135,7 +132,7 @@ export class AuyCompDateInput extends DataAwareMixin(LitElement) {
   override render() {
     return html`
       <style>${diStyles}</style>
-      ${this.label ? html`<label for=${this._inputId}>${this.label}${this.required ? html`<span class="required-star" aria-hidden="true"> *</span>` : nothing}</label>` : nothing}
+      ${this.label ? html`<label for=${this._inputId}>${this.label}${this.required ? html`<span data-auy-part="required-star" aria-hidden="true"> *</span>` : nothing}</label>` : nothing}
       <input
         type="date"
         id=${this._inputId}
